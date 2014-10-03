@@ -9,7 +9,7 @@ package airhockey.domain;
  *
  * @author Eric
  */
-public abstract class Player {
+public class Player {
 
     private int inGameScore;
 

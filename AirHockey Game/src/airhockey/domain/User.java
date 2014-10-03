@@ -9,7 +9,12 @@ package airhockey.domain;
  *
  * @author Eric
  */
-public abstract class User {
+public class User {
 
     private String username;
+    
+    public User(String username)
+    {
+        
+    }
 }
