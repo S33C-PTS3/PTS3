@@ -5,10 +5,32 @@
  */
 package airhockey.domain;
 
+import java.awt.Color;
+
 /**
  *
  * @author Eric
  */
 public class Bat {
+    
+    private Color color;
+    private double diameter;
+    private double xPos;
+    private double yVelocity;
+    
+    public Bat()
+    {
+        
+    }
+    
+    public void display()
+    {
+        
+    }
+    
+    public void move()
+    {
+        
+    }
     
 }

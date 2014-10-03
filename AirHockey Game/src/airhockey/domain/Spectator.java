@@ -5,16 +5,20 @@
  */
 package airhockey.domain;
 
+import java.util.List;
+
 /**
  *
  * @author Eric
  */
 public class Spectator extends User{
     
+    private List<Game> games;
+    
     //constructor met betrekking tot overerving user?
-    public Spectator()
+    public Spectator(String username)
     {
-        
+        super(username);
     }
     
     public void zoomIn(Game selectedGame)

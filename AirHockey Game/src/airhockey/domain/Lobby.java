@@ -15,7 +15,10 @@ import java.util.List;
 public class Lobby {
     private Chat chat;
     private User loggedInUser;
+    private List<Game> games;
+    private List<User> users;
     
+    //moet minimaal 1 user hebben?
     public Lobby()
     {
         

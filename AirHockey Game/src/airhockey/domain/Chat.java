@@ -5,6 +5,8 @@
  */
 package airhockey.domain;
 
+import java.util.List;
+
 /**
  *
  * @author Eric
@@ -13,6 +15,7 @@ public class Chat {
     
     //waarde van MAXAMOUNTOFCHARS nog veranderen naar de gewenste waarde
     private final int MAXAMOUNTOFCHARS = 255;
+    private List<Message> messages;
     
     public Chat()
     {

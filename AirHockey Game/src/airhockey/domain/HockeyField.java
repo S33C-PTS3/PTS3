@@ -5,10 +5,18 @@
  */
 package airhockey.domain;
 
+import java.util.List;
+
 /**
  *
  * @author Eric
  */
 public class HockeyField {
+    private Puck puck;
+    private List<Side> sides;
     
+    public HockeyField(Puck puck, List<Side> sides)
+    {
+        
+    }
 }

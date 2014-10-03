@@ -5,10 +5,27 @@
  */
 package airhockey.domain;
 
+import java.awt.Color;
+
 /**
  *
  * @author Eric
  */
 public class Side {
+    private Color color;
+    private double length;
+    private double goalBeginX;
+    private double goalEndX;
+    private Player bindedPlayer;
+    private Bat bat;
     
+    public Side(Color color, Player bindedPlayer)
+    {
+        
+    }
+    
+    public void display()
+    {
+        
+    }
 }

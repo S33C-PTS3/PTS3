@@ -9,9 +9,15 @@ package airhockey.domain;
  *
  * @author Eric
  */
-public class Player {
+public class Player extends User{
 
     private int inGameScore;
+    
+    //geen constructor in het klassendiagram en geen inGameScore in de constructor?
+    public Player(String username)
+    {
+        super(username);
+    }
 
     public void changeScore(int point)
     {

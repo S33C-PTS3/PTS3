@@ -13,6 +13,7 @@ public class User {
 
     private String username;
     
+    //geen constructor in het klassendiagram?
     public User(String username)
     {
         

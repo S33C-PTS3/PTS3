@@ -9,6 +9,12 @@ package airhockey.domain;
  *
  * @author Eric
  */
-public class HumanPlayer {
+public class HumanPlayer extends Player{
+    private double rating;
+
+    public HumanPlayer(String username)
+    {
+        super(username);
+    }
     
 }
