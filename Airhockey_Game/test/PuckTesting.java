@@ -29,18 +29,18 @@ public class PuckTesting {
     @Test
     public void testMove()
     {
-        //TODO
+        
     }
     
     @Test
     public void testDisplay()
     {
-        //TODO
+        
     }
     
     @Test
     public void checkGoal()
     {
-        //TODO
+        
     }
 }
