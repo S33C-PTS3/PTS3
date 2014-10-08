@@ -13,21 +13,31 @@ import java.util.List;
  */
 public class Chat {
     
-    //waarde van MAXAMOUNTOFCHARS nog veranderen naar de gewenste waarde
-    private final int MAXAMOUNTOFCHARS = 255;
     private List<Message> messages;
     
+    /**
+     * Creates a new instance of the Chat class
+     */
     public Chat()
     {
         
     }
     
+    /**
+     * gets the list of messages
+     * @return list of messages
+     */
     public List<Message> getMessages()
     {
         return null;
     }
     
-    public boolean addMessage(String message)
+    /**
+     * adds a message to the list of messages
+     * @param message
+     * @return true/false
+     */
+    public boolean addMessage(Message message)
     {
         return false;
     }
