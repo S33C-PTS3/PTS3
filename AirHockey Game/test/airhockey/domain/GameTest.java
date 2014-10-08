@@ -39,7 +39,7 @@ public class GameTest {
         game1 = new Game("NewGame",user1);
         game1.addPlayer(user2);
         game1.addPlayer(user3);
-        //active1 = new ActiveGame(new HockeyField(null,null),null,"ActiveNewGame");
+        active1 = new ActiveGame(new HockeyField(null,null),null,"ActiveNewGame");
     }
     
     @Test(expected=IllegalArgumentException.class)
