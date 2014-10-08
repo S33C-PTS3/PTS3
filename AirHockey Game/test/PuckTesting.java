@@ -4,12 +4,12 @@
  * and open the template in the editor.
  */
 
-package airhockey.unittests;
+
 
 /**
  *
  * @author Joep Kerste
  */
-public class SideTesting {
+public class PuckTesting {
     
 }
