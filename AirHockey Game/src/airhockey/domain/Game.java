@@ -56,7 +56,7 @@ public class Game {
         
     }
     
-    public boolean addPlayer(Player player)
+    public boolean addPlayer(User user)
     {
         return false;
     }
