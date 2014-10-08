@@ -32,7 +32,7 @@ public class RobotPlayerTest {
     
     @Before
     public void setUp() {
-        rp = new RobotPlayer("Theo");
+        //rp = new RobotPlayer("Theo");
     }
     
     @After
