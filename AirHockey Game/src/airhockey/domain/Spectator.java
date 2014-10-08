@@ -14,12 +14,13 @@ import java.util.List;
 public class Spectator extends User{
     
     private List<Game> games;
-    
-    //constructor met betrekking tot overerving user?
+
     public Spectator(String username)
     {
         super(username);
     }
+    
+    
     
     public void zoomIn(Game selectedGame)
     {

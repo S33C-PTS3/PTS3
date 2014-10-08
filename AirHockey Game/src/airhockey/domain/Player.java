@@ -12,13 +12,14 @@ package airhockey.domain;
 public class Player extends User{
 
     private int inGameScore;
-    
-    //geen constructor in het klassendiagram en geen inGameScore in de constructor?
+
     public Player(String username)
     {
         super(username);
     }
-
+    
+    //geen constructor in het klassendiagram en geen inGameScore in de constructor?
+    
     public void changeScore(int point)
     {
 

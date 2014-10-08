@@ -12,10 +12,9 @@ package airhockey.domain;
 public class User {
 
     private String username;
-    
-    //geen constructor in het klassendiagram?
     public User(String username)
     {
-        
+        this.username = username;
     }
+    //geen constructor in het klassendiagram?
 }
