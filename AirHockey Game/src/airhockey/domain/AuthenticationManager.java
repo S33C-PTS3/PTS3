@@ -10,8 +10,10 @@ package airhockey.domain;
  * @author Eric
  */
 public class AuthenticationManager {
-    //geen constructor?
-    //geen mulitipliciteit?
+    public AuthenticationManager()
+    {
+        
+    }
     
     public void login(String username, String password)
     {

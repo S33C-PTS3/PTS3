@@ -18,7 +18,7 @@ public class Bat {
     private double xPos;
     private double yVelocity;
     
-    public Bat()
+    public Bat(Color color, double diameter, double xPos)
     {
         
     }
