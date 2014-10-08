@@ -40,7 +40,7 @@ public class GameTest {
         game1 = new Game("NewGame",player1);
         game1.addPlayer(player2);
         game1.addPlayer(player3);
-        active1 = new ActiveGame(new HockeyField(null,null),null,"ActiveNewGame");
+        //active1 = new ActiveGame(new HockeyField(null,null),null,"ActiveNewGame");
     }
     
     @Test
