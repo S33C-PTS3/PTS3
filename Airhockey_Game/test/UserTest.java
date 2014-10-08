@@ -3,8 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package airhockey.domain;
-
+import airhockey.domain.*;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -16,10 +15,9 @@ import static org.junit.Assert.*;
  *
  * @author Roy
  */
-public class RobotPlayerTest {
-    RobotPlayer rp;
-    
-    public RobotPlayerTest() {
+public class UserTest {
+    Lobby lobby;
+    public UserTest() {
     }
     
     @BeforeClass
@@ -32,15 +30,21 @@ public class RobotPlayerTest {
     
     @Before
     public void setUp() {
-        //rp = new RobotPlayer("Theo");
+        lobby = new Lobby();
+        //lobby.addUser(null)
     }
     
     @After
     public void tearDown() {
     }
-    
-    /**
-     * Test for the constructor of spectator
-     */
-    
+
+    // TODO add test methods here.
+    // The methods must be annotated with annotation @Test. For example:
+    //
+    // @Test
+    // public void hello() {}
+    public void testUserCreate()
+    {
+        
+    }
 }
