@@ -4,8 +4,11 @@
  * and open the template in the editor.
  */
 
-import static org.junit.Assert.*;
+import airhockey.domain.Player;
+import airhockey.domain.Side;
+import java.awt.Color;
 import org.junit.*;
+import static org.junit.Assert.*;
 
 /**
  *
@@ -15,7 +18,12 @@ public class SideTesting {
     @Test
     public void testConstructor()
     {
+        Color newColor = new Color(100, 100, 0);
+        Player newPlayer = new Player("newUser");
+        Side newSide = new Side(newColor, newPlayer);
         
+        Assert.assertEquals("Kleur nieuwe Side niet correct", newColor, newSide.getColor());
+        Assert.assertEquals("Player nieuwe Side niet correct", newPlayer, newSide.getPlayer());
     }
     
     @Test
