@@ -33,7 +33,6 @@ public class Side {
     {
         return color;
     }
-    
     public Player getPlayer()
     {
         return bindedPlayer;

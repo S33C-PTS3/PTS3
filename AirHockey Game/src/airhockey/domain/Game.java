@@ -19,7 +19,6 @@ public class Game {
     private int averageGameRating;
     private List<User> users;
     
-    // moet minimaal 1 user hebben?
     public Game(String name, User creator)
     {
         users = new ArrayList<>();

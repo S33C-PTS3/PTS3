@@ -20,6 +20,11 @@ public class Spectator extends User{
         super(username);
     }
     
+    public List<Game> getGames()
+    {
+        return games;
+    }
+    
     
     
     public void zoomIn(Game selectedGame)

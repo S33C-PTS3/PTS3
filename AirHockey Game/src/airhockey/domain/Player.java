@@ -16,9 +16,13 @@ public class Player extends User{
     public Player(String username)
     {
         super(username);
+        //bv. ingamescore = 10
     }
     
-    //geen constructor in het klassendiagram en geen inGameScore in de constructor?
+    public int getInGameScore()
+    {
+        return inGameScore;
+    }
     
     public void changeScore(int point)
     {

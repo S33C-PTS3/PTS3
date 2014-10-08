@@ -15,12 +15,12 @@ public class ActiveGame extends Game{
     private Chat chat;
     private int round;
     
-//    //gegenereerde constructor
-//    public ActiveGame(HockeyField hockeyField, Chat chat, String name)
-//    {
-//        //nog invullen
-//        super(name);
-//    }
+    //gegenereerde constructor
+
+    public ActiveGame(String name, User creator, HockeyField hockeyField, Chat chat)
+    {
+        super(name, creator);
+    }
     
     public int getRound()
     {
@@ -32,3 +32,4 @@ public class ActiveGame extends Game{
         
     }
 }
+

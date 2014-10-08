@@ -17,4 +17,14 @@ public class HumanPlayer extends Player{
         super(username);
     }
     
+    public double getRating()
+    {
+        return rating;
+    }
+    
+    public void calculateRating()
+    {
+        
+    }
+    
 }

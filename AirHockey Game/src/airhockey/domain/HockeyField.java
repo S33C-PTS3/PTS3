@@ -19,4 +19,9 @@ public class HockeyField {
     {
         
     }
+    
+    public List<Side> getSides()
+    {
+        return null;
+    }
 }
