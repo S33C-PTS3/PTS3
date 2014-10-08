@@ -5,11 +5,7 @@
  */
 
 import airhockey.domain.*;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -21,6 +17,7 @@ public class GameTest {
     User user1;
     User user2;
     User user3;
+    User user4;
     Spectator spectator1;
     Game game1;
     ActiveGame active1;
@@ -33,6 +30,7 @@ public class GameTest {
         user1 = new Player("Chain");
         user2 = new Player("Meny");
         user3 = new Player("Test");
+        user4 = new Player("Fout");
         spectator1 = new Spectator("Spec1");
         game1 = new Game("NewGame",user1);
         game1.addPlayer(user2);
@@ -68,12 +66,19 @@ public class GameTest {
     public void testAddPlayer(){
         assertTrue(game1.addPlayer(user2));
         assertTrue(game1.addPlayer(user3));
+        assertFalse(game1.addPlayer(user4));
         assertFalse(game1.addPlayer(null));
         assertTrue(game1.addSpectator(spectator1));
         assertFalse(game1.addSpectator(null));
         
         assertEquals(3,game1.getPlayers().size());
         assertEquals(1,game1.getSpectators().size());
+    }
+    @Test
+    public void testAddSpectator(){
+        
+        assertTrue(game1.addSpectator(spectator1));
+        assertFalse(game1.addSpectator(null));
         
     }
     @Test
@@ -91,6 +96,8 @@ public class GameTest {
             active1.nextRound();
             fail("active game kan niet meer dan 10 rondes hebben");
         }
-        //assertNotNull(active1.calculateRating());
+        assertNotNull(active1.calculateRating());
+        assertNotNull(active1.getStartTime());
+        
     }
 }
