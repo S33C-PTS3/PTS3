@@ -22,10 +22,13 @@ public class ActiveGame extends Game{
         super(name);
     }
     
+    public int getRound()
+    {
+        return round;
+    }
+    
     public void nextRound()
     {
         
     }
-    
-    
 }
