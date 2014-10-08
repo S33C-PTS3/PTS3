@@ -31,5 +31,10 @@ public class ActiveGame extends Game{
     {
         
     }
+    
+    public int calculateRating()
+    {
+        return 0;
+    }
 }
 
