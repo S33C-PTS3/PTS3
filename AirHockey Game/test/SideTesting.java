@@ -4,12 +4,23 @@
  * and open the template in the editor.
  */
 
-
+import static org.junit.Assert.*;
+import org.junit.*;
 
 /**
  *
  * @author Joep Kerste
  */
 public class SideTesting {
+    @Test
+    public void testConstructor()
+    {
+        
+    }
     
+    @Test
+    public void testDisplay()
+    {
+        
+    }    
 }
