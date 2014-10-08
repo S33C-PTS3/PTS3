@@ -29,14 +29,10 @@ public class Side {
         
     }
     
-<<<<<<< HEAD
-=======
     public Color getColor()
     {
         return color;
     }
-    
->>>>>>> FETCH_HEAD
     public Player getPlayer()
     {
         return bindedPlayer;
