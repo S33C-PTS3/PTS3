@@ -49,12 +49,28 @@ public class GameTest {
         assertEquals(1,game1.getPlayers().size());
         assertEquals(player1, game1.getPlayers().get(0));
         assertNull(game1.getStartTime());
+    }
+    
+    @Test
+    public void testAddPlayer(){
         assertTrue(game1.addPlayer(player2));
+        assertTrue(game1.addPlayer(player3));
         assertFalse(game1.addPlayer(null));
         assertTrue(game1.addSpectator(spectator1));
         assertFalse(game1.addSpectator(null));
+        
+        assertEquals(3,game1.getPlayers().size());
+        assertEquals(1,game1.getSpectators().size());
+        
     }
-    
+    @Test
+    public void getRating(){
+        int size = 
+        for(int i = 0; i < game1.getPlayers().size(); i++)
+        {
+            
+        }
+    }
     public void testActive(){
         active1.nextRound();
         //assertEquals(2,active1.getRound());
