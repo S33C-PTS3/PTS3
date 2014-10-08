@@ -6,18 +6,26 @@
 package airhockey.domain;
 
 /**
- *
  * @author Eric
+ * User with an username
  */
 public class User {
 
     private String username;
     
+    /**
+     * Construtor for User.
+     * @param username 
+     */
     public User(String username)
     {
         this.username = username;
     }
     
+    /**
+     * Returns username.
+     * @return 
+     */
     public String getUsername()
     {
         return username;

@@ -6,8 +6,8 @@
 package airhockey.domain;
 
 /**
- *
  * @author Eric
+ * Enum for Difficulty used in RobotPlayer.
  */
 public enum Difficulty {
 

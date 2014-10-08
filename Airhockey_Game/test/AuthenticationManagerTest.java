@@ -31,29 +31,38 @@ public class AuthenticationManagerTest {
     @Before
     public void setUp() {
         authMan = new AuthenticationManager();
-        authMan.register("test", "test", "test");
+        authMan.register("test", "test");
     }
     
     @After
     public void tearDown() {
     }
 
-    /**
-     * Test for registering an user, no double usernames allowed.
-     */
+    
     @Test
     public void testRegisterUser()
     {
-        assertTrue("Should be able to register",authMan.register("henk", "test", "test"));   
-        assertFalse("Should not be ablte to register", authMan.register("test","test","test"));
+        /**
+        * Adds an user with a password and unique username. No duplicate usernames
+        * are allowed.
+        * @param username
+        * @param password
+        * @return 
+        */
+        assertTrue("Should be able to register",authMan.register("henk", "test"));   
+        assertFalse("Should not be ablte to register", authMan.register("test","test"));
     }
     
-    /**
-     * Login test should return an user when succesfull.
-     */
+    
     @Test
     public void testLoginUser()
     {
+        /**
+        * Checks every user in database with corresponding username and password.
+        * @param username
+        * @param password
+        * @return 
+        */
         assertEquals("Should be able to login", "henk", authMan.login("henk", "test").getUsername());
         assertNull("Should not work", authMan.login("top", "test"));
                 

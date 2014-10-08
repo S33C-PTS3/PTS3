@@ -6,13 +6,18 @@
 package airhockey.domain;
 
 /**
- *
  * @author Eric
+ * RobotPlayer with a set difficulty
  */
 public class RobotPlayer extends Player {
 
     private Difficulty difficulty;
-
+    
+    /**
+     * Constructor for RobotPlayer with a name and difficulty.
+     * @param username
+     * @param difficulty 
+     */
     public RobotPlayer(String username, Difficulty difficulty)
     {
         super(username);
