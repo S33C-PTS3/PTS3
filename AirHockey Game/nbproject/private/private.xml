@@ -3,6 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/Users/Eric/git/PTS3/PTS3/AirHockey%20Game/src/airhockey/domain/Puck.java</file>
             <file>file:/Users/Eric/git/PTS3/PTS3/AirHockey%20Game/src/airhockey/domain/Lobby.java</file>
             <file>file:/Users/Eric/git/PTS3/PTS3/AirHockey%20Game/src/airhockey/domain/Spectator.java</file>
@@ -20,6 +21,24 @@
             <file>file:/Users/Eric/git/PTS3/PTS3/AirHockey%20Game/src/airhockey/domain/Difficulty.java</file>
             <file>file:/Users/Eric/git/PTS3/PTS3/AirHockey%20Game/src/airhockey/domain/Game.java</file>
             <file>file:/Users/Eric/git/PTS3/PTS3/AirHockey%20Game/src/airhockey/domain/HockeyField.java</file>
+=======
+<<<<<<< HEAD
+            <file>file:/C:/Users/Sasa2905/Documents/skola/Jaar%202/Proftaak/PTS3/AirHockey%20Game/src/airhockey/domain/User.java</file>
+            <file>file:/C:/Users/Sasa2905/Documents/skola/Jaar%202/Proftaak/PTS3/AirHockey%20Game/test/airhockey/domain/GameTest.java</file>
+            <file>file:/C:/Users/Sasa2905/Documents/skola/Jaar%202/Proftaak/PTS3/AirHockey%20Game/src/airhockey/domain/Chat.java</file>
+            <file>file:/C:/Users/Sasa2905/Documents/skola/Jaar%202/Proftaak/PTS3/AirHockey%20Game/src/airhockey/domain/Player.java</file>
+            <file>file:/C:/Users/Sasa2905/Documents/skola/Jaar%202/Proftaak/PTS3/AirHockey%20Game/src/airhockey/domain/Game.java</file>
+            <file>file:/C:/Users/Sasa2905/Documents/skola/Jaar%202/Proftaak/PTS3/AirHockey%20Game/src/airhockey/domain/ActiveGame.java</file>
+            <file>file:/C:/Users/Sasa2905/Documents/skola/Jaar%202/Proftaak/PTS3/AirHockey%20Game/src/airhockey/domain/HockeyField.java</file>
+=======
+            <file>file:/C:/Users/joep__000/Documents/School/Fontys/P5/PTS3/PTS3/AirHockey%20Game/src/airhockey/unittests/BatTesting.java</file>
+            <file>file:/C:/Users/joep__000/Documents/School/Fontys/P5/PTS3/PTS3/AirHockey%20Game/test/airhockey/domain/UserTest.java</file>
+            <file>file:/C:/Users/joep__000/Documents/School/Fontys/P5/PTS3/PTS3/AirHockey%20Game/src/airhockey/unittests/HockeyFieldTesting.java</file>
+            <file>file:/C:/Users/joep__000/Documents/School/Fontys/P5/PTS3/PTS3/AirHockey%20Game/test/GameTest.java</file>
+            <file>file:/C:/Users/joep__000/Documents/School/Fontys/P5/PTS3/PTS3/AirHockey%20Game/src/airhockey/unittests/PuckTesting.java</file>
+            <file>file:/C:/Users/joep__000/Documents/School/Fontys/P5/PTS3/PTS3/AirHockey%20Game/src/airhockey/unittests/SideTesting.java</file>
+>>>>>>> 78ceda50451d05b3f9f6c23a95dbb8fa1092d7ba
+>>>>>>> FETCH_HEAD
         </group>
     </open-files>
 </project-private>

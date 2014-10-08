@@ -4,12 +4,25 @@
  * and open the template in the editor.
  */
 
-package airhockey.unittests;
+
+import static org.junit.Assert.*;
+import org.junit.*;
 
 /**
  *
  * @author Joep Kerste
  */
-public class PuckTesting {
+public class HockeyFieldTesting {
     
+    @Test
+    public void testConstructor()
+    {
+        
+    }
+    
+    @Test
+    public void testDisplayField()
+    {
+        
+    }
 }

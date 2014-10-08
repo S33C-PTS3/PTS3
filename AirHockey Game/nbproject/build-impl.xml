@@ -55,6 +55,7 @@ is divided into following sections:
         <property file="nbproject/project.properties"/>
     </target>
     <target depends="-pre-init,-init-private,-init-user,-init-project,-init-macrodef-property" name="-do-init">
+<property name="platform.java" value="${java.home}/bin/java"/>
         <j2seproject1:property name="platform.home" value="platforms.${platform.active}.home"/>
         <j2seproject1:property name="platform.bootcp" value="platforms.${platform.active}.bootclasspath"/>
         <j2seproject1:property name="platform.compiler" value="platforms.${platform.active}.compile"/>
