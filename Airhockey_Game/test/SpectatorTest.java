@@ -15,9 +15,9 @@ import static org.junit.Assert.*;
  *
  * @author Roy
  */
-public class UserTest {
-    Lobby lobby;
-    public UserTest() {
+public class SpectatorTest {
+    Spectator s;
+    public SpectatorTest() {
     }
     
     @BeforeClass
@@ -30,21 +30,22 @@ public class UserTest {
     
     @Before
     public void setUp() {
-        lobby = new Lobby();
-        //lobby.addUser(null)
+        s = new Spectator("Henk");
     }
     
     @After
     public void tearDown() {
     }
 
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
-    // @Test
-    // public void hello() {}
-    public void testUserCreate()
+    /**
+     * Test for registering an user.
+     */
+    @Test
+    public void testSpectator()
     {
-        
+        assertNotNull("Should be created",new Spectator("theo"));
+        assertNotNull("Should be created", s);
     }
+    
+    
 }
