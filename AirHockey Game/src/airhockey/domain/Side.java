@@ -28,4 +28,14 @@ public class Side {
     {
         
     }
+    
+    public Color getColor()
+    {
+        return color;
+    }
+    
+    public Player getPlayer()
+    {
+        return bindedPlayer;
+    }
 }
