@@ -65,7 +65,7 @@ public class GameTest {
     }
     @Test
     public void getRating(){
-        int size = 
+        //int size = 
         for(int i = 0; i < game1.getPlayers().size(); i++)
         {
             
