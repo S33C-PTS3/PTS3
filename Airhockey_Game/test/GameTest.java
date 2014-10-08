@@ -37,7 +37,7 @@ public class GameTest {
         game1 = new Game("NewGame",user1);
         game1.addPlayer(user2);
         game1.addPlayer(user3);
-        active1 = null;
+        active1 = new ActiveGame("NewGame",user1,null,null);
     }
     
     @Test(expected=IllegalArgumentException.class)
