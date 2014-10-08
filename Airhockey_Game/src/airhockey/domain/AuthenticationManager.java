@@ -15,9 +15,9 @@ public class AuthenticationManager {
         
     }
     
-    public void login(String username, String password)
+    public User login(String username, String password)
     {
-        
+        return null;
     }
     
     public boolean register(String username, String password, String passwordCheck)
