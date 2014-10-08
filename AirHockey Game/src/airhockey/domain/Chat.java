@@ -22,6 +22,11 @@ public class Chat {
         
     }
     
+    public List<Message> getMessages()
+    {
+        return null;
+    }
+    
     public boolean addMessage(String message)
     {
         return false;

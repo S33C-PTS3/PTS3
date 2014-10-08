@@ -18,7 +18,7 @@ public class Lobby {
     private List<Game> games;
     private List<User> users;
     
-    //moet minimaal 1 user hebben?
+    
     public Lobby()
     {
         

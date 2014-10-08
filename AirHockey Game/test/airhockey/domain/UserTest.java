@@ -32,7 +32,7 @@ public class UserTest {
     @Before
     public void setUp() {
         lobby = new Lobby();
-        lobby.addUser(null)
+        //lobby.addUser(null)
     }
     
     @After

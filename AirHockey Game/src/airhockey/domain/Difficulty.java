@@ -9,13 +9,7 @@ package airhockey.domain;
  *
  * @author Eric
  */
-public class RobotPlayer extends Player {
+public enum Difficulty {
 
-    private Difficulty difficulty;
-
-    public RobotPlayer(String username, Difficulty difficulty)
-    {
-        super(username);
-        //nog niet af
-    }
+    EASY, MEDIUM, HARD;
 }
