@@ -22,17 +22,28 @@ public class ActiveGame extends Game{
         super(name, creator);
     }
     
+    /**
+     * gets the current round of an active game
+     * @return 
+     */
     public int getRound()
     {
         return round;
     }
     
+    /**
+     * goes to the next round of the active game
+     */
     public void nextRound()
     {
         
     }
     
-    public int calculateRating()
+    /**
+     * calculates and returns the rating at the end of the game
+     * @return the calculated rating
+     */
+    public double calculateRating()
     {
         return 0;
     }

@@ -51,7 +51,7 @@ public class Game {
     
     /**
     * calculates and returns the average rating of this game
-    * average rating is the sum of the rating divided by the amount of players
+    * average rating is the sum of the rating of all players in this game divided by the amount of players in this game
     * @return average rating of this game 
     */
     public int getAverageRating()
@@ -71,10 +71,11 @@ public class Game {
     /**
      * starts an inactive game if 3 players have joined and the creator of the game has confirmed this.
      * a start-time will also be set at the current time.
+     * @return true if the game has started successfully, else returns false. 
      */
-    public void startGame()
+    public boolean startGame()
     {
-        
+        return false;
     }
     
     /**
