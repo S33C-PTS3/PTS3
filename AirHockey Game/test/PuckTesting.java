@@ -4,8 +4,9 @@
  * and open the template in the editor.
  */
 
-import static org.junit.Assert.*;
+import airhockey.domain.Puck;
 import org.junit.*;
+import static org.junit.Assert.*;
 
 /**
  *
@@ -15,7 +16,14 @@ public class PuckTesting {
     @Test
     public void testConstructor()
     {
+        double X = 100;
+        double Y = 100;
+        double velocity = 25;
+        Puck newPuck = new Puck(X, Y, velocity);
         
+        Assert.assertEquals("X cöordinaat incorrect", X, newPuck.getX());
+        Assert.assertEquals("Y cöordinaat incorrect", Y, newPuck.getY());
+        Assert.assertEquals("Velocity incorrect", velocity, newPuck.getVelocity());
     }
     
     @Test
