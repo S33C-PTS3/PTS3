@@ -9,7 +9,7 @@ package airhockey.domain;
  *
  * @author Eric
  */
-public enum EnumDificulty {
+public enum Difficulty {
 
     EASY, MEDIUM, HARD;
 }

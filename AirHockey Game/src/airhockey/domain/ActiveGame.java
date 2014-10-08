@@ -16,10 +16,10 @@ public class ActiveGame extends Game{
     private int round;
     
     //gegenereerde constructor
-    public ActiveGame(HockeyField hockeyField, Chat chat, String name)
+
+    public ActiveGame(String name, User creator, HockeyField hockeyField, Chat chat)
     {
-        //nog invullen
-        super(name);
+        super(name, creator);
     }
     
     public int getRound()

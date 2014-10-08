@@ -11,12 +11,11 @@ package airhockey.domain;
  */
 public class RobotPlayer extends Player {
 
-    private Enum difficulty;
-    
-    //geen set dificulty?
+    private Difficulty difficulty;
 
-    public RobotPlayer(String username)
+    public RobotPlayer(String username, Difficulty difficulty)
     {
         super(username);
+        //nog niet af
     }
 }

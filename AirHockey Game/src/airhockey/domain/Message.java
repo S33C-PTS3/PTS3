@@ -17,4 +17,14 @@ public class Message {
     {
         
     }
+    
+    public String getSender()
+    {
+        return sender;
+    }
+    
+    public String getText()
+    {
+        return text;
+    }
 }

@@ -28,4 +28,9 @@ public class Side {
     {
         
     }
+    
+    public Player getPlayer()
+    {
+        return bindedPlayer;
+    }
 }
