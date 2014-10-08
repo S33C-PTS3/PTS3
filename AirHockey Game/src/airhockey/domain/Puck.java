@@ -37,4 +37,19 @@ public class Puck {
     {
         return false;
     }
+    
+    public double getX()
+    {
+        return xPos;
+    }
+    
+    public double getY()
+    {
+        return yPos;
+    }
+    
+    public double getVelocity()
+    {
+        return velocity;
+    }
 }
