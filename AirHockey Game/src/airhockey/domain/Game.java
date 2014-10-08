@@ -5,6 +5,7 @@
  */
 package airhockey.domain;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -19,9 +20,10 @@ public class Game {
     private List<User> users;
     
     // moet minimaal 1 user hebben?
-    public Game(String name)
+    public Game(String name, User creator)
     {
-        
+        users = new ArrayList<>();
+        users.add(creator);
     }
     
     public String getName()
