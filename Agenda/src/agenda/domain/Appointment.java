@@ -7,6 +7,7 @@ package agenda.domain;
 
 import fontys.time.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  *
@@ -15,7 +16,41 @@ import java.util.ArrayList;
 public class Appointment {
     private String subject;
     private IPeriod period;
-    private ArrayList<Contact> invited;
+    private ArrayList<Contact> invitees;
     
+    //add javadoc
+    public Appointment(String subject, IPeriod period)
+    {
+        
     
+    }
+    //add javadoc
+    public String getSubject()
+    {
+        return "getSubject() Not yet implemented.";
+    }
+    
+    //add javadoc
+    public IPeriod getPeriod()
+    {
+        return null;
+    }
+    
+    //add javadoc
+    public Iterator<Contact> invitees()
+    {
+        return null;
+    }
+    
+    //add javadoc
+    public boolean addContact(Contact c)
+    {
+        return false;
+    }
+    
+    //add javadoc
+    public void removeContact(Contact c)
+    {
+        
+    }
 }
