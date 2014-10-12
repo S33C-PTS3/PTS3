@@ -30,5 +30,4 @@ public class User {
     {
         return username;
     }
-    //geen constructor in het klassendiagram?
 }
