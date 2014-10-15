@@ -25,6 +25,7 @@ import javafx.stage.Stage;
  */
 public class RegisterFXMLController implements Initializable {
 
+    private NavigationManager navMan = new NavigationManager();
     private Button btnBack;    
     
     /**
@@ -38,21 +39,7 @@ public class RegisterFXMLController implements Initializable {
     @FXML
     private void handleBtnBackAction(ActionEvent event)
     {
-        Node node = (Node)event.getSource();
-        Stage stage = (Stage)node.getScene().getWindow();
-        
-        try
-        {
-            Parent root = FXMLLoader.load(getClass().getResource("/airhockey_game/Login.fxml"));
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-        }
-        catch (IOException ex)
-        {
-            System.out.println("Parent root could not be loaded.");
-            System.out.println(ex.getMessage());
-        }
+        navMan.goTo("Login", event);
     }
     
 }

@@ -26,6 +26,7 @@ import javafx.stage.Stage;
 public class LoginFXMLController implements Initializable {
     
     @FXML
+    private NavigationManager navMan = new NavigationManager();
     private Button btnLogin;
     private Button btnRegister;
     public TextField txtUsername;
@@ -39,21 +40,7 @@ public class LoginFXMLController implements Initializable {
     @FXML
     private void handleBtnRegisterAction(ActionEvent event)
     {
-        Node node = (Node)event.getSource();
-        Stage stage = (Stage)node.getScene().getWindow();
-        
-        try
-        {
-            Parent root = FXMLLoader.load(getClass().getResource("/airhockey_game/Register.fxml"));
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-        }
-        catch (IOException ex)
-        {
-            System.out.println("Parent root could not be loaded.");
-            System.out.println(ex.getMessage());
-        }
+        navMan.goTo("Register", event);
     }
     
     @Override
