@@ -19,7 +19,7 @@ public class Airhockey_Game extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("IT1MainMenu.fxml"));
         
         Scene scene = new Scene(root);
         
