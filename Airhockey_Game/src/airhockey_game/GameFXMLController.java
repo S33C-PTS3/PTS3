@@ -5,18 +5,13 @@
  */
 package airhockey_game;
 
-import java.io.IOException;
+import javafx.scene.input.MouseEvent;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 
 /**
@@ -24,12 +19,10 @@ import javax.swing.JOptionPane;
  *
  * @author Joep Kerste
  */
-public class IT1MainMenuFXMLController implements Initializable {
+public class GameFXMLController implements Initializable {
 
     private NavigationManager navMan = new NavigationManager();
-    private Button btnStart;
-    private Button btnSettings;
-    private Button btnExit;
+    public Button btnExit;
     
     /**
      * Initializes the controller class.
@@ -40,24 +33,26 @@ public class IT1MainMenuFXMLController implements Initializable {
     }    
     
     @FXML
-    private void handleBtnStartEvent(ActionEvent event)
-    {
-        navMan.goTo("Game", event);
-    }
-    
-    @FXML
-    private void handleBtnSettingsEvent(ActionEvent event)
-    {
-        navMan.goTo("Settings", event);
-    }
-    
-    @FXML
     private void handleBtnExitEvent(ActionEvent event)
     {
         int reply = JOptionPane.showConfirmDialog(null, "Are you sure you want to exit the game?", "WARNING", JOptionPane.YES_NO_OPTION);
         if (reply == JOptionPane.YES_OPTION) 
         {
-            System.exit(0);
+            navMan.goTo("IT1MainMenu", event);
         }
+    }
+    
+    @FXML
+    public void handleBtnExitMouseEnterEvent(MouseEvent event)
+    {
+        btnExit.setText("Exit game");
+        btnExit.setOpacity(1);
+    }
+    
+    @FXML
+    public void handleBtnExitMouseExitEvent(MouseEvent event)
+    {
+        btnExit.setText("x");
+        btnExit.setOpacity(0.3);
     }
 }
