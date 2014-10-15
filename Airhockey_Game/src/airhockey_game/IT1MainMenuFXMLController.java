@@ -5,18 +5,12 @@
  */
 package airhockey_game;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 
 /**
@@ -26,7 +20,7 @@ import javax.swing.JOptionPane;
  */
 public class IT1MainMenuFXMLController implements Initializable {
 
-    private NavigationManager navMan = new NavigationManager();
+    private final NavigationManager navMan = new NavigationManager();
     private Button btnStart;
     private Button btnSettings;
     private Button btnExit;

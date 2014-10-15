@@ -26,6 +26,7 @@ public class NavigationManager {
      */
     public boolean goTo(String fxmlName, ActionEvent event)
     {
+        boolean isSuccess;
         Node node = (Node)event.getSource();
         Stage stage = (Stage)node.getScene().getWindow();
         
@@ -36,13 +37,15 @@ public class NavigationManager {
             stage.setScene(scene);
             stage.show();
             stage.centerOnScreen();
-            return true;
+            isSuccess = true;
         }
         catch (IOException ex)
         {
             System.out.println("Parent root could not be loaded.");
             System.out.println(ex.getMessage());
-            return false;
+            isSuccess = false;
         }
+        
+        return isSuccess;
     }    
 }

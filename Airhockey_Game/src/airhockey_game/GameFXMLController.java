@@ -23,7 +23,7 @@ import javax.swing.JOptionPane;
  */
 public class GameFXMLController implements Initializable {
 
-    private NavigationManager navMan = new NavigationManager();
+    private final NavigationManager navMan = new NavigationManager();
     public Button btnExit;
     public Rectangle recInfo;
     public Label lblSpeler1, lblSpeler2, lblSpeler3, lblSpeler1Score, lblSpeler2Score, lblSpeler3Score, lblRonde;
