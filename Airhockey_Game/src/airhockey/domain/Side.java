@@ -48,13 +48,40 @@ public class Side {
     
     public boolean goal(double x, double y)
     {
-        if(goalBeginX<x || x>goalEndX)
+        if (goalBeginX ==200)
         {
-            if(goalBeginY<y || y>goalEndY)
+            if(goalBeginX<x || x>goalEndX)
             {
-                if(y > x*0.577 || y < x*0.578)
+                if(goalBeginY<y || y>goalEndY)
+                {
+                    if(y > x*0.577 || y < x*0.578)
+                    {
+                        return true;
+                    }
+                }
+            }
+        }
+        if (goalBeginX ==400)
+        {
+            if(goalBeginX<x || x>goalEndX)
+            {
+                if(goalBeginY<y || y>goalEndY)
                 {
                     return true;
+                
+                }
+            }
+        }
+        if (goalBeginX ==600)
+        {
+            if(goalBeginX<x || x>goalEndX)
+            {
+                if(goalBeginY<y || y>goalEndY)
+                {
+                    if(y > x*-0.577 || y < x*-0.578)
+                    {
+                        return true;
+                    }
                 }
             }
         }
