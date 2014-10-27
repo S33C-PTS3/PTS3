@@ -16,6 +16,8 @@ public class Side {
     private double length;
     private double goalBeginX;
     private double goalEndX;
+    private double goalBeginY;
+    private double goalEndY;
     private Player bindedPlayer;
     private Bat bat;
     
@@ -37,5 +39,25 @@ public class Side {
     public Player getPlayer()
     {
         return bindedPlayer;
+    }
+    
+    public void score()
+    {
+        bindedPlayer.changeScore(1);
+    }
+    
+    public boolean goal(double x, double y)
+    {
+        if(goalBeginX<x || x>goalEndX)
+        {
+            if(goalBeginY<y || y>goalEndY)
+            {
+                if(y > x*0.577 || y < x*0.578)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

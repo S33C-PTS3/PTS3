@@ -17,6 +17,7 @@ public class Puck {
     double yPos;
     Color color;
     double diameter;
+    Side lastHit;
     
     public Puck(double xPos, double yPos, double velocity)
     {
@@ -33,10 +34,6 @@ public class Puck {
         
     }
     
-    public boolean checkGoal()
-    {
-        return false;
-    }
     
     public double getX()
     {
