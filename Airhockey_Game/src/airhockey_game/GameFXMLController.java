@@ -47,11 +47,9 @@ public class GameFXMLController implements Initializable {
     @FXML
     private void handleBtnExitEvent(ActionEvent event)
     {
-        int reply = JOptionPane.showConfirmDialog(null, "Are you sure you want to go back to the main menu?", "WARNING", JOptionPane.YES_NO_OPTION);
-        if (reply == JOptionPane.YES_OPTION) 
-        {
+        //int reply = JOptionPane.showConfirmDialog(null, "Are you sure you want to go back to the main menu?", "WARNING", JOptionPane.YES_NO_OPTION);
+        JOptionPane.showMessageDialog(null, "A basic JOptionPane message dialog");
             navMan.goTo("IT1MainMenu", event);
-        }
     }
     
     /**
