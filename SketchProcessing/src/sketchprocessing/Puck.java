@@ -31,8 +31,8 @@ public class Puck extends PApplet {
         this.color = Color.RED;
         this.Xpos = 400;
         this.Ypos = 300; 
-        this.Xvelocity = randomizer.nextDouble() + 1;
-        this.Yvelocity = randomizer.nextDouble() + 1;
+        this.Xvelocity = randomizer.nextDouble() + 2;
+        this.Yvelocity = -randomizer.nextDouble() +2;
         this.diameter = 600 * 0.04;
     }
 

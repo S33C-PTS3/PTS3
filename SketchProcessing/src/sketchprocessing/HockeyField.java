@@ -29,7 +29,7 @@ public class HockeyField {
                 if (lasthit == null) {
                     if (sides[i].getSideName().equals(SideName.BOTTOM)) {
                         lasthit = SideName.BOTTOM;
-                        puck.setXvelocity(-1);
+                        puck.setYvelocity(-1);
                         System.out.println("Begin");
                     } else {
                         lasthit = sides[i].getSideName();
@@ -39,7 +39,6 @@ public class HockeyField {
                 } else {
                     if (sides[i].getSideName().equals(SideName.BOTTOM) && !lasthit.equals(SideName.BOTTOM)) {
                         lasthit = SideName.BOTTOM;
-                        puck.setXvelocity(1);
                         puck.setYvelocity(-1);
                         System.out.println(lasthit.toString());
                     }
@@ -55,11 +54,11 @@ public class HockeyField {
                     }
                 }
             }
-            if(sides[i].hasCollided(puck))
-            {
-                puck.setXvelocity(-1);
-                lasthit = SideName.BAT;
-            }
+//            if(sides[i].hasCollided(puck))
+//            {
+//                puck.setXvelocity(-1);
+//                lasthit = SideName.BAT;
+//            }
         }
     }
     

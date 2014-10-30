@@ -107,22 +107,45 @@ public class Side {
     
     public boolean goal(double x, double y, double xvel, double yvel)
     {
-        double dy = (lineY2-lineY1);
-        double dx = (lineX2-lineX1);
-        double rc = dy/dx;
-        double start = lineY2-lineX2*rc;
-//        double yn = y - yvel*1.1;
-//        double yp = y + yvel*1.1;
-        double xn = x - xvel*1.5;
-        double xp = x + xvel*1.5;
-        double yn = rc*xn+start;
-        double yp = rc*xp+start;
-        if(y <= yp + yvel *1.2 && y >= yn - yvel*1.2)
-        {
-            checkGoal(x,y);
-            return true;
-        }
+//        double dy = (lineY2-lineY1);
+//        double dx = (lineX2-lineX1);
+//        double rc = dy/dx;
+//        double start = lineY2-lineX2*rc;
+//        double xn = x - xvel*1.5;
+//        double xp = x + xvel*1.5;
+//        double yn = rc*xn+start;
+//        double yp = rc*xp+start;
+//        if(y <= yp + yvel *1.2 && y >= yn - yvel*1.2)
+//        {
+//            checkGoal(x,y);
+//            return true;
+//        }
+//        return false;
+
+    // first get the length of the line using the Pythagorean theorem
+      float distX = lineX1-lineX2;
+      float distY = lineY1-lineY2;
+      double lineLength = Math.sqrt((distX*distX) + (distY*distY));
+
+      // then solve for r
+      double r = (((x-lineX1)*(lineX2-lineX1))+((y-lineY1)*(lineY2-lineY1)))/Math.pow(lineLength, 2);
+
+      // get x,y points of the closest point
+      double closestX = lineX1 + r*(lineX2-lineX1);
+      double closestY = lineY1 + r*(lineY2-lineY1);
+
+      // to get the length of the line, use the Pythagorean theorem again
+      double distToPointX = closestX - x;
+      double distToPointY = closestY - y;
+      double distToPoint = Math.sqrt(Math.pow(distToPointX, 2) + Math.pow(distToPointY, 2));
+
+      // if that distance is less than the radius of the ball: collision
+      if (distToPoint <= (600*0.04)/2) {
+        return true;
+      }
+      else {
         return false;
+      }
     }
     
     public void moveBat(String direction)
