@@ -32,7 +32,7 @@ public class Side {
     double batX2 = 0;
     double batY2 = 0;
 
-    Side(int x1, int y1, int x2, int y2, Color color, PApplet parent, SideName sideName) {
+    public Side(int x1, int y1, int x2, int y2, Color color, PApplet parent, SideName sideName) {
         this.lineX1 = x1;
         this.lineX2 = x2;
         this.lineY1 = y1;

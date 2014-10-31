@@ -10,6 +10,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import processing.core.PApplet;
 
 /**
  *
@@ -24,13 +27,13 @@ public class Airhockey_Game extends Application {
         Scene scene = new Scene(root);
         
         stage.setScene(scene);
-        stage.show();
+        stage.show(); 
     }
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) {                
         launch(args);
     }
     

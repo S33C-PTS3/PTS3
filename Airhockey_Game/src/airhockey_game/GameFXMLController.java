@@ -5,6 +5,8 @@
  */
 package airhockey_game;
 
+import static com.sun.javafx.fxml.expression.Expression.add;
+import java.awt.BorderLayout;
 import javafx.scene.input.MouseEvent;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -14,7 +16,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.shape.Rectangle;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import processing.core.PApplet;
 
 /**
  * FXML Controller class
@@ -38,6 +43,22 @@ public class GameFXMLController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         recInfo.setHeight(25);
         setInfoVisibility();
+
+        //Embed MySketch
+        JFrame frame = new JFrame("Embedded MySketch PApplet");
+        JPanel panel = new JPanel();
+        MySketch applet = new MySketch();
+
+        applet.init();
+        applet.setLocation(500, 0);
+
+        panel.add(applet);
+        frame.add(panel);
+        frame.setSize(800, 700);
+        frame.setLocation(250, 0);
+
+        frame.setUndecorated(true);
+        frame.setVisible(true);
     }    
     
     /**
