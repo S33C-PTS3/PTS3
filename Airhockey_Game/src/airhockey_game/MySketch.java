@@ -5,18 +5,20 @@
  */
 package airhockey_game;
 
-import airhockey.domain.HockeyField;
-import airhockey.domain.Puck;
-import airhockey.domain.Side;
-import airhockey.domain.SideName;
 import java.awt.Color;
+import airhockey.domain.*;
 import processing.core.*;
+import static processing.core.PConstants.CODED;
+import static processing.core.PConstants.LEFT;
+import static processing.core.PConstants.RIGHT;
 /**
  *
  * @author Sasa2905
  */
 public class MySketch extends PApplet{
         
+    final private float sizefactor = 0.75f;
+    
     int x1 = 200;
     int y1 = 500;
     int x2 = 250;
@@ -32,16 +34,16 @@ public class MySketch extends PApplet{
     @Override
     public void setup()
     {
-      size(800,700);
+      size(Math.round(800*sizefactor),Math.round(700*sizefactor));
       sides = new Side[3];
       colors = new Color[3];
       colors[0] = Color.RED;
       colors[1] = Color.BLUE;
       colors[2] = Color.GREEN;
-      int zijdeX1 = 400;
+      int zijdeX1 = Math.round(400*sizefactor);
       int zijdeY1 = 0;
       int zijdeX2 = 0;
-      int zijdeY2 = 693;
+      int zijdeY2 = Math.round(693*sizefactor);
       SideName sideName = SideName.LEFT;
       puck = new Puck(this);
       for(int i = 0; i < 3; i++)
@@ -53,13 +55,13 @@ public class MySketch extends PApplet{
           }
           if(i == 1)
           {
-            zijdeX2 = 800;
-            zijdeY2 = 693;
+            zijdeX2 = Math.round(800*sizefactor);
+            zijdeY2 = Math.round(693*sizefactor);
             sideName = SideName.BOTTOM;
           }
           if(i == 2)
           {
-            zijdeX2 = 400;
+            zijdeX2 = Math.round(400*sizefactor);
             zijdeY2 = 0;
             sideName = SideName.RIGHT;
           }

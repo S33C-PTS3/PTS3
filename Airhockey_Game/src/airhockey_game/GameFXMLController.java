@@ -5,8 +5,6 @@
  */
 package airhockey_game;
 
-import static com.sun.javafx.fxml.expression.Expression.add;
-import java.awt.BorderLayout;
 import javafx.scene.input.MouseEvent;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -19,7 +17,6 @@ import javafx.scene.shape.Rectangle;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import processing.core.PApplet;
 
 /**
  * FXML Controller class

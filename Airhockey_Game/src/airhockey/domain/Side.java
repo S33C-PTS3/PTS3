@@ -75,7 +75,7 @@ public class Side {
             sideBat = SideName.BATRIGHT;
         }
 
-        double diameter = 600 * 0.08;
+        double diameter = 520 * 0.08;
         bat = new Bat(color, parent, (float) batX1, (float) batY1, (float) diameter, sideBat);
         bat.display();
     }
