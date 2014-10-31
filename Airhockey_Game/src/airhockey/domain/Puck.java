@@ -24,17 +24,15 @@ public class Puck extends PApplet {
     private PVector position;
     private final Color color;
     private final double diameter;
-    private final Random randomizer;
+    private final Random randomizer = new Random();
 
     public Puck(PApplet parent) {
-        randomizer = new Random();
         this.parent = parent;
         this.color = Color.RED;
         this.Xpos = 400;
         this.Ypos = 300;
         this.position = new PVector((float) Xpos, (float) Ypos);
-        this.Xvelocity = -randomizer.nextDouble() + 3;
-        this.Yvelocity = -randomizer.nextDouble() + 3;
+        randomizePuck();
         this.velocity = new PVector((float) Xvelocity, (float) Yvelocity);
         this.diameter = 520 * 0.04;
     }
@@ -111,5 +109,11 @@ public class Puck extends PApplet {
         parent.strokeWeight(0);
         parent.fill(color.getRGB());
         parent.ellipse((float) position.x, (float) position.y, (float) diameter, (float) diameter);
+    }
+    
+    public void randomizePuck()
+    {
+        this.Xvelocity = -randomizer.nextDouble() + 3;
+        this.Yvelocity = -randomizer.nextDouble() + 3;
     }
 }

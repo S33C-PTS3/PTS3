@@ -120,8 +120,9 @@ public class HockeyField {
     
     private void resetGame()
     {
-        puck.setXpos(400);
+        puck.setXpos(350);
         puck.setYpos(300);
+        puck.randomizePuck();
         this.batHitters.clear();
         this.hitBat = null;
         this.hitSide = null;
