@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import processing.core.PApplet;
@@ -27,6 +28,7 @@ public class Airhockey_Game extends Application {
         Scene scene = new Scene(root);
         
         stage.setScene(scene);
+        stage.initStyle(StageStyle.UNDECORATED);
         stage.show(); 
     }
 

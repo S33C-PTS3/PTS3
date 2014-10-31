@@ -53,29 +53,28 @@ public class GameFXMLController implements Initializable {
         //Embed MySketch
         frame = new JFrame("Embedded MySketch PApplet");
         frame.setAlwaysOnTop(true);
+        
         applet = new MySketch();
         
         applet.init();
 
         frame.add(applet);
-        int frameWidth = (int)Math.round(820 * 0.7);
-        int frameHeight = (int)Math.round(720 * 0.7);
+        int frameWidth = (int)Math.round(800 * 0.7);
+        int frameHeight = (int)Math.round(700 * 0.7);
         frame.setSize(frameWidth, frameHeight);
         
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         java.awt.Rectangle r = frame.getBounds();
         
-        frame.setLocation((int)Math.round((screenSize.getWidth()/2)-(r.getWidth()/2)),(int)Math.round((screenSize.getHeight()/2)-(r.getHeight()/2))+50);
+        frame.setLocation((int)Math.round((screenSize.getWidth()/2)-(r.getWidth()/2)),(int)Math.round((screenSize.getHeight()/2)-(r.getHeight()/2))+30);
         
         
         Color bg = new Color(235,235,235);
         frame.setBackground(bg);
 
         frame.setUndecorated(true);
-
-        //applet.setLayout(null);
-        applet.setLocation(50,50);
         frame.setVisible(true);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }    
     
     /**

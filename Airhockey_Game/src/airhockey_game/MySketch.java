@@ -95,11 +95,8 @@ public class MySketch extends PApplet{
       puck.display();
       puck.move();
       field.checkColl();
-//      field.checkBatColl();
+
       moveAIplayers();
-//    line(400, 0, middenX, middenY);
-//    line(0,693,middenX, middenY);
-//    line(800,693,middenX, middenY);
     }
 
     @Override
