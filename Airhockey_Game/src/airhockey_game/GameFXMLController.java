@@ -7,6 +7,7 @@ package airhockey_game;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Frame;
 import java.awt.Point;
 import java.awt.Toolkit;
 import javafx.scene.input.MouseEvent;
@@ -31,7 +32,6 @@ import processing.core.PVector;
 public class GameFXMLController implements Initializable {
 
     private JFrame frame;
-    JPanel panel;
     MySketch applet;
     private final NavigationManager navMan = new NavigationManager();
     public Button btnExit;

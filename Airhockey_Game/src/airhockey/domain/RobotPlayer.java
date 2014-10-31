@@ -6,21 +6,45 @@
 package airhockey.domain;
 
 /**
- * @author Eric
- * RobotPlayer with a set difficulty
+ *
+ * @author Roy
  */
-public class RobotPlayer extends Player {
-
+public class RobotPlayer implements IPlayer {
+    private int inGameScore;
     private Difficulty difficulty;
+    private String naam;
     
-    /**
-     * Constructor for RobotPlayer with a name and difficulty.
-     * @param username
-     * @param difficulty 
-     */
-    public RobotPlayer(String username, Difficulty difficulty)
+    public RobotPlayer(String naam)
     {
-        super(username);
-        //nog niet af
+        this.inGameScore = 20;
+        this.naam = naam;
     }
+    
+    @Override
+    public void setInGameScore(int newInGameScore){
+        this.inGameScore = newInGameScore;
+    }
+    
+    @Override
+    public int getInGameScore(){
+        return this.inGameScore;
+    }
+    
+    @Override
+    public void changeScore(int point){
+        this.inGameScore += point;
+    }
+    
+    public void setDifficulty(Difficulty diff)
+    {
+        this.difficulty = diff;
+    }
+    
+    @Override
+    public String toString()
+    {
+        return this.naam;
+    }
+    
+    
 }

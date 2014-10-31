@@ -27,12 +27,13 @@ public class Side {
     private Color color;
     private Bat bat;
     private SideName sideName;
+    private IPlayer bindedPlayer;
     double batX1 = 0;
     double batY1 = 0;
     double batX2 = 0;
     double batY2 = 0;
 
-    public Side(int x1, int y1, int x2, int y2, Color color, PApplet parent, SideName sideName) {
+    public Side(int x1, int y1, int x2, int y2, Color color, PApplet parent, SideName sideName, IPlayer bp) {
         this.lineX1 = x1;
         this.lineX2 = x2;
         this.lineY1 = y1;
@@ -41,6 +42,7 @@ public class Side {
         this.color = color;
         this.bat = null;
         this.sideName = sideName;
+        this.bindedPlayer = bp;
         SideName sideBat = null;
         int distanceFromSide = 30;
         if (sideName == SideName.LEFT) {
@@ -80,24 +82,33 @@ public class Side {
         bat.display();
     }
 
+    public IPlayer getBindedPlayer() {
+        return this.bindedPlayer;
+    }
+
     public void display() {
         parent.stroke(color.getRGB());
         parent.strokeWeight(4);
         parent.line(lineX1, lineY1, lineX2, lineY2);
-       //bat = new Bat(color,parent,lineX1+10,lineY1+10,lineX2+10,lineY2+10);
+        //bat = new Bat(color,parent,lineX1+10,lineY1+10,lineX2+10,lineY2+10);
         //bat.display();
     }
-    
-    public PVector getVector1()
-    {
+
+    public PVector getVector1() {
         return new PVector(this.lineX1, this.lineY1);
     }
-    
-    public PVector getVector2()
-    {
+
+    public PVector getVector2() {
         return new PVector(this.lineX2, this.lineY2);
     }
-    
+
+    public PVector getGoalVector1() {
+        return new PVector((float) goalX1, (float) goalY1);
+    }
+
+    public PVector getGoalVector2() {
+        return new PVector((float) goalX2, (float) goalY2);
+    }
 
     public double getLineX1() {
         return this.lineX1;
@@ -128,21 +139,6 @@ public class Side {
     }
 
     public Side ballHitsWall(double x, double y, double xvel, double yvel) {
-//        double dy = (lineY2-lineY1);
-//        double dx = (lineX2-lineX1);
-//        double rc = dy/dx;
-//        double start = lineY2-lineX2*rc;
-//        double xn = x - xvel*1.5;
-//        double xp = x + xvel*1.5;
-//        double yn = rc*xn+start;
-//        double yp = rc*xp+start;
-//        if(y <= yp + yvel *1.2 && y >= yn - yvel*1.2)
-//        {
-//            checkGoal(x,y);
-//            return true;
-//        }
-//        return false;
-
         // first get the length of the line using the Pythagorean theorem
         float distX = lineX1 - lineX2;
         float distY = lineY1 - lineY2;
@@ -161,7 +157,7 @@ public class Side {
         double distToPoint = Math.sqrt(Math.pow(distToPointX, 2) + Math.pow(distToPointY, 2));
 
         // if that distance is less than the radius of the ball: collision
-        if (distToPoint <= (600 * 0.04) / 2) {
+        if (distToPoint <= (520 * 0.04) / 2) {
             return this;
         } else {
             return null;
@@ -192,6 +188,33 @@ public class Side {
         return goalX2;
     }
 
+    public Side checkGoalLine(double x, double y, double xvel, double yvel, float radius) {
+        // first get the length of the line using the Pythagorean theorem
+        float distX = lineX1 - lineX2;
+        float distY = lineY1 - lineY2;
+        double lineLength = Math.sqrt((distX * distX) + (distY * distY));
+
+        // then solve for r
+        double r = (((x - lineX1) * (lineX2 - lineX1)) + ((y - lineY1) * (lineY2 - lineY1))) / Math.pow(lineLength, 2);
+
+        // get x,y points of the closest point
+        double closestX = lineX1 + r * (lineX2 - lineX1);
+        double closestY = lineY1 + r * (lineY2 - lineY1);
+
+        // to get the length of the line, use the Pythagorean theorem again
+        double distToPointX = closestX - x;
+        double distToPointY = closestY - y;
+        double distToPoint = Math.sqrt(Math.pow(distToPointX, 2) + Math.pow(distToPointY, 2));
+
+        // if that distance is less than the radius of the ball: collision
+        if (distToPoint <= (600 * 0.04) / 2 && checkGoal(x,y)) {
+            return this;
+        } else {
+            return null;
+        }
+       
+    }
+
     public boolean checkGoal(double x, double y) {
         if (sideName.equals(SideName.LEFT)) {
             if (x < goalX1 && x > goalX2) {
@@ -217,11 +240,34 @@ public class Side {
         }
         return false;
     }
-    
+//        float distX = (float)goalX1 - (float)goalX2;
+//        float distY = (float)goalY1 - (float)goalY2;
+//        double lineLength = Math.sqrt((distX * distX) + (distY * distY));
+//
+//        // then solve for r
+//        double r = (((x - goalX1) * (goalX2 - goalX1)) + ((y - goalY1) * (goalY2 - goalY1))) / Math.pow(lineLength, 2);
+//
+//        // get x,y points of the closest point
+//        double closestX = goalX1 + r * (goalX2 - goalX1);
+//        double closestY = goalY1 + r * (goalY2 - goalY1);
+//
+//        // to get the length of the line, use the Pythagorean theorem again
+//        double distToPointX = closestX - x;
+//        double distToPointY = closestY - y;
+//        double distToPoint = Math.sqrt(Math.pow(distToPointX, 2) + Math.pow(distToPointY, 2));
+//
+//        // if that distance is less than the radius of the ball: collision
+//        if (distToPoint <= radius)
+//        {
+//            return this;
+//        }
+//        else
+//        {
+//            return null;
+//        }
 
     Side hasCollided(Puck p) {
-        if(parent.dist((float) p.getXpos(), (float) p.getYpos(), (float) bat.getXpos() + bat.getWidth(), (float) bat.getYpos() + bat.getHeight()) < p.getDiameter() / 2 + bat.getDiameter() / 2)
-        {
+        if (parent.dist((float) p.getXpos(), (float) p.getYpos(), (float) bat.getXpos() + bat.getWidth(), (float) bat.getYpos() + bat.getHeight()) < p.getDiameter() / 2 + bat.getDiameter() / 2) {
             return this;
         }
         return null;

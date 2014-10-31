@@ -46,6 +46,7 @@ public class MySketch extends PApplet{
       int zijdeY2 = Math.round(693*sizefactor);
       SideName sideName = SideName.LEFT;
       puck = new Puck(this);
+      IPlayer player = new RobotPlayer("Karel");
       for(int i = 0; i < 3; i++)
       {
           if(i != 0)
@@ -58,14 +59,16 @@ public class MySketch extends PApplet{
             zijdeX2 = Math.round(800*sizefactor);
             zijdeY2 = Math.round(693*sizefactor);
             sideName = SideName.BOTTOM;
+            player = new HumanPlayer();
           }
           if(i == 2)
           {
             zijdeX2 = Math.round(400*sizefactor);
             zijdeY2 = 0;
             sideName = SideName.RIGHT;
+            player = new RobotPlayer("Sjef");
           }
-          Side s = new Side(zijdeX1, zijdeY1, zijdeX2, zijdeY2, colors[i], this, sideName);
+          Side s = new Side(zijdeX1, zijdeY1, zijdeX2, zijdeY2, colors[i], this, sideName, player);
           sides[i] = s;
           middenX += zijdeX2;
           middenY += zijdeY2;

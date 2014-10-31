@@ -6,36 +6,39 @@
 package airhockey.domain;
 
 /**
- * * @author Eric
- * HumanPlayer is a Player that plays a game.
+ *
+ * @author Roy
  */
-public class HumanPlayer extends Player{
-    private double rating;
-    
-    /**
-     * Constructor for HumanPlayer.
-     * @param username 
-     */
-    public HumanPlayer(String username)
-    {
-        super(username);
+public class HumanPlayer implements IPlayer {
+
+    private int inGameScore;
+    private String naam;
+
+    public HumanPlayer() {
+        this.inGameScore = 20;
+        naam = "Eric";
+    }
+
+    @Override
+    public void setInGameScore(int newInGameScore) {
+        this.inGameScore = newInGameScore;
+    }
+
+    @Override
+    public int getInGameScore() {
+        return this.inGameScore;
+    }
+
+    @Override
+    public void changeScore(int point) {
+        this.inGameScore += point;
     }
     
-    /**
-     * Returns rating.
-     * @return 
-     */
-    public double getRating()
+    @Override
+    public String toString()
     {
-        return rating;
+        return naam;
     }
-    
-    /**
-     * Used to determine rating from played game.
-     */
-    public void calculateRating()
-    {
-        
-    }
-    
 }
+
+

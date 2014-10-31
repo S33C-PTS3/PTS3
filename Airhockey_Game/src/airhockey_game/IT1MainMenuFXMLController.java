@@ -48,10 +48,6 @@ public class IT1MainMenuFXMLController implements Initializable {
     @FXML
     private void handleBtnExitEvent(ActionEvent event)
     {
-        int reply = JOptionPane.showConfirmDialog(null, "Are you sure you want to exit the game?", "WARNING", JOptionPane.YES_NO_OPTION);
-        if (reply == JOptionPane.YES_OPTION) 
-        {
             System.exit(0);
-        }
     }
 }

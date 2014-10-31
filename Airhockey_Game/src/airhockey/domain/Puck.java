@@ -55,6 +55,16 @@ public class Puck extends PApplet {
     public double getXvelocity() {
         return this.velocity.x;
     }
+    
+    public void setXpos(float x)
+    {
+        this.position.x = x;
+    }
+    
+    public void setYpos(float y)
+    {
+        this.position.y = y;
+    }
 
     public void setVelocityWithoutNormal(PVector linePos1, PVector linePos2) {
         PVector baseDelta = PVector.sub(linePos2, linePos1);
