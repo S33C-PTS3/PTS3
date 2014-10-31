@@ -34,6 +34,7 @@ public class SettingsFXMLController implements Initializable {
     private Slider difficultySlider1;
     @FXML
     private Slider difficultySlider2;
+    private SerializationManager serMan = new SerializationManager();
 
     /**
      * Initializes the controller class.
@@ -44,49 +45,39 @@ public class SettingsFXMLController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-        // TODO 
-        try
+        Settings loadedSettings = serMan.loadAIsettings();
+        if (serMan.loadAIsettings() != null) 
         {
-            FileInputStream stream = new FileInputStream((new File("robotplayersSettings")));
-            ObjectInputStream input = new ObjectInputStream(stream);
-            Settings settings = (Settings) input.readObject();
-            input.close();
-
-            //SET THE VALUE OF SLIDER 1
-            if (settings.getDifficulty1().equals(Difficulty.EASY))
+            switch (loadedSettings.getDifficulty1())
             {
-                difficultySlider1.setValue(0);
+                case EASY:
+                    difficultySlider1.setValue(0);
+                    break;
+                case MEDIUM:
+                    difficultySlider1.setValue(1);
+                    break;
+                case HARD:
+                    difficultySlider1.setValue(2);
+                    break;
             }
-            else if (settings.getDifficulty1().equals(Difficulty.MEDIUM))
+            
+            switch (loadedSettings.getDifficulty2())
             {
-                difficultySlider1.setValue(1);
-            }
-            else if (settings.getDifficulty1().equals(Difficulty.HARD))
-            {
-                difficultySlider1.setValue(2);
-            }
-
-            //SET THE VALUE OF SLIDER 2
-            if (settings.getDifficulty2().equals(Difficulty.EASY))
-            {
-                difficultySlider2.setValue(0);
-            }
-            else if (settings.getDifficulty2().equals(Difficulty.MEDIUM))
-            {
-                difficultySlider2.setValue(1);
-            }
-            else if (settings.getDifficulty2().equals(Difficulty.HARD))
-            {
-                difficultySlider2.setValue(2);
+                case EASY:
+                    difficultySlider2.setValue(0);
+                    break;
+                case MEDIUM:
+                    difficultySlider2.setValue(1);
+                    break;
+                case HARD:
+                    difficultySlider2.setValue(2);
+                    break;
             }
         }
-        catch (ClassNotFoundException ex)
+        else
         {
-            System.out.println(ex);
-        }
-        catch (IOException ex)
-        {
-            Logger.getLogger(SettingsFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+            difficultySlider1.setValue(1);
+            difficultySlider2.setValue(1);
         }
     }
 
