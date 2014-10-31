@@ -6,39 +6,44 @@
 package airhockey.domain;
 
 import java.util.List;
+import processing.core.PVector;
 
 /**
  *
  * @author Eric
  */
 public class HockeyField {
+
     private Puck puck;
-    private List<Side> sides;
-    
-    public HockeyField(Puck puck, List<Side> sides)
-    {
-        
+    private Side[] sides;
+    SideName lasthit;
+    Side hitSide;
+    Side hitBat;
+
+    public HockeyField(Puck puck, Side[] sides) {
+        this.puck = puck;
+        this.sides = sides;
+        this.lasthit = null;
+        hitSide = null;
     }
-    
-    public void checkOfGoal()
-    {
-        for(Side s : sides)
-        {
-            if(s.goal(puck.getX(), puck.getY()))
-            {
-                for(Side si : sides)
-                {
-                    if(si.equals(puck.lastHit))
-                    {
-                        si.score();
-                    }
-                }
+
+    public void checkColl() {
+        for (int i = 0; i < sides.length; i++) {
+            hitSide = sides[i].ballHitsWall(puck.getXpos(), puck.getYpos(), puck.getXvelocity(), puck.getYvelocity());
+            hitBat = sides[i].hasCollided(puck);
+            if (hitSide != null) {
+                puck.setVelocityWithoutNormal(hitSide.getVector1(), hitSide.getVector2());
+
+                hitSide = null;
+            }
+            if (hitBat != null) {
+                puck.setVelocityWithNormal(hitBat.getBat().getVector(), puck.getPosition());
+                hitBat = null;
             }
         }
     }
-    
-    public List<Side> getSides()
-    {
+
+    public List<Side> getSides() {
         return null;
     }
 }
