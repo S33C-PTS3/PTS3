@@ -88,62 +88,46 @@ public class SettingsFXMLController implements Initializable {
     }
 
     @FXML        //SAVING ROBOTPLAYER SETTINGS
-
     private void handleBtnSaveAndBackEvent(ActionEvent event) throws IOException
     {
-        //TODO: IMPLEMENTATIE INSTELLINGEN OPSLAAN
-        FileOutputStream stream = null;
-        //SETTING THE DIFFICULTY AND SAVE IT IN THE SETTINGS
-        try
+        Difficulty diff1 = null;
+        Difficulty diff2 = null;
+        
+        switch ((int)difficultySlider1.getValue())
         {
-            Difficulty diff1 = Difficulty.MEDIUM;
-            Difficulty diff2 = Difficulty.MEDIUM;
-
-            int diff = (int) difficultySlider1.getValue();
-            switch (diff)
-            {
-                case 0:
-                    diff1 = Difficulty.EASY;
-                    break;
-                case 1:
-                    diff1 = Difficulty.MEDIUM;
-                    break;
-                case 2:
-                    diff1 = Difficulty.HARD;
-                    break;
-            }
-
-            diff = (int) difficultySlider2.getValue();
-            switch (diff)
-            {
-                case 0:
-                    diff2 = Difficulty.EASY;
-                    break;
-                case 1:
-                    diff2 = Difficulty.MEDIUM;
-                    break;
-                case 2:
-                    diff2 = Difficulty.HARD;
-                    break;
-            }
-
-            Settings settings = new Settings(diff1, diff2);
-
-            //SAVING ROBOTPLAYER SETTINGS
-            stream = new FileOutputStream(new File("robotplayersSettings"));
-            ObjectOutputStream out = new ObjectOutputStream(stream);
-            out.writeObject(settings);
-            out.close();
-            stream.close();
+            case 0:
+                diff1 = Difficulty.EASY;
+                break;
+            case 1:
+                diff1 = Difficulty.MEDIUM;
+                break;
+            case 2:
+                diff1 = Difficulty.HARD;
+                break;
         }
-        catch (IOException ex)
+        
+        switch ((int)difficultySlider2.getValue())
         {
-            System.out.println(ex);
-        } finally
-        {
-            stream.close();
+            case 0:
+                diff2 = Difficulty.EASY;
+                break;
+            case 1:
+                diff2 = Difficulty.MEDIUM;
+                break;
+            case 2:
+                diff2 = Difficulty.HARD;
+                break;
         }
-
-        navMan.goTo("IT1MainMenu", event);
+        
+        Settings settingsToBeSaved = new Settings(diff1,diff2);
+        
+        if (serMan.saveAIsettings(settingsToBeSaved)) 
+        {
+            navMan.goTo("IT1MainMenu", event);
+        }
+        else
+        {
+            System.out.println("SETTINGS WERE NOT SAVED");
+        }
     }
 }

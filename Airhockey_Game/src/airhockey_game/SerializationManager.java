@@ -9,8 +9,10 @@ import airhockey.domain.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 /**
@@ -21,7 +23,22 @@ public class SerializationManager
 {
     public boolean saveAIsettings(Settings s)
     {
-        return false;
+        boolean wasSuccess = true;
+        try
+        {
+            FileOutputStream stream = null;
+            stream = new FileOutputStream(new File("robotplayersSettings"));
+            ObjectOutputStream out = new ObjectOutputStream(stream);
+            out.writeObject(s);
+            out.close();
+            stream.close();
+        }
+        catch (IOException ex)
+        {
+            wasSuccess = false;
+        }
+        
+        return wasSuccess;
     }
     
     public Settings loadAIsettings()
@@ -38,7 +55,7 @@ public class SerializationManager
         } 
         catch (IOException | ClassNotFoundException ex)
         {
-            ex.printStackTrace();
+            System.out.println("Settings were not found/loaded.");
         } 
         
         return loadedSettings;
