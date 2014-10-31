@@ -69,7 +69,7 @@ public class HockeyField {
                 {
                     if (goal.equals(batHitters.get(batHitters.size() - 1)))
                     {
-                        System.out.println("1 Gescoord door " + batHitters.get(batHitters.size() - 2).getBindedPlayer().toString());
+                        System.out.println("1 Gescoord door " + batHitters.get(batHitters.size() - 1).getBindedPlayer().toString());
                         System.out.println("1 Gescoord bij " + goal.getBindedPlayer().toString());
                         batHitters.get(batHitters.size() - 1).getBindedPlayer().changeScore(-1);
                         resetGame();
@@ -121,7 +121,7 @@ public class HockeyField {
     private void resetGame()
     {
         puck.setXpos(400);
-        puck.setYpos(462);
+        puck.setYpos(300);
         this.batHitters.clear();
         this.hitBat = null;
         this.hitSide = null;

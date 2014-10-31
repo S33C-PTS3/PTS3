@@ -33,8 +33,8 @@ public class Puck extends PApplet {
         this.Xpos = 400;
         this.Ypos = 300;
         this.position = new PVector((float) Xpos, (float) Ypos);
-        this.Xvelocity = -randomizer.nextDouble() + 4;
-        this.Yvelocity = -randomizer.nextDouble() + 4;
+        this.Xvelocity = -randomizer.nextDouble() + 3;
+        this.Yvelocity = -randomizer.nextDouble() + 3;
         this.velocity = new PVector((float) Xvelocity, (float) Yvelocity);
         this.diameter = 520 * 0.04;
     }
