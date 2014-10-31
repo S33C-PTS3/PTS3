@@ -10,5 +10,5 @@ package sketchprocessing;
  * @author Sasa2905
  */
 public enum SideName {
-    LEFT,RIGHT,BOTTOM,BAT
+    LEFT,RIGHT,BOTTOM,BATLEFT,BATRIGHT,BATBOTTOM;
 }

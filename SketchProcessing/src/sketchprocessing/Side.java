@@ -41,7 +41,7 @@ public class Side {
         this.color = color;
         this.bat = null;
         this.sideName = sideName;
-        
+        SideName sideBat = null;
         int distanceFromSide = 30;
         if(sideName == SideName.LEFT)
         {
@@ -53,6 +53,7 @@ public class Side {
             batY1 = ((lineY1 + lineY2) * 0.42 + distanceFromSide/2);
             batX2 = ((lineX1 + lineX2) * 0.42 + distanceFromSide);
             batY2 = ((lineY1 + lineY2) * 0.58 + distanceFromSide/2);
+            sideBat = SideName.BATLEFT;
         }
         else if(sideName == SideName.BOTTOM)
         {
@@ -64,6 +65,7 @@ public class Side {
             batY1 = lineY1 - distanceFromSide;
             batX2 = lineX1 + ((lineX2-lineX1) * 0.58);
             batY2 = lineY2 - distanceFromSide;
+            sideBat = SideName.BATBOTTOM;
         }
         else if(sideName == SideName.RIGHT)
         {
@@ -75,10 +77,11 @@ public class Side {
             batY1 =  lineY1-(lineY1 * 0.58) + distanceFromSide/2;
             batX2 =  lineX1-(lineX2 * 0.42) - distanceFromSide;
             batY2 =  lineY1-(lineY1 * 0.42) + distanceFromSide/2;
+            sideBat = SideName.BATRIGHT;
         }
         
         double diameter = 600 * 0.08;
-        bat = new Bat(color,parent,(float)batX1, (float)batY1, (float)diameter);
+        bat = new Bat(color,parent,(float)batX1, (float)batY1, (float)diameter, sideBat);
         bat.display();
     }
 
@@ -90,6 +93,23 @@ public class Side {
        //bat = new Bat(color,parent,lineX1+10,lineY1+10,lineX2+10,lineY2+10);
        //bat.display();
     }
+    
+        public double getLineX1() {
+        return this.lineX1;
+    }
+
+    public double getLineY1() {
+        return this.lineY1;
+    }
+
+    public double getLineX2() {
+        return this.lineX2;
+    }
+
+    public double getLineY2() {
+        return this.lineY2;
+    }
+
     
     public SideName getSideName()
     {

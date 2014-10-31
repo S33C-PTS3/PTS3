@@ -19,8 +19,9 @@ public class Bat extends PApplet {
     private double Ypos;
     private double Xvelocity;
     private PApplet parent;
+    private SideName sidename;
     
-    public Bat(Color color, PApplet parent, double Xpos, double Ypos, double diameter)
+    public Bat(Color color, PApplet parent, double Xpos, double Ypos, double diameter, SideName sidename)
     {
         this.parent = parent;
         this.diameter = diameter;
@@ -28,10 +29,15 @@ public class Bat extends PApplet {
         this.Xpos = Xpos;
         this.Ypos = Ypos;
         this.Xvelocity = 10;
+        this.sidename = sidename;
     }
     
     public double getXpos(){
         return this.Xpos;
+    }
+    
+    public SideName getSideName(){
+        return this.sidename;
     }
     
     public void setXpos(double xpos){
