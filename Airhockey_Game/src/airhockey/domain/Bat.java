@@ -5,6 +5,7 @@
  */
 package airhockey.domain;
 
+import airhockey_game.SerializationManager;
 import java.awt.Color;
 import processing.core.PApplet;
 import processing.core.PVector;
@@ -21,6 +22,9 @@ public class Bat extends PApplet {
     private double Xvelocity;
     private PApplet parent;
     private SideName sidename;
+    private SerializationManager serMan = new SerializationManager();
+    double rightSpeedModifier = 1;
+    double leftSpeedModifier = 1;
     
     public Bat(Color color, PApplet parent, float Xpos, float Ypos, double diameter, SideName sidename)
     {
@@ -29,7 +33,31 @@ public class Bat extends PApplet {
         this.color = Color.BLUE;
         this.Xpos = Xpos;
         this.Ypos = Ypos;
-        this.Xvelocity = 10;
+        
+        //Speed of own bat depends on difficulty
+        Settings s = serMan.loadAIsettings();
+        int overallDifficulty = getOverallDifficulty(s);
+        int xVel = 100;
+        switch(overallDifficulty)
+        {
+            case 2:
+                xVel = 12;
+                break;
+            case 3:
+                xVel = 11;
+                break;
+            case 4:
+                xVel = 10;
+                break;
+            case 5:
+                xVel = 9;
+                break;
+            case 6:
+                xVel = 8;
+                break;
+        }
+        this.Xvelocity = xVel;
+        
         this.sidename = sidename;
     }
     
@@ -72,15 +100,18 @@ public class Bat extends PApplet {
     
     public void move(String direction)
     {
+        Settings s = serMan.loadAIsettings();
+        
+        
         if ("0right".equals(direction)) 
         {
-            this.Xpos += .58;
-            this.Ypos -= 1;
+            this.Xpos += (.58*leftSpeedModifier);
+            this.Ypos -= (1*leftSpeedModifier);
         }
         else if ("0left".equals(direction))
         {
-            this.Xpos -= .58;
-            this.Ypos += 1;
+            this.Xpos -= (.58*leftSpeedModifier);
+            this.Ypos += (1*leftSpeedModifier);
         }
         else if ("1right".equals(direction)) 
         {
@@ -92,13 +123,13 @@ public class Bat extends PApplet {
         }
         else if ("2right".equals(direction))
         {
-            this.Xpos += .58;
-            this.Ypos += 1;
+            this.Xpos += (.58*rightSpeedModifier);
+            this.Ypos += (1*rightSpeedModifier);
         }
         else if ("2left".equals(direction))
         {
-            this.Xpos -= .58;
-            this.Ypos -= 1;
+            this.Xpos -= (.58*rightSpeedModifier);
+            this.Ypos -= (1*rightSpeedModifier);
         }
             
         display();
@@ -112,5 +143,48 @@ public class Bat extends PApplet {
     {
         float radius = (float)this.diameter/2;
         return radius;
+    }
+    
+    //Difficulty of AI get assigned number values to calculte total
+    private int getOverallDifficulty(Settings s)
+    {
+        int overallDiff;
+        int diff1=0;
+        int diff2=0;
+        
+        switch (s.getDifficulty1())
+        {
+            case EASY:
+                diff1 = 1;
+                leftSpeedModifier = 1;
+                break;
+            case MEDIUM:
+                diff1 = 2;
+                leftSpeedModifier = 1.6;
+                break;
+            case HARD:
+                diff1 = 3;
+                leftSpeedModifier = 2.2;
+                break;
+        }
+            
+        switch (s.getDifficulty2())
+        {
+            case EASY:
+                diff2 = 1;
+                rightSpeedModifier = 1;
+                break;
+            case MEDIUM:
+                rightSpeedModifier = 1.6;
+                diff2 = 2;
+                break;
+            case HARD:
+                rightSpeedModifier = 2.2;
+                diff2 = 3;
+                break;
+        }
+        
+        overallDiff = diff1+diff2;
+        return overallDiff;
     }
 }
