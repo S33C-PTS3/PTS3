@@ -18,6 +18,7 @@ import javafx.stage.Stage;
  * @author Joep Kerste
  */
 public class NavigationManager {
+    
     /**
      * Go to a different FXML scene
      * @param fxmlName name of the .fxml file of the destination

@@ -5,6 +5,10 @@
  */
 package airhockey_game;
 
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Point;
+import java.awt.Toolkit;
 import javafx.scene.input.MouseEvent;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -17,6 +21,7 @@ import javafx.scene.shape.Rectangle;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import processing.core.PVector;
 
 /**
  * FXML Controller class
@@ -25,6 +30,9 @@ import javax.swing.JPanel;
  */
 public class GameFXMLController implements Initializable {
 
+    private JFrame frame;
+    JPanel panel;
+    MySketch applet;
     private final NavigationManager navMan = new NavigationManager();
     public Button btnExit;
     public Rectangle recInfo;
@@ -38,23 +46,35 @@ public class GameFXMLController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        frame = null;
         recInfo.setHeight(25);
         setInfoVisibility();
 
         //Embed MySketch
-        JFrame frame = new JFrame("Embedded MySketch PApplet");
-        JPanel panel = new JPanel();
-        MySketch applet = new MySketch();
-
+        frame = new JFrame("Embedded MySketch PApplet");
+        frame.setAlwaysOnTop(true);
+        applet = new MySketch();
+        
         applet.init();
-        applet.setLocation(500, 0);
 
-        panel.add(applet);
-        frame.add(panel);
-        frame.setSize(800, 700);
-        frame.setLocation(250, 0);
+        frame.add(applet);
+        int frameWidth = (int)Math.round(820 * 0.7);
+        int frameHeight = (int)Math.round(720 * 0.7);
+        frame.setSize(frameWidth, frameHeight);
+        
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        java.awt.Rectangle r = frame.getBounds();
+        
+        frame.setLocation((int)Math.round((screenSize.getWidth()/2)-(r.getWidth()/2)),(int)Math.round((screenSize.getHeight()/2)-(r.getHeight()/2))+50);
+        
+        
+        Color bg = new Color(235,235,235);
+        frame.setBackground(bg);
 
         frame.setUndecorated(true);
+
+        //applet.setLayout(null);
+        applet.setLocation(50,50);
         frame.setVisible(true);
     }    
     
@@ -65,9 +85,9 @@ public class GameFXMLController implements Initializable {
     @FXML
     private void handleBtnExitEvent(ActionEvent event)
     {
-        //int reply = JOptionPane.showConfirmDialog(null, "Are you sure you want to go back to the main menu?", "WARNING", JOptionPane.YES_NO_OPTION);
-        JOptionPane.showMessageDialog(null, "A basic JOptionPane message dialog");
-            navMan.goTo("IT1MainMenu", event);
+        frame.dispose();
+        applet.dispose();
+        navMan.goTo("IT1MainMenu", event);
     }
     
     /**

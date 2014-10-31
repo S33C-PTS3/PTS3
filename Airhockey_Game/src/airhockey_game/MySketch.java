@@ -17,7 +17,7 @@ import static processing.core.PConstants.RIGHT;
  */
 public class MySketch extends PApplet{
         
-    final private float sizefactor = 0.75f;
+    final private float sizefactor = 0.7f;
     
     int x1 = 200;
     int y1 = 500;
@@ -79,7 +79,7 @@ public class MySketch extends PApplet{
     @Override
     public void draw()
     {
-      background(255);
+      background(235);
       //line(x1,y1,x2,y2);
       for(int i = 0; i < 3; i++)
       {
