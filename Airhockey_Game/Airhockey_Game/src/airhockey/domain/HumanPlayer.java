@@ -12,11 +12,11 @@ package airhockey.domain;
 public class HumanPlayer implements IPlayer {
 
     private int inGameScore;
-    private String naam;
+    private String name;
 
     public HumanPlayer() {
         this.inGameScore = 20;
-        naam = "Eric";
+        name = "Eric";
     }
 
     @Override
@@ -37,7 +37,7 @@ public class HumanPlayer implements IPlayer {
     @Override
     public String toString()
     {
-        return naam;
+        return name;
     }
 }
 
