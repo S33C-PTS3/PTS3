@@ -49,7 +49,7 @@ public class HockeyField {
             if (hitBat != null && lasthit != hitBat.getBat().getSideName())
             {
                 puck.setVelocityWithNormal(hitBat.getBat().getVector(), puck.getPosition());
-                if(batHitters.isEmpty())
+                if (batHitters.isEmpty())
                 {
                     batHitters.add(hitBat);
                 }
@@ -69,10 +69,17 @@ public class HockeyField {
                 {
                     if (goal.equals(batHitters.get(batHitters.size() - 1)))
                     {
-                        System.out.println("1 Gescoord door " + batHitters.get(batHitters.size() - 1).getBindedPlayer().toString());
-                        System.out.println("1 Gescoord bij " + goal.getBindedPlayer().toString());
-                        batHitters.get(batHitters.size() - 1).getBindedPlayer().changeScore(-1);
-                        resetGame();
+                        if (batHitters.size() == 1)
+                        {
+                            System.out.println("0.5 Eigen goal " + goal.getBindedPlayer().toString());
+                            goal.getBindedPlayer().changeScore(-1);
+                        }
+                        else
+                        {
+                            System.out.println("1 Gescoord door " + batHitters.get(batHitters.size() - 2).getBindedPlayer().toString());
+                            System.out.println("1 Gescoord bij " + goal.getBindedPlayer().toString());
+                            batHitters.get(batHitters.size() - 1).getBindedPlayer().changeScore(-1);
+                        }
 
                     }
                     else if (batHitters.size() > 0)
@@ -81,35 +88,15 @@ public class HockeyField {
                         System.out.println("2 Gescoord bij " + goal.getBindedPlayer().toString());
                         batHitters.get(batHitters.size() - 1).getBindedPlayer().changeScore(1);
                         goal.getBindedPlayer().changeScore(-1);
-                        resetGame();
                     }
                 }
                 else
                 {
                     System.out.println("3 Eigen goal, niemand geraakt " + goal.getBindedPlayer().toString());
                     goal.getBindedPlayer().changeScore(-1);
-                    resetGame();
                 }
+                resetGame();
             }
-//            if (goal != null)
-//            {
-//                goal.getBindedPlayer().changeScore(-1);
-//                for (int bh = batHitters.size(); bh <= batHitters.size(); bh--)
-//                {
-//                    if (!batHitters.isEmpty())
-//                    {
-//                        if (goal != batHitters.get(bh))
-//                        {
-//                            batHitters.get(bh).getBindedPlayer().changeScore(1);
-//                            System.out.println(batHitters.get(bh).getBindedPlayer().toString());
-//                            System.out.println(batHitters.get(bh).getBindedPlayer().getInGameScore());
-//                            System.out.println(goal.getBindedPlayer().toString());
-//                            System.out.println(goal.getBindedPlayer().getInGameScore());
-//                        }
-//                    }
-//                }
-//                goal = null;
-//            }
         }
     }
 
