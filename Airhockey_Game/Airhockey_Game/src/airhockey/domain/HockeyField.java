@@ -19,27 +19,27 @@ public class HockeyField {
 
     private Puck puck;
     private Side[] sides;
-    private SideName lasthit;
+    private SideName lastHitSide;
     private Side hitSide;
     private Side hitBat;
     private Side goal;
-    private List<Side> batHitters;
+    private List<Side> batsHitsPuck;
     private int rounds;
     private ArrayList<Integer> scores;
-    private PApplet parent;
-    private ArrayList uitslag = null;
+    private PApplet parentApplet;
+    private ArrayList gameResult = null;
     private boolean gameOver = false;
 
     public HockeyField(Puck puck, Side[] sides, PApplet parent) {
         this.puck = puck;
         this.sides = sides;
-        this.lasthit = null;
+        this.lastHitSide = null;
         hitSide = null;
-        batHitters = new ArrayList<>();
+        batsHitsPuck = new ArrayList<>();
         rounds = 1;
         scores = new ArrayList<>();
-        uitslag = new ArrayList();
-        this.parent = parent;
+        gameResult = new ArrayList();
+        this.parentApplet = parent;
     }
 
     public boolean display() {
@@ -54,18 +54,18 @@ public class HockeyField {
             return true;
         } else 
         {
-            parent.textSize(30);
+            parentApplet.textSize(30);
             int highscore = 0;
-            Collections.sort(uitslag, new Comparator<Side>() {
+            Collections.sort(gameResult, new Comparator<Side>() {
                 @Override
                 public int compare(Side p1, Side p2) {
                     return p2.getBindedPlayer().getInGameScore() - p1.getBindedPlayer().getInGameScore(); // Ascending
                 }
             });
             for (int i = 0; i < 3; i++) {
-                Side tempSide = (Side)uitslag.get(i);
+                Side tempSide = (Side)gameResult.get(i);
 
-                parent.text(i+1 + ". " + tempSide.getBindedPlayer().toString() + ": " + tempSide.getBindedPlayer().getInGameScore(), 200, 200 + i * 50);
+                parentApplet.text(i+1 + ". " + tempSide.getBindedPlayer().toString() + ": " + tempSide.getBindedPlayer().getInGameScore(), 200, 200 + i * 50);
             }
         }
         return false;
@@ -76,42 +76,42 @@ public class HockeyField {
             hitSide = sides[i].ballHitsWall(puck.getXpos(), puck.getYpos(), puck.getXvelocity(), puck.getYvelocity());
             hitBat = sides[i].hasCollided(puck);
             goal = sides[i].checkGoalLine(puck.getXpos(), puck.getYpos(), puck.getXvelocity(), puck.getYvelocity(), puck.getRadius());
-            if (hitSide != null && lasthit != hitSide.getSideName()) {
+            if (hitSide != null && lastHitSide != hitSide.getSideName()) {
                 puck.setVelocityWithoutNormal(hitSide.getVector1(), hitSide.getVector2());
-                lasthit = sides[i].getSideName();
+                lastHitSide = sides[i].getSideName();
                 hitSide = null;
             }
-            if (hitBat != null && lasthit != hitBat.getBat().getSideName()) {
+            if (hitBat != null && lastHitSide != hitBat.getBat().getSideName()) {
                 puck.setVelocityWithNormal(hitBat.getBat().getVector(), puck.getPosition());
-                if (batHitters.isEmpty()) {
-                    batHitters.add(hitBat);
-                } else if (!hitBat.equals(batHitters.get(batHitters.size() - 1))) {
-                    batHitters.add(hitBat);
+                if (batsHitsPuck.isEmpty()) {
+                    batsHitsPuck.add(hitBat);
+                } else if (!hitBat.equals(batsHitsPuck.get(batsHitsPuck.size() - 1))) {
+                    batsHitsPuck.add(hitBat);
                 }
-                lasthit = sides[i].getBat().getSideName();
+                lastHitSide = sides[i].getBat().getSideName();
                 hitBat = null;
             }
             if (goal != null) {
                 System.out.println(goal.getSideName().toString());
                 //goal.getBindedPlayer().changeScore(-1);
 
-                if (!batHitters.isEmpty()) {
+                if (!batsHitsPuck.isEmpty()) {
 
-                    if (goal.equals(batHitters.get(batHitters.size() - 1))) {
-                        if (batHitters.size() <= 1) {
-                            System.out.println("eigen goal gemaakt en aangeraakt door" + batHitters.get(batHitters.size() - 1).getBindedPlayer().toString());
-                            batHitters.get(batHitters.size() - 1).getBindedPlayer().changeScore(-1);
+                    if (goal.equals(batsHitsPuck.get(batsHitsPuck.size() - 1))) {
+                        if (batsHitsPuck.size() <= 1) {
+                            System.out.println("eigen goal gemaakt en aangeraakt door" + batsHitsPuck.get(batsHitsPuck.size() - 1).getBindedPlayer().toString());
+                            batsHitsPuck.get(batsHitsPuck.size() - 1).getBindedPlayer().changeScore(-1);
                         } else {
-                            System.out.println("1 Gescoord door " + batHitters.get(batHitters.size() - 1).getBindedPlayer().toString());
+                            System.out.println("1 Gescoord door " + batsHitsPuck.get(batsHitsPuck.size() - 1).getBindedPlayer().toString());
                             System.out.println("1 Gescoord bij " + goal.getBindedPlayer().toString());
-                            batHitters.get(batHitters.size() - 1).getBindedPlayer().changeScore(-1);
+                            batsHitsPuck.get(batsHitsPuck.size() - 1).getBindedPlayer().changeScore(-1);
                         }
                         resetGame();
 
-                    } else if (batHitters.size() > 0) {
-                        System.out.println("2 Gescoord door " + batHitters.get(batHitters.size() - 1).getBindedPlayer().toString());
+                    } else if (batsHitsPuck.size() > 0) {
+                        System.out.println("2 Gescoord door " + batsHitsPuck.get(batsHitsPuck.size() - 1).getBindedPlayer().toString());
                         System.out.println("2 Gescoord bij " + goal.getBindedPlayer().toString());
-                        batHitters.get(batHitters.size() - 1).getBindedPlayer().changeScore(1);
+                        batsHitsPuck.get(batsHitsPuck.size() - 1).getBindedPlayer().changeScore(1);
                         goal.getBindedPlayer().changeScore(-1);
                         resetGame();
                     }
@@ -122,9 +122,9 @@ public class HockeyField {
                 }
             }
         }
-        parent.textSize(22);
-        parent.fill(0);
-        parent.text("Round : " + rounds, 50, 70);
+        parentApplet.textSize(22);
+        parentApplet.fill(0);
+        parentApplet.text("Round : " + rounds, 50, 70);
     }
 
     public List<Side> getSides() {
@@ -135,10 +135,10 @@ public class HockeyField {
         puck.setXpos(280);
         puck.setYpos(323);
         puck.randomizePuck();
-        this.batHitters.clear();
+        this.batsHitsPuck.clear();
         this.hitBat = null;
         this.hitSide = null;
-        this.lasthit = null;
+        this.lastHitSide = null;
         for (Side side : sides) {
             scores.add(side.getBindedPlayer().getInGameScore());
         }
@@ -154,7 +154,7 @@ public class HockeyField {
             int index = 0;
             for (Side side : sides) {
                 highscore = side.getBindedPlayer().getInGameScore();
-                uitslag.add(side);
+                gameResult.add(side);
                 gameOver = true;
                 index++;
             }
