@@ -32,6 +32,7 @@ public class Airhockey_Game extends Application {
         stage.show(); 
     }
 
+
     /**
      * @param args the command line arguments
      */
