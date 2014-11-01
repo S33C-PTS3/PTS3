@@ -20,7 +20,7 @@ public class Bat extends PApplet {
     private double diameter;
     private float Ypos;
     private double Xvelocity;
-    private PApplet parent;
+    private PApplet parentApplet;
     private SideName sidename;
     private SerializationManager serMan = new SerializationManager();
     double rightSpeedModifier = 1;
@@ -28,16 +28,16 @@ public class Bat extends PApplet {
     
     public Bat(Color color, PApplet parent, float Xpos, float Ypos, double diameter, SideName sidename)
     {
-        this.parent = parent;
+        this.parentApplet = parent;
         this.diameter = diameter;
         this.color = Color.BLUE;
         this.Xpos = Xpos;
         this.Ypos = Ypos;
         
         //Speed of own bat depends on difficulty
-        Settings s = serMan.loadAIsettings();
-        int overallDifficulty = getOverallDifficulty(s);
-        int xVel = 100;
+        Settings loadedSettings = serMan.loadAIsettings();
+        int overallDifficulty = getOverallDifficulty(loadedSettings);
+        int xVel = 10;
         switch(overallDifficulty)
         {
             case 2:
@@ -87,10 +87,10 @@ public class Bat extends PApplet {
     }
     
     public void display(){
-        parent.strokeWeight((float)diameter);
-        parent.fill(color.getRGB() + 100);
-        parent.noStroke();
-        parent.ellipse((float)Xpos, (float)Ypos, (float)diameter, (float)diameter);
+        parentApplet.strokeWeight((float)diameter);
+        parentApplet.fill(color.getRGB() + 100);
+        parentApplet.noStroke();
+        parentApplet.ellipse((float)Xpos, (float)Ypos, (float)diameter, (float)diameter);
     }
 
     public float getYpos()
