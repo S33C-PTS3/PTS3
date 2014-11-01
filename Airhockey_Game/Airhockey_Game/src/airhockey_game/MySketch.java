@@ -38,8 +38,8 @@ public class MySketch extends PApplet {
         size(Math.round(800 * sizefactor), Math.round(700 * sizefactor));
         sides = new Side[3];
         colors = new Color[3];
-        colors[0] = Color.RED;
-        colors[1] = Color.BLUE;
+        colors[0] = Color.BLUE;
+        colors[1] = Color.RED;
         colors[2] = Color.GREEN;
         int zijdeX1 = Math.round(400 * sizefactor);
         int zijdeY1 = 0;

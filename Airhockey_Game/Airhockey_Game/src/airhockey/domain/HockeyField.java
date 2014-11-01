@@ -43,10 +43,9 @@ public class HockeyField {
     }
 
     public boolean display() {
-
+        checkColl();
         if (!gameOver) {
             puck.move();
-            checkColl();
             for (int i = 0; i < 3; i++) {
                 sides[i].display(i * 20);
                 sides[i].makeGoal(i);
