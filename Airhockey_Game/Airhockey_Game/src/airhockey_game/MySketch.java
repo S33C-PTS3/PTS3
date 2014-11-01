@@ -19,14 +19,8 @@ import static processing.core.PConstants.RIGHT;
 public class MySketch extends PApplet {
 
     final private float sizefactor = 0.7f;
-
-    int x1 = 200;
-    int y1 = 500;
-    int x2 = 250;
-    int y2 = 500;
-    int speed = 5;
-    int middenX = 0;
-    int middenY = 0;
+    int middleX = 0;
+    int middleY = 0;
     Side[] sides;
     Color[] colors;
     Puck puck;
@@ -67,11 +61,11 @@ public class MySketch extends PApplet {
             }
             Side s = new Side(zijdeX1, zijdeY1, zijdeX2, zijdeY2, colors[i], this, sideName, player);
             sides[i] = s;
-            middenX += zijdeX2;
-            middenY += zijdeY2;
+            middleX += zijdeX2;
+            middleY += zijdeY2;
         }
-        middenX /= 3;
-        middenY /= 3;
+        middleX /= 3;
+        middleY /= 3;
 
         field = new HockeyField(puck, sides, this);
     }
@@ -81,7 +75,7 @@ public class MySketch extends PApplet {
         background(235);
         //line(x1,y1,x2,y2);
         if (field.display()) {
-            ellipse(middenX, middenY, 5, 5);
+            ellipse(middleX, middleY, 5, 5);
             moveAIplayers();
         }
         stroke(0);
@@ -95,14 +89,10 @@ public class MySketch extends PApplet {
                 if (sides[1].getGoalX1() < sides[1].getBat().getXpos()) {
                     sides[1].moveBat("1left");
                 }
-                x1 -= speed;
-                x2 -= speed;
             } else if (keyCode == RIGHT) {
                 if (sides[1].getGoalX2() > sides[1].getBat().getXpos()) {
                     sides[1].moveBat("1right");
                 }
-                x1 += speed;
-                x2 += speed;
             }
         }
     }
