@@ -15,7 +15,7 @@ import processing.core.*;
  */
 public class Puck extends PApplet {
 
-    PApplet parent;
+    PApplet parentApplet;
     private double Xvelocity = 3;
     private double Yvelocity = 3;
     private float Xpos;
@@ -27,7 +27,7 @@ public class Puck extends PApplet {
     private final Random randomizer = new Random();
 
     public Puck(PApplet parent) {
-        this.parent = parent;
+        this.parentApplet = parent;
         this.color = Color.RED;
         this.Xpos = 280;
         this.Ypos = 323;        
@@ -107,10 +107,10 @@ public class Puck extends PApplet {
     }
 
     public void display() {
-        parent.ellipseMode(CENTER);
-        parent.strokeWeight(0);
-        parent.fill(color.getRGB());
-        parent.ellipse((float) position.x, (float) position.y, (float) diameter, (float) diameter);
+        parentApplet.ellipseMode(CENTER);
+        parentApplet.strokeWeight(0);
+        parentApplet.fill(color.getRGB());
+        parentApplet.ellipse((float) position.x, (float) position.y, (float) diameter, (float) diameter);
     }
     
     public void randomizePuck()
@@ -124,8 +124,5 @@ public class Puck extends PApplet {
         {
             this.velocity.y *= -1;
         }
-        
-        //this.Xvelocity = (float)-randomizer.nextInt() +3;
-        //this.Yvelocity = (float)-randomizer.nextInt() +3;
     }
 }
