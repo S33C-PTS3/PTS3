@@ -34,12 +34,6 @@ public class GameFXMLController implements Initializable {
     MySketch applet;
     private final NavigationManager navMan = new NavigationManager();
     public Button btnExit;
-    public Rectangle recInfo;
-    public Label lblSpeler1, lblSpeler2, lblSpeler3, lblSpeler1Score, lblSpeler2Score, lblSpeler3Score, lblRonde;
-    private boolean infoIsVisible = false;
-
-    @FXML
-    Label lblWinner;
 
     /**
      * Initializes the controller class.
@@ -50,8 +44,6 @@ public class GameFXMLController implements Initializable {
     @FXML
     public void initialize(URL url, ResourceBundle rb) {
         frame = null;
-        recInfo.setHeight(25);
-        setInfoVisibility();
 
         //Embed MySketch
         frame = new JFrame("Embedded MySketch PApplet");
@@ -113,68 +105,5 @@ public class GameFXMLController implements Initializable {
     public void handleBtnExitMouseExitEvent(MouseEvent event) {
         btnExit.setText("x");
         btnExit.setOpacity(0.3);
-    }
-
-    /**
-     * Make the game info rectangle large and show the info.
-     *
-     * @param event
-     */
-    @FXML
-    public void handleRecInfoMouseEnterEvent(MouseEvent event) {
-        recInfo.setHeight(130);
-        changeInfoState();
-    }
-
-    /**
-     * Make the game info rectangle small and hide the info.
-     *
-     * @param event
-     */
-    @FXML
-    public void handleRecInfoMouseExitEvent(MouseEvent event) {
-        recInfo.setHeight(25);
-        changeInfoState();
-    }
-
-    /**
-     * Switch the state of the boolean infoIsVisible, and call
-     * setInfoVisibility() to set the new state of the info labels.
-     */
-    private void changeInfoState() {
-        infoIsVisible = !infoIsVisible;
-        setInfoVisibility();
-    }
-
-    /**
-     * If the info should be visible the labels will be all set to visible and
-     * the info will be updated. If else the labels will be all set to
-     * invisible.
-     */
-    private void setInfoVisibility() {
-        if (infoIsVisible) {
-            updateGameInfo();
-            lblSpeler1.setVisible(true);
-            lblSpeler2.setVisible(true);
-            lblSpeler3.setVisible(true);
-            lblSpeler1Score.setVisible(true);
-            lblSpeler2Score.setVisible(true);
-            lblSpeler3Score.setVisible(true);
-            lblRonde.setVisible(true);
-        } else {
-            lblSpeler1.setVisible(false);
-            lblSpeler2.setVisible(false);
-            lblSpeler3.setVisible(false);
-            lblSpeler1Score.setVisible(false);
-            lblSpeler2Score.setVisible(false);
-            lblSpeler3Score.setVisible(false);
-            lblRonde.setVisible(false);
-        }
-    }
-
-    /**
-     * Game info (Player names, scores, round number) are updated.
-     */
-    private void updateGameInfo() {
     }
 }
