@@ -16,8 +16,8 @@ import processing.core.*;
 public class Puck extends PApplet {
 
     PApplet parent;
-    private double Xvelocity;
-    private double Yvelocity;
+    private double Xvelocity = 3;
+    private double Yvelocity = 3;
     private float Xpos;
     private float Ypos;
     private PVector velocity;
@@ -30,10 +30,11 @@ public class Puck extends PApplet {
         this.parent = parent;
         this.color = Color.RED;
         this.Xpos = 280;
-        this.Ypos = 323;
+        this.Ypos = 323;        
         this.position = new PVector((float) Xpos, (float) Ypos);
-        randomizePuck();
+        
         this.velocity = new PVector((float) Xvelocity, (float) Yvelocity);
+        randomizePuck();
         this.diameter = 520 * 0.04;
     }
     
@@ -114,7 +115,17 @@ public class Puck extends PApplet {
     
     public void randomizePuck()
     {
-        this.Xvelocity = -randomizer.nextDouble() + 3;
-        this.Yvelocity = -randomizer.nextDouble() + 3;
+        if (randomizer.nextDouble() > .5) 
+        {
+            this.velocity.x *= -1;
+        }
+        
+        if (randomizer.nextDouble() > .5) 
+        {
+            this.velocity.y *= -1;
+        }
+        
+        //this.Xvelocity = (float)-randomizer.nextInt() +3;
+        //this.Yvelocity = (float)-randomizer.nextInt() +3;
     }
 }

@@ -48,33 +48,25 @@ public class HockeyField {
             puck.move();
             checkColl();
             for (int i = 0; i < 3; i++) {
-                sides[i].display(i * 10);
+                sides[i].display(i * 20);
                 sides[i].makeGoal(i);
             }
             puck.display();
             return true;
-        } else {
+        } else 
+        {
             parent.textSize(30);
-            boolean isGelijkspel = false;
+            int highscore = 0;
+            Collections.sort(uitslag, new Comparator<Side>() {
+                @Override
+                public int compare(Side p1, Side p2) {
+                    return p2.getBindedPlayer().getInGameScore() - p1.getBindedPlayer().getInGameScore(); // Ascending
+                }
+            });
             for (int i = 0; i < 3; i++) {
-                if (uitslag.get(i) == null) {
-                    isGelijkspel = true;
-                }
-            }
-            if (isGelijkspel) {
-                parent.text("Gelijkspel", 150, 200);
-            } else {
-                int highscore = 0;
-                Collections.sort(uitslag, new Comparator<Side>() {
-                    @Override
-                    public int compare(Side p1, Side p2) {
-                        return p2.getBindedPlayer().getInGameScore() - p1.getBindedPlayer().getInGameScore(); // Ascending
-                    }
-                });
-                for (int i = 0; i < 3; i++) {
-                    Side tempSide = (Side)uitslag.get(i);
-                    parent.text(i+1 + ". " + tempSide.getBindedPlayer().toString() + ": " + tempSide.getBindedPlayer().getInGameScore(), 180, 200 + i * 50);
-                }
+                Side tempSide = (Side)uitslag.get(i);
+
+                parent.text(i+1 + ". " + tempSide.getBindedPlayer().toString() + ": " + tempSide.getBindedPlayer().getInGameScore(), 200, 200 + i * 50);
             }
         }
         return false;
@@ -131,7 +123,9 @@ public class HockeyField {
                 }
             }
         }
-        parent.text("Round : " + rounds, 300, 200);
+        parent.textSize(22);
+        parent.fill(0);
+        parent.text("Round : " + rounds, 50, 70);
     }
 
     public List<Side> getSides() {
@@ -154,19 +148,14 @@ public class HockeyField {
 
     public void checkWinner() {
 
-        if (rounds < 2) {
+        if (rounds < 10) {
             rounds++;
         } else {
             int highscore = 0;
             int index = 0;
             for (Side side : sides) {
-                //if (side.getBindedPlayer().getInGameScore() > highscore) {
-                if (side.getBindedPlayer().getInGameScore() == highscore) {
-                    uitslag.add(null);
-                } else {
-                    highscore = side.getBindedPlayer().getInGameScore();
-                    uitslag.add(side);
-                }
+                highscore = side.getBindedPlayer().getInGameScore();
+                uitslag.add(side);
                 gameOver = true;
                 index++;
             }

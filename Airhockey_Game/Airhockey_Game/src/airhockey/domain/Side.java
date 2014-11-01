@@ -91,9 +91,8 @@ public class Side {
         parent.strokeWeight(4);
         parent.line(lineX1, lineY1, lineX2, lineY2);
         parent.fill(0);
-        parent.text(bindedPlayer.toString() + ": " +  bindedPlayer.getInGameScore(), 400, 100 + i);
-        //bat = new Bat(color,parent,lineX1+10,lineY1+10,lineX2+10,lineY2+10);
-        //bat.display();
+        parent.textSize(15);
+        parent.text(bindedPlayer.toString() + ": " +  bindedPlayer.getInGameScore(), 430, 60 + i);
     }
 
     public PVector getVector1() {

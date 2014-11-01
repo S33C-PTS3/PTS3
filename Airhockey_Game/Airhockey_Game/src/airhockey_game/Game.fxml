@@ -11,6 +11,11 @@
 
 <AnchorPane id="AnchorPane" prefHeight="650.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="airhockey_game.GameFXMLController">
   <children>
-    <Button fx:id="btnExit" layoutX="5.0" layoutY="4.0" mnemonicParsing="false" onAction="#handleBtnExitEvent" onMouseEntered="#handleBtnExitMouseEnterEvent" onMouseExited="#handleBtnExitMouseExitEvent" opacity="0.3" text="x" />
+    <Button fx:id="btnExit" layoutX="15.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleBtnExitEvent" onMouseEntered="#handleBtnExitMouseEnterEvent" onMouseExited="#handleBtnExitMouseExitEvent" opacity="0.3" text="x" />
+      <Label layoutX="274.0" layoutY="44.0" text="Airhockey Game" textAlignment="CENTER">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
   </children>
 </AnchorPane>
