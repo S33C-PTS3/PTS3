@@ -12,12 +12,12 @@ package airhockey.domain;
 public class RobotPlayer implements IPlayer {
     private int inGameScore;
     private Difficulty difficulty;
-    private String naam;
+    private String name;
     
     public RobotPlayer(String naam)
     {
         this.inGameScore = 20;
-        this.naam = naam;
+        this.name = naam;
     }
     
     @Override
@@ -43,7 +43,7 @@ public class RobotPlayer implements IPlayer {
     @Override
     public String toString()
     {
-        return this.naam;
+        return this.name;
     }
     
     
