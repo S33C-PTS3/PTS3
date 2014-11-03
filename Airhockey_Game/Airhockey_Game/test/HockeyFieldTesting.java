@@ -34,7 +34,8 @@ public class HockeyFieldTesting {
     @Test
     public void testCheckWinner()
     {
-        PApplet applet = new PApplet();
+        MySketch applet = new MySketch();
+        applet.init();
         Puck puck = new Puck(null);
         
         //Create players
@@ -57,7 +58,14 @@ public class HockeyFieldTesting {
         //Simulate 10 rounds
         for (int i = 0; i < 10; i++) 
         {
-            field.checkWinner();
+            try
+            {
+                field.checkWinner();
+            }
+            catch (Exception ex)
+            {
+                fail(ex.getMessage());
+            }
         }
     }
 }
