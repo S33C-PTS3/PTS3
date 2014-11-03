@@ -51,7 +51,7 @@ public class MySketch extends PApplet {
                 zijdeX2 = Math.round(800 * sizefactor);
                 zijdeY2 = Math.round(693 * sizefactor);
                 sideName = SideName.BOTTOM;
-                player = new HumanPlayer();
+                player = new HumanPlayer("Eric");
             }
             if (i == 2) {
                 zijdeX2 = Math.round(400 * sizefactor);

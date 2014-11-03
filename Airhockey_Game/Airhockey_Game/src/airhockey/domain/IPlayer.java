@@ -12,8 +12,6 @@ package airhockey.domain;
  */
 public interface IPlayer {
 
-    public void setInGameScore(int newInGameScore);
-
     public int getInGameScore();
 
     public void changeScore(int point);

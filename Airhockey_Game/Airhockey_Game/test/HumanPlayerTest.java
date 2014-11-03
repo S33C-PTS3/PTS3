@@ -50,6 +50,18 @@ public class HumanPlayerTest {
     }
     
     @Test
+    public void testToString()
+    {
+        assertEquals("Henk", hp.toString());
+    }
+    
+    @Test 
+    public void testGetInGameScore()
+    {
+        assertEquals(20, hp.getInGameScore());
+    }
+    
+    @Test
     public void testChangeScore()
     {
         /**
@@ -58,9 +70,13 @@ public class HumanPlayerTest {
          */
         int i = hp.getInGameScore();
         hp.changeScore(1);
-        assertEquals("Should be the same", i-1, hp.getInGameScore());
+        assertEquals("Should be the same", i+1, hp.getInGameScore());
+        
+        for (int j = 0; j < 30; j++) 
+        {
+            hp.changeScore(-1);
+        }
+        assertEquals("Should be zero", 0, hp.getInGameScore());
         
     }
-    
-    
 }

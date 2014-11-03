@@ -24,15 +24,6 @@ public class RobotPlayer implements IPlayer {
         this.inGameScore = 20;
         this.name = naam;
     }
-    
-     /**
-     * Used to change inGameScore.
-     * @param newInGameScore 
-     */
-    @Override
-    public void setInGameScore(int newInGameScore) {
-        this.inGameScore = newInGameScore;
-    }
 
     /**
      * Returns the inGamescore 
