@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 import airhockey.domain.*;
+import airhockey_game.MySketch;
 import java.awt.Color;
 import org.junit.*;
 import static org.junit.Assert.*;
-
+import processing.core.PApplet;
 /**
  *
  * @author Joep Kerste
@@ -17,17 +17,20 @@ public class SideTesting {
     @Test
     public void testConstructor()
     {
-        Color newColor = new Color(100, 100, 0);
-        Player newPlayer = new Player("newUser");
-        Side newSide = new Side(newColor, newPlayer);
+        IPlayer newPlayer = new HumanPlayer("Eric");
+        MySketch ms = new MySketch();
+        ms.init();
+        System.out.println(ms);
+        Side side = new Side(100, 200, 200, 100, Color.GREEN, ms, SideName.RIGHT, newPlayer);
         
-        Assert.assertEquals("Kleur nieuwe Side niet correct", newColor, newSide.getColor());
-        Assert.assertEquals("Player nieuwe Side niet correct", newPlayer, newSide.getPlayer());
-    }
-    
-    @Test
-    public void testDisplay()
-    {
-        //TODO
-    }    
+        
+        Assert.assertEquals("Toegewezen speler niet correct", newPlayer, side.getBindedPlayer());
+        Assert.assertEquals(100, side.getLineX1(), 0);
+        Assert.assertEquals(200, side.getLineX2(), 0);
+        Assert.assertEquals(200, side.getLineY1(), 0);
+        Assert.assertEquals(100, side.getLineY2(), 0);
+        Assert.assertEquals("Sidename incorrect ", SideName.RIGHT, side.getSideName());
+        
+        
+    }  
 }
