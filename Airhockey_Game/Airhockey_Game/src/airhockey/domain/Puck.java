@@ -185,4 +185,9 @@ public class Puck extends PApplet {
             this.velocity.y *= -1;
         }
     }
+    
+    public PVector getVelocity()
+    {
+        return velocity;
+    }
 }
