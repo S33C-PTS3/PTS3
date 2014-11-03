@@ -8,7 +8,6 @@ import airhockey_game.MySketch;
 import java.awt.Color;
 import static org.junit.Assert.*;
 import org.junit.*;
-import processing.core.PApplet;
 import processing.core.PVector;
 
 /**

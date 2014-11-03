@@ -16,19 +16,19 @@ import processing.core.PVector;
  */
 public class Side {
 
-    private int lineX1;
-    private int lineY1;
-    private int lineX2;
-    private int lineY2;
+    private final int lineX1;
+    private final int lineY1;
+    private final int lineX2;
+    private final int lineY2;
     private double goalX1;
     private double goalY1;
     private double goalX2;
     private double goalY2;
-    private PApplet parentApplet;
-    private Color color;
+    private final PApplet parentApplet;
+    private final Color color;
     private Bat bat;
-    private SideName sideName;
-    private IPlayer bindedPlayer;
+    private final SideName sideName;
+    private final IPlayer bindedPlayer;
     double batX1 = 0;
     double batY1 = 0;
     double batX2 = 0;

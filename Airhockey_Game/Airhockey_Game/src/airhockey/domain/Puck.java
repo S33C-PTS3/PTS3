@@ -17,12 +17,12 @@ import processing.core.*;
 public class Puck extends PApplet {
 
     PApplet parentApplet;
-    private double Xvelocity = 3;
-    private double Yvelocity = 3;
-    private float Xpos;
-    private float Ypos;
-    private PVector velocity;
-    private PVector position;
+    private final double Xvelocity = 3;
+    private final double Yvelocity = 3;
+    private final float Xpos;
+    private final float Ypos;
+    private final PVector velocity;
+    private final PVector position;
     private final Color color;
     private final double diameter;
     private final Random randomizer = new Random();

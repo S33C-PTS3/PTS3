@@ -7,8 +7,6 @@ import airhockey.domain.*;
 import airhockey_game.MySketch;
 import java.awt.Color;
 import org.junit.*;
-import static org.junit.Assert.*;
-import processing.core.PApplet;
 /**
  *
  * @author Joep Kerste

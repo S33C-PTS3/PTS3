@@ -7,7 +7,6 @@ import airhockey.domain.*;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import org.junit.*;
-import static org.junit.Assert.*;
 import processing.core.PApplet;
 import processing.core.PVector;
 /**
