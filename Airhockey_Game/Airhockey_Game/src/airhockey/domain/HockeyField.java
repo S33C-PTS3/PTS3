@@ -87,13 +87,13 @@ public class HockeyField {
      * Method to check if the puck collided with a side, a goal or a bat and changes its direction
      */
     public void checkColl() {
-        for (int i = 0; i < sides.length; i++) {
-            hitSide = sides[i].ballHitsWall(puck.getXpos(), puck.getYpos(), puck.getXvelocity(), puck.getYvelocity());
-            hitBat = sides[i].hasCollided(puck);
-            goal = sides[i].checkGoalLine(puck.getXpos(), puck.getYpos(), puck.getXvelocity(), puck.getYvelocity(), puck.getRadius());
+        for (Side side : sides) {
+            hitSide = side.ballHitsWall(puck.getXpos(), puck.getYpos(), puck.getXvelocity(), puck.getYvelocity());
+            hitBat = side.hasCollided(puck);
+            goal = side.checkGoalLine(puck.getXpos(), puck.getYpos(), puck.getXvelocity(), puck.getYvelocity(), puck.getRadius());
             if (hitSide != null && lastHitSide != hitSide.getSideName()) {
                 puck.setVelocityWithoutNormal(hitSide.getVector1(), hitSide.getVector2());
-                lastHitSide = sides[i].getSideName();
+                lastHitSide = side.getSideName();
                 hitSide = null;
             }
             if (hitBat != null && lastHitSide != hitBat.getBat().getSideName()) {
@@ -103,7 +103,7 @@ public class HockeyField {
                 } else if (!hitBat.equals(batsHitsPuck.get(batsHitsPuck.size() - 1))) {
                     batsHitsPuck.add(hitBat);
                 }
-                lastHitSide = sides[i].getBat().getSideName();
+                lastHitSide = side.getBat().getSideName();
                 hitBat = null;
             }
             if (goal != null) {
