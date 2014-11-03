@@ -41,6 +41,10 @@ public class RobotPlayer implements IPlayer {
     @Override
     public void changeScore(int point) {
         this.inGameScore += point;
+        if (inGameScore < 0) 
+        {
+            inGameScore = 0;
+        }
     }
     
     /**

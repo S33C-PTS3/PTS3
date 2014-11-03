@@ -52,13 +52,13 @@ public class HumanPlayerTest {
     @Test
     public void testToString()
     {
-        assertEquals("Henk", hp.toString());
+        assertEquals("Should be 'Henk'", "Henk", hp.toString());
     }
     
     @Test 
     public void testGetInGameScore()
     {
-        assertEquals(20, hp.getInGameScore());
+        assertEquals("Should be 20", 20, hp.getInGameScore());
     }
     
     @Test
@@ -77,6 +77,5 @@ public class HumanPlayerTest {
             hp.changeScore(-1);
         }
         assertEquals("Should be zero", 0, hp.getInGameScore());
-        
     }
 }

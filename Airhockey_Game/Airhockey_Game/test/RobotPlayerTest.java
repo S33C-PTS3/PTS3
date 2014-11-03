@@ -29,8 +29,9 @@ public class RobotPlayerTest {
     }
     
     @Before
-    public void setUp() {
-        rp = new RobotPlayer("Theo", Difficulty.EASY);
+    public void setUp() 
+    {
+        rp = new RobotPlayer("Theo");
     }
     
     @After
@@ -47,7 +48,7 @@ public class RobotPlayerTest {
          * @param difficulty 
          */
         assertNotNull("Should be created", rp);
-        assertNotNull("Should be created", new RobotPlayer("henk", Difficulty.HARD));
+        assertNotNull("Should be created", new RobotPlayer("henk"));
     }
     
     
@@ -60,9 +61,37 @@ public class RobotPlayerTest {
         */
         int i = rp.getInGameScore();
         rp.changeScore(1);
-        assertEquals("Should be the same", i-1, rp.getInGameScore());
+        assertEquals("Should be the same", i+1, rp.getInGameScore());
+        for (int j = 0; j < 30; j++) 
+        {
+            rp.changeScore(-1);
+        }
+        assertEquals("Should be zero", 0, rp.getInGameScore());
+    }
         
+    @Test
+    public void testToString()
+    {
+        assertEquals("Should be 'Theo'", "Theo", rp.toString());
     }
     
+    @Test
+    public void testGetInGameScore()
+    {
+        RobotPlayer newRobot = new RobotPlayer("x");
+        assertEquals("Should be 20", 20, newRobot.getInGameScore());
+    }
     
+    @Test
+    public void testSetDifficulty()
+    {
+        try
+        {
+            rp.setDifficulty(Difficulty.HARD);
+        }
+        catch (Exception ex)
+        {
+            fail("Failed to set Difficulty");
+        }
+    }
 }
