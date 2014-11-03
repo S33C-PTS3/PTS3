@@ -7,6 +7,7 @@
 import airhockey.domain.*;
 import org.junit.*;
 import static org.junit.Assert.*;
+import processing.core.PApplet;
 
 /**
  *
@@ -16,14 +17,15 @@ public class PuckTesting {
     @Test
     public void testConstructor()
     {
-        double X = 100;
-        double Y = 100;
-        double velocity = 25;
-        Puck newPuck = new Puck(X, Y, velocity);
+        double X = 280;
+        double Y = 323;
+        double diameter = 520 * 0.04;
+        PApplet parent = new PApplet();
+        Puck newPuck = new Puck(parent);
         
-        Assert.assertEquals("X cöordinaat incorrect", X, newPuck.getX());
-        Assert.assertEquals("Y cöordinaat incorrect", Y, newPuck.getY());
-        Assert.assertEquals("Velocity incorrect", velocity, newPuck.getVelocity());
+        Assert.assertEquals(X, newPuck.getX());
+        Assert.assertEquals(Y, newPuck.getY());
+        Assert.assertEquals(velocity, newPuck.getVelocity());
     }
     
     @Test

@@ -12,6 +12,7 @@ import processing.core.PVector;
 /**
  *
  * @author Sasa2905
+ * this class represent a side on the HockeyField
  */
 public class Side {
 
@@ -33,6 +34,17 @@ public class Side {
     double batX2 = 0;
     double batY2 = 0;
 
+    /**
+     * Constructor used for Side.
+     * @param x1
+     * @param y1
+     * @param x2
+     * @param y2
+     * @param color
+     * @param parent
+     * @param sideName
+     * @param bp 
+     */
     public Side(int x1, int y1, int x2, int y2, Color color, PApplet parent, SideName sideName, IPlayer bp) {
         this.lineX1 = x1;
         this.lineX2 = x2;
@@ -82,10 +94,18 @@ public class Side {
         bat.display();
     }
 
+    /**
+     * Returns player binded to this side
+     * @return 
+     */
     public IPlayer getBindedPlayer() {
         return this.bindedPlayer;
     }
 
+    /**
+     * Used to display Side on the board. 
+     * @param i 
+     */
     public void display(int i) {
         parentApplet.stroke(color.getRGB());
         parentApplet.strokeWeight(4);
@@ -95,42 +115,82 @@ public class Side {
         parentApplet.text(bindedPlayer.toString() + ": " +  bindedPlayer.getInGameScore(), 430, 60 + i);
     }
 
+    /**
+     * Returns a PVector for the starting point of this line.
+     * @return 
+     */
     public PVector getVector1() {
         return new PVector(this.lineX1, this.lineY1);
     }
 
+    /**
+     * Returns a PVector for the ending point of thies line.
+     * @return 
+     */
     public PVector getVector2() {
         return new PVector(this.lineX2, this.lineY2);
     }
 
+    /**
+     * Returns the starting point of the goal.
+     * @return 
+     */
     public PVector getGoalVector1() {
         return new PVector((float) goalX1, (float) goalY1);
     }
 
+    /**
+     * Returns the ending point of the goal.
+     * @return 
+     */
     public PVector getGoalVector2() {
         return new PVector((float) goalX2, (float) goalY2);
     }
 
+    /**
+     * Returns the x coordinate of starting point for this sideline
+     * @return te
+     */
     public double getLineX1() {
         return this.lineX1;
     }
 
+    /**
+     * Returns the y coordinate of starting point for this sideline
+     * @return te
+     */
     public double getLineY1() {
         return this.lineY1;
     }
 
+    /**
+     * Returns the x coordinate of ending point for this sideline
+     * @return te
+     */
     public double getLineX2() {
         return this.lineX2;
     }
 
+    /**
+     * Returns the y coordinate of ending point for this sideline
+     * @return te
+     */
     public double getLineY2() {
         return this.lineY2;
     }
 
+    /**
+     * Returns the SideName for this Side.
+     * @return 
+     */
     public SideName getSideName() {
         return sideName;
     }
 
+    /**
+     * Used to display the goals on the board.
+     * @param i 
+     */
     public void makeGoal(int i) {
         parentApplet.stroke(color.getRGB());
         parentApplet.strokeWeight(10);
@@ -139,6 +199,14 @@ public class Side {
         bat.display();
     }
 
+    /**
+     * Collision check between puck and this side.
+     * @param x
+     * @param y
+     * @param xvel
+     * @param yvel
+     * @return 
+     */
     public Side ballHitsWall(double x, double y, double xvel, double yvel) {
         // first get the length of the line using the Pythagorean theorem
         float distX = lineX1 - lineX2;
@@ -165,30 +233,63 @@ public class Side {
         }
     }
 
+    /**
+     * Moves the bat to a given direction.
+     * @param direction 
+     */
     public void moveBat(String direction) {
         bat.move(direction);
     }
 
+    /**
+     * Returns this sides bat
+     * @return 
+     */
     public Bat getBat() {
         return bat;
     }
 
+    /**
+     * Returns starting y point of this sides goal
+     * @return 
+     */
     public double getGoalY1() {
         return goalY1;
     }
-
+    
+    /**
+     * Returns ending y point of this sides goal
+     * @return 
+     */
     public double getGoalY2() {
         return goalY2;
     }
 
+    /**
+     * Returns starting x point of this sides goal
+     * @return 
+     */
     public double getGoalX1() {
         return goalX1;
     }
 
+    /**
+     * Returns ending x point of this sides goal
+     * @return 
+     */
     public double getGoalX2() {
         return goalX2;
     }
 
+    /**
+     * Checks if the boal collides with the goal line.
+     * @param x
+     * @param y
+     * @param xvel
+     * @param yvel
+     * @param radius
+     * @return 
+     */
     public Side checkGoalLine(double x, double y, double xvel, double yvel, float radius) {
         // first get the length of the line using the Pythagorean theorem
         float distX = lineX1 - lineX2;
@@ -216,6 +317,12 @@ public class Side {
        
     }
 
+    /**
+     * Checks if th puck is inside the goal area.
+     * @param puckX
+     * @param puckY
+     * @return 
+     */
     public boolean checkGoal(double puckX, double puckY) {
         if (sideName.equals(SideName.LEFT)) {
             if (puckX < goalX1 && puckX > goalX2) {
@@ -242,6 +349,11 @@ public class Side {
         return false;
     }
 
+    /**
+     * Checks if the puck collided with this sides bat.
+     * @param p
+     * @return 
+     */
     Side hasCollided(Puck p) {
         if (parentApplet.dist((float) p.getXpos(), (float) p.getYpos(), (float) bat.getXpos() + bat.getWidth(), (float) bat.getYpos() + bat.getHeight()) < p.getDiameter() / 2 + bat.getDiameter() / 2) {
             return this;

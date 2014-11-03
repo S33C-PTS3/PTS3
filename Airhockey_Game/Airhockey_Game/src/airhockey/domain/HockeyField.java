@@ -14,6 +14,7 @@ import processing.core.PApplet;
 /**
  *
  * @author Eric
+ * The HockeyField represents the board where the game is played on
  */
 public class HockeyField {
 
@@ -30,6 +31,12 @@ public class HockeyField {
     private ArrayList gameResult = null;
     private boolean gameOver = false;
 
+    /**
+     * Constructor used for HockeyField.
+     * @param puck
+     * @param sides
+     * @param parent 
+     */
     public HockeyField(Puck puck, Side[] sides, PApplet parent) {
         this.puck = puck;
         this.sides = sides;
@@ -42,6 +49,10 @@ public class HockeyField {
         this.parentApplet = parent;
     }
 
+    /**
+     * Method used to display the HockeyField
+     * @return 
+     */
     public boolean display() {
         checkColl();
         if (!gameOver) {
@@ -70,7 +81,11 @@ public class HockeyField {
         }
         return false;
     }
-
+    
+    
+    /**
+     * Method to check if the puck collided with a side, a goal or a bat and changes its direction
+     */
     public void checkColl() {
         for (int i = 0; i < sides.length; i++) {
             hitSide = sides[i].ballHitsWall(puck.getXpos(), puck.getYpos(), puck.getXvelocity(), puck.getYvelocity());
@@ -126,11 +141,18 @@ public class HockeyField {
         parentApplet.fill(0);
         parentApplet.text("Round : " + rounds, 50, 70);
     }
-
+    
+    /**
+     * returns null
+     * @return 
+     */
     public List<Side> getSides() {
         return null;
     }
 
+    /**
+     * Used to reset the ball and checks each time if there is a winner.
+     */
     private void resetGame() {
         puck.setXpos(280);
         puck.setYpos(323);
@@ -144,7 +166,10 @@ public class HockeyField {
         }
         checkWinner();
     }
-
+    
+    /**
+     * Checks if there is a winner.
+     */
     public void checkWinner() {
 
         if (rounds < 10) {

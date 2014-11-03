@@ -13,6 +13,7 @@ import processing.core.PVector;
 /**
  *
  * @author rens
+ * The Bat class represents the bats used inside the game.
  */
 public class Bat extends PApplet {
     private Color color;
@@ -26,6 +27,15 @@ public class Bat extends PApplet {
     double rightSpeedModifier = 1;
     double leftSpeedModifier = 1;
     
+    /**
+     * Constructor used for the Bat Class
+     * @param color
+     * @param parent
+     * @param Xpos
+     * @param Ypos
+     * @param diameter
+     * @param sidename 
+     */
     public Bat(Color color, PApplet parent, float Xpos, float Ypos, double diameter, SideName sidename)
     {
         this.parentApplet = parent;
@@ -61,31 +71,58 @@ public class Bat extends PApplet {
         this.sidename = sidename;
     }
     
+    /**
+     * Returns a PVector for the current position from the object.
+     * @return 
+     */
     public PVector getVector()
     {
         return new PVector(Xpos,Ypos);
     }
     
+    /**
+     * Returns the Xpos which represent the current x coördinate from the object.
+     * @return 
+     */
     public float getXpos(){
         return this.Xpos;
     }
     
+    /**
+     * Returns the SideName for this object.
+     * @return 
+     */
     public SideName getSideName(){
         return this.sidename;
     }
     
+    /**
+     * Sets the Xposisition for this object.
+     * @param xpos 
+     */
     public void setXpos(float xpos){
         this.Xpos = xpos;
     }
     
+    /**
+     * Returns the velocity of x for this object.
+     * @return 
+     */
     public double getXvelocity(){
         return this.Xvelocity;
     }
     
+    /**
+     * Sets the new velocity for this object.
+     * @param Xvelocity 
+     */
     public void setXvelocity(double Xvelocity){
         this.Xvelocity = Xvelocity;
     }
     
+    /**
+     * Used to display the bat on the field.
+     */
     public void display(){
         parentApplet.strokeWeight((float)diameter);
         parentApplet.fill(color.getRGB() + 100);
@@ -93,11 +130,19 @@ public class Bat extends PApplet {
         parentApplet.ellipse((float)Xpos, (float)Ypos, (float)diameter, (float)diameter);
     }
 
+    /**
+     * Returns the Ypos which represent the current Y coördinate from the object.
+     * @return 
+     */
     public float getYpos()
     {
         return this.Ypos;
     }
     
+    /**
+     * Changes position of bat based on the direction given.
+     * @param direction 
+     */
     public void move(String direction)
     {
         Settings s = serMan.loadAIsettings();
@@ -135,16 +180,30 @@ public class Bat extends PApplet {
         display();
     }
     
+    /**
+     * Returns the diameter for this object.
+     * @return 
+     */
     public double getDiameter()
     {
         return this.diameter;
     }
+    
+    /**
+     * Returns the readius for this object.
+     * @return 
+     */
     public float getRadius()
     {
         float radius = (float)this.diameter/2;
         return radius;
     }
     
+    /**
+     * Returns the Difficulty based on the settings
+     * @param s
+     * @return 
+     */
     //Difficulty of AI get assigned number values to calculte total
     private int getOverallDifficulty(Settings s)
     {

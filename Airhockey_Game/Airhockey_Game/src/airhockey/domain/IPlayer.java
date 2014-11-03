@@ -8,6 +8,7 @@ package airhockey.domain;
 /**
  *
  * @author Roy
+ * Interface IPlayer
  */
 public interface IPlayer {
 

@@ -8,6 +8,7 @@ package airhockey.domain;
 /**
  *
  * @author Sasa2905
+ * Enum for SideNames and the Sides Bats.
  */
 public enum SideName {
     LEFT,RIGHT,BOTTOM,BATLEFT,BATRIGHT,BATBOTTOM;
