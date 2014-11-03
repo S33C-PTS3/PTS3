@@ -18,16 +18,16 @@ import processing.core.PApplet;
  */
 public class HockeyField {
 
-    private Puck puck;
-    private Side[] sides;
+    private final Puck puck;
+    private final Side[] sides;
     private SideName lastHitSide;
     private Side hitSide;
     private Side hitBat;
     private Side goal;
-    private List<Side> batsHitsPuck;
+    private final List<Side> batsHitsPuck;
     private int rounds;
-    private ArrayList<Integer> scores;
-    private PApplet parentApplet;
+    private final ArrayList<Integer> scores;
+    private final PApplet parentApplet;
     private ArrayList gameResult = null;
     private boolean gameOver = false;
 
@@ -108,7 +108,6 @@ public class HockeyField {
             }
             if (goal != null) {
                 System.out.println(goal.getSideName().toString());
-                //goal.getBindedPlayer().changeScore(-1);
 
                 if (!batsHitsPuck.isEmpty()) {
 
@@ -141,14 +140,6 @@ public class HockeyField {
         parentApplet.fill(0);
         parentApplet.text("Round : " + rounds, 50, 70);
     }
-    
-    /**
-     * returns null
-     * @return 
-     */
-    public List<Side> getSides() {
-        return null;
-    }
 
     /**
      * Used to reset the ball and checks each time if there is a winner.
@@ -171,7 +162,6 @@ public class HockeyField {
      * Checks if there is a winner.
      */
     public void checkWinner() {
-
         if (rounds < 10) {
             rounds++;
         } else {
