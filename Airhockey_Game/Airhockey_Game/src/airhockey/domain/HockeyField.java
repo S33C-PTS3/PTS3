@@ -59,7 +59,7 @@ public class HockeyField {
             puck.move();
             for (int i = 0; i < 3; i++) {
                 sides[i].display(i * 20);
-                sides[i].makeGoal(i);
+                sides[i].makeGoal();
             }
             puck.display();
             return true;

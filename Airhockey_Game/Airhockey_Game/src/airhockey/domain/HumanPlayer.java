@@ -13,14 +13,27 @@ package airhockey.domain;
 public class HumanPlayer implements IPlayer {
 
     private int inGameScore;
+<<<<<<< Updated upstream
     private final String name;
+=======
+    private String username;
+>>>>>>> Stashed changes
 
     /**
      * Constructor used for HumanPlayer
      */
     public HumanPlayer(String name) {
         this.inGameScore = 20;
+<<<<<<< Updated upstream
         this.name = name;
+=======
+        username = "Eric";
+    }
+
+    @Override
+    public void setInGameScore(int newInGameScore) {
+        this.inGameScore = newInGameScore;
+>>>>>>> Stashed changes
     }
 
     /**
@@ -52,7 +65,7 @@ public class HumanPlayer implements IPlayer {
     @Override
     public String toString()
     {
-        return name;
+        return username;
     }
 }
 

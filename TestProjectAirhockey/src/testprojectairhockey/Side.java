@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package airhockey.domain;
+package testprojectairhockey;
 
-import java.awt.Color;
-import processing.core.PApplet;
-import processing.core.PVector;
+import javafx.scene.paint.Color;
+
+
 
 /**
  *
@@ -16,32 +16,16 @@ import processing.core.PVector;
  */
 public class Side {
 
-<<<<<<< Updated upstream
-    private final int lineX1;
-    private final int lineY1;
-    private final int lineX2;
-    private final int lineY2;
-=======
-    private Color color;
     private int lineX1;
     private int lineY1;
     private int lineX2;
     private int lineY2;
->>>>>>> Stashed changes
     private double goalX1;
     private double goalY1;
     private double goalX2;
     private double goalY2;
-<<<<<<< Updated upstream
-    private final PApplet parentApplet;
-    private final Color color;
-=======
-    private PApplet parentApplet;
-    
->>>>>>> Stashed changes
-    private Bat bat;
-    private final SideName sideName;
-    private final IPlayer bindedPlayer;
+    private SideName sideName;
+    private Color color;
     double batX1 = 0;
     double batY1 = 0;
     double batX2 = 0;
@@ -58,16 +42,13 @@ public class Side {
      * @param sideName
      * @param bp 
      */
-    public Side(int x1, int y1, int x2, int y2, Color color, PApplet parent, SideName sideName, IPlayer bp) {
+    public Side(int x1, int y1, int x2, int y2, Color color, SideName sideName) {
         this.lineX1 = x1;
         this.lineX2 = x2;
         this.lineY1 = y1;
         this.lineY2 = y2;
-        this.parentApplet = parent;
         this.color = color;
-        this.bat = null;
         this.sideName = sideName;
-        this.bindedPlayer = bp;
         SideName sideBat = null;
         int distanceFromSide = 30;
         if (sideName == SideName.LEFT) {
@@ -103,63 +84,8 @@ public class Side {
         }
 
         double diameter = 520 * 0.08;
-        bat = new Bat(color, parent, (float) batX1, (float) batY1, (float) diameter, sideBat);
-        bat.display();
     }
-
-    /**
-     * Returns player binded to this side
-     * @return 
-     */
-    public IPlayer getBindedPlayer() {
-        return this.bindedPlayer;
-    }
-
-    /**
-     * Used to display Side on the board. 
-     * @param i 
-     */
-    public void display(int i) {
-        parentApplet.stroke(color.getRGB());
-        parentApplet.strokeWeight(4);
-        parentApplet.line(lineX1, lineY1, lineX2, lineY2);
-        parentApplet.fill(0);
-        parentApplet.textSize(15);
-        parentApplet.text(bindedPlayer.toString() + ": " +  bindedPlayer.getInGameScore(), 430, 60 + i);
-    }
-
-    /**
-     * Returns a PVector for the starting point of this line.
-     * @return 
-     */
-    public PVector getVector1() {
-        return new PVector(this.lineX1, this.lineY1);
-    }
-
-    /**
-     * Returns a PVector for the ending point of thies line.
-     * @return 
-     */
-    public PVector getVector2() {
-        return new PVector(this.lineX2, this.lineY2);
-    }
-
-    /**
-     * Returns the starting point of the goal.
-     * @return 
-     */
-    public PVector getGoalVector1() {
-        return new PVector((float) goalX1, (float) goalY1);
-    }
-
-    /**
-     * Returns the ending point of the goal.
-     * @return 
-     */
-    public PVector getGoalVector2() {
-        return new PVector((float) goalX2, (float) goalY2);
-    }
-
+    
     /**
      * Returns the x coordinate of starting point for this sideline
      * @return te
@@ -200,22 +126,6 @@ public class Side {
         return sideName;
     }
 
-<<<<<<< Updated upstream
-    /**
-     * Used to display the goals on the board.
-     * @param i 
-     */
-    public void makeGoal(int i) {
-=======
-    public void makeGoal() {
->>>>>>> Stashed changes
-        parentApplet.stroke(color.getRGB());
-        parentApplet.strokeWeight(10);
-
-        parentApplet.line((float) goalX1, (float) goalY1, (float) goalX2, (float) goalY2);
-        bat.display();
-    }
-
     /**
      * Collision check between puck and this side.
      * @param x
@@ -248,22 +158,6 @@ public class Side {
         } else {
             return null;
         }
-    }
-
-    /**
-     * Moves the bat to a given direction.
-     * @param direction 
-     */
-    public void moveBat(String direction) {
-        bat.move(direction);
-    }
-
-    /**
-     * Returns this sides bat
-     * @return 
-     */
-    public Bat getBat() {
-        return bat;
     }
 
     /**
@@ -371,10 +265,4 @@ public class Side {
      * @param p
      * @return 
      */
-    Side hasCollided(Puck p) {
-        if (parentApplet.dist((float) p.getXpos(), (float) p.getYpos(), (float) bat.getXpos() + bat.getWidth(), (float) bat.getYpos() + bat.getHeight()) < p.getDiameter() / 2 + bat.getDiameter() / 2) {
-            return this;
-        }
-        return null;
-    }
 }

@@ -7,8 +7,14 @@ import airhockey.domain.*;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import org.junit.*;
+<<<<<<< Updated upstream
 import processing.core.PApplet;
 import processing.core.PVector;
+=======
+import static org.junit.Assert.*;
+import processing.core.PApplet;
+
+>>>>>>> Stashed changes
 /**
  *
  * @author Joep Kerste
@@ -19,7 +25,19 @@ public class PuckTesting {
     @Before
     public void setUp()
     {
+<<<<<<< Updated upstream
         parent = new PApplet();
+=======
+        double X = 100;
+        double Y = 100;
+        double velocity = 25;
+        PApplet parent = new PApplet();
+        Puck newPuck = new Puck(parent);
+        
+        Assert.assertEquals("X cöordinaat incorrect", X, newPuck.getX());
+        Assert.assertEquals("Y cöordinaat incorrect", Y, newPuck.getY());
+        Assert.assertEquals("Velocity incorrect", velocity, newPuck.getVelocity());
+>>>>>>> Stashed changes
     }
     
     @Test
