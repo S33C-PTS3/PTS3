@@ -356,6 +356,18 @@ public class Side {
         /*if (parentApplet.dist((float) p.getXpos(), (float) p.getYpos(), (float) bat.getXpos() + bat.getDiameter(), (float) bat.getYpos() + bat.getDiameter()) < p.getDiameter() / 2 + bat.getDiameter() / 2) {
             return this;
         }*/
+        
+        float xd = bat.getXpos() - p.getXpos();
+        float yd = bat.getYpos() - p.getYpos();
+        
+        float sumRadius = bat.getRadius() + p.getRadius();
+        float sqrRadius = sumRadius * sumRadius;
+        
+        float distSqr = (xd * xd) + (yd*yd);
+        if(distSqr <= sqrRadius)
+        {
+            return this;
+        }
         return null;
     }
 }
