@@ -3,11 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package testprojectairhockey;
+package testprojectairhockey.domain;
 
-import javafx.scene.paint.Color;
-
-
+import java.awt.Color;
+import javafx.geometry.Point2D;
 
 /**
  *
@@ -24,8 +23,10 @@ public class Side {
     private double goalY1;
     private double goalX2;
     private double goalY2;
-    private SideName sideName;
     private Color color;
+    private Bat bat;
+    private SideName sideName;
+    private IPlayer bindedPlayer;
     double batX1 = 0;
     double batY1 = 0;
     double batX2 = 0;
@@ -38,17 +39,18 @@ public class Side {
      * @param x2
      * @param y2
      * @param color
-     * @param parent
      * @param sideName
      * @param bp 
      */
-    public Side(int x1, int y1, int x2, int y2, Color color, SideName sideName) {
+    public Side(int x1, int y1, int x2, int y2, Color color, SideName sideName, IPlayer bp) {
         this.lineX1 = x1;
         this.lineX2 = x2;
         this.lineY1 = y1;
         this.lineY2 = y2;
         this.color = color;
+        this.bat = null;
         this.sideName = sideName;
+        this.bindedPlayer = bp;
         SideName sideBat = null;
         int distanceFromSide = 30;
         if (sideName == SideName.LEFT) {
@@ -84,8 +86,63 @@ public class Side {
         }
 
         double diameter = 520 * 0.08;
+        bat = new Bat(color, (float) batX1, (float) batY1, (float) diameter, sideBat);
+       // bat.display();
     }
-    
+
+    /**
+     * Returns player binded to this side
+     * @return 
+     */
+    public IPlayer getBindedPlayer() {
+        return this.bindedPlayer;
+    }
+
+    /**
+     * Used to display Side on the board. 
+     * @param i 
+     */
+    /*public void display(int i) {
+        parentApplet.stroke(color.getRGB());
+        parentApplet.strokeWeight(4);
+        parentApplet.line(lineX1, lineY1, lineX2, lineY2);
+        parentApplet.fill(0);
+        parentApplet.textSize(15);
+        parentApplet.text(bindedPlayer.toString() + ": " +  bindedPlayer.getInGameScore(), 430, 60 + i);
+    }*/
+
+    /**
+     * Returns a Point2D for the starting point of this line.
+     * @return 
+     */
+    public Point2D getVector1() {
+        return new Point2D(this.lineX1, this.lineY1);
+    }
+
+    /**
+     * Returns a Point2D for the ending point of thies line.
+     * @return 
+     */
+    public Point2D getVector2() {
+        return new Point2D(this.lineX2, this.lineY2);
+    }
+
+    /**
+     * Returns the starting point of the goal.
+     * @return 
+     */
+    public Point2D getGoalVector1() {
+        return new Point2D((float) goalX1, (float) goalY1);
+    }
+
+    /**
+     * Returns the ending point of the goal.
+     * @return 
+     */
+    public Point2D getGoalVector2() {
+        return new Point2D((float) goalX2, (float) goalY2);
+    }
+
     /**
      * Returns the x coordinate of starting point for this sideline
      * @return te
@@ -127,6 +184,18 @@ public class Side {
     }
 
     /**
+     * Used to display the goals on the board.
+     * @param i 
+     */
+    /*public void makeGoal(int i) {
+        parentApplet.stroke(color.getRGB());
+        parentApplet.strokeWeight(10);
+
+        parentApplet.line((float) goalX1, (float) goalY1, (float) goalX2, (float) goalY2);
+        bat.display();/*
+    }
+
+    /**
      * Collision check between puck and this side.
      * @param x
      * @param y
@@ -158,6 +227,22 @@ public class Side {
         } else {
             return null;
         }
+    }
+
+    /**
+     * Moves the bat to a given direction.
+     * @param direction 
+     */
+    public void moveBat(String direction) {
+        bat.move(direction);
+    }
+
+    /**
+     * Returns this sides bat
+     * @return 
+     */
+    public Bat getBat() {
+        return bat;
     }
 
     /**
@@ -265,4 +350,12 @@ public class Side {
      * @param p
      * @return 
      */
+    
+    //TODO
+    Side hasCollided(Puck p) {
+        /*if (parentApplet.dist((float) p.getXpos(), (float) p.getYpos(), (float) bat.getXpos() + bat.getDiameter(), (float) bat.getYpos() + bat.getDiameter()) < p.getDiameter() / 2 + bat.getDiameter() / 2) {
+            return this;
+        }*/
+        return null;
+    }
 }

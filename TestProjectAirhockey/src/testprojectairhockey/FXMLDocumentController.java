@@ -5,6 +5,8 @@
  */
 package testprojectairhockey;
 
+import testprojectairhockey.domain.SideName;
+import testprojectairhockey.domain.Side;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.animation.AnimationTimer;
@@ -43,8 +45,8 @@ public class FXMLDocumentController implements Initializable {
     
     public void Draw()
     {
-        Side s = new Side(0, 0, 200, 300, Color.BLUE, SideName.LEFT);
-        gc.strokeLine(s.getLineX1(), s.getLineY1(), s.getLineX2(), s.getLineY2());
+        //Side s = new Side(0, 0, 200, 300, Color.BLUE, SideName.LEFT);
+        //gc.strokeLine(s.getLineX1(), s.getLineY1(), s.getLineX2(), s.getLineY2());
     }
     
 }
