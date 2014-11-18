@@ -5,9 +5,10 @@
  */
 package testprojectairhockey.domain;
 
-import java.awt.Color;
+
 import java.util.Random;
 import javafx.geometry.Point2D;
+import javafx.scene.paint.Color;
 
 /**
  *
@@ -144,7 +145,8 @@ public class Puck{
      * Changes position influenced by velocity
      */
     public void move() {
-        position.add(velocity);
+        
+        position = position.add(velocity);
     }
 
     /**

@@ -5,11 +5,13 @@
  */
 package testprojectairhockey.domain;
 
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import javafx.geometry.Point2D;
+import javafx.scene.paint.Color;
 
 /**
  *
@@ -18,6 +20,11 @@ import javafx.geometry.Point2D;
  */
 public class HockeyField {
 
+    final private float sizefactor = 0.7f;
+    int middleX = 0;
+    int middleY = 0;
+    Color[] colors;
+    
     private Puck puck;
     private Side[] sides;
     private SideName lastHitSide;
@@ -32,18 +39,53 @@ public class HockeyField {
 
     /**
      * Constructor used for HockeyField.
-     * @param puck
-     * @param sides
      */
-    public HockeyField(Puck puck, Side[] sides) {
-        this.puck = puck;
-        this.sides = sides;
+    public HockeyField() {
+        puck = new Puck();
+        
         this.lastHitSide = null;
         hitSide = null;
         batsHitsPuck = new ArrayList<>();
         rounds = 1;
         scores = new ArrayList<>();
         gameResult = new ArrayList();
+        
+        
+        sides = new Side[3];
+        colors = new Color[3];
+        colors[0] = Color.BLUE;
+        colors[1] = Color.RED;
+        colors[2] = Color.GREEN;
+        int zijdeX1 = Math.round(400 * sizefactor);
+        int zijdeY1 = 0;
+        int zijdeX2 = 0;
+        int zijdeY2 = Math.round(693 * sizefactor);
+        SideName sideName = SideName.LEFT;
+        IPlayer player = new RobotPlayer("Karel");
+        for (int i = 0; i < 3; i++) {
+            if (i != 0) {
+                zijdeX1 = zijdeX2;
+                zijdeY1 = zijdeY2;
+            }
+            if (i == 1) {
+                zijdeX2 = Math.round(800 * sizefactor);
+                zijdeY2 = Math.round(693 * sizefactor);
+                sideName = SideName.BOTTOM;
+                player = new HumanPlayer();
+            }
+            if (i == 2) {
+                zijdeX2 = Math.round(400 * sizefactor);
+                zijdeY2 = 0;
+                sideName = SideName.RIGHT;
+                player = new RobotPlayer("Sjef");
+            }
+            Side s = new Side(zijdeX1, zijdeY1, zijdeX2, zijdeY2, colors[i], sideName, player);
+            sides[i] = s;
+            middleX += zijdeX2;
+            middleY += zijdeY2;
+        }
+        middleX /= 3;
+        middleY /= 3;
     }
 
     /**
@@ -139,8 +181,13 @@ public class HockeyField {
      * returns null
      * @return 
      */
-    public List<Side> getSides() {
-        return null;
+    public Side[] getSides() {
+        return sides;
+    }
+    
+    public Puck getPuck()
+    {
+        return this.puck;
     }
 
     /**

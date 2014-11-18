@@ -5,8 +5,9 @@
  */
 package testprojectairhockey.domain;
 
-import java.awt.Color;
+
 import javafx.geometry.Point2D;
+import javafx.scene.paint.Color;
 
 /**
  *
@@ -39,11 +40,12 @@ public class Bat{
         this.color = Color.BLUE;
         this.Xpos = Xpos;
         this.Ypos = Ypos;
+        int xVel = 10;
         
         //Speed of own bat depends on difficulty
-        Settings loadedSettings = serMan.loadAIsettings();
+        /*Settings loadedSettings = serMan.loadAIsettings();
         int overallDifficulty = getOverallDifficulty(loadedSettings);
-        int xVel = 10;
+        
         switch(overallDifficulty)
         {
             case 2:
@@ -61,7 +63,7 @@ public class Bat{
             case 6:
                 xVel = 8;
                 break;
-        }
+        }*/
         this.Xvelocity = xVel;
         
         this.sidename = sidename;

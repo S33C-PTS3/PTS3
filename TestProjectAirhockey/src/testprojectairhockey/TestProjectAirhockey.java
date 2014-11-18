@@ -12,6 +12,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.shape.*;
 import javafx.stage.Stage;
+import testprojectairhockey.domain.HockeyField;
 
 /**
  *
@@ -24,6 +25,8 @@ public class TestProjectAirhockey extends Application {
     {
         Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
         stage.setTitle("Test drawing");
+        HockeyField hockeyField = new HockeyField();
+        Circle c = new Circle(hockeyField.getPuck().getXpos(), hockeyField.getPuck().getYpos(), hockeyField.getPuck().getRadius());
         Scene scene = new Scene(root);
         
         stage.setScene(scene);

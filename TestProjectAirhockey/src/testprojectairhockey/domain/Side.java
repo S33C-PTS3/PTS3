@@ -5,8 +5,9 @@
  */
 package testprojectairhockey.domain;
 
-import java.awt.Color;
+
 import javafx.geometry.Point2D;
+import javafx.scene.paint.Color;
 
 /**
  *
@@ -88,6 +89,11 @@ public class Side {
         double diameter = 520 * 0.08;
         bat = new Bat(color, (float) batX1, (float) batY1, (float) diameter, sideBat);
        // bat.display();
+    }
+    
+    public Color getColor()
+    {
+        return this.color;
     }
 
     /**
