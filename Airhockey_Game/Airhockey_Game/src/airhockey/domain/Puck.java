@@ -179,8 +179,7 @@ public class Puck extends PApplet {
         {
             this.velocity.x *= -1;
         }
-        
-        if (randomizer.nextDouble() > .5) 
+        else
         {
             this.velocity.y *= -1;
         }
