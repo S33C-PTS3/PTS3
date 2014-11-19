@@ -17,8 +17,7 @@ import javafx.scene.paint.Color;
  */
 public class Puck{
 
-    private double Xvelocity = 3;
-    private double Yvelocity = 3;
+    private final double baseSpeed = 3;
     private float Xpos;
     private float Ypos;
     private Point2D velocity;
@@ -36,7 +35,7 @@ public class Puck{
         this.Ypos = 323;        
         this.position = new Point2D((float) Xpos, (float) Ypos);
         
-        this.velocity = new Point2D((float) Xvelocity, (float) Yvelocity);
+        this.velocity = new Point2D((float) baseSpeed, (float) baseSpeed);
         randomizePuck();
         this.diameter = 520 * 0.04;
     }
@@ -89,15 +88,13 @@ public class Puck{
      * @param linePos2 
      */
     public void setVelocityWithoutNormal(Point2D linePos1, Point2D linePos2) {
-        Point2D baseDelta = linePos2.subtract(linePos1);
-        baseDelta.normalize();
+        Point2D baseDelta = linePos2.subtract(linePos1).normalize();
         Point2D normal = new Point2D(-baseDelta.getY(), baseDelta.getX());
-        Point2D incidence = velocity.multiply(-1);
-        incidence.normalize();
+        Point2D incidence = velocity.multiply(-1).normalize();
         // calculate dot product of incident vector and base top normal 
         float dot = (float)incidence.dotProduct(normal);
         velocity = new Point2D(2 * normal.getX() * dot - incidence.getX(), 2 * normal.getY() * dot - incidence.getY());
-        velocity.multiply((float) Xvelocity);
+        velocity = velocity.multiply((float)baseSpeed);
     }
 
     /**
@@ -131,14 +128,12 @@ public class Puck{
      * @param linePos2 
      */
     public void setVelocityWithNormal(Point2D linePos1, Point2D linePos2) {
-        Point2D normal = linePos2.subtract(linePos1);
-        normal.normalize();
-        Point2D incidence = velocity.multiply(-1);
-        incidence.normalize();
+        Point2D normal = linePos2.subtract(linePos1).normalize();
+        Point2D incidence = velocity.multiply(-1).normalize();
         // calculate dot product of incident vector and base top normal 
         float dot = (float)incidence.dotProduct(normal);
         velocity = new Point2D(2 * normal.getX() * dot - incidence.getX(), 2 * normal.getY() * dot - incidence.getY());
-        velocity.multiply((float) Xvelocity);
+        velocity = velocity.multiply((float)baseSpeed);
     }
 
     /**

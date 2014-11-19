@@ -133,6 +133,7 @@ public class HockeyField {
                 puck.setVelocityWithoutNormal(hitSide.getVector1(), hitSide.getVector2());
                 lastHitSide = sides[i].getSideName();
                 hitSide = null;
+                System.out.println("1");
             }
             if (hitBat != null && lastHitSide != hitBat.getBat().getSideName()) {
                 puck.setVelocityWithNormal(hitBat.getBat().getVector(), puck.getPosition());
@@ -143,6 +144,7 @@ public class HockeyField {
                 }
                 lastHitSide = sides[i].getBat().getSideName();
                 hitBat = null;
+                System.out.println("2");
             }
             if (goal != null) {
                 System.out.println(goal.getSideName().toString());

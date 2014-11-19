@@ -33,21 +33,19 @@ public class FXMLDocumentController implements Initializable {
     HockeyField hockeyField;
 
     @Override
-    public void initialize(URL url, ResourceBundle rb)
-    {
+    public void initialize(URL url, ResourceBundle rb) {
         // TODO annimation timer
         label.setText("hallo");
 
         gc = canvas.getGraphicsContext2D();
         hockeyField = new HockeyField();
-        
 
         new AnimationTimer() {
             @Override
-            public void handle(long now)
-            {
+            public void handle(long now) {
                 gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
                 hockeyField.getPuck().move();
+                hockeyField.checkColl();
                 Draw();
             }
 
@@ -55,29 +53,23 @@ public class FXMLDocumentController implements Initializable {
 
     }
 
-    public void Draw()
-    {
+    public void Draw() {
         Side[] sides = hockeyField.getSides();
         //gc.strokeLine(sides[0].getLineX1(), sides[0].getLineY1(), sides[0].getLineX1(), sides[0].getLineY2());
         //gc.strokeLine(sides[1].getLineX1(), sides[1].getLineY1(), (sides[2].getLineX2() + sides[2].getLineX1()) / 2, (sides[2].getLineY2() + sides[2].getLineY1()) / 2);
         //gc.strokeLine(sides[2].getLineX1(), sides[2].getLineY1(), (sides[0].getLineX2() + sides[0].getLineX1()) / 2, (sides[0].getLineY2() + sides[0].getLineY1()) / 2);
-        for (Side side : sides)
-        {
+        for (Side side : sides) {
+
             gc.setStroke(side.getColor());
             gc.setFill(side.getColor());
             gc.strokeLine(side.getLineX1(), side.getLineY1(), side.getLineX2(), side.getLineY2());
 
             Bat bat = side.getBat();
-            if (side.getSideName().equals(SideName.BOTTOM))
-            {
+            if (side.getSideName().equals(SideName.BOTTOM)) {
                 gc.fillOval(bat.getXpos() + bat.getRadius(), bat.getYpos() - bat.getRadius(), bat.getDiameter(), bat.getDiameter());
-            }
-            else if (side.getSideName().equals(SideName.LEFT))
-            {
+            } else if (side.getSideName().equals(SideName.LEFT)) {
                 gc.fillOval(bat.getXpos() - bat.getDiameter(), bat.getYpos() + bat.getRadius(), bat.getDiameter(), bat.getDiameter());
-            }
-            else if (side.getSideName().equals(SideName.RIGHT))
-            {
+            } else if (side.getSideName().equals(SideName.RIGHT)) {
                 gc.fillOval(bat.getXpos(), bat.getYpos() + bat.getRadius(), bat.getDiameter(), bat.getDiameter());
             }
 
