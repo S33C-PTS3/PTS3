@@ -16,29 +16,19 @@ import processing.core.PVector;
  */
 public class Side {
 
-<<<<<<< Updated upstream
     private final int lineX1;
     private final int lineY1;
     private final int lineX2;
     private final int lineY2;
-=======
-    private Color color;
-    private int lineX1;
-    private int lineY1;
-    private int lineX2;
-    private int lineY2;
->>>>>>> Stashed changes
+
     private double goalX1;
     private double goalY1;
     private double goalX2;
     private double goalY2;
-<<<<<<< Updated upstream
+
     private final PApplet parentApplet;
     private final Color color;
-=======
-    private PApplet parentApplet;
-    
->>>>>>> Stashed changes
+
     private Bat bat;
     private final SideName sideName;
     private final IPlayer bindedPlayer;
@@ -200,15 +190,11 @@ public class Side {
         return sideName;
     }
 
-<<<<<<< Updated upstream
     /**
      * Used to display the goals on the board.
      * @param i 
      */
-    public void makeGoal(int i) {
-=======
     public void makeGoal() {
->>>>>>> Stashed changes
         parentApplet.stroke(color.getRGB());
         parentApplet.strokeWeight(10);
 
