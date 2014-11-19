@@ -13,15 +13,13 @@ package airhockey.domain;
 public class HumanPlayer implements IPlayer {
 
     private int inGameScore;
-    private final String name;
     private String username;
     /**
      * Constructor used for HumanPlayer
      */
     public HumanPlayer(String name) {
         this.inGameScore = 20;
-        this.name = name;
-        username = "Eric";
+        username = name;
     }
 
     public void setInGameScore(int newInGameScore) {
