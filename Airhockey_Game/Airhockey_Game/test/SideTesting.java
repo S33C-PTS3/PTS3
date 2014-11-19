@@ -28,7 +28,5 @@ public class SideTesting {
         Assert.assertEquals(200, side.getLineY1(), 0);
         Assert.assertEquals(100, side.getLineY2(), 0);
         Assert.assertEquals("Sidename incorrect ", SideName.RIGHT, side.getSideName());
-        
-        
     }  
 }
