@@ -40,15 +40,15 @@ public class FXMLDocumentController implements Initializable {
 
         gc = canvas.getGraphicsContext2D();
         hockeyField = new HockeyField();
-        Draw();
+        
 
         new AnimationTimer() {
             @Override
             public void handle(long now)
             {
+                gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
                 hockeyField.getPuck().move();
-                System.out.println(hockeyField.getPuck().getVelocity() + "");
-                Move();
+                Draw();
             }
 
         }.start();
@@ -80,15 +80,11 @@ public class FXMLDocumentController implements Initializable {
             {
                 gc.fillOval(bat.getXpos(), bat.getYpos() + bat.getRadius(), bat.getDiameter(), bat.getDiameter());
             }
+
+            Puck puck = hockeyField.getPuck();
+            //System.out.println("x: " + puck.getXpos() + " y: " + puck.getYpos());
+            gc.fillOval(puck.getXpos() - puck.getRadius(), puck.getYpos() - puck.getRadius(), puck.getDiameter(), puck.getDiameter());
         }
-    }
-    
-    public void Move()
-    {
-        Puck puck = hockeyField.getPuck();
-        //System.out.println("x: " + puck.getXpos() + " y: " + puck.getYpos());
-        gc.fillOval(puck.getXpos() - puck.getRadius(), puck.getYpos() - puck.getRadius(), puck.getDiameter(), puck.getDiameter());
-    
     }
 
 }
