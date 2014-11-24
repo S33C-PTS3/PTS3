@@ -23,11 +23,9 @@ public class TestProjectAirhockey extends Application {
     @Override
     public void start(Stage stage) throws Exception
     {
-        Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
-        stage.setTitle("Test drawing");
-        HockeyField hockeyField = new HockeyField();
+        Parent root = FXMLLoader.load(getClass().getResource("Menu.fxml"));
+        stage.setTitle("Airhockey");
         Scene scene = new Scene(root);
-        
         stage.setScene(scene);
         stage.show();
     }
