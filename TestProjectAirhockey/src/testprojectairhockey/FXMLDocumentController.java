@@ -26,7 +26,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import testprojectairhockey.domain.HockeyField;
 
@@ -37,7 +36,28 @@ import testprojectairhockey.domain.HockeyField;
 public class FXMLDocumentController implements Initializable {
     
     @FXML
-    private Label label;
+    Label label;
+    
+    @FXML
+    Label lblRoundNr;
+    
+    @FXML
+    Label lblPlayer1;
+    
+    @FXML
+    Label lblPlayer2;
+    
+    @FXML
+    Label lblPlayer3;
+    
+    @FXML            
+    Label lblScore1;
+    
+    @FXML
+    Label lblScore2;
+    
+    @FXML
+    Label lblScore3;
 
     @FXML
     Canvas canvas;
@@ -55,17 +75,32 @@ public class FXMLDocumentController implements Initializable {
 
     GraphicsContext gc;
     HockeyField hockeyField;
+    AnimationTimer timer;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        label.setText("hallo");
         lvChat.setItems(messages);
-        
 
         gc = canvas.getGraphicsContext2D();
         hockeyField = new HockeyField();
-
-        new AnimationTimer() {
+        Side[] sides = hockeyField.getSides();
+        for(Side side : sides)
+        {
+            if(side.getSideName().equals(SideName.BOTTOM))
+            {
+                lblPlayer1.setText(sides[0].getBindedPlayer().toString());
+            }
+            if(side.getSideName().equals(SideName.RIGHT))
+            {
+                lblPlayer2.setText(sides[1].getBindedPlayer().toString());
+            }
+            if(side.getSideName().equals(SideName.LEFT))
+            {
+                lblPlayer3.setText(sides[2].getBindedPlayer().toString());
+            }
+        }
+        
+        timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
                 gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
@@ -74,7 +109,8 @@ public class FXMLDocumentController implements Initializable {
                 Draw();
             }
 
-        }.start();
+        };
+        timer.start();
 
     }
 
@@ -145,6 +181,8 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void btnExit_Click(ActionEvent evt)
     {
+        timer.stop();
+        hockeyField = null;
         Parent root;
         try
         {
