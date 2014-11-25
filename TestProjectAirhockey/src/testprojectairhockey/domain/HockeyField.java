@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
+import javafx.beans.InvalidationListener;
 import javafx.geometry.Point2D;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
@@ -208,6 +211,11 @@ public class HockeyField {
     {
         return sides;
     }
+    
+    public int getRound()
+    {
+        return this.rounds;
+    }
 
     public Puck getPuck()
     {
@@ -280,7 +288,6 @@ public class HockeyField {
      */
     public void checkWinner()
     {
-
         if (rounds < 10)
         {
             rounds++;

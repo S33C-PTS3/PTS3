@@ -5,6 +5,8 @@
  */
 package testprojectairhockey.domain;
 
+import java.util.Observable;
+
 /**
  *
  * @author Roy

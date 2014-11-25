@@ -5,6 +5,10 @@
  */
 package testprojectairhockey.domain;
 
+import java.util.Observable;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.StringProperty;
+
 /**
  *
  * @author Roy
@@ -70,6 +74,4 @@ public class RobotPlayer implements IPlayer {
     {
         return this.name;
     }
-    
-    
 }
