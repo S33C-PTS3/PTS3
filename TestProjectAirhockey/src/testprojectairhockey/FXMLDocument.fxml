@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.scene.canvas.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
@@ -7,13 +8,42 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" fx:id="stage" onKeyPressed="#keyEventPressed" prefHeight="700.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="testprojectairhockey.FXMLDocumentController">
+<AnchorPane id="AnchorPane" fx:id="stage" onKeyPressed="#keyEventPressed" prefHeight="750.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="testprojectairhockey.FXMLDocumentController">
     <children>
+<<<<<<< HEAD
         <Label fx:id="label" layoutX="126" layoutY="120" minHeight="16" minWidth="69" />
       <Canvas fx:id="canvas" focusTraversable="true" height="498.0" layoutX="100.0" layoutY="7.0" width="600.0" />
       <TextField fx:id="tfMessage" layoutX="100.0" layoutY="660.0" onKeyPressed="#enterPressed" prefHeight="26.0" prefWidth="532.0" promptText="Write a message..." />
       <Button fx:id="btnSend" layoutX="643.0" layoutY="660.0" mnemonicParsing="false" onAction="#btnSend_Click" prefHeight="26.0" prefWidth="57.0" text="Send" />
       <ListView fx:id="lvChat" editable="true" focusTraversable="false" layoutX="100.0" layoutY="520.0" prefHeight="129.0" prefWidth="600.0" />
       <Button fx:id="btnExit" focusTraversable="false" layoutX="706.0" layoutY="29.0" mnemonicParsing="false" onAction="#btnExit_Click" text="Exit Game" />
+=======
+        <Label fx:id="lblPlayer1" layoutX="23.0" layoutY="49.0" minHeight="16" minWidth="69" text="Red:" />
+      <Canvas fx:id="canvas" height="498.0" layoutX="100.0" layoutY="55.0" width="600.0" />
+      <TextField fx:id="tfMessage" focusTraversable="false" layoutX="100.0" layoutY="701.0" onKeyPressed="#enterPressed" prefHeight="26.0" prefWidth="532.0" promptText="Write a message..." />
+      <Button fx:id="btnSend" focusTraversable="false" layoutX="643.0" layoutY="701.0" mnemonicParsing="false" onAction="#btnSend_Click" prefHeight="26.0" prefWidth="57.0" text="Send" />
+      <ListView fx:id="lvChat" editable="true" layoutX="100.0" layoutY="561.0" prefHeight="129.0" prefWidth="600.0" />
+      <Button fx:id="btnExit" focusTraversable="false" layoutX="706.0" layoutY="29.0" mnemonicParsing="false" onAction="#btnExit_Click" text="Exit Game" />
+      <Label fx:id="lblPlayer2" layoutX="23.0" layoutY="68.0" minHeight="16" minWidth="69" text="Green:" />
+      <Label fx:id="lblPlayer3" layoutX="23.0" layoutY="86.0" minHeight="16" minWidth="69" text="Blue:" />
+      <Label fx:id="lblScore3" layoutX="66.0" layoutY="87.0" minHeight="16" minWidth="69" text="10" />
+      <Label fx:id="lblScore2" layoutX="66.0" layoutY="69.0" minHeight="16" minWidth="69" text="10" />
+      <Label fx:id="lblScore1" layoutX="66.0" layoutY="50.0" minHeight="16" minWidth="69" text="10" />
+      <Label fx:id="label3" layoutX="23.0" layoutY="21.0" minHeight="16" minWidth="69" text="Score:">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="269.0" layoutY="21.0" text="Round:">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblRoundNr" layoutX="354.0" layoutY="21.0" text="1">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+>>>>>>> da21fd56130f7b7babea3301b2257d597dee4eda
     </children>
 </AnchorPane>
