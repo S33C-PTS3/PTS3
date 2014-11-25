@@ -86,12 +86,8 @@ public class FXMLDocumentController implements Initializable {
     public void initialize(URL url, ResourceBundle rb)
     {
         lvChat.setItems(messages);
-<<<<<<< HEAD
         lvChat.setFocusTraversable(true);
         tfMessage.setFocusTraversable(false);
-        
-=======
->>>>>>> da21fd56130f7b7babea3301b2257d597dee4eda
 
         gc = canvas.getGraphicsContext2D();
         hockeyField = new HockeyField();
