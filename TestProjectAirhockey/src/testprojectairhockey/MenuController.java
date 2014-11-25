@@ -58,6 +58,7 @@ public class MenuController implements Initializable {
             Scene scene = new Scene(root);
 
             stage.setScene(scene);
+            stage.setResizable(false);
             stage.show();
             ((Node) (evt.getSource())).getScene().getWindow().hide();
         }
@@ -85,6 +86,7 @@ public class MenuController implements Initializable {
             Scene scene = new Scene(root);
 
             stage.setScene(scene);
+            stage.setResizable(false);
             stage.show();
             ((Node) (evt.getSource())).getScene().getWindow().hide();
         }

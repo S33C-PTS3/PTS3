@@ -10,9 +10,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.shape.*;
 import javafx.stage.Stage;
-import testprojectairhockey.domain.HockeyField;
 
 /**
  *
@@ -27,6 +25,7 @@ public class TestProjectAirhockey extends Application {
         stage.setTitle("Airhockey");
         Scene scene = new Scene(root);
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
     }
 

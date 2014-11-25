@@ -7,15 +7,11 @@ package testprojectairhockey;
 
 import testprojectairhockey.domain.*;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 import javafx.animation.AnimationTimer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -30,8 +26,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import testprojectairhockey.domain.HockeyField;
 
@@ -40,7 +35,7 @@ import testprojectairhockey.domain.HockeyField;
  * @author Eric
  */
 public class FXMLDocumentController implements Initializable {
-
+    
     @FXML
     private Label label;
 
@@ -63,9 +58,9 @@ public class FXMLDocumentController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO annimation timer
         label.setText("hallo");
         lvChat.setItems(messages);
+        
 
         gc = canvas.getGraphicsContext2D();
         hockeyField = new HockeyField();
@@ -85,28 +80,40 @@ public class FXMLDocumentController implements Initializable {
 
     public void Draw() {
         Side[] sides = hockeyField.getSides();
-        //gc.strokeLine(sides[0].getLineX1(), sides[0].getLineY1(), sides[0].getLineX1(), sides[0].getLineY2());
+        gc.setLineWidth(1);
+        gc.strokeLine(sides[0].getLineX1(), sides[0].getLineY1(), sides[0].getLineX1(), sides[0].getLineY2());
         //gc.strokeLine(sides[1].getLineX1(), sides[1].getLineY1(), (sides[2].getLineX2() + sides[2].getLineX1()) / 2, (sides[2].getLineY2() + sides[2].getLineY1()) / 2);
         //gc.strokeLine(sides[2].getLineX1(), sides[2].getLineY1(), (sides[0].getLineX2() + sides[0].getLineX1()) / 2, (sides[0].getLineY2() + sides[0].getLineY1()) / 2);
         for (Side side : sides) {
 
+            gc.setLineWidth(1);
             gc.setStroke(side.getColor());
             gc.setFill(side.getColor());
             gc.strokeLine(side.getLineX1(), side.getLineY1(), side.getLineX2(), side.getLineY2());
+            
+            gc.setLineWidth(5);
+            gc.strokeLine(side.getGoalX1(), side.getGoalY1(), side.getGoalX2(), side.getGoalY2());
 
             Bat bat = side.getBat();
             if (side.getSideName().equals(SideName.BOTTOM)) {
-                gc.fillOval(bat.getXpos() + bat.getRadius(), bat.getYpos() - bat.getRadius(), bat.getDiameter(), bat.getDiameter());
+                gc.fillOval(bat.getXpos() - bat.getRadius(), bat.getYpos() - bat.getRadius(), bat.getDiameter(), bat.getDiameter());
             } else if (side.getSideName().equals(SideName.LEFT)) {
-                gc.fillOval(bat.getXpos() - bat.getDiameter(), bat.getYpos() + bat.getRadius(), bat.getDiameter(), bat.getDiameter());
+                gc.fillOval(bat.getXpos() - bat.getRadius(), bat.getYpos() - bat.getRadius(), bat.getDiameter(), bat.getDiameter());
             } else if (side.getSideName().equals(SideName.RIGHT)) {
-                gc.fillOval(bat.getXpos(), bat.getYpos() + bat.getRadius(), bat.getDiameter(), bat.getDiameter());
+                gc.fillOval(bat.getXpos() - bat.getRadius(), bat.getYpos() - bat.getRadius(), bat.getDiameter(), bat.getDiameter());
             }
 
             Puck puck = hockeyField.getPuck();
-            //System.out.println("x: " + puck.getXpos() + " y: " + puck.getYpos());
             gc.fillOval(puck.getXpos() - puck.getRadius(), puck.getYpos() - puck.getRadius(), puck.getDiameter(), puck.getDiameter());
+            
+            hockeyField.moveAIPlayers();
         }
+    }
+    
+    @FXML
+    private void keyEventPressed(KeyEvent evt)
+    {
+        hockeyField.movePlayerBat(evt.getCode());
     }
 
     @FXML
@@ -147,6 +154,7 @@ public class FXMLDocumentController implements Initializable {
             Scene scene = new Scene(root);
 
             stage.setScene(scene);
+            stage.setResizable(false);
             stage.show();
             ((Node) (evt.getSource())).getScene().getWindow().hide();
         }
