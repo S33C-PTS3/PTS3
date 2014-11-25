@@ -60,6 +60,8 @@ public class FXMLDocumentController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         label.setText("hallo");
         lvChat.setItems(messages);
+        lvChat.setFocusTraversable(true);
+        tfMessage.setFocusTraversable(false);
         
 
         gc = canvas.getGraphicsContext2D();
@@ -127,6 +129,8 @@ public class FXMLDocumentController implements Initializable {
     {
         if (evt.getCode().equals(KeyCode.ENTER))
         {
+            lvChat.setFocusTraversable(true);
+            tfMessage.setFocusTraversable(false);
             sendMessage();
         }
     }

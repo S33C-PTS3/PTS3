@@ -10,10 +10,10 @@
 <AnchorPane id="AnchorPane" fx:id="stage" onKeyPressed="#keyEventPressed" prefHeight="700.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="testprojectairhockey.FXMLDocumentController">
     <children>
         <Label fx:id="label" layoutX="126" layoutY="120" minHeight="16" minWidth="69" />
-      <Canvas fx:id="canvas" height="498.0" layoutX="100.0" layoutY="7.0" width="600.0" />
+      <Canvas fx:id="canvas" focusTraversable="true" height="498.0" layoutX="100.0" layoutY="7.0" width="600.0" />
       <TextField fx:id="tfMessage" layoutX="100.0" layoutY="660.0" onKeyPressed="#enterPressed" prefHeight="26.0" prefWidth="532.0" promptText="Write a message..." />
       <Button fx:id="btnSend" layoutX="643.0" layoutY="660.0" mnemonicParsing="false" onAction="#btnSend_Click" prefHeight="26.0" prefWidth="57.0" text="Send" />
-      <ListView fx:id="lvChat" editable="true" layoutX="100.0" layoutY="520.0" prefHeight="129.0" prefWidth="600.0" />
-      <Button fx:id="btnExit" layoutX="706.0" layoutY="29.0" mnemonicParsing="false" onAction="#btnExit_Click" text="Exit Game" />
+      <ListView fx:id="lvChat" editable="true" focusTraversable="false" layoutX="100.0" layoutY="520.0" prefHeight="129.0" prefWidth="600.0" />
+      <Button fx:id="btnExit" focusTraversable="false" layoutX="706.0" layoutY="29.0" mnemonicParsing="false" onAction="#btnExit_Click" text="Exit Game" />
     </children>
 </AnchorPane>
