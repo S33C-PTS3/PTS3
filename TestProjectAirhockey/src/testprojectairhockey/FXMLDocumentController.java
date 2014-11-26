@@ -8,22 +8,14 @@ package testprojectairhockey;
 import java.io.IOException;
 import testprojectairhockey.domain.*;
 import java.net.URL;
-import java.util.Observable;
-import java.util.Observer;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.animation.AnimationTimer;
-import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -37,7 +29,6 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
-import javax.swing.text.ChangedCharSetException;
 import testprojectairhockey.domain.HockeyField;
 
 /**
@@ -82,12 +73,19 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     ListView lvChat;
 
+    //lijst met alles messages in de chatbox
     ObservableList<String> messages = FXCollections.observableArrayList();
 
+    //graphicscontext om te tekenen op de canvas
     GraphicsContext gc;
+    
+    //HockeyField, het startpunt van het spel (root)
     HockeyField hockeyField;
+    
+    //Animation timer zodat het spel een loop is
     AnimationTimer timer;
 
+    //De afbeeldingen van de bats
     Image batRed = new Image("/testprojectairhockey/batred2.png");
     Image batBlue = new Image("/testprojectairhockey/batblue2.png");
     Image batGreen = new Image("/testprojectairhockey/batgreen2.png");
@@ -95,6 +93,7 @@ public class FXMLDocumentController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
+        //Focus op het spel zodat je meteen de bat kan bewegen
         lvChat.setItems(messages);
         lvChat.setFocusTraversable(true);
         tfMessage.setFocusTraversable(false);
@@ -102,6 +101,7 @@ public class FXMLDocumentController implements Initializable {
         gc = canvas.getGraphicsContext2D();
         hockeyField = new HockeyField();
 
+        //Labels vullen met de namen van de spelers
         Side[] sides = hockeyField.getSides();
         for (Side side : sides)
         {
@@ -119,6 +119,7 @@ public class FXMLDocumentController implements Initializable {
             }
         }
 
+        //De gameloop
         timer = new AnimationTimer() {
             @Override
             public void handle(long now)
@@ -127,11 +128,14 @@ public class FXMLDocumentController implements Initializable {
                 hockeyField.getPuck().move();
                 hockeyField.checkColl();
                 Draw();
+                
+                //Als het spel klaar is, isGameOver return de gameResults
                 if (hockeyField.isGameOver() != null)
                 {
                     this.stop();
                     try
                     {
+                        //Scherm met de gameResults wordt weergegeven.
                         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("GameResults.fxml"));
                         Parent root = (Parent) fxmlLoader.load();
                         GameResultsController controller = fxmlLoader.<GameResultsController>getController();
@@ -162,6 +166,8 @@ public class FXMLDocumentController implements Initializable {
     {
         Side[] sides = hockeyField.getSides();
         gc.setLineWidth(1);
+        
+        //hulplijnen om te kijken of de puck en de bats in het midden staan.
         //gc.strokeLine(sides[0].getLineX1(), sides[0].getLineY1(), sides[0].getLineX1(), sides[0].getLineY2());
         //gc.strokeLine(sides[1].getLineX1(), sides[1].getLineY1(), (sides[2].getLineX2() + sides[2].getLineX1()) / 2, (sides[2].getLineY2() + sides[2].getLineY1()) / 2);
         //gc.strokeLine(sides[2].getLineX1(), sides[2].getLineY1(), (sides[0].getLineX2() + sides[0].getLineX1()) / 2, (sides[0].getLineY2() + sides[0].getLineY1()) / 2);
@@ -178,19 +184,16 @@ public class FXMLDocumentController implements Initializable {
             Bat bat = side.getBat();
             if (side.getSideName().equals(SideName.BOTTOM))
             {
-                //gc.fillOval(bat.getXpos() - bat.getRadius(), bat.getYpos() - bat.getRadius(), bat.getDiameter(), bat.getDiameter());
                 gc.drawImage(batRed, bat.getXpos() - bat.getRadius(), bat.getYpos() - bat.getRadius(), bat.getDiameter(), bat.getDiameter());
                 lblScore1.setText(String.valueOf(side.getBindedPlayer().getInGameScore()));
             }
             else if (side.getSideName().equals(SideName.RIGHT))
             {
-                //gc.fillOval(bat.getXpos() - bat.getRadius(), bat.getYpos() - bat.getRadius(), bat.getDiameter(), bat.getDiameter());
                 gc.drawImage(batGreen, bat.getXpos() - bat.getRadius(), bat.getYpos() - bat.getRadius(), bat.getDiameter(), bat.getDiameter());
                 lblScore2.setText(String.valueOf(side.getBindedPlayer().getInGameScore()));
             }
             else if (side.getSideName().equals(SideName.LEFT))
             {
-                //gc.fillOval(bat.getXpos() - bat.getRadius(), bat.getYpos() - bat.getRadius(), bat.getDiameter(), bat.getDiameter());
                 gc.drawImage(batBlue, bat.getXpos() - bat.getRadius(), bat.getYpos() - bat.getRadius(), bat.getDiameter(), bat.getDiameter());
                 lblScore3.setText(String.valueOf(side.getBindedPlayer().getInGameScore()));
             }
@@ -215,14 +218,6 @@ public class FXMLDocumentController implements Initializable {
         //andere keys werken alleen als de textbox geslecteerd is.
 
     }
-    
-    @FXML void keyEventReleased(KeyEvent evt)
-    {
-        if(evt.getCode().equals(KeyCode.LEFT) || evt.getCode().equals(KeyCode.RIGHT))
-        {
-            hockeyField.stopPlayerBat();
-        }
-    }
 
     @FXML
     private void btnSend_Click(ActionEvent evt)
@@ -233,7 +228,7 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void enterPressed(KeyEvent evt)
     {
-        if (evt.getCode().equals(KeyCode.ENTER))
+        if (evt.getCode().equals(KeyCode.ENTER) && tfMessage.isFocused())
         {
             lvChat.setFocusTraversable(true);
             tfMessage.setFocusTraversable(false);

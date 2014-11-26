@@ -265,11 +265,6 @@ public class HockeyField {
             }
         }
     }
-    
-    public void stopPlayerBat()
-    {
-        sides[1].getBat().setXvelocity(0);
-    }
 
     public void moveAIPlayers()
     {
