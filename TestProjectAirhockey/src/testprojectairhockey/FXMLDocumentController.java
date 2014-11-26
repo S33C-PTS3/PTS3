@@ -5,12 +5,16 @@
  */
 package testprojectairhockey;
 
+import java.io.IOException;
 import testprojectairhockey.domain.*;
 import java.net.URL;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.animation.AnimationTimer;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -19,6 +23,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -28,6 +33,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
@@ -82,6 +88,10 @@ public class FXMLDocumentController implements Initializable {
     HockeyField hockeyField;
     AnimationTimer timer;
 
+    Image batRed = new Image("/testprojectairhockey/batred2.png");
+    Image batBlue = new Image("/testprojectairhockey/batblue2.png");
+    Image batGreen = new Image("/testprojectairhockey/batgreen2.png");
+
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
@@ -117,6 +127,31 @@ public class FXMLDocumentController implements Initializable {
                 hockeyField.getPuck().move();
                 hockeyField.checkColl();
                 Draw();
+                if (hockeyField.isGameOver() != null)
+                {
+                    this.stop();
+                    try
+                    {
+                        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("GameResults.fxml"));
+                        Parent root = (Parent) fxmlLoader.load();
+                        GameResultsController controller = fxmlLoader.<GameResultsController>getController();
+                        controller.setResults(hockeyField.isGameOver());
+                        Scene scene = new Scene(root);
+                        Stage stage = new Stage();
+                        stage.setScene(scene);
+                        stage.setTitle("Airhockey - Game Results");
+                        stage.setResizable(false);
+                        stage.show();
+                        hockeyField = null;
+                        Node node = (Node) btnSend;
+                        node.getParent().getScene().getWindow().hide();
+                    }
+                    catch (IOException ex)
+                    {
+                        System.out.println(ex.getMessage());
+                    }
+
+                }
             }
         };
         timer.start();
@@ -127,7 +162,7 @@ public class FXMLDocumentController implements Initializable {
     {
         Side[] sides = hockeyField.getSides();
         gc.setLineWidth(1);
-        gc.strokeLine(sides[0].getLineX1(), sides[0].getLineY1(), sides[0].getLineX1(), sides[0].getLineY2());
+        //gc.strokeLine(sides[0].getLineX1(), sides[0].getLineY1(), sides[0].getLineX1(), sides[0].getLineY2());
         //gc.strokeLine(sides[1].getLineX1(), sides[1].getLineY1(), (sides[2].getLineX2() + sides[2].getLineX1()) / 2, (sides[2].getLineY2() + sides[2].getLineY1()) / 2);
         //gc.strokeLine(sides[2].getLineX1(), sides[2].getLineY1(), (sides[0].getLineX2() + sides[0].getLineX1()) / 2, (sides[0].getLineY2() + sides[0].getLineY1()) / 2);
         for (Side side : sides)
@@ -143,19 +178,23 @@ public class FXMLDocumentController implements Initializable {
             Bat bat = side.getBat();
             if (side.getSideName().equals(SideName.BOTTOM))
             {
-                gc.fillOval(bat.getXpos() - bat.getRadius(), bat.getYpos() - bat.getRadius(), bat.getDiameter(), bat.getDiameter());
+                //gc.fillOval(bat.getXpos() - bat.getRadius(), bat.getYpos() - bat.getRadius(), bat.getDiameter(), bat.getDiameter());
+                gc.drawImage(batRed, bat.getXpos() - bat.getRadius(), bat.getYpos() - bat.getRadius(), bat.getDiameter(), bat.getDiameter());
                 lblScore1.setText(String.valueOf(side.getBindedPlayer().getInGameScore()));
-            }
-            else if (side.getSideName().equals(SideName.LEFT))
-            {
-                gc.fillOval(bat.getXpos() - bat.getRadius(), bat.getYpos() - bat.getRadius(), bat.getDiameter(), bat.getDiameter());
-                lblScore2.setText(String.valueOf(side.getBindedPlayer().getInGameScore()));
             }
             else if (side.getSideName().equals(SideName.RIGHT))
             {
-                gc.fillOval(bat.getXpos() - bat.getRadius(), bat.getYpos() - bat.getRadius(), bat.getDiameter(), bat.getDiameter());
+                //gc.fillOval(bat.getXpos() - bat.getRadius(), bat.getYpos() - bat.getRadius(), bat.getDiameter(), bat.getDiameter());
+                gc.drawImage(batGreen, bat.getXpos() - bat.getRadius(), bat.getYpos() - bat.getRadius(), bat.getDiameter(), bat.getDiameter());
+                lblScore2.setText(String.valueOf(side.getBindedPlayer().getInGameScore()));
+            }
+            else if (side.getSideName().equals(SideName.LEFT))
+            {
+                //gc.fillOval(bat.getXpos() - bat.getRadius(), bat.getYpos() - bat.getRadius(), bat.getDiameter(), bat.getDiameter());
+                gc.drawImage(batBlue, bat.getXpos() - bat.getRadius(), bat.getYpos() - bat.getRadius(), bat.getDiameter(), bat.getDiameter());
                 lblScore3.setText(String.valueOf(side.getBindedPlayer().getInGameScore()));
             }
+
             lblRoundNr.setText(String.valueOf(hockeyField.getRound()));
 
             Puck puck = hockeyField.getPuck();
@@ -168,7 +207,21 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void keyEventPressed(KeyEvent evt)
     {
-        hockeyField.movePlayerBat(evt.getCode());
+        if (evt.getCode().equals(KeyCode.LEFT) || evt.getCode().equals(KeyCode.RIGHT))
+        {
+            hockeyField.movePlayerBat(evt.getCode());
+        }
+        
+        //andere keys werken alleen als de textbox geslecteerd is.
+
+    }
+    
+    @FXML void keyEventReleased(KeyEvent evt)
+    {
+        if(evt.getCode().equals(KeyCode.LEFT) || evt.getCode().equals(KeyCode.RIGHT))
+        {
+            hockeyField.stopPlayerBat();
+        }
     }
 
     @FXML
@@ -184,6 +237,7 @@ public class FXMLDocumentController implements Initializable {
         {
             lvChat.setFocusTraversable(true);
             tfMessage.setFocusTraversable(false);
+            lvChat.requestFocus();
             sendMessage();
         }
     }

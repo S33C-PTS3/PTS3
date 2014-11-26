@@ -9,9 +9,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
-import javafx.beans.InvalidationListener;
 import javafx.geometry.Point2D;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
@@ -36,7 +33,7 @@ public class HockeyField {
     private List<Side> batsHitsPuck;
     private int rounds;
     private ArrayList<Integer> scores;
-    private ArrayList gameResult = null;
+    private List<Side> gameResult = null;
     private boolean gameOver = false;
 
     /**
@@ -142,7 +139,6 @@ public class HockeyField {
                 puck.setVelocityWithoutNormal(hitSide.getVector1(), hitSide.getVector2());
                 lastHitSide = sides[i].getSideName();
                 hitSide = null;
-                System.out.println("1");
             }
             if (hitBat != null && lastHitSide != hitBat.getBat().getSideName())
             {
@@ -157,7 +153,6 @@ public class HockeyField {
                 }
                 lastHitSide = sides[i].getBat().getSideName();
                 hitBat = null;
-                System.out.println("2");
             }
             if (goal != null)
             {
@@ -211,7 +206,7 @@ public class HockeyField {
     {
         return sides;
     }
-    
+
     public int getRound()
     {
         return this.rounds;
@@ -220,6 +215,18 @@ public class HockeyField {
     public Puck getPuck()
     {
         return this.puck;
+    }
+    
+    public List<Side> isGameOver()
+    {
+        if(gameOver)
+        {
+            return gameResult;
+        }
+        else
+        {
+            return null;
+        }
     }
 
     /**
@@ -242,20 +249,26 @@ public class HockeyField {
 
     public void movePlayerBat(KeyCode key)
     {
+        Bat bat = sides[1].getBat();
         if (key.equals(KeyCode.LEFT))
         {
-            if (sides[1].getGoalX1() < sides[1].getBat().getXpos())
+            if (sides[1].getGoalX1() < bat.getXpos())
             {
-                sides[1].moveBat("1left");
+                bat.move("1left");
             }
         }
         else if (key.equals(KeyCode.RIGHT))
         {
-            if (sides[1].getGoalX2() > sides[1].getBat().getXpos())
+            if (sides[1].getGoalX2() > bat.getXpos())
             {
-                sides[1].moveBat("1right");
+                bat.move("1right");
             }
         }
+    }
+    
+    public void stopPlayerBat()
+    {
+        sides[1].getBat().setXvelocity(0);
     }
 
     public void moveAIPlayers()
@@ -288,21 +301,36 @@ public class HockeyField {
      */
     public void checkWinner()
     {
-        if (rounds < 10)
+        if (rounds < 2)
         {
             rounds++;
         }
         else
         {
             int highscore = 0;
-            int index = 0;
             for (Side side : sides)
             {
                 highscore = side.getBindedPlayer().getInGameScore();
                 gameResult.add(side);
                 gameOver = true;
-                index++;
+
             }
+            Collections.sort(gameResult, new Comparator<Side>() {
+
+                @Override
+                public int compare(Side side1, Side side2)
+                {
+                    if (side1.getBindedPlayer().getInGameScore()> side2.getBindedPlayer().getInGameScore())
+                    {
+                        return -1;
+                    }
+                    if (side1.getBindedPlayer().getInGameScore()< side2.getBindedPlayer().getInGameScore())
+                    {
+                        return 1;
+                    }
+                    return 0;
+                }
+            });
         }
     }
 }

@@ -5,8 +5,8 @@
  */
 package testprojectairhockey;
 
-import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,22 +18,30 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import testprojectairhockey.domain.Side;
 
 /**
  * FXML Controller class
  *
  * @author Eric
  */
-public class MenuController implements Initializable {
+public class GameResultsController implements Initializable {
 
     @FXML
-    Button btnSettings;
-    Button btnSP;
-    Button btnMP;
-
+    Button btnMainMenu;
+    
     @FXML
-    Label lblHoi;
-
+    Button btnRestart;
+    
+    @FXML
+    Label lblResult1;
+    
+    @FXML
+    Label lblResult2;
+    
+    @FXML
+    Label lblResult3;
+    
     /**
      * Initializes the controller class.
      */
@@ -41,48 +49,34 @@ public class MenuController implements Initializable {
     public void initialize(URL url, ResourceBundle rb)
     {
         // TODO
-        lblHoi.setText("Airhockey");
+    }    
 
-    }
-
-    @FXML
-    private void btnSP_Click(ActionEvent evt) throws IOException
+    public void setResults(List<Side> gameOver)
     {
-        lblHoi.setText("Singleplayer");
-        Parent root;
-        try
-        {
-            root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
-            Stage stage = new Stage();
-            stage.setTitle("Airhockey - Singleplayer");
-            Scene scene = new Scene(root);
-
-            stage.setScene(scene);
-            stage.setResizable(false);
-            stage.show();
-            ((Node) (evt.getSource())).getScene().getWindow().hide();
-        }
-        catch (Exception ex)
-        {
-            System.out.println(ex.getMessage());
-        }
+        lblResult1.setText(gameOver.get(0).getBindedPlayer().toString() + " - " + gameOver.get(0).getBindedPlayer().getInGameScore());
+        lblResult2.setText(gameOver.get(1).getBindedPlayer().toString() + " - " + gameOver.get(1).getBindedPlayer().getInGameScore());
+        lblResult3.setText(gameOver.get(2).getBindedPlayer().toString() + " - " + gameOver.get(2).getBindedPlayer().getInGameScore());
     }
-
+    
     @FXML
-    private void btnMP_Click(ActionEvent evt)
+    private void btnMainMenu(ActionEvent evt)
     {
-        lblHoi.setText("Multiplayer");
+        gotoScherm("Menu.fxml", evt, "Airhockey");
     }
-
-    @FXML
-    private void btnSettings_Click(ActionEvent evt)
+    
+    @FXML void btnRestart(ActionEvent evt)
+    {
+        gotoScherm("FXMLDocument.fxml", evt, "Airhockey - Singleplayer");
+    }
+    
+    private void gotoScherm(String bestand, ActionEvent evt, String title)
     {
         Parent root;
         try
         {
-            root = FXMLLoader.load(getClass().getResource("Settings.fxml"));
+            root = FXMLLoader.load(getClass().getResource(bestand));
             Stage stage = new Stage();
-            stage.setTitle("Airhockey - Settings");
+            stage.setTitle(title);
             Scene scene = new Scene(root);
 
             stage.setScene(scene);

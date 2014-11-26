@@ -7,6 +7,7 @@ package testprojectairhockey.domain;
 
 
 import javafx.geometry.Point2D;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 
 /**
@@ -24,6 +25,7 @@ public class Bat{
     private SerializationManager serMan = new SerializationManager();
     double rightSpeedModifier = 1;
     double leftSpeedModifier = 1;
+    private Image batImage;
     
     /**
      * Constructor used for the Bat Class
@@ -37,7 +39,7 @@ public class Bat{
     public Bat(Color color, float Xpos, float Ypos, double diameter, SideName sidename)
     {
         this.diameter = diameter;
-        this.color = Color.BLUE;
+        this.color = color;
         this.Xpos = Xpos;
         this.Ypos = Ypos;
         int xVel = 10;
@@ -133,7 +135,7 @@ public class Bat{
      */
     public void move(String direction)
     {
-        Settings s = serMan.loadAIsettings();
+        //Settings s = serMan.loadAIsettings();
         
         
         if ("0right".equals(direction)) 

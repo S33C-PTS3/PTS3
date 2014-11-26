@@ -54,7 +54,7 @@ public class Side {
         this.bindedPlayer = bp;
         SideName sideBat = null;
         int distanceFromSide = 30;
-        if (sideName == SideName.LEFT) {
+        if (sideName.equals(SideName.LEFT)) {
             goalX1 = ((lineX1 + lineX2) * 0.7);
             goalY1 = ((lineY1 + lineY2) * 0.3);
             goalX2 = ((lineX1 + lineX2) * 0.3);
@@ -64,7 +64,7 @@ public class Side {
             batX2 = ((lineX1 + lineX2) * 0.42 + distanceFromSide);
             batY2 = ((lineY1 + lineY2) * 0.58 + distanceFromSide / 2);
             sideBat = SideName.BATLEFT;
-        } else if (sideName == SideName.BOTTOM) {
+        } else if (sideName.equals(SideName.BOTTOM)) {
             goalX1 = lineX1 + ((lineX2 - lineX1) * 0.3);
             goalY1 = lineY1;
             goalX2 = lineX1 + ((lineX2 - lineX1) * 0.7);
@@ -74,7 +74,7 @@ public class Side {
             batX2 = lineX1 + ((lineX2 - lineX1) * 0.58);
             batY2 = lineY2 - distanceFromSide;
             sideBat = SideName.BATBOTTOM;
-        } else if (sideName == SideName.RIGHT) {
+        } else if (sideName.equals(SideName.RIGHT)) {
             goalX1 = (lineX1 - (lineX2 * 0.7));
             goalY1 = (lineY1 - (lineY1 * 0.7));
             goalX2 = (lineX1 - (lineX2 * 0.3));
