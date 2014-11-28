@@ -201,7 +201,8 @@ public class FXMLDocumentController implements Initializable {
             lblRoundNr.setText(String.valueOf(hockeyField.getRound()));
 
             Puck puck = hockeyField.getPuck();
-            gc.fillOval(puck.getXpos() - puck.getRadius(), puck.getYpos() - puck.getRadius(), puck.getDiameter(), puck.getDiameter());
+            gc.setFill(puck.getColor());
+            gc.fillOval(puck.getPosition().getX() - puck.getRadius(), puck.getPosition().getY() - puck.getRadius(), puck.getDiameter(), puck.getDiameter());
 
             hockeyField.moveAIPlayers();
         }

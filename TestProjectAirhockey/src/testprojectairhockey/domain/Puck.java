@@ -18,8 +18,6 @@ import javafx.scene.paint.Color;
 public class Puck{
 
     private final double baseSpeed = 3;
-    private float Xpos;
-    private float Ypos;
     private Point2D velocity;
     private Point2D position;
     private final Color color;
@@ -30,10 +28,8 @@ public class Puck{
      * Constructor used for puck
      */
     public Puck() {
-        this.color = Color.RED;
-        this.Xpos = 280;
-        this.Ypos = 323;        
-        this.position = new Point2D((float) Xpos, (float) Ypos);
+        this.color = Color.BLACK;     
+        this.position = new Point2D((float) 280, (float) 323);
         
         this.velocity = new Point2D((float) baseSpeed, (float) baseSpeed);
         randomizePuck();
@@ -48,31 +44,11 @@ public class Puck{
     {
         return position;
     }
-
-    /**
-     * Returns the x postion for this object.
-     * @return 
-     */
-    public float getXpos() {
-        return (float)position.getX();
-    }
-
-    /**
-     * Returns the y position for this object.
-     * @return 
-     */
-    public float getYpos() {
-        return (float)this.position.getY();
-    }
-
-    /**
-     * Returns the x velocity for this object.
-     * @return 
-     */
-    public double getXvelocity() {
-        return this.velocity.getX();
-    }
     
+    public Color getColor()
+    {
+        return this.color;
+    }
     /**
      * Sets the position for this object.
      * @param position
@@ -95,14 +71,6 @@ public class Puck{
         float dot = (float)incidence.dotProduct(normal);
         velocity = new Point2D(2 * normal.getX() * dot - incidence.getX(), 2 * normal.getY() * dot - incidence.getY());
         velocity = velocity.multiply((float)baseSpeed);
-    }
-
-    /**
-     * Gets Y velocity for this object
-     * @return 
-     */
-    public double getYvelocity() {
-        return this.velocity.getY();
     }
 
     /**
@@ -143,16 +111,6 @@ public class Puck{
         
         position = position.add(velocity);
     }
-
-    /**
-     * Displays Puck on the field.
-     */
-    /*public void display() {
-        parentApplet.ellipseMode(CENTER);
-        parentApplet.strokeWeight(0);
-        parentApplet.fill(color.getRGB());
-        parentApplet.ellipse((float) position.x, (float) position.y, (float) diameter, (float) diameter);
-    }*/
     
     /**
      * Changes the velocity randomly to negative or positive.

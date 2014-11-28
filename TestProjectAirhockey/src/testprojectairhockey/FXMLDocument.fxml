@@ -26,12 +26,12 @@
                 <Font size="20.0" />
             </font>
         </Label>
-        <Label layoutX="269.0" layoutY="21.0" text="Round:">
+        <Label layoutX="367.0" layoutY="21.0" text="Round:" textAlignment="CENTER">
             <font>
                 <Font size="20.0" />
             </font>
         </Label>
-        <Label fx:id="lblRoundNr" layoutX="354.0" layoutY="21.0" text="1">
+        <Label fx:id="lblRoundNr" layoutX="444.0" layoutY="21.0" text="1" textAlignment="CENTER">
             <font>
                 <Font size="20.0" />
             </font>

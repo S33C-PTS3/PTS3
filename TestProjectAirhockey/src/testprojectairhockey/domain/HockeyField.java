@@ -131,18 +131,18 @@ public class HockeyField {
     {
         for (int i = 0; i < sides.length; i++)
         {
-            hitSide = sides[i].ballHitsWall(puck.getXpos(), puck.getYpos(), puck.getXvelocity(), puck.getYvelocity());
+            hitSide = sides[i].ballHitsWall(puck.getPosition().getX(), puck.getPosition().getY(), puck.getVelocity().getX(), puck.getVelocity().getY());
             hitBat = sides[i].hasCollided(puck);
-            goal = sides[i].checkGoalLine(puck.getXpos(), puck.getYpos(), puck.getXvelocity(), puck.getYvelocity(), puck.getRadius());
+            goal = sides[i].checkGoalLine(puck.getPosition().getX(), puck.getPosition().getY(), puck.getVelocity().getX(), puck.getVelocity().getY(), puck.getRadius());
             if (hitSide != null && lastHitSide != hitSide.getSideName())
             {
-                puck.setVelocityWithoutNormal(hitSide.getVector1(), hitSide.getVector2());
+                puck.setVelocityWithoutNormal(hitSide.getStartPoint(), hitSide.getEndPoint());
                 lastHitSide = sides[i].getSideName();
                 hitSide = null;
             }
             if (hitBat != null && lastHitSide != hitBat.getBat().getSideName())
             {
-                puck.setVelocityWithNormal(hitBat.getBat().getVector(), puck.getPosition());
+                puck.setVelocityWithNormal(hitBat.getBat().getPosition(), puck.getPosition());
                 if (batsHitsPuck.isEmpty())
                 {
                     batsHitsPuck.add(hitBat);
@@ -268,23 +268,23 @@ public class HockeyField {
 
     public void moveAIPlayers()
     {
-        if (puck.getYpos() < sides[0].getBat().getYpos()
+        if (puck.getPosition().getY() < sides[0].getBat().getYpos()
                 && sides[0].getGoalY1() + 20 < sides[0].getBat().getYpos())
         {
             sides[0].moveBat("0right");
         }
-        else if (puck.getYpos() > sides[0].getBat().getYpos()
+        else if (puck.getPosition().getY() > sides[0].getBat().getYpos()
                 && sides[0].getGoalY2() - 10 > sides[0].getBat().getYpos())
         {
             sides[0].moveBat("0left");
         }
 
-        if (puck.getYpos() > sides[2].getBat().getYpos()
+        if (puck.getPosition().getY() > sides[2].getBat().getYpos()
                 && sides[2].getGoalY2() - 10 > sides[2].getBat().getYpos())
         {
             sides[2].moveBat("2right");
         }
-        else if (puck.getYpos() < sides[2].getBat().getYpos()
+        else if (puck.getPosition().getY() < sides[2].getBat().getYpos()
                 && sides[2].getGoalY1() + 20 < sides[2].getBat().getYpos())
         {
             sides[2].moveBat("2left");

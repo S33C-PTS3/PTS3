@@ -13,17 +13,17 @@
         <URL value="@gameresults.css" />
     </stylesheets>
    <children>
-      <Label fx:id="lblResult1" layoutX="255.0" layoutY="65.0" text="Label">
+      <Label fx:id="lblResult1" layoutX="255.0" layoutY="65.0" text="Label" textAlignment="CENTER">
          <font>
             <Font size="36.0" />
          </font>
       </Label>
-      <Label fx:id="lblResult2" layoutX="275.0" layoutY="140.0" text="Label">
+      <Label fx:id="lblResult2" layoutX="275.0" layoutY="140.0" text="Label" textAlignment="CENTER">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label fx:id="lblResult3" layoutX="284.0" layoutY="192.0" text="Label" />
+      <Label fx:id="lblResult3" layoutX="284.0" layoutY="192.0" text="Label" textAlignment="CENTER" />
       <Button fx:id="btnMainMenu" layoutX="50.0" layoutY="325.0" mnemonicParsing="false" onAction="#btnMainMenu" prefHeight="44.0" prefWidth="90.0" text="Main Menu" />
       <Button fx:id="btnRestart" layoutX="450.0" layoutY="325.0" mnemonicParsing="false" onAction="#btnRestart" prefHeight="44.0" prefWidth="90.0" text="Restart" />
    </children>

@@ -7,7 +7,6 @@ package testprojectairhockey.domain;
 
 
 import javafx.geometry.Point2D;
-import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 
 /**
@@ -18,19 +17,17 @@ import javafx.scene.paint.Color;
 public class Bat{
     private Color color;
     private float Xpos;
-    private double diameter;
     private float Ypos;
+    private double diameter;
     private double Xvelocity;
     private SideName sidename;
     private SerializationManager serMan = new SerializationManager();
     double rightSpeedModifier = 1;
     double leftSpeedModifier = 1;
-    private Image batImage;
     
     /**
      * Constructor used for the Bat Class
      * @param color
-     * @param parent
      * @param Xpos
      * @param Ypos
      * @param diameter
@@ -75,7 +72,7 @@ public class Bat{
      * Returns a Point2D for the current position from the object.
      * @return 
      */
-    public Point2D getVector()
+    public Point2D getPosition()
     {
         return new Point2D(Xpos,Ypos);
     }
