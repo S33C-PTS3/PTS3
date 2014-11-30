@@ -42,47 +42,36 @@ public class MenuController implements Initializable {
     {
         // TODO
         lblHoi.setText("Airhockey");
-
     }
 
     @FXML
     private void btnSP_Click(ActionEvent evt) throws IOException
     {
         lblHoi.setText("Singleplayer");
-        Parent root;
-        try
-        {
-            root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
-            Stage stage = new Stage();
-            stage.setTitle("Airhockey - Singleplayer");
-            Scene scene = new Scene(root);
-
-            stage.setScene(scene);
-            stage.setResizable(false);
-            stage.show();
-            ((Node) (evt.getSource())).getScene().getWindow().hide();
-        }
-        catch (Exception ex)
-        {
-            System.out.println(ex.getMessage());
-        }
+        startNewWindow("FXMLDocument", "Airhockey - Singleplayer", evt);
     }
 
     @FXML
     private void btnMP_Click(ActionEvent evt)
     {
         lblHoi.setText("Multiplayer");
+        startNewWindow("Lobby", "Airhockey - Multiplayer", evt);
     }
 
     @FXML
     private void btnSettings_Click(ActionEvent evt)
     {
+        startNewWindow("Settings", "Airhockey - Settings", evt);
+    }
+
+    private void startNewWindow(String file, String name, ActionEvent evt)
+    {
         Parent root;
         try
         {
-            root = FXMLLoader.load(getClass().getResource("Settings.fxml"));
+            root = FXMLLoader.load(getClass().getResource(file + ".fxml"));
             Stage stage = new Stage();
-            stage.setTitle("Airhockey - Settings");
+            stage.setTitle(name);
             Scene scene = new Scene(root);
 
             stage.setScene(scene);
