@@ -18,7 +18,7 @@
             <Font size="36.0" />
          </font>
       </Label>
-      <Label fx:id="lblResult2" layoutX="275.0" layoutY="140.0" text="Label" textAlignment="CENTER">
+      <Label fx:id="lblResult2" layoutX="275.0" layoutY="132.0" text="Label" textAlignment="CENTER">
          <font>
             <Font size="20.0" />
          </font>

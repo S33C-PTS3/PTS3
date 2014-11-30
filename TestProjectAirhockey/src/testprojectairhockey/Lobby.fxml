@@ -12,18 +12,13 @@
         <URL value="@lobby.css" />
     </stylesheets>
    <children>
-      <TextField fx:id="tfMessage" layoutX="18.0" layoutY="560.0" prefHeight="26.0" prefWidth="675.0" promptText="Write a Message.." />
-      <Button fx:id="btnSend" layoutX="703.0" layoutY="560.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="80.0" text="Send" />
-      <ScrollPane fx:id="ScrollChatBox" layoutX="18.0" layoutY="410.0" prefHeight="137.0" prefWidth="765.0" vbarPolicy="NEVER" />
-      <ScrollPane layoutX="18.0" layoutY="58.0" prefHeight="342.0" prefWidth="200.0">
-         <content>
-            <Accordion fx:id="RankingPane" prefHeight="340.0" prefWidth="198.0" />
-         </content>
-      </ScrollPane>
-      <Button fx:id="btnStartNewGame" layoutX="18.0" layoutY="22.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="200.0" text="Start New Game" />
-      <Accordion fx:id="GameAccordion" layoutX="231.0" layoutY="58.0" prefHeight="342.0" prefWidth="551.0">
+      <TextField fx:id="tfMessage" layoutX="18.0" layoutY="560.0" onKeyPressed="#enterPressed" prefHeight="26.0" prefWidth="675.0" promptText="Write a Message.." />
+      <Button fx:id="btnSend" focusTraversable="false" layoutX="703.0" layoutY="560.0" mnemonicParsing="false" onAction="#btnSend_Click" prefHeight="26.0" prefWidth="80.0" text="Send" />
+      <ScrollPane focusTraversable="false" layoutX="18.0" layoutY="58.0" prefHeight="342.0" prefWidth="200.0" />
+      <Button fx:id="btnStartNewGame" focusTraversable="false" layoutX="18.0" layoutY="22.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="200.0" text="Start New Game" />
+      <Accordion fx:id="GameAccordion" focusTraversable="false" layoutX="231.0" layoutY="58.0" prefHeight="342.0" prefWidth="551.0">
         <panes>
-          <TitledPane fx:id="TitlePane1" text="Eric''s Game">
+          <TitledPane fx:id="TitlePane1" focusTraversable="false" text="Eric''s Game">
                <content>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0">
                      <children>
@@ -38,12 +33,13 @@
                   </AnchorPane>
                </content>
             </TitledPane>
-          <TitledPane fx:id="TitlePane2" text="Bob's Game" />
+          <TitledPane fx:id="TitlePane2" focusTraversable="false" text="Bob's Game" />
         </panes>
       </Accordion>
-      <Label layoutX="264.0" layoutY="27.0" text="Game Name" textAlignment="CENTER" />
-      <Label layoutX="411.0" layoutY="27.0" text="# Players" textAlignment="CENTER" />
-      <Label layoutX="526.0" layoutY="27.0" text="Game Rating" textAlignment="CENTER" />
-      <Label layoutX="677.0" layoutY="27.0" text="Start Time" textAlignment="CENTER" />
+      <Label focusTraversable="false" layoutX="264.0" layoutY="27.0" text="Game Name" textAlignment="CENTER" />
+      <Label focusTraversable="false" layoutX="411.0" layoutY="27.0" text="# Players" textAlignment="CENTER" />
+      <Label focusTraversable="false" layoutX="526.0" layoutY="27.0" text="Game Rating" textAlignment="CENTER" />
+      <Label focusTraversable="false" layoutX="677.0" layoutY="27.0" text="Start Time" textAlignment="CENTER" />
+      <ListView fx:id="lvChatBox" focusTraversable="false" layoutX="18.0" layoutY="410.0" prefHeight="137.0" prefWidth="765.0" />
    </children>
 </AnchorPane>

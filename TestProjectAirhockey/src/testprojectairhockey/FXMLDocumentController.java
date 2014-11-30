@@ -245,6 +245,7 @@ public class FXMLDocumentController implements Initializable {
         if (!message.isEmpty() && message.trim().length() > 0)
         {
             messages.add(message);
+            lvChat.scrollTo(lvChat.getItems().size());
             tfMessage.clear();
         }
     }

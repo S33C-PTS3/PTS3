@@ -47,14 +47,12 @@ public class MenuController implements Initializable {
     @FXML
     private void btnSP_Click(ActionEvent evt) throws IOException
     {
-        lblHoi.setText("Singleplayer");
         startNewWindow("FXMLDocument", "Airhockey - Singleplayer", evt);
     }
 
     @FXML
     private void btnMP_Click(ActionEvent evt)
     {
-        lblHoi.setText("Multiplayer");
         startNewWindow("Lobby", "Airhockey - Multiplayer", evt);
     }
 
