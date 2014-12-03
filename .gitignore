@@ -27,3 +27,6 @@ hs_err_pid*
 /TestProjectAirhockey/nbproject/private/
 /TestProjectAirhockey/build/
 /TestProjectAirhockey/dist/
+/TestDB/DBTest/nbproject/private/
+/TestDB/DBTest/dist/
+/TestDB/DBTest/build/
