@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Lobby;
+package Shared;
 
+import Lobby.Game;
+import Lobby.User;
 import java.rmi.Remote;
 import java.util.List;
 

@@ -54,6 +54,7 @@ public class MenuController implements Initializable {
     private void btnMP_Click(ActionEvent evt)
     {
         startNewWindow("Lobby", "Airhockey - Multiplayer", evt);
+        
     }
 
     @FXML

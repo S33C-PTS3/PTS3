@@ -5,6 +5,7 @@
  */
 package Lobby;
 
+import Shared.ILobby;
 import Chat.Chat;
 import java.beans.PropertyChangeEvent;
 import java.rmi.RemoteException;
