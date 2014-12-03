@@ -5,6 +5,7 @@
  */
 package Game;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -12,12 +13,14 @@ import java.util.List;
 import javafx.geometry.Point2D;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
+import observer.RemotePropertyListener;
+import observer.RemotePublisher;
 
 /**
  *
  * @author Eric The HockeyField represents the board where the game is played on
  */
-public class HockeyField {
+public class HockeyField implements RemotePublisher{
 
     final private float sizefactor = 0.7f;
     int middleX = 0;
@@ -327,5 +330,15 @@ public class HockeyField {
                 }
             });
         }
+    }
+
+    @Override
+    public void addListener(RemotePropertyListener listener, String property) throws RemoteException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void removeListener(RemotePropertyListener listener, String property) throws RemoteException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
