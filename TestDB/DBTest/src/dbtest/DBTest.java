@@ -21,6 +21,9 @@ import javafx.scene.control.Button;
 import javafx.scene.image.*;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import jaco.mp3.player.MP3Player;
+import java.io.File;
+import java.net.URL;
 
 
 /**
@@ -45,6 +48,7 @@ public class DBTest extends Application {
                 if (result.equals("hebjeevenvoormij")) 
                 {
                     showFrans();
+                    playFrans();
                 }
                 System.out.println("Admin password:" + result);
             }
@@ -137,6 +141,12 @@ public class DBTest extends Application {
     private void showFrans()
     {
         root.getChildren().add(imgView);
+    }
+    
+    private void playFrans()
+    {
+        File file = new File("Frans Bauer ; heb je even voor mij..mp3");
+        new MP3Player(file).play();
     }
     
     private void hideFrans()
