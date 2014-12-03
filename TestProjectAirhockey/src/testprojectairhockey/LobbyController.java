@@ -6,8 +6,6 @@
 package testprojectairhockey;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,6 +17,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TitledPane;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
@@ -46,6 +45,9 @@ public class LobbyController implements Initializable {
     
     @FXML
     Button btnSend;
+    
+    @FXML
+    Button btnRefresh;
     
     ObservableList<String> messages = FXCollections.observableArrayList();
     
@@ -84,6 +86,14 @@ public class LobbyController implements Initializable {
             lvChatBox.scrollTo(lvChatBox.getItems().size());
             tfMessage.clear();
         }
+    }
+    
+    @FXML
+    private void btnCreateGame_Click(ActionEvent evt)
+    {
+        TitledPane gameTitle = new TitledPane();
+        gameTitle.setText("Rens' game");
+        GameAccordion.getPanes().add(gameTitle);
     }
     
 }

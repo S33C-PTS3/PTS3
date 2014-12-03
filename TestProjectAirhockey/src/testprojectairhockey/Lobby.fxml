@@ -7,39 +7,40 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="800.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="testprojectairhockey.LobbyController">
-    <stylesheets>
-        <URL value="@lobby.css" />
-    </stylesheets>
-   <children>
-      <TextField fx:id="tfMessage" layoutX="18.0" layoutY="560.0" onKeyPressed="#enterPressed" prefHeight="26.0" prefWidth="675.0" promptText="Write a Message.." />
-      <Button fx:id="btnSend" focusTraversable="false" layoutX="703.0" layoutY="560.0" mnemonicParsing="false" onAction="#btnSend_Click" prefHeight="26.0" prefWidth="80.0" text="Send" />
-      <ScrollPane focusTraversable="false" layoutX="18.0" layoutY="58.0" prefHeight="342.0" prefWidth="200.0" />
-      <Button fx:id="btnStartNewGame" focusTraversable="false" layoutX="18.0" layoutY="22.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="200.0" text="Start New Game" />
-      <Accordion fx:id="GameAccordion" focusTraversable="false" layoutX="231.0" layoutY="58.0" prefHeight="342.0" prefWidth="551.0">
-        <panes>
-          <TitledPane fx:id="TitlePane1" focusTraversable="false" text="Eric''s Game">
-               <content>
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
-                     <children>
-                        <Label layoutX="26.0" layoutY="45.0" text="3/3 Players" textAlignment="CENTER" />
-                        <Label layoutX="26.0" layoutY="77.0" text="2 Spectators" textAlignment="CENTER" />
-                        <Label layoutX="213.0" layoutY="45.0" text="Player: Eric" />
-                        <Label layoutX="213.0" layoutY="77.0" text="Player: Meny" />
-                        <Label layoutX="213.0" layoutY="108.0" text="Player: Rens" />
-                        <Button layoutX="377.0" layoutY="72.0" mnemonicParsing="false" text="Join" />
-                        <Button layoutX="453.0" layoutY="72.0" mnemonicParsing="false" text="Spectate" />
-                     </children>
-                  </AnchorPane>
-               </content>
-            </TitledPane>
-          <TitledPane fx:id="TitlePane2" focusTraversable="false" text="Bob's Game" />
-        </panes>
-      </Accordion>
-      <Label focusTraversable="false" layoutX="264.0" layoutY="27.0" text="Game Name" textAlignment="CENTER" />
-      <Label focusTraversable="false" layoutX="411.0" layoutY="27.0" text="# Players" textAlignment="CENTER" />
-      <Label focusTraversable="false" layoutX="526.0" layoutY="27.0" text="Game Rating" textAlignment="CENTER" />
-      <Label focusTraversable="false" layoutX="677.0" layoutY="27.0" text="Start Time" textAlignment="CENTER" />
-      <ListView fx:id="lvChatBox" focusTraversable="false" layoutX="18.0" layoutY="410.0" prefHeight="137.0" prefWidth="765.0" />
-   </children>
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="800.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="testprojectairhockey.LobbyController">
+  <children>
+    <TextField fx:id="tfMessage" layoutX="18.0" layoutY="560.0" onKeyPressed="#enterPressed" prefHeight="26.0" prefWidth="675.0" promptText="Write a Message.." />
+    <Button fx:id="btnSend" focusTraversable="false" layoutX="703.0" layoutY="560.0" mnemonicParsing="false" onAction="#btnSend_Click" prefHeight="26.0" prefWidth="80.0" text="Send" />
+    <ScrollPane focusTraversable="false" layoutX="18.0" layoutY="58.0" prefHeight="342.0" prefWidth="200.0" />
+    <Button fx:id="btnStartNewGame" focusTraversable="false" layoutX="18.0" layoutY="22.0" mnemonicParsing="false" onAction="#btnCreateGame_Click" prefHeight="26.0" prefWidth="147.0" text="Start New Game" />
+    <Accordion fx:id="GameAccordion" focusTraversable="false" layoutX="231.0" layoutY="58.0" prefHeight="342.0" prefWidth="551.0">
+      <panes>
+        <TitledPane fx:id="TitlePane1" focusTraversable="false" text="Eric''s Game">
+          <content>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0">
+              <children>
+                <Label layoutX="26.0" layoutY="45.0" text="3/3 Players" textAlignment="CENTER" />
+                <Label layoutX="26.0" layoutY="77.0" text="2 Spectators" textAlignment="CENTER" />
+                <Label layoutX="213.0" layoutY="45.0" text="Player: Eric" />
+                <Label layoutX="213.0" layoutY="77.0" text="Player: Meny" />
+                <Label layoutX="213.0" layoutY="108.0" text="Player: Rens" />
+                <Button layoutX="377.0" layoutY="72.0" mnemonicParsing="false" text="Join" />
+                <Button layoutX="453.0" layoutY="72.0" mnemonicParsing="false" text="Spectate" />
+              </children>
+            </AnchorPane>
+          </content>
+        </TitledPane>
+        <TitledPane fx:id="TitlePane2" focusTraversable="false" text="Bob's Game" />
+      </panes>
+    </Accordion>
+    <Label focusTraversable="false" layoutX="264.0" layoutY="27.0" text="Game Name" textAlignment="CENTER" />
+    <Label focusTraversable="false" layoutX="411.0" layoutY="27.0" text="# Players" textAlignment="CENTER" />
+    <Label focusTraversable="false" layoutX="526.0" layoutY="27.0" text="Game Rating" textAlignment="CENTER" />
+    <Label focusTraversable="false" layoutX="677.0" layoutY="27.0" text="Start Time" textAlignment="CENTER" />
+    <ListView fx:id="lvChatBox" focusTraversable="false" layoutX="18.0" layoutY="410.0" prefHeight="137.0" prefWidth="765.0" />
+    <Button fx:id="btnRefresh" layoutX="171.0" layoutY="25.0" mnemonicParsing="false" prefWidth="42.0" text="RF" />
+  </children>
+  <stylesheets>
+    <URL value="@lobby.css" />
+  </stylesheets>
 </AnchorPane>

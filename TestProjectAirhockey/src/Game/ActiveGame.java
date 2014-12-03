@@ -20,6 +20,7 @@ public class ActiveGame extends Game{
     private int round;
     
     //gegenereerde constructor
+    //ROUNDS AND SCORES IN ACTIVE GAME ZETTEN EN UIT HOCKEYFIELD
 
     public ActiveGame(String name, User creator, HockeyField hockeyField, Chat chat)
     {

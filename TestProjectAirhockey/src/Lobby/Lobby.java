@@ -6,14 +6,18 @@
 package Lobby;
 
 import Chat.Chat;
+import java.beans.PropertyChangeEvent;
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
+import observer.RemotePropertyListener;
 
 /**
  *
  * @author Eric
  */
 // SINGLETON CLASS
-public class Lobby {
+public class Lobby extends UnicastRemoteObject implements RemotePropertyListener, ILobby{
     private Chat chat;
     private User loggedInUser;
     private List<Game> games;
@@ -21,46 +25,13 @@ public class Lobby {
     
     /**
      * creates an new instance of the lobby class
+     * @throws java.rmi.RemoteException
      */
-    public Lobby()
+    public Lobby() throws RemoteException
     {
         
     }
     
-    /**
-     * get the logged in users
-     * @return List of logged in users
-     */
-    public List<User> getUsers()
-    {
-        return null;
-    }
-    /**
-     * gets all started/not-started games
-     * @return list of games
-     */
-    public List<Game> getGames()
-    {
-        return null;
-    }
-    /**
-     * Adds a game to the list of games
-     * @param game
-     * @return true/false
-     */
-    public boolean addGame(Game game)
-    {
-        return false;
-    }
-    /**
-     * Adds a user to the list of users
-     * @param user
-     * @return true/false
-     */
-    public boolean addUser(User user)
-    {
-        return false;
-    }
     /**
      * sets the loggedInUser field with the user that just logged in
      * @param user 
@@ -76,6 +47,36 @@ public class Lobby {
     public User getLoggedInUser()
     {
         return null;
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) throws RemoteException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<User> getUsers() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Game> getGames() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public String[] updateRanking() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean addGame(Game game) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean addUser(User user) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }
