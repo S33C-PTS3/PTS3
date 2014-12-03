@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package testprojectairhockey.domain;
+package Lobby;
 
+import Chat.Chat;
 import java.util.List;
 
 /**

@@ -3,7 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package testprojectairhockey.domain;
+package Game;
+
+import Lobby.Game;
+import Lobby.User;
+import Chat.Chat;
 
 /**
  *

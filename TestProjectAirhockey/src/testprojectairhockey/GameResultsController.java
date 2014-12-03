@@ -18,7 +18,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
-import testprojectairhockey.domain.Side;
+import Game.Side;
 
 /**
  * FXML Controller class

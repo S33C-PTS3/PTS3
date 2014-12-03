@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package testprojectairhockey.domain;
+package testprojectairhockey;
 
+import Game.Difficulty;
 import java.io.Serializable;
 
 /**

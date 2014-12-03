@@ -3,11 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package testprojectairhockey.domain;
+package Game;
 
 
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
+import testprojectairhockey.SerializationManager;
+import testprojectairhockey.Settings;
 
 /**
  *

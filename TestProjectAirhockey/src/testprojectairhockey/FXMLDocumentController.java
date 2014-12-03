@@ -5,8 +5,11 @@
  */
 package testprojectairhockey;
 
+import Game.SideName;
+import Game.Bat;
+import Game.Side;
+import Game.Puck;
 import java.io.IOException;
-import testprojectairhockey.domain.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.animation.AnimationTimer;
@@ -29,7 +32,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
-import testprojectairhockey.domain.HockeyField;
+import Game.HockeyField;
 
 /**
  *
