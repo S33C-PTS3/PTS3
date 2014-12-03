@@ -42,7 +42,7 @@ public class DBTest extends Application {
             @Override
             public void handle(ActionEvent event) {
                 String result = getAdminPassword();
-                if (result != null) 
+                if (result.equals("hebjeevenvoormij")) 
                 {
                     showFrans();
                 }
