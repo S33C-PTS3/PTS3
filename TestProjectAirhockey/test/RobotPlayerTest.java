@@ -3,11 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import airhockey.domain.*;
-import org.junit.After;
-import org.junit.AfterClass;
+import Game.Difficulty;
+import Game.RobotPlayer;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -17,28 +15,13 @@ import static org.junit.Assert.*;
  */
 public class RobotPlayerTest {
     RobotPlayer rp;
-    public RobotPlayerTest() {
-    }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
+
     @Before
     public void setUp() 
     {
         rp = new RobotPlayer("Theo");
     }
-    
-    @After
-    public void tearDown() {
-    }
 
-    
     @Test
     public void testRobotPlayer()
     {
@@ -50,7 +33,6 @@ public class RobotPlayerTest {
         assertNotNull("Should be created", rp);
         assertNotNull("Should be created", new RobotPlayer("henk"));
     }
-    
     
     @Test
     public void testChangeScore()
