@@ -52,7 +52,7 @@ public class LobbyController implements Initializable {
     Button btnRefresh;
 
     ObservableList<String> messages;
-    ArrayList<Game> games;
+    //ArrayList<Game> games;
 
 
     /**

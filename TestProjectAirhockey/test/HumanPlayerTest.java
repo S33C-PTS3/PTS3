@@ -3,13 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import airhockey.domain.*;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
+import Game.HumanPlayer;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Before;
 
 /**
  *
@@ -17,26 +14,11 @@ import static org.junit.Assert.*;
  */
 public class HumanPlayerTest {
     HumanPlayer hp;
-    public HumanPlayerTest() {
-    }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
     
     @Before
     public void setUp() {
-        hp = new HumanPlayer("Henk");
+        hp = new HumanPlayer();
     }
-    
-    @After
-    public void tearDown() {
-    }
-
     
     @Test
     public void testHumanPlayer()
@@ -46,13 +28,13 @@ public class HumanPlayerTest {
          * @param username 
          */
         assertNotNull("Should be created", hp);
-        assertNotNull("Should be created", new HumanPlayer("Theo"));
+        assertNotNull("Should be created", new HumanPlayer());
     }
     
     @Test
     public void testToString()
     {
-        assertEquals("Should be 'Henk'", "Henk", hp.toString());
+        assertEquals("Should be 'Eric'", "Eric", hp.toString());
     }
     
     @Test 
