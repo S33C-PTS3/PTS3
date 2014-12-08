@@ -41,6 +41,6 @@ public class AuthenticationManager {
      */
     public boolean register(String username, String password)
     {
-        return false;
+        throw new UnsupportedOperationException("AuthenticationManager.register() nog implementeren");
     }
 }

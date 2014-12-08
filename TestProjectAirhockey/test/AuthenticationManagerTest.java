@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import airhockey.domain.*;
+import Security.AuthenticationManager;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -17,28 +17,13 @@ import static org.junit.Assert.*;
  */
 public class AuthenticationManagerTest {
     AuthenticationManager authMan;
-    public AuthenticationManagerTest() {
-    }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
+
     @Before
     public void setUp() {
         authMan = new AuthenticationManager();
         authMan.register("test", "test");
     }
-    
-    @After
-    public void tearDown() {
-    }
 
-    
     @Test
     public void testRegisterUser()
     {
@@ -50,9 +35,8 @@ public class AuthenticationManagerTest {
         * @return 
         */
         assertTrue("Should be able to register",authMan.register("henk", "test"));   
-        assertFalse("Should not be ablte to register", authMan.register("test","test"));
+        assertFalse("Should not be able to register", authMan.register("test","test"));
     }
-    
     
     @Test
     public void testLoginUser()
@@ -64,9 +48,7 @@ public class AuthenticationManagerTest {
         * @return 
         */
         assertEquals("Should be able to login", "henk", authMan.login("henk", "test").getUsername());
-        assertNull("Should not work", authMan.login("top", "test"));
-                
-                
+        assertNull("Should not work", authMan.login("top", "test"));    
     }
     
     
