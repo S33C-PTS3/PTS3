@@ -5,9 +5,7 @@
  */
 package testprojectairhockey;
 
-import observer.*;
 import Shared.ILobby;
-import java.beans.PropertyChangeEvent;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
@@ -23,8 +21,8 @@ import observer.RemotePublisher;
  *
  * @author rens
  */
-public class LobbyRMI extends UnicastRemoteObject implements RemotePropertyListener
-{
+public class LobbyRMI extends UnicastRemoteObject {
+
     private ILobby lobby;
     private Registry registry;
     private final String bindingname = "Lobby";
@@ -53,7 +51,7 @@ public class LobbyRMI extends UnicastRemoteObject implements RemotePropertyListe
         }
 
         //Bind effectenbeurs
-        if (registry!= null)
+        if (registry != null)
         {
             try
             {
@@ -81,19 +79,11 @@ public class LobbyRMI extends UnicastRemoteObject implements RemotePropertyListe
         {
             Logger.getLogger(LobbyRMI.class.getName()).log(Level.SEVERE, null, ex);
         }
-        publisher.addListener(this, "lobby");
-    }
-
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) throws RemoteException
-    {
-        System.out.println("IT WORKS");
-        getGameCount();
     }
     
     public void getGameCount()
     {
-        if (registry!= null)
+        if (registry != null)
         {
             try
             {
@@ -112,16 +102,21 @@ public class LobbyRMI extends UnicastRemoteObject implements RemotePropertyListe
                 lobby = null;
             }
         }
-        try {
+        try
+        {
             System.out.println(lobby.getGames().size());
-        } catch (RemoteException ex) {
+        }
+        catch (RemoteException ex)
+        {
             Logger.getLogger(LobbyRMI.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
     public RemotePublisher getPublisher()
     {
         return publisher;
     }
+
     public ILobby getLobby()
     {
         return this.lobby;

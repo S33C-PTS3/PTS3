@@ -8,8 +8,10 @@ package testprojectairhockey;
 import Lobby.Game;
 import Lobby.User;
 import Shared.ILobby;
+import java.beans.PropertyChangeEvent;
 import java.net.URL;
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -29,13 +31,14 @@ import javafx.scene.control.TitledPane;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import observer.RemotePropertyListener;
 
 /**
  * FXML Controller class
  *
  * @author Eric
  */
-public class LobbyController implements Initializable {
+public class LobbyController extends UnicastRemoteObject implements Initializable, RemotePropertyListener {
 
     @FXML
     Button btnStartNewGame;
@@ -69,40 +72,59 @@ public class LobbyController implements Initializable {
      * @param rb
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize(URL url, ResourceBundle rb)
+    {
         // TODO
         lvChatBox.setItems(messages);
         messages = FXCollections.observableArrayList();
-        try {
+        try
+        {
             rmiController = new LobbyRMI();
-        } catch (RemoteException ex) {
+            rmiController.getPublisher().addListener(this, "lobby");
+        }
+        catch (RemoteException ex)
+        {
             Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
+    public LobbyController() throws RemoteException
+    {
+    
+    }
+    
     @FXML
-    private void btnSend_Click(ActionEvent evt) {
+    private void btnSend_Click(ActionEvent evt)
+    {
         sendMessage();
     }
 
     @FXML
-    private void enterPressed(KeyEvent evt) {
-        if (evt.getCode().equals(KeyCode.ENTER)) {
+    private void enterPressed(KeyEvent evt)
+    {
+        if (evt.getCode().equals(KeyCode.ENTER))
+        {
             sendMessage();
         }
-        try {
-            for (Game g : rmiController.getLobby().getGames()) {
+        try
+        {
+            for (Game g : rmiController.getLobby().getGames())
+            {
                 System.out.println(g.toString());
             }
-        } catch (RemoteException ex) {
+        }
+        catch (RemoteException ex)
+        {
             Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    private void sendMessage() {
+    private void sendMessage()
+    {
         //van wie komt het bericht.. voorbeeldbericht: Eric: Hallo!
         String message = tfMessage.getText();
-        if (!message.isEmpty() && message.trim().length() > 0) {
+        if (!message.isEmpty() && message.trim().length() > 0)
+        {
             messages.add(message);
             lvChatBox.scrollTo(lvChatBox.getItems().size());
             tfMessage.clear();
@@ -110,20 +132,24 @@ public class LobbyController implements Initializable {
     }
 
     @FXML
-    private void btnCreateGame_Click(ActionEvent evt) {
+    private void btnCreateGame_Click(ActionEvent evt)
+    {
         ILobby lobby = rmiController.getLobby();
         String[] gameInfo = null;
-        try {
+        try
+        {
             gameInfo = lobby.addGame(new Game("Meny's Game", new User("Meny")));
-        } catch (RemoteException ex) {
+        }
+        catch (RemoteException ex)
+        {
             Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
         }
         createNewGame(gameInfo);
 
     }
 
-    private void createNewGame(String[] gameInfo) {
-        
+    private void createNewGame(String[] gameInfo)
+    {
         String gameId = gameInfo[0];
         String gameName = gameInfo[1];
         String gameAverageRanking = gameInfo[2];
@@ -133,19 +159,19 @@ public class LobbyController implements Initializable {
         TitledPane gameTitle = new TitledPane();
         gameTitle.setText(gameName);
         AnchorPane gamePane = new AnchorPane();
-        
+
         Label idLabel = new Label();
         Label ratingLabel = new Label();
         Label labelSpeler1 = new Label();
         Label labelSpeler2 = new Label();
         Label labelSpeler3 = new Label();
-        
+
         idLabel.setText(gameId);
         ratingLabel.setText(gameAverageRanking);
         labelSpeler1.setText(player1);
         labelSpeler2.setText(player2);
         labelSpeler3.setText(player3);
-        
+
         ratingLabel.setTranslateX(100);
         ratingLabel.setTranslateY(100);
         labelSpeler1.setTranslateX(200);
@@ -156,10 +182,16 @@ public class LobbyController implements Initializable {
         gamePane.getChildren().add(ratingLabel);
         GameAccordion.getPanes().add(gameTitle);
         gameTitle.setContent(gamePane);
-        for(int i = 0; i < 6; i++)
+        for (int i = 0; i < 6; i++)
         {
             System.out.println(gameInfo[i]);
         }
     }
 
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) throws RemoteException
+    {
+        String[] gameinfo = (String[]) evt.getNewValue();
+        createNewGame(gameinfo);
+    }
 }

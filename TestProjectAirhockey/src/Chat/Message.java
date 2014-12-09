@@ -20,6 +20,22 @@ public class Message {
      */
     public Message(String sender, String text)
     {
+        if(sender == null)
+        {
+            throw new IllegalArgumentException("Sender cannot be null");
+        }
+        if(text == null)
+        {
+            throw new IllegalArgumentException("Text cannot be null");
+        }
+        if(text.length() > maxChars)
+        {
+            throw new IllegalArgumentException("Text to long");
+        }
+        if(text.trim().equals(""))
+        {
+            throw new IllegalArgumentException("Text is empty");
+        }
         this.sender = sender;
         this.text = text;
     }
