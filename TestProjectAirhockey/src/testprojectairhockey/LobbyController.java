@@ -83,11 +83,6 @@ public class LobbyController implements Initializable {
             Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
-    public LobbyController() throws RemoteException
-    {
-    
-    }
     
     @FXML
     private void btnSend_Click(ActionEvent evt)
