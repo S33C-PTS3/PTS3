@@ -87,17 +87,7 @@ public class LobbyRMI extends UnicastRemoteObject implements RemotePropertyListe
     public void propertyChange(PropertyChangeEvent evt) throws RemoteException
     {
         System.out.println("IT WORKS");
-        rebindLobby();
-    }
-    
-    public void rebindLobby()
-    {
-        try {
-            registry.rebind(bindingname, lobby);
-            System.out.println("Lobby updated");
-        } catch (RemoteException ex) {
-            Logger.getLogger(LobbyRMI.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        getGameCount();
     }
     
     public void getGameCount()
