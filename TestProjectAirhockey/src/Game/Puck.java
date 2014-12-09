@@ -30,7 +30,6 @@ public class Puck{
     public Puck() {
         this.color = Color.BLACK;     
         this.position = new Point2D((float) 280, (float) 323);
-        
         this.velocity = new Point2D((float) baseSpeed, (float) baseSpeed);
         randomizePuck();
         this.diameter = 520 * 0.04;
@@ -108,7 +107,6 @@ public class Puck{
      * Changes position influenced by velocity
      */
     public void move() {
-        
         position = position.add(velocity);
     }
     

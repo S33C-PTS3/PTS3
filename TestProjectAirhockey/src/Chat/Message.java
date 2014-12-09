@@ -20,7 +20,8 @@ public class Message {
      */
     public Message(String sender, String text)
     {
-        
+        this.sender = sender;
+        this.text = text;
     }
     
     /**

@@ -33,6 +33,7 @@ public class RMI_Server {
     // Constructor
     public RMI_Server() {
 
+        System.setProperty("java.rmi.server.hostname", "145.93.162.240");
         // Print port number for registry
         System.out.println("Server: Port number " + portNumber);
 
