@@ -1,6 +1,9 @@
-import airhockey.domain.Game;
-import airhockey.domain.Lobby;
-import airhockey.domain.User;
+import Lobby.Game;
+import Lobby.Lobby;
+import Lobby.User;
+import java.rmi.RemoteException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.junit.Assert;
 import static org.junit.Assert.fail;
 import org.junit.Test;
@@ -21,9 +24,14 @@ public class LobbyTest {
         /**
          * creates an new instance of the lobby class
          */
-        Lobby lobby = new Lobby();
-        Assert.assertNotNull(lobby.getGames());
-        Assert.assertNotNull(lobby.getUsers());
+        Lobby lobby = null;
+        try {
+            lobby = new Lobby();
+            Assert.assertNotNull(lobby.getGames());
+            Assert.assertNotNull(lobby.getUsers());
+        } catch (RemoteException ex) {
+            Logger.getLogger(LobbyTest.class.getName()).log(Level.SEVERE, null, ex);
+        }        
     }
 
     @Test
@@ -37,7 +45,12 @@ public class LobbyTest {
 
         User user = new User("testuser");
         Game game = new Game("testgame", user);
-        Lobby lobby = new Lobby();
+        Lobby lobby = null;
+        try {
+            lobby = new Lobby();
+        } catch (RemoteException ex) {
+            Logger.getLogger(LobbyTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         /**
          * Test if game is added correctly to the list.
@@ -47,6 +60,8 @@ public class LobbyTest {
             Assert.assertEquals("amount of games is not as expected", 1, lobby.getGames().size());
         } catch (IllegalArgumentException ex) {
             fail("game is not added succesfully.");
+        } catch (RemoteException ex) {
+            Logger.getLogger(LobbyTest.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         /**
@@ -57,6 +72,8 @@ public class LobbyTest {
             fail("game cannot be null");
         } catch (IllegalArgumentException ex) {
             Assert.assertTrue(true);
+        } catch (RemoteException ex) {
+            Logger.getLogger(LobbyTest.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -69,7 +86,12 @@ public class LobbyTest {
          * @return true/false
          */
         User user = new User("henk");
-        Lobby lobby = new Lobby();
+        Lobby lobby = null;
+        try {
+            lobby = new Lobby();
+        } catch (RemoteException ex) {
+            Logger.getLogger(LobbyTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         /**
          * Test if the user is added correctly to the list
@@ -79,6 +101,8 @@ public class LobbyTest {
             Assert.assertEquals("Amount of users in the list is not correct.", 1, lobby.getUsers().size());
         } catch (IllegalArgumentException ex) {
             fail("User is not added succesfully");
+        } catch (RemoteException ex) {
+            Logger.getLogger(LobbyTest.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         /**
@@ -89,6 +113,8 @@ public class LobbyTest {
             fail("user cannot be null");
         } catch (IllegalArgumentException ex) {
             Assert.assertTrue(true);
+        } catch (RemoteException ex) {
+            Logger.getLogger(LobbyTest.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -99,7 +125,12 @@ public class LobbyTest {
          *
          * @param user
          */
-        Lobby lobby = new Lobby();
+        Lobby lobby = null;
+        try {
+            lobby = new Lobby();
+        } catch (RemoteException ex) {
+            Logger.getLogger(LobbyTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
         User user = new User("Piet");
         
         /**

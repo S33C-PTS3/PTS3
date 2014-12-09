@@ -46,15 +46,16 @@ public class Lobby extends UnicastRemoteObject implements RemotePublisher, ILobb
      */
     public void setLoggedInUser(User user)
     {
-        
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
     /**
      * gets the logged in user
      * @return user that is logged in
      */
     public User getLoggedInUser()
     {
-        return null;
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     
@@ -75,9 +76,10 @@ public class Lobby extends UnicastRemoteObject implements RemotePublisher, ILobb
 
     @Override
     public boolean addGame(Game game) throws RemoteException{
-        publisher.inform(this, null, null, "lobby");
-        games.add(game);
-        return true;
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //publisher.inform(this, null, null, "lobby");
+        //games.add(game);
+        //return true;
     }
 
     @Override
