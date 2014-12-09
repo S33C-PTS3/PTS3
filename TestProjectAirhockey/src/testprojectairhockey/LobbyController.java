@@ -8,10 +8,8 @@ package testprojectairhockey;
 import Lobby.Game;
 import Lobby.User;
 import Shared.ILobby;
-import java.beans.PropertyChangeEvent;
 import java.net.URL;
 import java.rmi.RemoteException;
-import java.rmi.server.UnicastRemoteObject;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -31,14 +29,13 @@ import javafx.scene.control.TitledPane;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
-import observer.RemotePropertyListener;
 
 /**
  * FXML Controller class
  *
  * @author Eric
  */
-public class LobbyController extends UnicastRemoteObject implements Initializable, RemotePropertyListener {
+public class LobbyController implements Initializable {
 
     @FXML
     Button btnStartNewGame;
@@ -80,7 +77,6 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
         try
         {
             rmiController = new LobbyRMI();
-            rmiController.getPublisher().addListener(this, "lobby");
         }
         catch (RemoteException ex)
         {
@@ -106,17 +102,6 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
         {
             sendMessage();
         }
-        try
-        {
-            for (Game g : rmiController.getLobby().getGames())
-            {
-                System.out.println(g.toString());
-            }
-        }
-        catch (RemoteException ex)
-        {
-            Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
     private void sendMessage()
@@ -131,6 +116,22 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
         }
     }
 
+    @FXML
+    private void btnRefresh_Click(ActionEvent evt)
+    {
+        try
+        {
+            for (String[] gamesArray : rmiController.getLobby().getGames())            
+            {
+                createNewGame(gamesArray);
+            }
+        }
+        catch (RemoteException ex)
+        {
+            Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     @FXML
     private void btnCreateGame_Click(ActionEvent evt)
     {
@@ -180,18 +181,11 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
         gamePane.getChildren().add(labelSpeler3);
         gamePane.getChildren().add(idLabel);
         gamePane.getChildren().add(ratingLabel);
-        GameAccordion.getPanes().add(gameTitle);
         gameTitle.setContent(gamePane);
+        GameAccordion.getPanes().add(gameTitle);
         for (int i = 0; i < 6; i++)
         {
             System.out.println(gameInfo[i]);
         }
-    }
-
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) throws RemoteException
-    {
-        String[] gameinfo = (String[]) evt.getNewValue();
-        createNewGame(gameinfo);
     }
 }
