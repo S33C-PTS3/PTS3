@@ -6,6 +6,11 @@
 package Security;
 
 import Lobby.User;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author Eric
@@ -13,11 +18,22 @@ import Lobby.User;
  */
 public class AuthenticationManager {
     
+    private Connection dbConnection;
+    
     /**
      * Constructor for AuthenticationManager
      */
     public AuthenticationManager()
     {
+        try 
+        {
+            initConnection();
+        } 
+        catch (RuntimeException ex) 
+        {
+            System.out.println("DB init failed");
+        }
+        
         throw new UnsupportedOperationException("constructor nog implementeren");
     }
     
@@ -42,5 +58,31 @@ public class AuthenticationManager {
     public boolean register(String username, String password)
     {
         throw new UnsupportedOperationException("AuthenticationManager.register() nog implementeren");
+    }
+    
+    private void initConnection() throws RuntimeException
+    {
+        try
+        {
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+        }
+        catch(ClassNotFoundException ex)
+        {
+            System.out.println("JDBC Driver not found!");
+        }
+
+        try
+        {
+            dbConnection = DriverManager.getConnection("jdbc:oracle:thin:@//145.93.163.170:1521/orcl", "system", "qbNdsAWq123");
+            //conn = DriverManager.getConnection("jdbc:oracle:thin:@//"+ ip +":1521/orcl", "system", "qbNdsAWq123");
+        }
+        catch (SQLException ex)
+        {
+            ex.printStackTrace();
+        }        
+
+        if (dbConnection == null) {
+            throw new RuntimeException("Connection could not be made.");
+        }
     }
 }
