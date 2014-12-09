@@ -7,28 +7,23 @@ package Lobby;
 
 import Shared.ILobby;
 import Chat.Chat;
-import java.beans.PropertyChangeEvent;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
-import observer.BasicPublisher;
 import observer.RemotePropertyListener;
-import observer.RemotePublisher;
 
 /**
  *
  * @author Eric
  */
 // SINGLETON CLASS
-public class Lobby extends UnicastRemoteObject implements RemotePublisher, ILobby {
+public class Lobby extends UnicastRemoteObject implements ILobby {
 
     private Chat chat;
     private User loggedInUser;
     private List<Game> games;
     private List<User> users;
-    private BasicPublisher publisher;
-    private String[] lobby;
     private int gameCount;
 
     /**
@@ -38,10 +33,7 @@ public class Lobby extends UnicastRemoteObject implements RemotePublisher, ILobb
      */
     public Lobby() throws RemoteException
     {
-        lobby = new String[1];
-        lobby[0] = "lobby";
-        publisher = new BasicPublisher(lobby);
-        games = new ArrayList<Game>();
+        games = new ArrayList<>();
         gameCount = 1;
     }
 
@@ -72,9 +64,23 @@ public class Lobby extends UnicastRemoteObject implements RemotePublisher, ILobb
     }
 
     @Override
-    public List<Game> getGames() throws RemoteException
+    public List<String[]> getGames() throws RemoteException
     {
-        return this.games;
+        List<String[]> gamesAsString = new ArrayList<>();
+        String[] gameInfo;
+        gameInfo = new String[6];
+        for (Game game : games)
+        {
+            gameInfo[0] = String.valueOf(game.getId());
+            gameInfo[1] = game.getName();
+            gameInfo[2] = String.valueOf(game.getAverageRating());
+            for (int i = 3; i < game.getUsers().size() + 3; i++)
+            {
+                gameInfo[i] = game.getUsers().get(i - 3).getUsername();
+            }
+            gamesAsString.add(gameInfo);
+        }
+        return gamesAsString;
     }
 
     @Override
@@ -98,7 +104,6 @@ public class Lobby extends UnicastRemoteObject implements RemotePublisher, ILobb
             gameInfo[i] = game.getUsers().get(i - 3).getUsername();
         }
         gameCount++;
-        publisher.inform(this, null, null, gameInfo);
         return gameInfo;
     }
 
@@ -107,17 +112,4 @@ public class Lobby extends UnicastRemoteObject implements RemotePublisher, ILobb
     {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
-    @Override
-    public void addListener(RemotePropertyListener listener, String property) throws RemoteException
-    {
-        publisher.addListener(listener, property);
-    }
-
-    @Override
-    public void removeListener(RemotePropertyListener listener, String property) throws RemoteException
-    {
-        publisher.addListener(listener, property);
-    }
-
 }

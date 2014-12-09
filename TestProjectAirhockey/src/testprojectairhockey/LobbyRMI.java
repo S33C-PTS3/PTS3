@@ -26,7 +26,6 @@ public class LobbyRMI extends UnicastRemoteObject {
     private ILobby lobby;
     private Registry registry;
     private final String bindingname = "Lobby";
-    private RemotePublisher publisher = null;
 
     /**
      *
@@ -71,14 +70,6 @@ public class LobbyRMI extends UnicastRemoteObject {
             }
         }
 
-        try
-        {
-            publisher = (RemotePublisher) Naming.lookup("rmi://145.93.162.240/Lobby");
-        }
-        catch (MalformedURLException | NotBoundException ex)
-        {
-            Logger.getLogger(LobbyRMI.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
     
     public void getGameCount()
@@ -110,11 +101,6 @@ public class LobbyRMI extends UnicastRemoteObject {
         {
             Logger.getLogger(LobbyRMI.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-
-    public RemotePublisher getPublisher()
-    {
-        return publisher;
     }
 
     public ILobby getLobby()
