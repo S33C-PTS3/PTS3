@@ -1,4 +1,4 @@
-import airhockey.domain.Message;
+import Chat.Message;
 import junit.framework.Assert;
 import static org.junit.Assert.fail;
 import org.junit.Test;
@@ -23,8 +23,8 @@ public class MessageTest {
          * @param text
          */
         Message message = new Message("Jan", "Hello, this is a test message.");
-        Assert.assertEquals("Sender is not set correctfully", "Jan", message.getSender());
-        Assert.assertEquals("Text is not set correctfully", "Hello, this is a test message", message.getText());
+        Assert.assertEquals("Sender is not set correctly", "Jan", message.getSender());
+        Assert.assertEquals("Text is not set correctly", "Hello, this is a test message.", message.getText());
 
         /**
          * Test if an exception occurs if the sender of an message is null
