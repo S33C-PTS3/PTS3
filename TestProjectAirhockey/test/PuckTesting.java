@@ -8,24 +8,12 @@ import javafx.geometry.Point2D;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import org.junit.*;
-<<<<<<< HEAD
 import static org.junit.Assert.*;
-=======
->>>>>>> FETCH_HEAD
 /**
  *
  * @author Joep Kerste
  */
 public class PuckTesting {
-<<<<<<< HEAD
-    
-=======
-
->>>>>>> FETCH_HEAD
-    @Before
-    public void setUp()
-    {
-    }
     
     @Test
     public void testConstructor()
@@ -38,11 +26,7 @@ public class PuckTesting {
         float radius = (float) diameter / 2;
         
         Assert.assertEquals(X, newPuck.getPosition().getX(), 0);
-<<<<<<< HEAD
         Assert.assertEquals(Y, newPuck.getPosition().getY() ,0);
-=======
-        Assert.assertEquals(Y, newPuck.getPosition().getY(),0);
->>>>>>> FETCH_HEAD
         Assert.assertEquals(diameter, newPuck.getDiameter(), 0);
         Assert.assertEquals(radius, newPuck.getRadius(), 0);
     }
@@ -52,16 +36,9 @@ public class PuckTesting {
     {
         Puck puck = new Puck();
         Point2D position = puck.getPosition();
-<<<<<<< HEAD
         puck.move();
         Point2D positionNieuw = puck.getPosition();
-        Assert.assertThat(position, is(not(positionNieuw.toString())));
-=======
-        String positionString = position.toString();
-        puck.move();
-        Point2D positionNieuw = puck.getPosition();
-        Assert.assertThat("puck did not move", positionString, is(not(positionNieuw.toString())));
->>>>>>> FETCH_HEAD
+        Assert.assertThat("Puck did not move",position, is(not(positionNieuw.toString())));
     }
     
     @Test
@@ -69,15 +46,8 @@ public class PuckTesting {
     {
         Puck puck = new Puck();
         Point2D velocity = puck.getVelocity();
-<<<<<<< HEAD
         puck.randomizePuck();
         Point2D velocityNieuw = puck.getVelocity();
-        Assert.assertThat(velocity, is(not(velocityNieuw.toString())));
-=======
-        String velocityString = velocity.toString();
-        puck.randomizePuck();
-        Point2D velocityNieuw = puck.getVelocity();
-        Assert.assertThat("velocity did not change", velocityString, is(not(velocityNieuw.toString())));
->>>>>>> FETCH_HEAD
+        Assert.assertThat("velocity did not change", velocity, is(not(velocityNieuw.toString())));
     }
 }
