@@ -5,10 +5,13 @@
  */
 
 
-import airhockey.domain.HockeyField;
-import airhockey.domain.*;
-import airhockey_game.MySketch;
-import java.awt.Color;
+
+import Game.HockeyField;
+import Game.HumanPlayer;
+import Game.IPlayer;
+import Game.Puck;
+import Game.RobotPlayer;
+import Game.Side;
 import static org.junit.Assert.*;
 import org.junit.*;
 
@@ -20,43 +23,39 @@ public class HockeyFieldTesting {
     
     HockeyField field;
     Puck puck;
-    Side[] sides;
-    
+    IPlayer h;
+    IPlayer r1;
+    IPlayer r2;
     @Before
     public void setUp()
     {
-        MySketch applet = new MySketch();
-        applet.init();
-        puck = new Puck(null);
+        puck = new Puck();
         
         //Create players
-        IPlayer h = new HumanPlayer("human");
-        IPlayer r1 = new RobotPlayer("roboteen");
-        IPlayer r2 = new RobotPlayer("robottwee");
-        
-        //Create and add sides
-        sides = new Side[3];
-        Side side1 = new Side(0,0,0,0,Color.BLACK,applet,SideName.BOTTOM,h);
-        sides[0] = side1;
-        Side side2 = new Side(0,0,0,0,Color.BLACK,applet,SideName.RIGHT,r1);
-        sides[1] = side2;
-        Side side3 = new Side(0,0,0,0,Color.BLACK,applet,SideName.LEFT,r2);
-        sides[2] = side3;
+        h = new HumanPlayer();
+        r1 = new RobotPlayer("Sjef");
+        r2 = new RobotPlayer("Karel");
         
         //Create hockey field
-        field = new HockeyField(puck, sides, null);
+        field = new HockeyField();
     }
     
     @Test
     public void testConstructor()
     {
         assertNotNull("Field was not instantiated", field);
-    }
-    
-    @Test
-    public void testDisplayField()
-    {
-        //TODO
+        Side[] sides = field.getSides();
+        IPlayer robot1 = sides[2].getBindedPlayer();
+        IPlayer human = sides[1].getBindedPlayer();
+        IPlayer robot2 = sides[0].getBindedPlayer();
+        
+        assertEquals("Naam van r1 is niet goed", r1.toString(), robot1.toString());
+        assertEquals("Naam van r2 is niet goed", r2.toString(), robot2.toString());
+        assertEquals("Naam van humanplayer is niet goed", h.toString(), human.toString());
+        
+        assertEquals("Score van r1 is niet goed", r1.getInGameScore(), robot1.getInGameScore());
+        assertEquals("Score van r2 is niet goed", r2.getInGameScore(), robot2.getInGameScore());
+        assertEquals("Score van humanplayer is niet goed", h.getInGameScore(), human.getInGameScore());
     }
     
     @Test

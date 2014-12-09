@@ -3,9 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-import airhockey.domain.*;
-import java.util.ArrayList;
+import Game.ActiveGame;
+import Game.Player;
+import Game.Spectator;
+import Lobby.Game;
+import Lobby.User;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,9 +24,6 @@ public class GameTest {
     Spectator spectator1;
     Game game1;
     ActiveGame active1;
-    public GameTest() {
-    }
-    
     
     @Before
     public void setUp() {

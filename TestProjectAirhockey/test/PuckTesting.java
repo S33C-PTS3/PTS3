@@ -8,16 +8,12 @@ import javafx.geometry.Point2D;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import org.junit.*;
+import static org.junit.Assert.*;
 /**
  *
  * @author Joep Kerste
  */
 public class PuckTesting {
-
-    @Before
-    public void setUp()
-    {
-    }
     
     @Test
     public void testConstructor()
@@ -30,7 +26,7 @@ public class PuckTesting {
         float radius = (float) diameter / 2;
         
         Assert.assertEquals(X, newPuck.getPosition().getX(), 0);
-        Assert.assertEquals(Y, newPuck.getPosition().getY(),0);
+        Assert.assertEquals(Y, newPuck.getPosition().getY() ,0);
         Assert.assertEquals(diameter, newPuck.getDiameter(), 0);
         Assert.assertEquals(radius, newPuck.getRadius(), 0);
     }
@@ -40,10 +36,9 @@ public class PuckTesting {
     {
         Puck puck = new Puck();
         Point2D position = puck.getPosition();
-        String positionString = position.toString();
         puck.move();
         Point2D positionNieuw = puck.getPosition();
-        Assert.assertThat("puck did not move", positionString, is(not(positionNieuw.toString())));
+        Assert.assertThat("Puck did not move",position, is(not(positionNieuw.toString())));
     }
     
     @Test
@@ -51,9 +46,8 @@ public class PuckTesting {
     {
         Puck puck = new Puck();
         Point2D velocity = puck.getVelocity();
-        String velocityString = velocity.toString();
         puck.randomizePuck();
         Point2D velocityNieuw = puck.getVelocity();
-        Assert.assertThat("velocity did not change", velocityString, is(not(velocityNieuw.toString())));
+        Assert.assertThat("velocity did not change", velocity, is(not(velocityNieuw.toString())));
     }
 }

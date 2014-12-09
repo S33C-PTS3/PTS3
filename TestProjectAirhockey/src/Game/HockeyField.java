@@ -299,7 +299,7 @@ public class HockeyField implements RemotePublisher{
      */
     public void checkWinner()
     {
-        if (rounds < 2)
+        if (rounds < 10)
         {
             rounds++;
         }
