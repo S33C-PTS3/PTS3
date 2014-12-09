@@ -17,6 +17,7 @@ import java.io.Serializable;
  * @author Eric
  */
 public class Game implements Serializable{
+    private int id;
     private String name;
     private Calendar startTime;
     private int averageGameRating;
@@ -25,23 +26,34 @@ public class Game implements Serializable{
     public Game(String name, User creator)
     {
         users = new ArrayList<>();
+        this.name = name;
+        this.averageGameRating = 0;
         users.add(creator);
     }
     
+    public int getId()
+    {
+        return this.id;
+    }
+    
+    public void setId(int id)
+    {
+        this.id = id;
+    }
     /*
     *returns the name of this game
     */
     public String getName()
     {
-        return null;
+        return this.name;
     }
     
     /**
     * @return a list of players that joined this game as players
     */
-    public List<Player> getPlayers()
+    public List<User> getUsers()
     {
-        return null;
+        return this.users;
     }
     
     /**
@@ -59,7 +71,7 @@ public class Game implements Serializable{
     */
     public int getAverageRating()
     {
-        return 0;
+        return this.averageGameRating;
     }
     
     /**
