@@ -44,6 +44,29 @@ public class MessageTest {
         } catch (IllegalArgumentException ex) {
             Assert.assertTrue(true);
         }
+        /**
+         * Test if an exception occurs if the text of an message is empty;
+         */
+        try {
+            Message message3 = new Message("Hank", "");
+            fail("Text cannot be empty");
+        } catch (IllegalArgumentException ex) {
+            Assert.assertTrue(true);
+        }
+        /**
+         * Test if an exception occurs if the text of an message is empty;
+         */
+        try {
+            StringBuilder sb = new StringBuilder();
+            for(int i = 0; i < 256; i++)
+            {
+                sb.append("a");
+            }
+            Message message4 = new Message("Hank", sb.toString());
+            fail("Text cannot be larger than 255 chars.");
+        } catch (IllegalArgumentException ex) {
+            Assert.assertTrue(true);
+        }
     }
 
     @Test

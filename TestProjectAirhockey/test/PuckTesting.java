@@ -8,7 +8,6 @@ import javafx.geometry.Point2D;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import org.junit.*;
-import static org.junit.Assert.*;
 /**
  *
  * @author Joep Kerste
