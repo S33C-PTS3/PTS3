@@ -21,6 +21,14 @@ public class RobotPlayer implements IPlayer {
      */
     public RobotPlayer(String naam)
     {
+        if(naam == null)
+        {
+            throw new IllegalArgumentException("Naam mag niet null zijn");
+        }
+        if(naam.trim().equals(""))
+        {
+            throw new IllegalArgumentException("Naam mag niet leeg zijn");
+        }
         this.inGameScore = 20;
         this.name = naam;
     }
@@ -49,7 +57,11 @@ public class RobotPlayer implements IPlayer {
      */
     @Override
     public void changeScore(int point) {
-        this.inGameScore += point;
+        if(inGameScore > 0)
+        {
+            this.inGameScore += point;
+        }
+        
     }
     
     /**
