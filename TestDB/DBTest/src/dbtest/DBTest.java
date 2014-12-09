@@ -23,7 +23,8 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import jaco.mp3.player.MP3Player;
 import java.io.File;
-import java.net.URL;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 
 /**
@@ -35,15 +36,17 @@ public class DBTest extends Application {
     private Connection conn;
     StackPane root;
     ImageView imgView;
+    String ip;
     
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) {;
         Button btn = new Button();
         btn.setText("Say 'Hello World'");
         btn.setOnAction(new EventHandler<ActionEvent>() {
             
             @Override
             public void handle(ActionEvent event) {
+                getServerIP();
                 String result = getAdminPassword();
                 if (result.equals("hebjeevenvoormij")) 
                 {
@@ -62,7 +65,7 @@ public class DBTest extends Application {
         
         Scene scene = new Scene(root, 300, 250);
         
-        primaryStage.setTitle("Hello World!");
+        primaryStage.setTitle("DB test");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
@@ -122,9 +125,8 @@ public class DBTest extends Application {
         
         try
         {
-            //conn = DriverManager.getConnection("jdbc:oracle:thin:@//localhost:1521/orcl", "system", "qbNdsAWq123");
-            //conn = DriverManager.getConnection("jdbc:oracle:thin:@//127.0.0.1:1521/orcl", "system", "qbNdsAWq123");
-            conn = DriverManager.getConnection("jdbc:oracle:thin:@//145.93.163.65:1521/orcl", "system", "qbNdsAWq123");
+            //conn = DriverManager.getConnection("jdbc:oracle:thin:@//145.93.163.170:1521/orcl", "system", "qbNdsAWq123");
+            conn = DriverManager.getConnection("jdbc:oracle:thin:@//"+ ip +":1521/orcl", "system", "qbNdsAWq123");
         }
         catch (SQLException ex)
         {
@@ -136,6 +138,27 @@ public class DBTest extends Application {
             System.out.println("Connection could not be made.");
         }
         
+    }
+    
+    private void getServerIP() {
+        try {
+            InetAddress localhost = InetAddress.getLocalHost();
+
+            InetAddress[] allMyIps = InetAddress.getAllByName(localhost.getCanonicalHostName());
+            if (allMyIps != null && allMyIps.length > 1) {
+                for (InetAddress allMyIp : allMyIps) {
+                    if (allMyIp.toString().contains("145")) 
+                    {
+                        System.out.println("Server IP: " + allMyIp);
+                        int slashIndex = allMyIp.toString().indexOf("/");
+                        ip = allMyIp.toString().substring(slashIndex + 1);
+                    }
+                }
+            }
+        } catch (UnknownHostException ex) {
+            System.out.println("Server: Cannot get IP address of local host");
+            System.out.println("Server: UnknownHostException: " + ex.getMessage());
+        }
     }
     
     private void showFrans()
