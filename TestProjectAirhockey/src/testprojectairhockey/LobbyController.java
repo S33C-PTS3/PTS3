@@ -24,10 +24,11 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
+import javafx.scene.control.Label;
 import javafx.scene.control.TitledPane;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import observer.RemotePublisher;
+import javafx.scene.layout.AnchorPane;
 
 /**
  * FXML Controller class
@@ -63,12 +64,12 @@ public class LobbyController implements Initializable {
 
     /**
      * Initializes the controller class.
+     *
      * @param url
      * @param rb
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb)
-    {
+    public void initialize(URL url, ResourceBundle rb) {
         // TODO
         lvChatBox.setItems(messages);
         messages = FXCollections.observableArrayList();
@@ -80,21 +81,17 @@ public class LobbyController implements Initializable {
     }
 
     @FXML
-    private void btnSend_Click(ActionEvent evt)
-    {
+    private void btnSend_Click(ActionEvent evt) {
         sendMessage();
     }
 
     @FXML
-    private void enterPressed(KeyEvent evt)
-    {
-        if (evt.getCode().equals(KeyCode.ENTER))
-        {
+    private void enterPressed(KeyEvent evt) {
+        if (evt.getCode().equals(KeyCode.ENTER)) {
             sendMessage();
         }
         try {
-            for(Game g : rmiController.getLobby().getGames())
-            {
+            for (Game g : rmiController.getLobby().getGames()) {
                 System.out.println(g.toString());
             }
         } catch (RemoteException ex) {
@@ -102,12 +99,10 @@ public class LobbyController implements Initializable {
         }
     }
 
-    private void sendMessage()
-    {
+    private void sendMessage() {
         //van wie komt het bericht.. voorbeeldbericht: Eric: Hallo!
         String message = tfMessage.getText();
-        if (!message.isEmpty() && message.trim().length() > 0)
-        {
+        if (!message.isEmpty() && message.trim().length() > 0) {
             messages.add(message);
             lvChatBox.scrollTo(lvChatBox.getItems().size());
             tfMessage.clear();
@@ -115,19 +110,56 @@ public class LobbyController implements Initializable {
     }
 
     @FXML
-    private void btnCreateGame_Click(ActionEvent evt)
-    {
-            TitledPane gameTitle = new TitledPane();
-            gameTitle.setText("Rens' game");
-            GameAccordion.getPanes().add(gameTitle);
-            ILobby lobby = rmiController.getLobby();
+    private void btnCreateGame_Click(ActionEvent evt) {
+        ILobby lobby = rmiController.getLobby();
+        String[] gameInfo = null;
         try {
-            lobby.addGame(new Game("Meny's Game", new User("Meny")));
+            gameInfo = lobby.addGame(new Game("Meny's Game", new User("Meny")));
         } catch (RemoteException ex) {
             Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        rmiController.getGameCount();
-            
+        createNewGame(gameInfo);
+
+    }
+
+    private void createNewGame(String[] gameInfo) {
+        
+        String gameId = gameInfo[0];
+        String gameName = gameInfo[1];
+        String gameAverageRanking = gameInfo[2];
+        String player1 = gameInfo[3];
+        String player2 = gameInfo[4];
+        String player3 = gameInfo[5];
+        TitledPane gameTitle = new TitledPane();
+        gameTitle.setText(gameName);
+        AnchorPane gamePane = new AnchorPane();
+        
+        Label idLabel = new Label();
+        Label ratingLabel = new Label();
+        Label labelSpeler1 = new Label();
+        Label labelSpeler2 = new Label();
+        Label labelSpeler3 = new Label();
+        
+        idLabel.setText(gameId);
+        ratingLabel.setText(gameAverageRanking);
+        labelSpeler1.setText(player1);
+        labelSpeler2.setText(player2);
+        labelSpeler3.setText(player3);
+        
+        ratingLabel.setTranslateX(100);
+        ratingLabel.setTranslateY(100);
+        labelSpeler1.setTranslateX(200);
+        gamePane.getChildren().add(labelSpeler1);
+        gamePane.getChildren().add(labelSpeler2);
+        gamePane.getChildren().add(labelSpeler3);
+        gamePane.getChildren().add(idLabel);
+        gamePane.getChildren().add(ratingLabel);
+        GameAccordion.getPanes().add(gameTitle);
+        gameTitle.setContent(gamePane);
+        for(int i = 0; i < 6; i++)
+        {
+            System.out.println(gameInfo[i]);
+        }
     }
 
 }

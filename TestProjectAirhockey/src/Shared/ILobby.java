@@ -40,7 +40,7 @@ public interface ILobby extends Remote{
      * Voegt een game toe aan de lijst met games.
      * @return true als dit succesvol is verlopen, anders false.
      */
-    public boolean addGame(Game game) throws RemoteException;
+    public String[] addGame(Game game) throws RemoteException;
     
     /**
      * Voegt een ingelogde user toe aan de lijst met users in de lobby

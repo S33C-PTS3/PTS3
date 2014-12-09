@@ -28,6 +28,7 @@ public class Lobby extends UnicastRemoteObject implements RemotePublisher, ILobb
     private List<User> users;
     private BasicPublisher publisher;
     private String[] lobby;
+    private int gameCount;
     /**
      * creates an new instance of the lobby class
      * @throws java.rmi.RemoteException
@@ -38,6 +39,7 @@ public class Lobby extends UnicastRemoteObject implements RemotePublisher, ILobb
         lobby[0] = "lobby";
         publisher = new BasicPublisher(lobby);
         games = new ArrayList<Game>();
+        gameCount = 1;
     }
     
     /**
@@ -75,11 +77,21 @@ public class Lobby extends UnicastRemoteObject implements RemotePublisher, ILobb
     }
 
     @Override
-    public boolean addGame(Game game) throws RemoteException{
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        //publisher.inform(this, null, null, "lobby");
-        //games.add(game);
-        //return true;
+    public String[] addGame(Game game) throws RemoteException{
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        publisher.inform(this, null, null, "lobby");
+        game.setId(gameCount);
+        games.add(game);
+        String[] gameInfo = new String[6];
+        gameInfo[0] = String.valueOf(game.getId());
+        gameInfo[1] = game.getName();
+        gameInfo[2] = String.valueOf(game.getAverageRating());
+        for(int i = 3; i < game.getUsers().size() + 3; i++)
+        {
+            gameInfo[i] = game.getUsers().get(i-3).getUsername();
+        }
+        gameCount++;
+        return gameInfo;
     }
 
     @Override
