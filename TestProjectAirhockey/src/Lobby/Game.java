@@ -10,12 +10,13 @@ import java.util.Calendar;
 import java.util.List;
 import Game.Player;
 import Game.Spectator;
+import java.io.Serializable;
 
 /**
  *
  * @author Eric
  */
-public class Game {
+public class Game implements Serializable{
     private String name;
     private Calendar startTime;
     private int averageGameRating;

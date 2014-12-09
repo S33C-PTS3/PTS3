@@ -10,27 +10,34 @@ import Chat.Chat;
 import java.beans.PropertyChangeEvent;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 import java.util.List;
+import observer.BasicPublisher;
 import observer.RemotePropertyListener;
+import observer.RemotePublisher;
 
 /**
  *
  * @author Eric
  */
 // SINGLETON CLASS
-public class Lobby extends UnicastRemoteObject implements RemotePropertyListener, ILobby{
+public class Lobby extends UnicastRemoteObject implements RemotePublisher, ILobby{
     private Chat chat;
     private User loggedInUser;
     private List<Game> games;
     private List<User> users;
-    
+    private BasicPublisher publisher;
+    private String[] lobby;
     /**
      * creates an new instance of the lobby class
      * @throws java.rmi.RemoteException
      */
     public Lobby() throws RemoteException
     {
-        
+        lobby = new String[1];
+        lobby[0] = "lobby";
+        publisher = new BasicPublisher(lobby);
+        games = new ArrayList<Game>();
     }
     
     /**
@@ -50,34 +57,42 @@ public class Lobby extends UnicastRemoteObject implements RemotePropertyListener
         return null;
     }
 
+    
     @Override
-    public void propertyChange(PropertyChangeEvent evt) throws RemoteException {
+    public List<User> getUsers() throws RemoteException{
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public List<User> getUsers() {
+    public List<Game> getGames() throws RemoteException{
+        return this.games;
+    }
+
+    @Override
+    public String[] updateRanking() throws RemoteException{
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public List<Game> getGames() {
+    public boolean addGame(Game game) throws RemoteException{
+        publisher.inform(this, null, null, "lobby");
+        games.add(game);
+        return true;
+    }
+
+    @Override
+    public boolean addUser(User user) throws RemoteException{
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String[] updateRanking() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void addListener(RemotePropertyListener listener, String property) throws RemoteException {
+       publisher.addListener(listener, property);
     }
 
     @Override
-    public boolean addGame(Game game) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public boolean addUser(User user) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void removeListener(RemotePropertyListener listener, String property) throws RemoteException {
+       publisher.addListener(listener, property);
     }
     
 }

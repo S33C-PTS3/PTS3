@@ -28,6 +28,7 @@ public class LobbyRMI extends UnicastRemoteObject implements RemotePropertyListe
     private ILobby lobby;
     private Registry registry;
     private final String bindingname = "Lobby";
+    private RemotePublisher publisher = null;
 
     /**
      *
@@ -40,7 +41,7 @@ public class LobbyRMI extends UnicastRemoteObject implements RemotePropertyListe
         //Locate registry
         try
         {
-            registry = LocateRegistry.getRegistry("145.93.67.6", 1099);
+            registry = LocateRegistry.getRegistry("145.93.162.240", 1099);
             System.out.println("Registry located");
         }
         catch (RemoteException ex)
@@ -71,27 +72,65 @@ public class LobbyRMI extends UnicastRemoteObject implements RemotePropertyListe
             }
         }
 
-        RemotePublisher publisher = null;
-
         try
         {
-            publisher = (RemotePublisher) Naming.lookup("rmi://145.93.67.6:1099/EffectenBeurs");
+            publisher = (RemotePublisher) Naming.lookup("rmi://145.93.162.240/Lobby");
         }
         catch (MalformedURLException | NotBoundException ex)
         {
             Logger.getLogger(LobbyRMI.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        publisher.addListener(this,"Lobby");
+        publisher.addListener(this, "lobby");
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) throws RemoteException
     {
-        
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        System.out.println("IT WORKS");
+        rebindLobby();
     }
     
+    public void rebindLobby()
+    {
+        try {
+            registry.rebind(bindingname, lobby);
+            System.out.println("Lobby updated");
+        } catch (RemoteException ex) {
+            Logger.getLogger(LobbyRMI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void getGameCount()
+    {
+        if (registry!= null)
+        {
+            try
+            {
+                lobby = (ILobby) registry.lookup(bindingname);
+            }
+            catch (RemoteException ex)
+            {
+                System.out.println("Cannot bind Lobby");
+                System.out.println("RemoteException: " + ex.getMessage());
+                lobby = null;
+            }
+            catch (NotBoundException ex)
+            {
+                System.out.println("Cannot bind Lobby");
+                System.out.println("NotBoundException: " + ex.getMessage());
+                lobby = null;
+            }
+        }
+        try {
+            System.out.println(lobby.getGames().size());
+        } catch (RemoteException ex) {
+            Logger.getLogger(LobbyRMI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public RemotePublisher getPublisher()
+    {
+        return publisher;
+    }
     public ILobby getLobby()
     {
         return this.lobby;
