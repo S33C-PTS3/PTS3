@@ -31,3 +31,4 @@ hs_err_pid*
 /TestDB/DBTest/dist/		
 /TestDB/DBTest/build/
 /InternetBankieren/nbproject/private/
+*.properties

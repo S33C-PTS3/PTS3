@@ -11,7 +11,11 @@
   </resources>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
+<<<<<<< HEAD
     <jar href="DBTest.jar" size="6013" download="eager" />
+=======
+    <jar href="DBTest.jar" size="4803" download="eager" />
+>>>>>>> 738c83d60a10aef44fb982077874eb1b38550a5f
     <jar href="lib/jaco-mp3-player-0.9.3.jar" size="90069" download="eager" />
     <jar href="lib/ojdbc7.jar" size="3397734" download="eager" />
   </resources>
