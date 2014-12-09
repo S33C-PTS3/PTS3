@@ -28,7 +28,7 @@ public interface ILobby extends Remote{
      * Haalt alle Game objecten van deze Lobby op.
      * @return een lijst met games die aangemaakt zijn in de lobby
      */
-    public List<Game> getGames() throws RemoteException;
+    public List<String[]> getGames() throws RemoteException;
     
     /**
      * Update de ranglijst in de lobby
