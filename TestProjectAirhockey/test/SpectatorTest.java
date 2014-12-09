@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import airhockey.domain.*;
+import Game.Spectator;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -20,23 +20,11 @@ public class SpectatorTest {
     public SpectatorTest() {
     }
     
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
     @Before
     public void setUp() {
         s = new Spectator("Henk");
     }
     
-    @After
-    public void tearDown() {
-    }
-
     /**
      * Test for registering an user.
      */
@@ -46,6 +34,4 @@ public class SpectatorTest {
         assertNotNull("Should be created",new Spectator("theo"));
         assertNotNull("Should be created", s);
     }
-    
-    
 }

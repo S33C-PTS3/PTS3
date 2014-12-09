@@ -29,7 +29,7 @@ public class Chat {
      */
     public List<Message> getMessages()
     {
-        return null;
+        throw new UnsupportedOperationException("Chat.getMessages() nog implementeren");
     }
     
     /**
@@ -39,7 +39,7 @@ public class Chat {
      */
     public boolean addMessage(Message message)
     {
-        return false;
+        throw new UnsupportedOperationException("Chat.addMessage() nog implementeren");
     }
     
     
