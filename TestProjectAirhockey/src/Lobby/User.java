@@ -5,11 +5,13 @@
  */
 package Lobby;
 
+import java.io.Serializable;
+
 /**
  * @author Eric
  * User with an username
  */
-public class User {
+public class User implements Serializable{
 
     private String username;
     

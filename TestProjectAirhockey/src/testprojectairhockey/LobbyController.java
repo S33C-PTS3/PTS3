@@ -6,7 +6,13 @@
 package testprojectairhockey;
 
 import Lobby.Game;
+<<<<<<< HEAD
+=======
+import Lobby.User;
+import Shared.ILobby;
+>>>>>>> FETCH_HEAD
 import java.net.URL;
+import java.rmi.RemoteException;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,13 +23,20 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+<<<<<<< HEAD
 import Shared.*;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
+=======
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+>>>>>>> FETCH_HEAD
 import javafx.event.ActionEvent;
 import javafx.scene.control.TitledPane;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import observer.RemotePublisher;
 
 /**
  * FXML Controller class
@@ -55,7 +68,7 @@ public class LobbyController implements Initializable {
 
     ObservableList<String> messages;
     ArrayList<Game> games;
-
+    LobbyRMI rmiController;
 
     /**
      * Initializes the controller class.
@@ -68,6 +81,11 @@ public class LobbyController implements Initializable {
         // TODO
         lvChatBox.setItems(messages);
         messages = FXCollections.observableArrayList();
+        try {
+            rmiController = new LobbyRMI();
+        } catch (RemoteException ex) {
+            Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @FXML
@@ -82,6 +100,14 @@ public class LobbyController implements Initializable {
         if (evt.getCode().equals(KeyCode.ENTER))
         {
             sendMessage();
+        }
+        try {
+            for(Game g : rmiController.getLobby().getGames())
+            {
+                System.out.println(g.toString());
+            }
+        } catch (RemoteException ex) {
+            Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -103,6 +129,14 @@ public class LobbyController implements Initializable {
             TitledPane gameTitle = new TitledPane();
             gameTitle.setText("Rens' game");
             GameAccordion.getPanes().add(gameTitle);
+            ILobby lobby = rmiController.getLobby();
+        try {
+            lobby.addGame(new Game("Meny's Game", new User("Meny")));
+        } catch (RemoteException ex) {
+            Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        rmiController.getGameCount();
+            
     }
 
 }
