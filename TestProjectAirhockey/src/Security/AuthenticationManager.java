@@ -18,7 +18,7 @@ public class AuthenticationManager {
      */
     public AuthenticationManager()
     {
-        
+        throw new UnsupportedOperationException("constructor nog implementeren");
     }
     
     /**
