@@ -1,5 +1,5 @@
-import airhockey.domain.Chat;
-import airhockey.domain.Message;
+import Chat.Chat;
+import Chat.Message;
 import org.junit.Assert;
 import static org.junit.Assert.fail;
 import org.junit.Test;
