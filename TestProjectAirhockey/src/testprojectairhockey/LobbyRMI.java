@@ -41,6 +41,7 @@ public class LobbyRMI extends UnicastRemoteObject implements RemotePropertyListe
         //Locate registry
         try
         {
+            //System.setProperty("java.rmi.server.hostname", "145.93.162.240");
             registry = LocateRegistry.getRegistry("145.93.162.240", 1099);
             System.out.println("Registry located");
         }
