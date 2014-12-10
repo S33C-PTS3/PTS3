@@ -6,6 +6,8 @@
 package Security;
 
 import Lobby.User;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -17,6 +19,7 @@ import java.sql.SQLException;
 public class AuthenticationManager {
     
     private Connection dbConnection;
+    private String ip;
     
     /**
      * Constructor for AuthenticationManager
@@ -71,8 +74,9 @@ public class AuthenticationManager {
 
         try
         {
-            dbConnection = DriverManager.getConnection("jdbc:oracle:thin:@//145.93.162.112:1521/orcl", "system", "qbNdsAWq123");
-            //conn = DriverManager.getConnection("jdbc:oracle:thin:@//"+ ip +":1521/orcl", "system", "qbNdsAWq123");
+            getServerIP();
+            //dbConnection = DriverManager.getConnection("jdbc:oracle:thin:@//145.93.162.112:1521/orcl", "system", "qbNdsAWq123");
+            dbConnection = DriverManager.getConnection("jdbc:oracle:thin:@//"+ ip +":1521/orcl", "system", "qbNdsAWq123");
         }
         catch (SQLException ex)
         {
@@ -84,4 +88,27 @@ public class AuthenticationManager {
             System.out.println("DB Connection found");
         }
     }
+    
+     private void getServerIP() {
+        try {
+            InetAddress localhost = InetAddress.getLocalHost();
+
+            InetAddress[] allMyIps = InetAddress.getAllByName(localhost.getCanonicalHostName());
+            if (allMyIps != null && allMyIps.length > 1) {
+                for (InetAddress allMyIp : allMyIps) {
+                    if (allMyIp.toString().contains("145")) 
+                    {
+                        int slashIndex = allMyIp.toString().indexOf("/");
+                        ip = allMyIp.toString().substring(slashIndex + 1);
+                        System.out.println("Server IP: " + ip);
+                    }
+                }
+            }
+        } catch (UnknownHostException ex) 
+        {
+            System.out.println("Server: Cannot get IP address of local host");
+            System.out.println("Server: UnknownHostException: " + ex.getMessage());
+        }
+    }
+    
 }
