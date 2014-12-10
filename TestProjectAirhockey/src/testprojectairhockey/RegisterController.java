@@ -57,6 +57,8 @@ public class RegisterController implements Initializable {
     @FXML
     public void btnRegister_Click(ActionEvent evt)
     {
+        String test = txtPassword1.getText();
+        
         if (!txtUsername.getText().equals("") 
                 && !txtPassword1.getText().equals("") 
                 && !txtPassword2.getText().equals("")) 
