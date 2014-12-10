@@ -5,10 +5,21 @@
  */
 package Lobby;
 
+import Security.FTPManager;
 import Shared.ILobby;
+import com.sun.deploy.util.SessionState;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.PrintStream;
 import java.net.InetAddress;
+import java.net.MalformedURLException;
 import java.net.NetworkInterface;
 import java.net.SocketException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.net.UnknownHostException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -20,6 +31,9 @@ import java.util.Enumeration;
  * @author rens
  */
 public class RMI_Server {
+    //Manager for FTP actions
+    FTPManager ftp = new FTPManager();
+    
         // Set port number
     private static final int portNumber = 1099;
 
@@ -31,9 +45,26 @@ public class RMI_Server {
     private ILobby lobby = null;
 
     // Constructor
+<<<<<<< HEAD
     public RMI_Server() {
 
         System.setProperty("java.rmi.server.hostname", "145.93.65.203");
+=======
+    public RMI_Server() {       
+        System.setProperty("java.rmi.server.hostname", "145.93.162.25");
+        
+        //Save Server ip on web server
+        try 
+        {
+            saveLocalServerIP();
+        }
+        catch(RuntimeException ex)
+        {
+            System.out.println("IP was not saved to web server: " + ex.getMessage());
+        }
+        
+        
+>>>>>>> fb965bc6ebf0ae83cc62c81475e3c0492eef640a
         // Print port number for registry
         System.out.println("Server: Port number " + portNumber);
 
@@ -112,5 +143,39 @@ public class RMI_Server {
 
         // Create server
         RMI_Server server = new RMI_Server();
+    }
+    
+    private void saveLocalServerIP() {
+        String ip = "";
+        
+        //Get ip
+        try {
+            InetAddress localhost = InetAddress.getLocalHost();
+
+            InetAddress[] allMyIps = InetAddress.getAllByName(localhost.getCanonicalHostName());
+            if (allMyIps != null && allMyIps.length > 1) {
+                for (InetAddress allMyIp : allMyIps) {
+                    if (allMyIp.toString().contains("145")) 
+                    {
+                        int slashIndex = allMyIp.toString().indexOf("/");
+                        ip = allMyIp.toString().substring(slashIndex + 1);
+                        System.out.println("Server IP: " + ip);
+                    }
+                }
+            }
+        } catch (UnknownHostException ex) 
+        {
+            System.out.println("Server: Cannot get IP address of local host");
+            System.out.println("Server: UnknownHostException: " + ex.getMessage());
+        }
+        
+        try
+        {
+            ftp.writeIP(ip);
+        }
+        catch (RuntimeException ex)
+        {
+            throw new RuntimeException(ex.getMessage());
+        }
     }
 }

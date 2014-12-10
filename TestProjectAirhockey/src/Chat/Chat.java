@@ -5,21 +5,24 @@
  */
 package Chat;
 
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Eric
  */
-public class Chat {
+public class Chat extends UnicastRemoteObject implements IChat {
 
     private List<Message> messages;
 
     /**
      * Creates a new instance of the Chat class
      */
-    public Chat()
+    public Chat() throws RemoteException 
     {
         messages = new ArrayList<>();
     }
@@ -29,28 +32,29 @@ public class Chat {
      *
      * @return list of messages
      */
-    public List<Message> getMessages()
-    {
+    @Override
+    public List<Message> getMessages() {
         return this.messages;
     }
 
     /**
      * adds a message to the list of messages
      *
-     * @param message
+     * @param sender
+     * @param text
      * @return true/false
      */
-    public boolean addMessage(Message message)
-    {
-        if (message != null)
-        {
-            messages.add(message);
+    @Override
+    public boolean addMessage(String sender, String text) {
+        boolean b;
+        try {
+            Message m = new Message(sender, text);
+            messages.add(m);
+            b = true;
+        } catch (Exception e) {
+            System.out.println(e.toString());
+            b = false;
         }
-        else
-        {
-            throw  new IllegalArgumentException("Message can not be null");
-        }
-        return messages.contains(message);
+        return b;
     }
-
 }
