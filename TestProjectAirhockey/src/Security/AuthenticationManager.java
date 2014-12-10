@@ -6,7 +6,14 @@
 package Security;
 
 import Lobby.User;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.InetAddress;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.net.UnknownHostException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -74,8 +81,14 @@ public class AuthenticationManager {
 
         try
         {
-            getServerIP();
-            //dbConnection = DriverManager.getConnection("jdbc:oracle:thin:@//145.93.162.112:1521/orcl", "system", "qbNdsAWq123");
+            try
+            {
+                getServerIP();
+            }
+            catch (RuntimeException ex)
+            {
+                System.out.println("Server IP not found: " + ex.getMessage());
+            }
             dbConnection = DriverManager.getConnection("jdbc:oracle:thin:@//"+ ip +":1521/orcl", "system", "qbNdsAWq123");
         }
         catch (SQLException ex)
@@ -89,7 +102,7 @@ public class AuthenticationManager {
         }
     }
     
-     private void getServerIP() {
+     private void getLocalServerIP() {
         try {
             InetAddress localhost = InetAddress.getLocalHost();
 
@@ -110,5 +123,33 @@ public class AuthenticationManager {
             System.out.println("Server: UnknownHostException: " + ex.getMessage());
         }
     }
+     
+     private void getServerIP()
+     {
+        String username = "airhockey%40joepkerste.nl";
+        String password = "hebjeevenvoormij";
+        String urlString = "ftp://" + username + ":" + password + "@joepkerste.nl/ServerIP.txt";
+
+        try 
+        {
+            URL url = new URL(urlString);
+            URLConnection urlConn = url.openConnection();
+            InputStream is = urlConn.getInputStream();
+            
+            BufferedReader bf = new BufferedReader(new InputStreamReader(is));
+            String s = bf.readLine();
+            System.out.println("Opgehaalde waarde: " + s);
+
+        } 
+        catch (MalformedURLException ex) 
+        {
+            throw new RuntimeException("invalid URL");
+        }
+        catch (IOException ex) 
+        {
+            throw new RuntimeException("IO Exception");
+        }
+         
+     }
     
 }
