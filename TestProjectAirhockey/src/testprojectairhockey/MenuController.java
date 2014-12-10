@@ -30,6 +30,7 @@ public class MenuController implements Initializable {
     Button btnSettings;
     Button btnSP;
     Button btnMP;
+    Button btnLogin;
 
     @FXML
     Label lblHoi;
@@ -57,6 +58,12 @@ public class MenuController implements Initializable {
         
     }
 
+    @FXML
+    private void btnLogin_Click(ActionEvent evt) throws IOException
+    {
+        startNewWindow("Login", "Airhockey - Login", evt);
+    }
+    
     @FXML
     private void btnSettings_Click(ActionEvent evt)
     {
