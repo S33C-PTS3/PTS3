@@ -9,8 +9,6 @@ import Lobby.User;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * @author Eric
@@ -34,7 +32,7 @@ public class AuthenticationManager {
             System.out.println("DB init failed");
         }
         
-        throw new UnsupportedOperationException("constructor nog implementeren");
+        //throw new UnsupportedOperationException("constructor nog implementeren");
     }
     
     /**
@@ -45,7 +43,7 @@ public class AuthenticationManager {
      */
     public User login(String username, String password)
     {
-        return null;
+        throw new UnsupportedOperationException("AuthenticationManager.login() nog implementeren");
     }
     
     /**
@@ -73,13 +71,13 @@ public class AuthenticationManager {
 
         try
         {
-            dbConnection = DriverManager.getConnection("jdbc:oracle:thin:@//145.93.163.170:1521/orcl", "system", "qbNdsAWq123");
+            dbConnection = DriverManager.getConnection("jdbc:oracle:thin:@//145.93.162.112:1521/orcl", "system", "qbNdsAWq123");
             //conn = DriverManager.getConnection("jdbc:oracle:thin:@//"+ ip +":1521/orcl", "system", "qbNdsAWq123");
         }
         catch (SQLException ex)
         {
             ex.printStackTrace();
-        }        
+        }           
 
         if (dbConnection == null) {
             throw new RuntimeException("Connection could not be made.");
