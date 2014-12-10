@@ -71,7 +71,6 @@ public class LobbyController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-        refresh();
         lvChatBox.setItems(messages);
         messages = FXCollections.observableArrayList();
         try
@@ -82,6 +81,7 @@ public class LobbyController implements Initializable {
         {
             Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        refresh();
     }
     
     @FXML
