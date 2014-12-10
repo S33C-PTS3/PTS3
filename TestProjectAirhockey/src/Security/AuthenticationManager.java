@@ -8,7 +8,12 @@ package Security;
 import Lobby.User;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author Eric
@@ -55,7 +60,55 @@ public class AuthenticationManager {
      */
     public boolean register(String username, String password)
     {
-        throw new UnsupportedOperationException("AuthenticationManager.register() nog implementeren");
+        boolean isSucces = false;
+        Statement stat = null;
+        String query = "SELECT MAX(ID) FROM AH_ACCOUNT";
+        int highestID = 0;
+        
+        try 
+        {
+            stat = dbConnection.createStatement();
+            ResultSet rs = stat.executeQuery(query);
+            while(rs.next())
+            {
+                highestID = rs.getInt("ID");
+            }
+        } 
+        catch (SQLException ex) 
+        {
+            System.out.println("Highest User ID not found");
+            isSucces = false;
+        }
+        
+        int newID = highestID + 1;
+        PreparedStatement prepstat;
+        query = "INSERT INTO AH_ACCOUNT VALUES (?, ?, ?, 100)";
+        int result = 0;
+        
+        try {
+            prepstat = dbConnection.prepareStatement(query);
+            prepstat.setInt(1, newID);
+            prepstat.setString(2, username);
+            prepstat.setString(3, password);
+            
+            result = prepstat.executeUpdate();    
+        } 
+        catch (SQLException ex) 
+        {
+            System.out.println("Registering not completed");
+            isSucces = false;
+        }
+        
+        if (result == 1) 
+        {
+            isSucces = true;
+        }
+        else
+        {
+            isSucces = false;
+        }
+        
+        return isSucces;
     }
     
     private void initConnection() throws RuntimeException

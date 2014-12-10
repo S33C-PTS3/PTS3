@@ -5,6 +5,7 @@
  */
 package testprojectairhockey;
 
+import Security.AuthenticationManager;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -25,6 +26,8 @@ import javafx.stage.Stage;
  */
 public class RegisterController implements Initializable {
 
+    private final AuthenticationManager authMan = new AuthenticationManager();
+    
     @FXML
     Button btnBackMain;
     Button btnBackLogin;
@@ -37,9 +40,7 @@ public class RegisterController implements Initializable {
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
+    public void initialize(URL url, ResourceBundle rb) {}    
     
     @FXML
     public void btnBackMain_Click(ActionEvent evt)
@@ -56,7 +57,25 @@ public class RegisterController implements Initializable {
     @FXML
     public void btnRegister_Click(ActionEvent evt)
     {
-        System.out.println("Register nog implementeren");
+        if (!txtUsername.getText().equals("") 
+                && !txtPassword1.getText().equals("") 
+                && !txtPassword2.getText().equals("")) 
+        {
+            if (txtPassword1.getText().equals(txtPassword2.getText())) 
+            {
+                boolean success = authMan.register(txtUsername.getText(), txtPassword1.getText());
+                if (success) 
+                {
+                    startNewWindow("Login", "Airhockey - Login", evt);
+                }
+                else
+                {
+                    txtUsername.setText("");
+                    txtPassword1.setText("");
+                    txtPassword2.setText("");
+                }
+            }
+        }
     }
     
     private void startNewWindow(String file, String name, ActionEvent evt)
