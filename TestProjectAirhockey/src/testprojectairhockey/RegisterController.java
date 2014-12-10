@@ -5,11 +5,8 @@
  */
 package testprojectairhockey;
 
-import Security.AuthenticationManager;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -26,58 +23,40 @@ import javafx.stage.Stage;
  *
  * @author Joep Kerste
  */
-public class LoginController implements Initializable {
+public class RegisterController implements Initializable {
 
-    AuthenticationManager authMan;
-    private final int dbTimeout = 5000;
-    
     @FXML
-    TextField txtUsername;
-    TextField txtPassword;
-    Button btnBack;
+    Button btnBackMain;
+    Button btnBackLogin;
     Button btnRegister;
-    Button btnLogin;
+    TextField txtUsername;
+    TextField txtPassword1;
+    TextField txtPassword2;
     
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        while(true)
-        {
-            try
-            {
-                authMan = new AuthenticationManager();
-                break;
-            }
-            catch(RuntimeException ex)
-            {
-                System.out.println("Database connection could not be made: " + ex.getMessage());
-                try 
-                {
-                    Thread.sleep(dbTimeout);
-                } 
-                catch (InterruptedException ex1) {}
-            }
-        }
+        // TODO
     }    
     
     @FXML
-    public void btnLogin_Click(ActionEvent evt)
+    public void btnBackMain_Click(ActionEvent evt)
     {
-        System.out.println("Login nog implementeren");
+        startNewWindow("Menu", "Airhockey", evt);
+    }
+    
+    @FXML
+    public void btnBackLogin_Click(ActionEvent evt)
+    {
+        startNewWindow("Login", "Airhockey - Login", evt);
     }
     
     @FXML
     public void btnRegister_Click(ActionEvent evt)
     {
-        startNewWindow("Register", "Airhockey - Register", evt);
-    }
-    
-    @FXML
-    public void btnBack_Click(ActionEvent evt)
-    {
-        startNewWindow("Menu", "Airhockey", evt);
+        System.out.println("Register nog implementeren");
     }
     
     private void startNewWindow(String file, String name, ActionEvent evt)
