@@ -71,7 +71,7 @@ public class LobbyController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-        // TODO
+        refresh();
         lvChatBox.setItems(messages);
         messages = FXCollections.observableArrayList();
         try
@@ -114,18 +114,7 @@ public class LobbyController implements Initializable {
     @FXML
     private void btnRefresh_Click(ActionEvent evt)
     {
-        try
-        {
-            GameAccordion.getPanes().clear();
-            for (String[] gamesArray : rmiController.getLobby().getGames())            
-            {
-                createNewGame(gamesArray);
-            }
-        }
-        catch (RemoteException ex)
-        {
-            Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        refresh();
     }
     
     @FXML
@@ -142,7 +131,22 @@ public class LobbyController implements Initializable {
             Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
         }
         createNewGame(gameInfo);
-
+    }
+    
+    private void refresh()
+    {
+        try
+        {
+            GameAccordion.getPanes().clear();
+            for (String[] gamesArray : rmiController.getLobby().getGames())            
+            {
+                createNewGame(gamesArray);
+            }
+        }
+        catch (RemoteException ex)
+        {
+            Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     private void createNewGame(String[] gameInfo)
