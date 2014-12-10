@@ -6,8 +6,6 @@
 package testprojectairhockey;
 
 import Shared.ILobby;
-import java.net.MalformedURLException;
-import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -15,7 +13,6 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import observer.RemotePublisher;
 
 /**
  *
@@ -39,7 +36,7 @@ public class LobbyRMI extends UnicastRemoteObject {
         try
         {
             //System.setProperty("java.rmi.server.hostname", "145.93.162.240");
-            registry = LocateRegistry.getRegistry("145.93.162.25", 1099);
+            registry = LocateRegistry.getRegistry("145.93.65.203", 1099);
             System.out.println("Registry located");
         }
         catch (RemoteException ex)

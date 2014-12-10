@@ -36,5 +36,4 @@ public class TestProjectAirhockey extends Application {
     {
         launch(args);
     }
-    
 }
