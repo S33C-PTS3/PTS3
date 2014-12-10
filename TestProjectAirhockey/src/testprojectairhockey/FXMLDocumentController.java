@@ -33,6 +33,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import Game.HockeyField;
+import Game.Mode;
 
 /**
  *
@@ -87,6 +88,9 @@ public class FXMLDocumentController implements Initializable {
     
     //Animation timer zodat het spel een loop is
     AnimationTimer timer;
+    
+    //Modus van de game
+    Mode mode;
 
     //De afbeeldingen van de bats
     Image batRed = new Image("/testprojectairhockey/batred2.png");
@@ -103,7 +107,10 @@ public class FXMLDocumentController implements Initializable {
 
         gc = canvas.getGraphicsContext2D();
         hockeyField = new HockeyField();
+    }
 
+    public void startGame()
+    {
         //Labels vullen met de namen van de spelers
         Side[] sides = hockeyField.getSides();
         for (Side side : sides)
@@ -162,7 +169,6 @@ public class FXMLDocumentController implements Initializable {
             }
         };
         timer.start();
-
     }
 
     public void Draw()
@@ -275,6 +281,13 @@ public class FXMLDocumentController implements Initializable {
         {
             System.out.println(ex.getMessage());
         }
+    }
+    
+    public void setMode(Mode mode)
+    {
+        this.mode = mode;
+        hockeyField.init(mode);
+        startGame();
     }
 
 }

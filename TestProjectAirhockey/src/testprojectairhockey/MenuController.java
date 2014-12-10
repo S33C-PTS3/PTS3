@@ -5,6 +5,7 @@
  */
 package testprojectairhockey;
 
+import Game.Mode;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -47,14 +48,27 @@ public class MenuController implements Initializable {
     @FXML
     private void btnSP_Click(ActionEvent evt) throws IOException
     {
-        startNewWindow("FXMLDocument", "Airhockey - Singleplayer", evt);
+        //startNewWindow("FXMLDocument", "Airhockey - Singleplayer", evt);
+
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXMLDocument.fxml"));
+        Parent root = (Parent) fxmlLoader.load();
+        FXMLDocumentController controller = fxmlLoader.<FXMLDocumentController>getController();
+        controller.setMode(Mode.SINGLE);
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.setTitle("Airhockey - Singleplayer");
+        stage.setResizable(false);
+        stage.show();
+        ((Node) (evt.getSource())).getScene().getWindow().hide();
+
     }
 
     @FXML
     private void btnMP_Click(ActionEvent evt)
     {
         startNewWindow("Lobby", "Airhockey - Multiplayer", evt);
-        
+
     }
 
     @FXML
@@ -72,7 +86,6 @@ public class MenuController implements Initializable {
             Stage stage = new Stage();
             stage.setTitle(name);
             Scene scene = new Scene(root);
-
             stage.setScene(scene);
             stage.setResizable(false);
             stage.show();

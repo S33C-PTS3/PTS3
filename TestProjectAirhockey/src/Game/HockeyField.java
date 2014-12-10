@@ -20,7 +20,7 @@ import observer.RemotePublisher;
  *
  * @author Eric The HockeyField represents the board where the game is played on
  */
-public class HockeyField implements RemotePublisher{
+public class HockeyField implements RemotePublisher {
 
     final private float sizefactor = 0.7f;
     int middleX = 0;
@@ -44,8 +44,13 @@ public class HockeyField implements RemotePublisher{
      */
     public HockeyField()
     {
-        puck = new Puck();
+        
+    }
 
+    public void init(Mode mode)
+    {
+        puck = new Puck();
+        
         this.lastHitSide = null;
         hitSide = null;
         batsHitsPuck = new ArrayList<>();
@@ -63,7 +68,8 @@ public class HockeyField implements RemotePublisher{
         int zijdeX2 = 0;
         int zijdeY2 = Math.round(693 * sizefactor);
         SideName sideName = SideName.LEFT;
-        IPlayer player = new RobotPlayer("Karel");
+        IPlayer player = null;
+
         for (int i = 0; i < 3; i++)
         {
             if (i != 0)
@@ -71,19 +77,46 @@ public class HockeyField implements RemotePublisher{
                 zijdeX1 = zijdeX2;
                 zijdeY1 = zijdeY2;
             }
+            else if(i ==0)
+            {
+                if (mode.equals(Mode.SINGLE))
+                {
+                    player = new RobotPlayer("Karel");
+                }
+                else if(mode.equals(Mode.MULTI))
+                {
+                    //make new human player
+                }
+            }
             if (i == 1)
             {
                 zijdeX2 = Math.round(800 * sizefactor);
                 zijdeY2 = Math.round(693 * sizefactor);
                 sideName = SideName.BOTTOM;
-                player = new HumanPlayer();
+                if(mode.equals(Mode.SINGLE))
+                {
+                    player = new HumanPlayer();
+                }
+                else if(mode.equals(Mode.MULTI))
+                {
+                    //make new human player
+                }
+                
             }
             if (i == 2)
             {
                 zijdeX2 = Math.round(400 * sizefactor);
                 zijdeY2 = 0;
                 sideName = SideName.RIGHT;
-                player = new RobotPlayer("Sjef");
+                if(mode.equals(Mode.SINGLE))
+                {
+                    player = new RobotPlayer("Sjef");
+                }
+                else if(mode.equals(Mode.MULTI))
+                {
+                    //make new human player
+                }
+                
             }
             Side s = new Side(zijdeX1, zijdeY1, zijdeX2, zijdeY2, colors[i], sideName, player);
             sides[i] = s;
@@ -94,38 +127,6 @@ public class HockeyField implements RemotePublisher{
         middleY /= 3;
     }
 
-    /**
-     * Method used to display the HockeyField
-     *
-     * @return
-     */
-    /*public boolean display() {
-     checkColl();
-     if (!gameOver) {
-     puck.move();
-     for (int i = 0; i < 3; i++) {
-     // sides[i].display(i * 20);
-     //sides[i].makeGoal(i);
-     }
-     puck.display();
-     return true;
-     } else 
-     {
-     int highscore = 0;
-     Collections.sort(gameResult, new Comparator<Side>() {
-     @Override
-     public int compare(Side p1, Side p2) {
-     return p2.getBindedPlayer().getInGameScore() - p1.getBindedPlayer().getInGameScore(); // Ascending
-     }
-     });
-     for (int i = 0; i < 3; i++) {
-     Side tempSide = (Side)gameResult.get(i);
-
-     //parentApplet.text(i+1 + ". " + tempSide.getBindedPlayer().toString() + ": " + tempSide.getBindedPlayer().getInGameScore(), 200, 200 + i * 50);
-     }
-     }
-     return false;
-     }*/
     /**
      * Method to check if the puck collided with a side, a goal or a bat and
      * changes its direction
@@ -160,7 +161,6 @@ public class HockeyField implements RemotePublisher{
             if (goal != null)
             {
                 System.out.println(goal.getSideName().toString());
-                //goal.getBindedPlayer().changeScore(-1);
 
                 if (!batsHitsPuck.isEmpty())
                 {
@@ -219,10 +219,10 @@ public class HockeyField implements RemotePublisher{
     {
         return this.puck;
     }
-    
+
     public List<Side> isGameOver()
     {
-        if(gameOver)
+        if (gameOver)
         {
             return gameResult;
         }
@@ -318,11 +318,11 @@ public class HockeyField implements RemotePublisher{
                 @Override
                 public int compare(Side side1, Side side2)
                 {
-                    if (side1.getBindedPlayer().getInGameScore()> side2.getBindedPlayer().getInGameScore())
+                    if (side1.getBindedPlayer().getInGameScore() > side2.getBindedPlayer().getInGameScore())
                     {
                         return -1;
                     }
-                    if (side1.getBindedPlayer().getInGameScore()< side2.getBindedPlayer().getInGameScore())
+                    if (side1.getBindedPlayer().getInGameScore() < side2.getBindedPlayer().getInGameScore())
                     {
                         return 1;
                     }
@@ -333,12 +333,14 @@ public class HockeyField implements RemotePublisher{
     }
 
     @Override
-    public void addListener(RemotePropertyListener listener, String property) throws RemoteException {
+    public void addListener(RemotePropertyListener listener, String property) throws RemoteException
+    {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void removeListener(RemotePropertyListener listener, String property) throws RemoteException {
+    public void removeListener(RemotePropertyListener listener, String property) throws RemoteException
+    {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
