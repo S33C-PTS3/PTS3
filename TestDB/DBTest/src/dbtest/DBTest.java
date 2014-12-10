@@ -126,7 +126,7 @@ public class DBTest extends Application {
         
         try
         {
-            conn = DriverManager.getConnection("jdbc:oracle:thin:@//145.93.161.228:1521/orcl", "system", "qbNdsAWq123");
+            conn = DriverManager.getConnection("jdbc:oracle:thin:@//145.93.162.112:1521/orcl", "system", "qbNdsAWq123");
             //conn = DriverManager.getConnection("jdbc:oracle:thin:@//"+ ip +":1521/orcl", "system", "qbNdsAWq123");
         }
         catch (SQLException ex)
