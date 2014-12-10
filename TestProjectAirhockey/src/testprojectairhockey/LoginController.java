@@ -5,8 +5,11 @@
  */
 package testprojectairhockey;
 
+import Security.AuthenticationManager;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -25,6 +28,9 @@ import javafx.stage.Stage;
  */
 public class LoginController implements Initializable {
 
+    AuthenticationManager authMan;
+    private final int dbTimeout = 5000;
+    
     @FXML
     TextField txtUsername;
     TextField txtPassword;
@@ -37,19 +43,35 @@ public class LoginController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        while(true)
+        {
+            try
+            {
+                authMan = new AuthenticationManager();
+                break;
+            }
+            catch(RuntimeException ex)
+            {
+                System.out.println("Database connection could not be made: " + ex.getMessage());
+                try 
+                {
+                    Thread.sleep(dbTimeout);
+                } 
+                catch (InterruptedException ex1) {}
+            }
+        }
     }    
     
     @FXML
     public void btnLogin_Click(ActionEvent evt)
     {
-        
+        System.out.println("Login nog implementeren");
     }
     
     @FXML
     public void btnRegister_Click(ActionEvent evt)
     {
-        
+        System.out.println("Register nog implementeren");
     }
     
     @FXML

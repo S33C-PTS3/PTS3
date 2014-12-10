@@ -29,7 +29,7 @@ public class AuthenticationManager {
         } 
         catch (RuntimeException ex) 
         {
-            System.out.println("DB init failed");
+            throw new RuntimeException(ex.getMessage());
         }
         
         //throw new UnsupportedOperationException("constructor nog implementeren");
@@ -66,7 +66,7 @@ public class AuthenticationManager {
         }
         catch(ClassNotFoundException ex)
         {
-            System.out.println("JDBC Driver not found!");
+            throw new RuntimeException("JDBC Driver not found!");
         }
 
         try
@@ -76,11 +76,12 @@ public class AuthenticationManager {
         }
         catch (SQLException ex)
         {
-            ex.printStackTrace();
+            throw new RuntimeException("DB was not found");
         }           
 
-        if (dbConnection == null) {
-            throw new RuntimeException("Connection could not be made.");
+        if (dbConnection != null) 
+        {
+            System.out.println("DB Connection found");
         }
     }
 }
