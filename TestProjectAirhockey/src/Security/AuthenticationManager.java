@@ -6,15 +6,6 @@
 package Security;
 
 import Lobby.User;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.InetAddress;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
-import java.net.UnknownHostException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -27,6 +18,7 @@ public class AuthenticationManager {
     
     private Connection dbConnection;
     private String ip;
+    private FTPManager ftp = new FTPManager();
     
     /**
      * Constructor for AuthenticationManager
@@ -41,8 +33,6 @@ public class AuthenticationManager {
         {
             throw new RuntimeException(ex.getMessage());
         }
-        
-        //throw new UnsupportedOperationException("constructor nog implementeren");
     }
     
     /**
@@ -83,7 +73,7 @@ public class AuthenticationManager {
         {
             try
             {
-                getServerIP();
+                ip = ftp.getIP();
             }
             catch (RuntimeException ex)
             {
@@ -100,56 +90,5 @@ public class AuthenticationManager {
         {
             System.out.println("DB Connection found");
         }
-    }
-    
-     private void getLocalServerIP() {
-        try {
-            InetAddress localhost = InetAddress.getLocalHost();
-
-            InetAddress[] allMyIps = InetAddress.getAllByName(localhost.getCanonicalHostName());
-            if (allMyIps != null && allMyIps.length > 1) {
-                for (InetAddress allMyIp : allMyIps) {
-                    if (allMyIp.toString().contains("145")) 
-                    {
-                        int slashIndex = allMyIp.toString().indexOf("/");
-                        ip = allMyIp.toString().substring(slashIndex + 1);
-                        System.out.println("Server IP: " + ip);
-                    }
-                }
-            }
-        } catch (UnknownHostException ex) 
-        {
-            System.out.println("Server: Cannot get IP address of local host");
-            System.out.println("Server: UnknownHostException: " + ex.getMessage());
-        }
-    }
-     
-     private void getServerIP()
-     {
-        String username = "airhockey%40joepkerste.nl";
-        String password = "hebjeevenvoormij";
-        String urlString = "ftp://" + username + ":" + password + "@joepkerste.nl/ServerIP.txt";
-
-        try 
-        {
-            URL url = new URL(urlString);
-            URLConnection urlConn = url.openConnection();
-            InputStream is = urlConn.getInputStream();
-            
-            BufferedReader bf = new BufferedReader(new InputStreamReader(is));
-            String s = bf.readLine();
-            System.out.println("Opgehaalde waarde: " + s);
-
-        } 
-        catch (MalformedURLException ex) 
-        {
-            throw new RuntimeException("invalid URL");
-        }
-        catch (IOException ex) 
-        {
-            throw new RuntimeException("IO Exception");
-        }
-         
-     }
-    
+    }    
 }
