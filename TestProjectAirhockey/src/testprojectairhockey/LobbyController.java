@@ -116,6 +116,7 @@ public class LobbyController implements Initializable {
     {
         try
         {
+            GameAccordion.getPanes().clear();
             for (String[] gamesArray : rmiController.getLobby().getGames())            
             {
                 createNewGame(gamesArray);
