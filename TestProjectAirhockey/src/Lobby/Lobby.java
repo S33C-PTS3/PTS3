@@ -52,9 +52,16 @@ public class Lobby extends UnicastRemoteObject implements ILobby {
      *
      * @return user that is logged in
      */
+    @Override
     public User getLoggedInUser()
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return loggedInUser;
+    }
+    
+    @Override
+    public Chat getChat()
+    {
+        return chat;
     }
 
     @Override

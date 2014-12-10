@@ -5,10 +5,17 @@
  */
 package Chat;
 
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+import java.util.List;
+
 /**
  *
- * @author rens
+ * @author Roy
  */
-public class IChat {
+public interface IChat extends Remote{
     
+    public List<Message> getMessages() throws RemoteException;
+    
+     public boolean addMessage(String sender, String text) throws RemoteException;
 }
