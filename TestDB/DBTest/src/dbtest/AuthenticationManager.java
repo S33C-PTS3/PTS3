@@ -60,7 +60,7 @@ public class AuthenticationManager {
 
         try
         {
-            dbConnection = DriverManager.getConnection("jdbc:oracle:thin:@//145.93.163.170:1521/orcl", "system", "qbNdsAWq123");
+            dbConnection = DriverManager.getConnection("jdbc:oracle:thin:@//145.93.161.228:1521/orcl", "system", "qbNdsAWq123");
             //conn = DriverManager.getConnection("jdbc:oracle:thin:@//"+ ip +":1521/orcl", "system", "qbNdsAWq123");
         }
         catch (SQLException ex)
