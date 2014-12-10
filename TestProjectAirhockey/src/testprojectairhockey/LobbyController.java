@@ -24,11 +24,16 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TitledPane;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.RowConstraints;
 
 /**
  * FXML Controller class
@@ -47,6 +52,9 @@ public class LobbyController implements Initializable {
     Accordion GameAccordion;
 
     @FXML
+    ScrollPane GamePane;
+
+    @FXML
     ListView lvChatBox;
 
     @FXML
@@ -58,9 +66,12 @@ public class LobbyController implements Initializable {
     @FXML
     Button btnRefresh;
 
-    ObservableList<String> messages;
-    ArrayList<Game> games;
-    LobbyRMI rmiController;
+    private ObservableList<String> messages;
+    private ArrayList<Game> games;
+    private LobbyRMI rmiController;
+    // widht of accordion / 4 to determine width of the columns
+    private final double COLUMNWIDTH = 137.5;
+    private final double ROWHEIGHT = 20;
 
     /**
      * Initializes the controller class.
@@ -83,7 +94,7 @@ public class LobbyController implements Initializable {
         }
         refresh();
     }
-    
+
     @FXML
     private void btnSend_Click(ActionEvent evt)
     {
@@ -116,7 +127,7 @@ public class LobbyController implements Initializable {
     {
         refresh();
     }
-    
+
     @FXML
     private void btnCreateGame_Click(ActionEvent evt)
     {
@@ -132,13 +143,13 @@ public class LobbyController implements Initializable {
         }
         createNewGame(gameInfo);
     }
-    
+
     private void refresh()
     {
         try
         {
             GameAccordion.getPanes().clear();
-            for (String[] gamesArray : rmiController.getLobby().getGames())            
+            for (String[] gamesArray : rmiController.getLobby().getGames())
             {
                 createNewGame(gamesArray);
             }
@@ -161,27 +172,55 @@ public class LobbyController implements Initializable {
         gameTitle.setText(gameName);
         AnchorPane gamePane = new AnchorPane();
 
+        GridPane gamegrid = new GridPane();
+        //550 /4 = 137,5
+        for (int i = 0; i < 4; i++)
+        {
+            ColumnConstraints column = new ColumnConstraints(COLUMNWIDTH);
+            gamegrid.getColumnConstraints().add(column);
+        }
+
+        for (int i = 0; i < 4; i++)
+        {
+           RowConstraints row = new RowConstraints(ROWHEIGHT);
+           gamegrid.getRowConstraints().add(row);
+        }
+        gamegrid.setPrefSize(550, 300);
         Label idLabel = new Label();
-        Label ratingLabel = new Label();
+        // grid column 0
+        Label labelPlayers = new Label();
+        labelPlayers.setText("Players: 3/3");
+        Label labelSpectators = new Label();
+        labelSpectators.setText("Spectators: 2");
+        Label labelRating = new Label();
+        labelRating.setText("Avg. rating 123");
+        //              node      col row
+        gamegrid.add(labelPlayers, 0, 0);
+        gamegrid.add(labelSpectators, 0, 1);
+        gamegrid.add(labelRating, 0, 2);
+        // grid column 1
         Label labelSpeler1 = new Label();
+        labelSpeler1.setText("Player 1: Rens");
         Label labelSpeler2 = new Label();
+        labelSpeler2.setText("Player 2: Karel");
         Label labelSpeler3 = new Label();
-
+        labelSpeler3.setText("Player 3: Hans");
+        gamegrid.add(labelSpeler1, 1, 0);
+        gamegrid.add(labelSpeler2, 1, 1);
+        gamegrid.add(labelSpeler3, 1, 2);
+        //grid column 2
+        Button btnJoin = new Button();
+        btnJoin.setText("Join game");
+        gamegrid.add(btnJoin, 2, 1);
+        //grid column 3
+        Button btnSpectate = new Button();
+        gamegrid.add(btnSpectate, 3, 1);
+        //spectate button is niet zichtbaar voor iteratie 2
+        btnSpectate.visibleProperty().set(true);
+        gamegrid.visibleProperty().set(false);
+        gamePane.getChildren().add(gamegrid);
+        gameTitle.setContent(gamegrid);
         idLabel.setText(gameId);
-        ratingLabel.setText(gameAverageRanking);
-        labelSpeler1.setText(player1);
-        labelSpeler2.setText(player2);
-        labelSpeler3.setText(player3);
-
-        ratingLabel.setTranslateX(100);
-        ratingLabel.setTranslateY(100);
-        labelSpeler1.setTranslateX(200);
-        gamePane.getChildren().add(labelSpeler1);
-        gamePane.getChildren().add(labelSpeler2);
-        gamePane.getChildren().add(labelSpeler3);
-        gamePane.getChildren().add(idLabel);
-        gamePane.getChildren().add(ratingLabel);
-        gameTitle.setContent(gamePane);
         GameAccordion.getPanes().add(gameTitle);
         for (int i = 0; i < 6; i++)
         {

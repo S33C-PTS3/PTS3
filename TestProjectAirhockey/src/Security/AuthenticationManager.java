@@ -8,7 +8,10 @@ package Security;
 import Lobby.User;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -19,6 +22,8 @@ import java.util.logging.Logger;
 public class AuthenticationManager {
     
     private Connection dbConnection;
+    private String ip;
+    private FTPManager ftp = new FTPManager();
     
     /**
      * Constructor for AuthenticationManager
@@ -31,10 +36,8 @@ public class AuthenticationManager {
         } 
         catch (RuntimeException ex) 
         {
-            System.out.println("DB init failed");
+            throw new RuntimeException(ex.getMessage());
         }
-        
-        throw new UnsupportedOperationException("constructor nog implementeren");
     }
     
     /**
@@ -45,7 +48,7 @@ public class AuthenticationManager {
      */
     public User login(String username, String password)
     {
-        return null;
+        throw new UnsupportedOperationException("AuthenticationManager.login() nog implementeren");
     }
     
     /**
@@ -57,7 +60,55 @@ public class AuthenticationManager {
      */
     public boolean register(String username, String password)
     {
-        throw new UnsupportedOperationException("AuthenticationManager.register() nog implementeren");
+        boolean isSucces = false;
+        Statement stat = null;
+        String query = "SELECT MAX(ID) FROM AH_ACCOUNT";
+        int highestID = 0;
+        
+        try 
+        {
+            stat = dbConnection.createStatement();
+            ResultSet rs = stat.executeQuery(query);
+            while(rs.next())
+            {
+                highestID = rs.getInt("ID");
+            }
+        } 
+        catch (SQLException ex) 
+        {
+            System.out.println("Highest User ID not found");
+            isSucces = false;
+        }
+        
+        int newID = highestID + 1;
+        PreparedStatement prepstat;
+        query = "INSERT INTO AH_ACCOUNT VALUES (?, ?, ?, 100)";
+        int result = 0;
+        
+        try {
+            prepstat = dbConnection.prepareStatement(query);
+            prepstat.setInt(1, newID);
+            prepstat.setString(2, username);
+            prepstat.setString(3, password);
+            
+            result = prepstat.executeUpdate();    
+        } 
+        catch (SQLException ex) 
+        {
+            System.out.println("Registering not completed");
+            isSucces = false;
+        }
+        
+        if (result == 1) 
+        {
+            isSucces = true;
+        }
+        else
+        {
+            isSucces = false;
+        }
+        
+        return isSucces;
     }
     
     private void initConnection() throws RuntimeException
@@ -68,21 +119,29 @@ public class AuthenticationManager {
         }
         catch(ClassNotFoundException ex)
         {
-            System.out.println("JDBC Driver not found!");
+            throw new RuntimeException("JDBC Driver not found!");
         }
 
         try
         {
-            dbConnection = DriverManager.getConnection("jdbc:oracle:thin:@//145.93.163.170:1521/orcl", "system", "qbNdsAWq123");
-            //conn = DriverManager.getConnection("jdbc:oracle:thin:@//"+ ip +":1521/orcl", "system", "qbNdsAWq123");
+            try
+            {
+                ip = ftp.getIP();
+            }
+            catch (RuntimeException ex)
+            {
+                System.out.println("Server IP not found: " + ex.getMessage());
+            }
+            dbConnection = DriverManager.getConnection("jdbc:oracle:thin:@//"+ ip +":1521/orcl", "system", "qbNdsAWq123");
         }
         catch (SQLException ex)
         {
-            ex.printStackTrace();
-        }        
+            throw new RuntimeException("DB was not found");
+        }           
 
-        if (dbConnection == null) {
-            throw new RuntimeException("Connection could not be made.");
+        if (dbConnection != null) 
+        {
+            System.out.println("DB Connection found");
         }
-    }
+    }    
 }
