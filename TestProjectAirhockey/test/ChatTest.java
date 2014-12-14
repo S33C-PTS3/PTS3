@@ -1,5 +1,9 @@
 import Chat.Chat;
 import Chat.Message;
+import Lobby.User;
+import java.rmi.RemoteException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.junit.Assert;
 import static org.junit.Assert.fail;
 import org.junit.Test;
@@ -14,14 +18,19 @@ import org.junit.Test;
  * @author Rens & Eric
  */
 public class ChatTest {
-
+    
     @Test
     public void testChatConstructor()
     {
         /**
          * Creates a new instance of the Chat class
          */
-        Chat chat = new Chat();
+        Chat chat = null;
+        try {
+            chat = new Chat();
+        } catch (RemoteException ex) {
+            Logger.getLogger(ChatTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
         Assert.assertNotNull(chat.getMessages());
     }
 
@@ -36,9 +45,14 @@ public class ChatTest {
          */
 
         Message message = new Message("Hank", "Hi");
-        Chat chat = new Chat();
+        Chat chat = null;
+        try {
+            chat = new Chat();
+        } catch (RemoteException ex) {
+            Logger.getLogger(ChatTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
-        chat.addMessage(message);
+        chat.addMessage(message.getSender(), message.getText());
         Assert.assertEquals("Message is not succesfully added to the list", 1, chat.getMessages().size());
 
         /**
@@ -46,7 +60,7 @@ public class ChatTest {
          */
         try
         {
-            chat.addMessage(null);
+            chat.addMessage(message.getSender(), message.getText());
             fail("Message cannot be null");
         }
         catch (IllegalArgumentException ex)
