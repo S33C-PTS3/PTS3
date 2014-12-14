@@ -5,8 +5,10 @@
  */
 package testprojectairhockey;
 
+import Game.Mode;
 import Lobby.User;
 import Security.AuthenticationManager;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -30,6 +32,7 @@ public class LoginController implements Initializable {
 
     AuthenticationManager authMan;
     private final int dbTimeout = 5000;
+    private User loggingInUser = null;
     
     @FXML
     public TextField txtUsername;
@@ -72,7 +75,8 @@ public class LoginController implements Initializable {
             User foundUser = authMan.login(txtUsername.getText(), txtPassword.getText());
             if (foundUser != null) 
             {
-                startNewWindow("Menu", "Airhockey", evt);
+                loggingInUser = foundUser;
+                navToLobby();
             }
             else
             {
@@ -119,7 +123,7 @@ public class LoginController implements Initializable {
     {
         Parent root;
         try
-        {
+        {           
             root = FXMLLoader.load(getClass().getResource(file + ".fxml"));
             Stage stage = new Stage();
             stage.setTitle(name);
@@ -133,6 +137,24 @@ public class LoginController implements Initializable {
         catch (Exception ex)
         {
             System.out.println(ex.getMessage());
+        }
+    }
+    
+    private void navToLobby()
+    {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Lobby.fxml"));
+            Parent root = (Parent) fxmlLoader.load();
+            LobbyController controller = fxmlLoader.<LobbyController>getController();
+            controller.setLoggedInUser(loggingInUser);
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.setTitle("Airhockey - Lobby");
+            stage.setResizable(false);
+            stage.show();
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
     }
 }

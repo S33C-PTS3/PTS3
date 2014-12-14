@@ -12,7 +12,7 @@ import java.io.Serializable;
  * @author Eric
  * User with an username
  */
-public class User implements Serializable{
+public class User implements Serializable, IUser {
 
     private String username;
     

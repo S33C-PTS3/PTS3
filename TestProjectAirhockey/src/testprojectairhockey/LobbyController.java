@@ -241,4 +241,9 @@ public class LobbyController implements Initializable {
             ex.printStackTrace();
         }
     }
+    
+    public void setLoggedInUser(User u)
+    {
+        this.loggedInUser = u;
+    }
 }
