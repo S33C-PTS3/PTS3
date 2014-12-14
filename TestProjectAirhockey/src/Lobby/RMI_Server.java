@@ -7,19 +7,9 @@ package Lobby;
 
 import Security.FTPManager;
 import Shared.ILobby;
-import com.sun.deploy.util.SessionState;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.PrintStream;
 import java.net.InetAddress;
-import java.net.MalformedURLException;
 import java.net.NetworkInterface;
 import java.net.SocketException;
-import java.net.URL;
-import java.net.URLConnection;
 import java.net.UnknownHostException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -45,11 +35,6 @@ public class RMI_Server {
     private ILobby lobby = null;
 
     // Constructor
-<<<<<<< HEAD
-    public RMI_Server() {
-
-        System.setProperty("java.rmi.server.hostname", "145.93.65.203");
-=======
     public RMI_Server() {       
         System.setProperty("java.rmi.server.hostname", "145.93.162.25");
         
@@ -62,9 +47,7 @@ public class RMI_Server {
         {
             System.out.println("IP was not saved to web server: " + ex.getMessage());
         }
-        
-        
->>>>>>> fb965bc6ebf0ae83cc62c81475e3c0492eef640a
+
         // Print port number for registry
         System.out.println("Server: Port number " + portNumber);
 

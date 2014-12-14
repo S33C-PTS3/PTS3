@@ -63,8 +63,8 @@ public class GameTest {
         /**
         * @return a list of players that joined this game as players
         */
-        assertEquals(1,game1.getPlayers().size());
-        assertEquals(user1, game1.getPlayers().get(0));
+        assertEquals(1,game1.getUsers().size());
+        assertEquals(user1, game1.getUsers().get(0));
          /**
          * gets the time the Game has started
          * @return the time the Game has started if it has started ,else returns null
@@ -86,7 +86,7 @@ public class GameTest {
                 /**
         * @return a list of players that joined this game as players
         */
-        assertEquals(3,game1.getPlayers().size());
+        assertEquals(3,game1.getUsers().size());
  
     }
     @Test
