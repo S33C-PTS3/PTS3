@@ -54,6 +54,8 @@ public interface ILobby extends Remote {
      */
     public boolean addUser(User user) throws RemoteException;
 
+    public boolean addUserToGame(int gameId, IUser user) throws RemoteException;
+    
     public User getLoggedInUser() throws RemoteException;
 
     public Chat getChat() throws RemoteException;

@@ -36,7 +36,7 @@ public class LobbyRMI extends UnicastRemoteObject {
         try
         {
             //System.setProperty("java.rmi.server.hostname", "145.93.162.240");
-            registry = LocateRegistry.getRegistry("145.93.65.203", 1099);
+            registry = LocateRegistry.getRegistry("192.168.153.1", 1099);
             System.out.println("Registry located");
         }
         catch (RemoteException ex)
@@ -67,37 +67,6 @@ public class LobbyRMI extends UnicastRemoteObject {
             }
         }
 
-    }
-    
-    public void getGameCount()
-    {
-        if (registry != null)
-        {
-            try
-            {
-                lobby = (ILobby) registry.lookup(bindingname);
-            }
-            catch (RemoteException ex)
-            {
-                System.out.println("Cannot bind Lobby");
-                System.out.println("RemoteException: " + ex.getMessage());
-                lobby = null;
-            }
-            catch (NotBoundException ex)
-            {
-                System.out.println("Cannot bind Lobby");
-                System.out.println("NotBoundException: " + ex.getMessage());
-                lobby = null;
-            }
-        }
-        try
-        {
-            System.out.println(lobby.getGames().size());
-        }
-        catch (RemoteException ex)
-        {
-            Logger.getLogger(LobbyRMI.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
     public ILobby getLobby()

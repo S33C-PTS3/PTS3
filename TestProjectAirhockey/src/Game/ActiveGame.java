@@ -8,12 +8,17 @@ package Game;
 import Lobby.Game;
 import Lobby.User;
 import Chat.Chat;
+import Shared.IActiveGame;
+import Shared.IHockeyField;
+import java.rmi.RemoteException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Eric
  */
-public class ActiveGame extends Game{
+public class ActiveGame extends Game implements IActiveGame{
 
     private HockeyField hockeyField;
     private Chat chat;
@@ -22,9 +27,14 @@ public class ActiveGame extends Game{
     //gegenereerde constructor
     //ROUNDS AND SCORES IN ACTIVE GAME ZETTEN EN UIT HOCKEYFIELD
 
-    public ActiveGame(String name, User creator, HockeyField hockeyField, Chat chat)
+    public ActiveGame(String name, User creator)
     {
         super(name, creator);
+        try {
+            hockeyField = new HockeyField();
+        } catch (RemoteException ex) {
+            Logger.getLogger(ActiveGame.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     /**
@@ -51,6 +61,16 @@ public class ActiveGame extends Game{
     public double calculateRating()
     {
         return 0;
+    }
+
+    @Override
+    public String[] getUsers() throws RemoteException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public IHockeyField getHockeyField() throws RemoteException {
+        return this.hockeyField;
     }
 }
 

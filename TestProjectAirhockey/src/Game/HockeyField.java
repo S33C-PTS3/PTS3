@@ -5,7 +5,9 @@
  */
 package Game;
 
+import Shared.IHockeyField;
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -13,6 +15,7 @@ import java.util.List;
 import javafx.geometry.Point2D;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
+import observer.BasicPublisher;
 import observer.RemotePropertyListener;
 import observer.RemotePublisher;
 
@@ -20,7 +23,7 @@ import observer.RemotePublisher;
  *
  * @author Eric The HockeyField represents the board where the game is played on
  */
-public class HockeyField implements RemotePublisher {
+public class HockeyField extends UnicastRemoteObject implements RemotePublisher, IHockeyField{
 
     final private float sizefactor = 0.7f;
     int middleX = 0;
@@ -38,13 +41,13 @@ public class HockeyField implements RemotePublisher {
     private ArrayList<Integer> scores;
     private List<Side> gameResult = null;
     private boolean gameOver = false;
-
+    private BasicPublisher publisher;
     /**
      * Constructor used for HockeyField.
      */
-    public HockeyField()
+    public HockeyField() throws RemoteException
     {
-        
+        publisher = new BasicPublisher(new String[] {"game"});
     }
 
     public void init(Mode mode)
@@ -335,12 +338,32 @@ public class HockeyField implements RemotePublisher {
     @Override
     public void addListener(RemotePropertyListener listener, String property) throws RemoteException
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        publisher.addListener(listener, property);
     }
 
     @Override
     public void removeListener(RemotePropertyListener listener, String property) throws RemoteException
     {
+        publisher.removeListener(listener, property);
+    }
+
+    @Override
+    public double[] getPuckPosition() throws RemoteException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void setPuckPosition(double x, double y) throws RemoteException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public double getDiameter() throws RemoteException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void setPlayerBatPosition() throws RemoteException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

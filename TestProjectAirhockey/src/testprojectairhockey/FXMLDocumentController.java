@@ -34,6 +34,9 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import Game.HockeyField;
 import Game.Mode;
+import java.rmi.RemoteException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -106,7 +109,11 @@ public class FXMLDocumentController implements Initializable {
         tfMessage.setFocusTraversable(false);
 
         gc = canvas.getGraphicsContext2D();
-        hockeyField = new HockeyField();
+        try {
+            hockeyField = new HockeyField();
+        } catch (RemoteException ex) {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void startGame()

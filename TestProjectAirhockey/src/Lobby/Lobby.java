@@ -7,11 +7,11 @@ package Lobby;
 
 import Shared.ILobby;
 import Chat.Chat;
+import Shared.IUser;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
-import observer.RemotePropertyListener;
 
 /**
  *
@@ -81,9 +81,9 @@ public class Lobby extends UnicastRemoteObject implements ILobby {
             gameInfo[0] = String.valueOf(game.getId());
             gameInfo[1] = game.getName();
             gameInfo[2] = String.valueOf(game.getAverageRating());
-            for (int i = 3; i < game.getUsers().size() + 3; i++)
+            for (int i = 3; i < game.getUsersGame().size() + 3; i++)
             {
-                gameInfo[i] = game.getUsers().get(i - 3).getUsername();
+                gameInfo[i] = game.getUsersGame().get(i - 3).getUsername();
             }
             gamesAsString.add(gameInfo);
         }
@@ -106,9 +106,9 @@ public class Lobby extends UnicastRemoteObject implements ILobby {
         gameInfo[0] = String.valueOf(game.getId());
         gameInfo[1] = game.getName();
         gameInfo[2] = String.valueOf(game.getAverageRating());
-        for (int i = 3; i < game.getUsers().size() + 3; i++)
+        for (int i = 3; i < game.getUsersGame().size() + 3; i++)
         {
-            gameInfo[i] = game.getUsers().get(i - 3).getUsername();
+            gameInfo[i] = game.getUsersGame().get(i - 3).getUsername();
         }
         gameCount++;
         return gameInfo;
@@ -118,5 +118,18 @@ public class Lobby extends UnicastRemoteObject implements ILobby {
     public boolean addUser(User user) throws RemoteException
     {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean addUserToGame(int gameId, IUser user) throws RemoteException {
+        for(Game g : games)
+        {
+            if(g.getId() == gameId)
+            {
+                g.addPlayer((User)user);
+                return true;
+            }
+        }
+        return false;
     }
 }
