@@ -22,6 +22,7 @@ import java.rmi.registry.Registry;
 import java.util.Enumeration;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.animation.AnimationTimer;
 import observer.RemotePropertyListener;
 import observer.RemotePublisher;
 
@@ -29,14 +30,11 @@ import observer.RemotePublisher;
  *
  * @author rens
  */
-public class RMI_Server implements RemotePropertyListener {
-
-    //Manager for FTP actions
-    FTPManager ftp = new FTPManager();
+public class RMI_Server implements RemotePropertyListener{
 
     // Set port number
     private static final int portNumber = 1099;
-
+    FTPManager ftp = new FTPManager();
     // Set binding name for student administration
     private static final String BINDINGNAMELOBBY = "Lobby";
     private static final String BINDINGNAMEGAME = "Game";
@@ -44,24 +42,18 @@ public class RMI_Server implements RemotePropertyListener {
     // References to registry and student administration
     private Registry registry = null;
     private ILobby lobby = null;
+    private AnimationTimer timer;
     private IActiveGame game;
     private HockeyField hockeyField;
 
     // Constructor
     public RMI_Server() {
+
         System.setProperty("java.rmi.server.hostname", "192.168.153.1");
-
-        //Save Server ip on web server
-        try {
-            saveLocalServerIP();
-        } catch (RuntimeException ex) {
-            System.out.println("IP was not saved to web server: " + ex.getMessage());
-        }
-
         // Print port number for registry
         System.out.println("Server: Port number " + portNumber);
 
-        // Create student administration
+        // Create lobby
         try {
             lobby = new Lobby();
             System.out.println("Server: Lobby created");
@@ -71,9 +63,10 @@ public class RMI_Server implements RemotePropertyListener {
             lobby = null;
         }
 
+        // Create game
         try {
             game = new ActiveGame("Meny", new User("Sasa2079"));
-            RemotePublisher publisher = (RemotePublisher) game.getHockeyField();
+            RemotePublisher publisher = (RemotePublisher)game.getHockeyField();
             publisher.addListener(this, "game");
             System.out.println("Server: Game created");
         } catch (Exception ex) {
@@ -92,6 +85,18 @@ public class RMI_Server implements RemotePropertyListener {
             registry = null;
         }
 
+        System.setProperty("java.rmi.server.hostname", "192.168.153.1");
+        // Print port number for registry
+        System.out.println("Server: Port number " + portNumber);
+
+        //Bind game using registry
+        try {
+            registry.rebind(BINDINGNAMEGAME, game);
+        } catch (RemoteException ex) {
+            System.out.println("Server: Cannot bind game");
+            System.out.println("Server: RemoteException: " + ex.getMessage());
+        }
+        // Bind lobby using registry
         try {
             registry.rebind(BINDINGNAMELOBBY, lobby);
         } catch (RemoteException ex) {
@@ -99,18 +104,12 @@ public class RMI_Server implements RemotePropertyListener {
             System.out.println("Server: RemoteException: " + ex.getMessage());
         }
         try {
-            registry.rebind(BINDINGNAMEGAME, game);
-        } catch (RemoteException ex) {
-            System.out.println("Server: Cannot bind game");
-            System.out.println("Server: RemoteException: " + ex.getMessage());
-        }
-
-        try {
             hockeyField = (HockeyField) game.getHockeyField();
         } catch (RemoteException ex) {
             Logger.getLogger(RMI_Server.class.getName()).log(Level.SEVERE, null, ex);
         }
         hockeyField.init(Mode.MULTI);
+
     }
 
     // Print IP addresses and network interfaces
@@ -145,7 +144,7 @@ public class RMI_Server implements RemotePropertyListener {
             System.out.println("Server: UnknownHostException: " + ex.getMessage());
         }
     }
-
+    
     private void saveLocalServerIP() {
         String ip = "";
 
@@ -181,6 +180,7 @@ public class RMI_Server implements RemotePropertyListener {
         }
     }
 
+
     /**
      * @param args the command line arguments
      */
@@ -196,8 +196,14 @@ public class RMI_Server implements RemotePropertyListener {
         RMI_Server server = new RMI_Server();
     }
 
+    public void serverLoop() {
+        System.out.println("GOTIMER");
+        hockeyField.getPuck().move();
+        hockeyField.checkColl();
+    }
+
     @Override
     public void propertyChange(PropertyChangeEvent evt) throws RemoteException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        serverLoop();
     }
 }

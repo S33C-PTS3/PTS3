@@ -7,8 +7,8 @@ package testprojectairhockey;
 
 import Shared.IActiveGame;
 import Shared.IHockeyField;
+import Shared.ILobby;
 import java.beans.PropertyChangeEvent;
-import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -26,6 +26,7 @@ public class GameRMI extends UnicastRemoteObject implements RemotePropertyListen
 
     private Registry registry;
     private IActiveGame game;
+    private Object gameObject;
     private IHockeyField hockeyField;
     private final String BINDINGNAME = "Game";
     private Point2D puckPosition;
@@ -53,12 +54,12 @@ public class GameRMI extends UnicastRemoteObject implements RemotePropertyListen
         {
             try
             {
-                System.out.println("help=");
                 game = (IActiveGame)registry.lookup(BINDINGNAME);
                 hockeyField = (IHockeyField)game.getHockeyField();
             }
             catch (RemoteException ex)
             {
+                ex.printStackTrace();
                 System.out.println("Cannot bind Game");
                 System.out.println("RemoteException: " + ex.getMessage());
                 game = null;
@@ -71,9 +72,9 @@ public class GameRMI extends UnicastRemoteObject implements RemotePropertyListen
             }
         }
 
-//        RemotePublisher publisher = null;
-//        publisher = (RemotePublisher)game.getHockeyField();
-//        publisher.addListener(this, "game");
+        RemotePublisher publisher = null;
+        publisher = (RemotePublisher)game.getHockeyField();
+        publisher.addListener(this, "game");
     }
 
     @Override

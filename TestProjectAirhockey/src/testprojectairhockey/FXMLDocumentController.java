@@ -119,7 +119,12 @@ public class FXMLDocumentController implements Initializable {
     public void startGame()
     {
         //Labels vullen met de namen van de spelers
-        Side[] sides = hockeyField.getSides();
+        Side[] sides = null;
+        try {
+            sides = hockeyField.getSides();
+        } catch (RemoteException ex) {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         for (Side side : sides)
         {
             if (side.getSideName().equals(SideName.BOTTOM))
@@ -180,7 +185,12 @@ public class FXMLDocumentController implements Initializable {
 
     public void Draw()
     {
-        Side[] sides = hockeyField.getSides();
+        Side[] sides = null;
+        try {
+            sides = hockeyField.getSides();
+        } catch (RemoteException ex) {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         gc.setLineWidth(1);
         
         //hulplijnen om te kijken of de puck en de bats in het midden staan.
@@ -214,7 +224,11 @@ public class FXMLDocumentController implements Initializable {
                 lblScore3.setText(String.valueOf(side.getBindedPlayer().getInGameScore()));
             }
 
-            lblRoundNr.setText(String.valueOf(hockeyField.getRound()));
+            try {
+                lblRoundNr.setText(String.valueOf(hockeyField.getRound()));
+            } catch (RemoteException ex) {
+                Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
             Puck puck = hockeyField.getPuck();
             gc.setFill(puck.getColor());

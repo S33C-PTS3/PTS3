@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="380.0" prefWidth="580.0" styleClass="mainMenu" stylesheets="@menu.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="testprojectairhockey.MenuController">
+   <children>
+      <Button fx:id="btnSP" layoutX="241.0" layoutY="171.0" mnemonicParsing="false" onAction="#btnSP_Click" prefHeight="39.0" prefWidth="118.0" text="Singleplayer" />
+      <Button fx:id="btnSettings" layoutX="241.0" layoutY="292.0" mnemonicParsing="false" onAction="#btnSettings_Click" prefHeight="39.0" prefWidth="118.0" text="Settings" />
+      <Button fx:id="btnMP" layoutX="241.0" layoutY="230.0" mnemonicParsing="false" onAction="#btnMP_Click" prefHeight="39.0" prefWidth="118.0" text="Multiplayer" />
+      <Label fx:id="lblHoi" layoutX="176.0" layoutY="60.0" text="Airhockey">
+         <font>
+            <Font name="Andale Mono" size="46.0" />
+         </font></Label>
+   </children>
+</AnchorPane>
