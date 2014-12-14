@@ -16,6 +16,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -32,12 +33,14 @@ public class RegisterController implements Initializable {
     Button btnBackMain;
     Button btnBackLogin;
     Button btnRegister;
-    TextField txtUsername;
-    TextField txtPassword1;
-    TextField txtPassword2;
+    public TextField txtUsername;
+    public PasswordField txtPassword1;
+    public PasswordField txtPassword2;
     
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {}    
@@ -56,28 +59,55 @@ public class RegisterController implements Initializable {
     
     @FXML
     public void btnRegister_Click(ActionEvent evt)
-    {
-        String test = txtPassword1.getText();
-        
-        if (!txtUsername.getText().equals("") 
-                && !txtPassword1.getText().equals("") 
-                && !txtPassword2.getText().equals("")) 
+    {   
+        if (checkValidInput()) 
         {
-            if (txtPassword1.getText().equals(txtPassword2.getText())) 
+            boolean success = authMan.register(txtUsername.getText(), txtPassword1.getText());
+            if (success) 
             {
-                boolean success = authMan.register(txtUsername.getText(), txtPassword1.getText());
-                if (success) 
-                {
-                    startNewWindow("Login", "Airhockey - Login", evt);
-                }
-                else
-                {
-                    txtUsername.setText("");
-                    txtPassword1.setText("");
-                    txtPassword2.setText("");
-                }
+                startNewWindow("Login", "Airhockey - Login", evt);
+            }
+            else
+            {
+                txtUsername.setText("");
+                txtPassword1.setText("");
+                txtPassword2.setText("");
             }
         }
+    }
+    
+    private boolean checkValidInput()
+    {
+        boolean isValid = true;
+        
+        if (txtUsername.getText().equals("")) 
+        {
+            txtUsername.setPromptText("Vul uw username in!");
+            isValid = false;
+        }
+        
+        if (txtPassword1.getText().equals("")) 
+        {
+            txtPassword1.setPromptText("Vul uw wachtwoord in!");
+            isValid = false;
+        }
+        
+        if (txtPassword2.getText().equals("")) 
+        {
+            txtPassword2.setPromptText("Vul uw wachtwoord in!");
+            isValid = false;
+        }
+        
+        if (!txtPassword1.getText().equals(txtPassword2.getText())) 
+        {
+            isValid = false;
+            txtPassword1.setText("");
+            txtPassword2.setText("");
+            txtPassword1.setPromptText("Wachtwoord incorrect!");
+            txtPassword2.setPromptText("Wachtwoord incorrect!");
+        }
+        
+        return isValid;
     }
     
     private void startNewWindow(String file, String name, ActionEvent evt)

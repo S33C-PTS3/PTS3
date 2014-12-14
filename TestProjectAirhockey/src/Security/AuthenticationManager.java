@@ -71,7 +71,7 @@ public class AuthenticationManager {
             ResultSet rs = stat.executeQuery(query);
             while(rs.next())
             {
-                highestID = rs.getInt("ID");
+                highestID = rs.getInt(1);
             }
         } 
         catch (SQLException ex) 
