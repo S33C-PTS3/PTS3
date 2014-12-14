@@ -5,66 +5,57 @@
  */
 package Lobby;
 
+import Game.ActiveGame;
+import Game.HockeyField;
 import Security.FTPManager;
+import Shared.IActiveGame;
 import Shared.ILobby;
-import com.sun.deploy.util.SessionState;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.PrintStream;
+import java.beans.PropertyChangeEvent;
 import java.net.InetAddress;
-import java.net.MalformedURLException;
 import java.net.NetworkInterface;
 import java.net.SocketException;
-import java.net.URL;
-import java.net.URLConnection;
 import java.net.UnknownHostException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.Enumeration;
+import observer.RemotePropertyListener;
+import observer.RemotePublisher;
 
 /**
  *
  * @author rens
  */
-public class RMI_Server {
+public class RMI_Server implements RemotePropertyListener {
+
     //Manager for FTP actions
     FTPManager ftp = new FTPManager();
-    
-        // Set port number
+
+    // Set port number
     private static final int portNumber = 1099;
 
     // Set binding name for student administration
-    private static final String bindingName = "Lobby";
+    private static final String BINDINGNAMELOBBY = "Lobby";
+    private static final String BINDINGNAMEGAME = "Game";
 
     // References to registry and student administration
     private Registry registry = null;
     private ILobby lobby = null;
+    private IActiveGame game;
+    private HockeyField hockeyField;
 
     // Constructor
-<<<<<<< HEAD
-    public RMI_Server() {
 
-        System.setProperty("java.rmi.server.hostname", "145.93.65.203");
-=======
-    public RMI_Server() {       
-        System.setProperty("java.rmi.server.hostname", "145.93.162.25");
-        
+    public RMI_Server() {
+        System.setProperty("java.rmi.server.hostname", "192.168.153.1");
+
         //Save Server ip on web server
-        try 
-        {
+        try {
             saveLocalServerIP();
-        }
-        catch(RuntimeException ex)
-        {
+        } catch (RuntimeException ex) {
             System.out.println("IP was not saved to web server: " + ex.getMessage());
         }
-        
-        
->>>>>>> fb965bc6ebf0ae83cc62c81475e3c0492eef640a
+
         // Print port number for registry
         System.out.println("Server: Port number " + portNumber);
 
@@ -78,6 +69,17 @@ public class RMI_Server {
             lobby = null;
         }
 
+        try {
+            game = new ActiveGame("Meny", new User("Sasa2079"));
+            RemotePublisher publisher = (RemotePublisher) game.getHockeyField();
+            publisher.addListener(this, "game");
+            System.out.println("Server: Game created");
+        } catch (Exception ex) {
+            System.out.println("Server: Cannot create Game");
+            System.out.println("Server: RemoteException: " + ex.getMessage());
+            game = null;
+        }
+
         // Create registry at port number
         try {
             registry = LocateRegistry.createRegistry(portNumber);
@@ -87,10 +89,15 @@ public class RMI_Server {
             System.out.println("Server: RemoteException: " + ex.getMessage());
             registry = null;
         }
-
+        try {
+            registry.rebind(BINDINGNAMEGAME, game);
+        } catch (RemoteException ex) {
+            System.out.println("Server: Cannot bind game");
+            System.out.println("Server: RemoteException: " + ex.getMessage());
+        }
         // Bind student administration using registry
-        try {            
-            registry.rebind(bindingName, lobby);
+        try {
+            registry.rebind(BINDINGNAMELOBBY, lobby);
         } catch (RemoteException ex) {
             System.out.println("Server: Cannot bind lobby");
             System.out.println("Server: RemoteException: " + ex.getMessage());
@@ -144,10 +151,10 @@ public class RMI_Server {
         // Create server
         RMI_Server server = new RMI_Server();
     }
-    
+
     private void saveLocalServerIP() {
         String ip = "";
-        
+
         //Get ip
         try {
             InetAddress localhost = InetAddress.getLocalHost();
@@ -155,27 +162,27 @@ public class RMI_Server {
             InetAddress[] allMyIps = InetAddress.getAllByName(localhost.getCanonicalHostName());
             if (allMyIps != null && allMyIps.length > 1) {
                 for (InetAddress allMyIp : allMyIps) {
-                    if (allMyIp.toString().contains("145")) 
-                    {
+                    if (allMyIp.toString().contains("145")) {
                         int slashIndex = allMyIp.toString().indexOf("/");
                         ip = allMyIp.toString().substring(slashIndex + 1);
                         System.out.println("Server IP: " + ip);
                     }
                 }
             }
-        } catch (UnknownHostException ex) 
-        {
+        } catch (UnknownHostException ex) {
             System.out.println("Server: Cannot get IP address of local host");
             System.out.println("Server: UnknownHostException: " + ex.getMessage());
         }
-        
-        try
-        {
+
+        try {
             ftp.writeIP(ip);
-        }
-        catch (RuntimeException ex)
-        {
+        } catch (RuntimeException ex) {
             throw new RuntimeException(ex.getMessage());
         }
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) throws RemoteException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

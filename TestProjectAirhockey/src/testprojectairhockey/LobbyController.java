@@ -5,9 +5,12 @@
  */
 package testprojectairhockey;
 
+import Game.Mode;
 import Lobby.Game;
 import Lobby.User;
 import Shared.ILobby;
+import Shared.IUser;
+import java.io.IOException;
 import java.net.URL;
 import java.rmi.RemoteException;
 import java.util.ResourceBundle;
@@ -24,8 +27,10 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
+import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TitledPane;
 import javafx.scene.input.KeyCode;
@@ -34,6 +39,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -69,6 +75,7 @@ public class LobbyController implements Initializable {
     private ObservableList<String> messages;
     private ArrayList<Game> games;
     private LobbyRMI rmiController;
+    private IUser loggedInUser;
     // widht of accordion / 4 to determine width of the columns
     private final double COLUMNWIDTH = 137.5;
     private final double ROWHEIGHT = 20;
@@ -80,42 +87,33 @@ public class LobbyController implements Initializable {
      * @param rb
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb)
-    {
+    public void initialize(URL url, ResourceBundle rb) {
         lvChatBox.setItems(messages);
         messages = FXCollections.observableArrayList();
-        try
-        {
+        try {
             rmiController = new LobbyRMI();
-        }
-        catch (RemoteException ex)
-        {
+        } catch (RemoteException ex) {
             Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
         }
         refresh();
     }
 
     @FXML
-    private void btnSend_Click(ActionEvent evt)
-    {
+    private void btnSend_Click(ActionEvent evt) {
         sendMessage();
     }
 
     @FXML
-    private void enterPressed(KeyEvent evt)
-    {
-        if (evt.getCode().equals(KeyCode.ENTER))
-        {
+    private void enterPressed(KeyEvent evt) {
+        if (evt.getCode().equals(KeyCode.ENTER)) {
             sendMessage();
         }
     }
 
-    private void sendMessage()
-    {
+    private void sendMessage() {
         //van wie komt het bericht.. voorbeeldbericht: Eric: Hallo!
         String message = tfMessage.getText();
-        if (!message.isEmpty() && message.trim().length() > 0)
-        {
+        if (!message.isEmpty() && message.trim().length() > 0) {
             messages.add(message);
             lvChatBox.scrollTo(lvChatBox.getItems().size());
             tfMessage.clear();
@@ -123,45 +121,34 @@ public class LobbyController implements Initializable {
     }
 
     @FXML
-    private void btnRefresh_Click(ActionEvent evt)
-    {
+    private void btnRefresh_Click(ActionEvent evt) {
         refresh();
     }
 
     @FXML
-    private void btnCreateGame_Click(ActionEvent evt)
-    {
+    private void btnCreateGame_Click(ActionEvent evt) {
         ILobby lobby = rmiController.getLobby();
         String[] gameInfo = null;
-        try
-        {
+        try {
             gameInfo = lobby.addGame(new Game("Meny's Game", new User("Meny")));
-        }
-        catch (RemoteException ex)
-        {
+        } catch (RemoteException ex) {
             Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
         }
         createNewGame(gameInfo);
     }
 
-    private void refresh()
-    {
-        try
-        {
+    private void refresh() {
+        try {
             GameAccordion.getPanes().clear();
-            for (String[] gamesArray : rmiController.getLobby().getGames())
-            {
+            for (String[] gamesArray : rmiController.getLobby().getGames()) {
                 createNewGame(gamesArray);
             }
-        }
-        catch (RemoteException ex)
-        {
+        } catch (RemoteException ex) {
             Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    private void createNewGame(String[] gameInfo)
-    {
+    private void createNewGame(String[] gameInfo) {
         String gameId = gameInfo[0];
         String gameName = gameInfo[1];
         String gameAverageRanking = gameInfo[2];
@@ -174,16 +161,14 @@ public class LobbyController implements Initializable {
 
         GridPane gamegrid = new GridPane();
         //550 /4 = 137,5
-        for (int i = 0; i < 4; i++)
-        {
+        for (int i = 0; i < 4; i++) {
             ColumnConstraints column = new ColumnConstraints(COLUMNWIDTH);
             gamegrid.getColumnConstraints().add(column);
         }
 
-        for (int i = 0; i < 4; i++)
-        {
-           RowConstraints row = new RowConstraints(ROWHEIGHT);
-           gamegrid.getRowConstraints().add(row);
+        for (int i = 0; i < 4; i++) {
+            RowConstraints row = new RowConstraints(ROWHEIGHT);
+            gamegrid.getRowConstraints().add(row);
         }
         gamegrid.setPrefSize(550, 300);
         Label idLabel = new Label();
@@ -211,6 +196,17 @@ public class LobbyController implements Initializable {
         //grid column 2
         Button btnJoin = new Button();
         btnJoin.setText("Join game");
+        btnJoin.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                try {
+                    rmiController.getLobby().addUserToGame(Integer.parseInt(gameId), loggedInUser);
+                    navigateToGame();
+                } catch (RemoteException ex) {
+                    Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
         gamegrid.add(btnJoin, 2, 1);
         //grid column 3
         Button btnSpectate = new Button();
@@ -222,9 +218,25 @@ public class LobbyController implements Initializable {
         gameTitle.setContent(gamegrid);
         idLabel.setText(gameId);
         GameAccordion.getPanes().add(gameTitle);
-        for (int i = 0; i < 6; i++)
-        {
+        for (int i = 0; i < 6; i++) {
             System.out.println(gameInfo[i]);
+        }
+    }
+
+    private void navigateToGame() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Game.fxml"));
+            Parent root = (Parent) fxmlLoader.load();
+            GameController controller = fxmlLoader.<GameController>getController();
+            controller.setMode(Mode.MULTI);
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.setTitle("Airhockey - Multiplayer");
+            stage.setResizable(false);
+            stage.show();
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
     }
 }

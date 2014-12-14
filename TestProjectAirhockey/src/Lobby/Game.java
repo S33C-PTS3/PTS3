@@ -8,9 +8,11 @@ package Lobby;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import Game.Player;
 import Game.Spectator;
+import Shared.IActiveGame;
+import Shared.IHockeyField;
 import java.io.Serializable;
+import java.rmi.RemoteException;
 
 /**
  *
@@ -51,7 +53,7 @@ public class Game implements Serializable{
     /**
     * @return a list of players that joined this game as players
     */
-    public List<User> getUsers()
+    public List<User> getUsersGame()
     {
         return this.users;
     }
