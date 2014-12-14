@@ -18,7 +18,7 @@ import java.rmi.RemoteException;
  *
  * @author Eric
  */
-public class Game implements Serializable{
+public class Game implements Serializable, IActiveGame{
     private int id;
     private String name;
     private Calendar startTime;
@@ -114,5 +114,15 @@ public class Game implements Serializable{
     public boolean addSpectator(Spectator spectator)
     {
         return false;
+    }
+
+    @Override
+    public String[] getUsers() throws RemoteException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public IHockeyField getHockeyField() throws RemoteException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

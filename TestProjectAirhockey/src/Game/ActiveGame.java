@@ -27,14 +27,10 @@ public class ActiveGame extends Game implements IActiveGame{
     //gegenereerde constructor
     //ROUNDS AND SCORES IN ACTIVE GAME ZETTEN EN UIT HOCKEYFIELD
 
-    public ActiveGame(String name, User creator)
+    public ActiveGame(String name, User creator) throws RemoteException
     {
         super(name, creator);
-        try {
-            hockeyField = new HockeyField();
-        } catch (RemoteException ex) {
-            Logger.getLogger(ActiveGame.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        hockeyField = new HockeyField();
     }
     
     /**

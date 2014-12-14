@@ -25,7 +25,7 @@ import observer.RemotePublisher;
 public class GameRMI extends UnicastRemoteObject implements RemotePropertyListener {
 
     private Registry registry;
-    private Object game;
+    private IActiveGame game;
     private IHockeyField hockeyField;
     private final String BINDINGNAME = "Game";
     private Point2D puckPosition;
@@ -53,7 +53,8 @@ public class GameRMI extends UnicastRemoteObject implements RemotePropertyListen
         {
             try
             {
-                game = registry.lookup(BINDINGNAME);
+                String[] list = registry.list();
+                game = (IActiveGame)registry.lookup(BINDINGNAME);
                 //hockeyField = (IHockeyField)game.getHockeyField();
             }
             catch (RemoteException ex)
