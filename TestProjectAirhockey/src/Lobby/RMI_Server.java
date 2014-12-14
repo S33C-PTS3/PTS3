@@ -122,7 +122,7 @@ public class RMI_Server {
         System.out.println("SERVER USING REGISTRY");
 
         // Print IP addresses and network interfaces
-        printIPAddresses();
+        //printIPAddresses();
 
         // Create server
         RMI_Server server = new RMI_Server();
@@ -146,6 +146,13 @@ public class RMI_Server {
                     }
                 }
             }
+            
+            if (ip.equals("")) 
+            {
+                System.err.println("External ip not found. Running on localhost.");
+                ip = "localhost";
+            }
+            
         } catch (UnknownHostException ex) 
         {
             System.out.println("Server: Cannot get IP address of local host");
