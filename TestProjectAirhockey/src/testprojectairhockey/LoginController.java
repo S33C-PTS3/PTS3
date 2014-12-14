@@ -5,11 +5,10 @@
  */
 package testprojectairhockey;
 
+import Lobby.User;
 import Security.AuthenticationManager;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,6 +17,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -32,14 +32,16 @@ public class LoginController implements Initializable {
     private final int dbTimeout = 5000;
     
     @FXML
-    TextField txtUsername;
-    TextField txtPassword;
+    public TextField txtUsername;
+    public PasswordField txtPassword;
     Button btnBack;
     Button btnRegister;
     Button btnLogin;
     
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -65,7 +67,40 @@ public class LoginController implements Initializable {
     @FXML
     public void btnLogin_Click(ActionEvent evt)
     {
-        System.out.println("Login nog implementeren");
+        if (checkValidInput()) 
+        {
+            User foundUser = authMan.login(txtUsername.getText(), txtPassword.getText());
+            if (foundUser != null) 
+            {
+                startNewWindow("Menu", "Airhockey", evt);
+            }
+            else
+            {
+                txtUsername.setText("");
+                txtPassword.setText("");
+                txtUsername.setPromptText("Gegevens ongeldig!");
+                txtPassword.setPromptText("Gegevens ongeldig!");
+            }
+        }
+    }
+    
+    private boolean checkValidInput()
+    {
+        boolean isValid = true;
+        
+        if (txtUsername.getText().equals("")) 
+        {
+            txtUsername.setPromptText("Vul uw username in!");
+            isValid = false;
+        }
+        
+        if (txtPassword.getText().equals("")) 
+        {
+            txtPassword.setPromptText("Vul uw wachtwoord in!");
+            isValid = false;
+        }
+        
+        return isValid;
     }
     
     @FXML

@@ -23,21 +23,13 @@ public class AuthenticationManager {
     
     private Connection dbConnection;
     private String ip;
-    private FTPManager ftp = new FTPManager();
+    private final FTPManager ftp = new FTPManager();
     
     /**
      * Constructor for AuthenticationManager
      */
     public AuthenticationManager()
     {
-        try 
-        {
-            initConnection();
-        } 
-        catch (RuntimeException ex) 
-        {
-            throw new RuntimeException(ex.getMessage());
-        }
     }
     
     /**
@@ -48,7 +40,47 @@ public class AuthenticationManager {
      */
     public User login(String username, String password)
     {
-        throw new UnsupportedOperationException("AuthenticationManager.login() nog implementeren");
+        try 
+        {
+            initConnection();
+        } 
+        catch (RuntimeException ex) 
+        {
+            throw new RuntimeException(ex.getMessage());
+        }
+        
+        User loggedInUser = null;
+        PreparedStatement prepstat = null;
+        String query = "SELECT * FROM AH_ACCOUNT WHERE USERNAME = ? AND PASSWORD = ?";
+        int userID = 0;
+        
+        try 
+        {
+            prepstat = dbConnection.prepareStatement(query);
+            prepstat.setString(1, username);
+            prepstat.setString(2, password);
+            ResultSet rs = prepstat.executeQuery();
+            
+            while(rs.next())
+            {
+                userID = rs.getInt(1);
+            }
+            
+            if (userID == 0) 
+            {
+                throw new SQLException();
+            }
+            else
+            {
+                loggedInUser = new User(username);
+            }
+        } 
+        catch (SQLException ex) 
+        {
+            System.err.println("User not found");
+        }
+                
+        return loggedInUser;
     }
     
     /**
@@ -60,6 +92,15 @@ public class AuthenticationManager {
      */
     public boolean register(String username, String password)
     {
+        try 
+        {
+            initConnection();
+        } 
+        catch (RuntimeException ex) 
+        {
+            throw new RuntimeException(ex.getMessage());
+        }
+                
         boolean isSucces = false;
         Statement stat = null;
         String query = "SELECT MAX(ID) FROM AH_ACCOUNT";
@@ -76,7 +117,7 @@ public class AuthenticationManager {
         } 
         catch (SQLException ex) 
         {
-            System.out.println("Highest User ID not found");
+            System.err.println("Highest User ID not found");
             isSucces = false;
         }
         
@@ -95,7 +136,7 @@ public class AuthenticationManager {
         } 
         catch (SQLException ex) 
         {
-            System.out.println("Registering not completed");
+            System.err.println("Registering not completed: " + ex.getMessage());
             isSucces = false;
         }
         
@@ -130,7 +171,7 @@ public class AuthenticationManager {
             }
             catch (RuntimeException ex)
             {
-                System.out.println("Server IP not found: " + ex.getMessage());
+                System.err.println("Server IP not found: " + ex.getMessage());
             }
             dbConnection = DriverManager.getConnection("jdbc:oracle:thin:@//"+ ip +":1521/orcl", "system", "qbNdsAWq123");
         }

@@ -72,6 +72,7 @@ public class RegisterController implements Initializable {
                 txtUsername.setText("");
                 txtPassword1.setText("");
                 txtPassword2.setText("");
+                txtUsername.setPromptText("Gegevens ongeldig!");
             }
         }
     }
