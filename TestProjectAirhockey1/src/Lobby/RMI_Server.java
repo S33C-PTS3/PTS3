@@ -30,7 +30,7 @@ import observer.RemotePublisher;
  *
  * @author rens
  */
-public class RMI_Server implements RemotePropertyListener{
+public class RMI_Server{
 
     // Set port number
     private static final int portNumber = 1099;
@@ -66,8 +66,6 @@ public class RMI_Server implements RemotePropertyListener{
         // Create game
         try {
             game = new ActiveGame("Meny", new User("Sasa2079"));
-            RemotePublisher publisher = (RemotePublisher)game.getHockeyField();
-            publisher.addListener(this, "game");
             System.out.println("Server: Game created");
         } catch (Exception ex) {
             System.out.println("Server: Cannot create Game");
@@ -200,10 +198,5 @@ public class RMI_Server implements RemotePropertyListener{
         System.out.println("GOTIMER");
         hockeyField.getPuck().move();
         hockeyField.checkColl();
-    }
-
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) throws RemoteException {
-        serverLoop();
     }
 }

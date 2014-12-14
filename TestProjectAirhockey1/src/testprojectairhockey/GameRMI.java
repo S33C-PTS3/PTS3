@@ -15,6 +15,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import javafx.geometry.Point2D;
+import observer.BasicPublisher;
 import observer.RemotePropertyListener;
 import observer.RemotePublisher;
 
@@ -22,7 +23,7 @@ import observer.RemotePublisher;
  *
  * @author Eric
  */
-public class GameRMI extends UnicastRemoteObject implements RemotePropertyListener {
+public class GameRMI extends UnicastRemoteObject implements RemotePropertyListener, RemotePublisher{
 
     private Registry registry;
     private IActiveGame game;
@@ -30,9 +31,11 @@ public class GameRMI extends UnicastRemoteObject implements RemotePropertyListen
     private IHockeyField hockeyField;
     private final String BINDINGNAME = "Game";
     private Point2D puckPosition;
+    private BasicPublisher bpublisher;
 
     public GameRMI() throws RemoteException
     {
+        bpublisher = new BasicPublisher(new String[] { "Server" });
         puckPosition = new Point2D(250,250);
         System.out.println("Attempting to locate remote registry");
         //Locate registry
@@ -92,5 +95,15 @@ public class GameRMI extends UnicastRemoteObject implements RemotePropertyListen
     public IHockeyField getHockeyField()
     {
         return this.hockeyField;
+    }
+
+    @Override
+    public void addListener(RemotePropertyListener listener, String property) throws RemoteException {
+        bpublisher.addListener(listener, property);
+    }
+
+    @Override
+    public void removeListener(RemotePropertyListener listener, String property) throws RemoteException {
+        bpublisher.addListener(listener, property);
     }
 }

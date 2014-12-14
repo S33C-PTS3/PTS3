@@ -10,15 +10,17 @@ import Lobby.User;
 import Chat.Chat;
 import Shared.IActiveGame;
 import Shared.IHockeyField;
+import java.beans.PropertyChangeEvent;
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import observer.RemotePropertyListener;
 
 /**
  *
  * @author Eric
  */
-public class ActiveGame extends UnicastRemoteObject implements IActiveGame{
+public class ActiveGame extends UnicastRemoteObject implements IActiveGame, RemotePropertyListener{
 
     private HockeyField hockeyField;
     private Chat chat;
@@ -69,6 +71,11 @@ public class ActiveGame extends UnicastRemoteObject implements IActiveGame{
     public IHockeyField getHockeyField() throws RemoteException
     {
         return this.hockeyField;
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) throws RemoteException {
+        
     }
 }
 
