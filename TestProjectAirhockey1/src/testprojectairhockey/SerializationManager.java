@@ -16,7 +16,7 @@ import java.io.ObjectOutputStream;
  *
  * @author Joep Kerste
  */
-public class SerializationManager
+public class SerializationManager 
 {
     public boolean saveAIsettings(Settings s)
     {

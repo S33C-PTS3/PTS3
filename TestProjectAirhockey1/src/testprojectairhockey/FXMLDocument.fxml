@@ -8,7 +8,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" fx:id="stage" onKeyPressed="#keyEventPressed" prefHeight="750.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="testprojectairhockey.GameController">
+<AnchorPane id="AnchorPane" fx:id="stage" onKeyPressed="#keyEventPressed" prefHeight="750.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="testprojectairhockey.FXMLDocumentController">
     <children>
         <Label fx:id="lblPlayer1" layoutX="23.0" layoutY="49.0" minHeight="16" minWidth="69" text="Red:" />
         <Canvas fx:id="canvas" height="498.0" layoutX="100.0" layoutY="55.0" width="600.0" />

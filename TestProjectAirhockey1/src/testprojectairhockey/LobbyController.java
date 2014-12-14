@@ -7,8 +7,10 @@ package testprojectairhockey;
 
 import Game.Mode;
 import Lobby.Game;
+import Lobby.IGame;
 import Lobby.User;
 import Shared.ILobby;
+import Shared.IUser;
 import java.io.IOException;
 import java.net.URL;
 import java.rmi.RemoteException;
@@ -57,6 +59,9 @@ public class LobbyController implements Initializable {
     Accordion GameAccordion;
 
     @FXML
+    ScrollPane GamePane;
+
+    @FXML
     ListView lvChatBox;
 
     @FXML
@@ -68,10 +73,11 @@ public class LobbyController implements Initializable {
     @FXML
     Button btnRefresh;
 
-    ObservableList<String> messages;
-    ArrayList<Game> games;
-    LobbyRMI rmiController;
-    User loggedInUser;
+    private ObservableList<String> messages;
+    private ArrayList<IGame> games;
+    private LobbyRMI rmiController;
+    private IUser loggedInUser;
+    // widht of accordion / 4 to determine width of the columns
     private final double COLUMNWIDTH = 137.5;
     private final double ROWHEIGHT = 20;
 
@@ -88,27 +94,9 @@ public class LobbyController implements Initializable {
         try {
             rmiController = new LobbyRMI();
         } catch (RemoteException ex) {
-            System.out.println("RemoteException: " + ex.getMessage());
+            Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
         }
         refresh();
-    }
-
-    public void startMulti() {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Game.fxml"));
-            Parent root = (Parent) fxmlLoader.load();
-            GameController controller = fxmlLoader.<GameController>getController();
-            controller.setMode(Mode.MULTI);
-            Scene scene = new Scene(root);
-            Stage stage = new Stage();
-            stage.setScene(scene);
-            stage.setTitle("Airhockey - Multiplayer");
-            stage.setResizable(false);
-            stage.show();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-
     }
 
     @FXML
@@ -141,12 +129,12 @@ public class LobbyController implements Initializable {
     @FXML
     private void btnCreateGame_Click(ActionEvent evt) {
         ILobby lobby = rmiController.getLobby();
-        System.out.println("test");
         String[] gameInfo = null;
         try {
+            System.out.println(lobby.toString());
             gameInfo = lobby.addGame(new Game("Meny's Game", new User("Meny")));
         } catch (RemoteException ex) {
-            ex.printStackTrace();
+            Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
         }
         createNewGame(gameInfo);
     }
@@ -170,108 +158,87 @@ public class LobbyController implements Initializable {
         String player2 = gameInfo[4];
         String player3 = gameInfo[5];
         TitledPane gameTitle = new TitledPane();
-
         gameTitle.setText(gameName);
         AnchorPane gamePane = new AnchorPane();
 
         GridPane gamegrid = new GridPane();
         //550 /4 = 137,5
-        for (int i = 0;
-                i < 4; i++) {
+        for (int i = 0; i < 4; i++) {
             ColumnConstraints column = new ColumnConstraints(COLUMNWIDTH);
             gamegrid.getColumnConstraints().add(column);
         }
 
-        for (int i = 0;
-                i < 4; i++) {
+        for (int i = 0; i < 4; i++) {
             RowConstraints row = new RowConstraints(ROWHEIGHT);
             gamegrid.getRowConstraints().add(row);
         }
-
-        gamegrid.setPrefSize(
-                550, 300);
+        gamegrid.setPrefSize(550, 300);
         Label idLabel = new Label();
         // grid column 0
         Label labelPlayers = new Label();
-
-        labelPlayers.setText(
-                "Players: 3/3");
+        labelPlayers.setText("Players: 3/3");
         Label labelSpectators = new Label();
-
-        labelSpectators.setText(
-                "Spectators: 2");
+        labelSpectators.setText("Spectators: 2");
         Label labelRating = new Label();
-
-        labelRating.setText(
-                "Avg. rating 123");
+        labelRating.setText("Avg. rating 123");
         //              node      col row
-        gamegrid.add(labelPlayers,
-                0, 0);
-        gamegrid.add(labelSpectators,
-                0, 1);
-        gamegrid.add(labelRating,
-                0, 2);
+        gamegrid.add(labelPlayers, 0, 0);
+        gamegrid.add(labelSpectators, 0, 1);
+        gamegrid.add(labelRating, 0, 2);
         // grid column 1
         Label labelSpeler1 = new Label();
-
-        labelSpeler1.setText(
-                "Player 1: Rens");
+        labelSpeler1.setText("Player 1: Rens");
         Label labelSpeler2 = new Label();
-
-        labelSpeler2.setText(
-                "Player 2: Karel");
+        labelSpeler2.setText("Player 2: Karel");
         Label labelSpeler3 = new Label();
-
-        labelSpeler3.setText(
-                "Player 3: Hans");
-        gamegrid.add(labelSpeler1,
-                1, 0);
-        gamegrid.add(labelSpeler2,
-                1, 1);
-        gamegrid.add(labelSpeler3,
-                1, 2);
+        labelSpeler3.setText("Player 3: Hans");
+        gamegrid.add(labelSpeler1, 1, 0);
+        gamegrid.add(labelSpeler2, 1, 1);
+        gamegrid.add(labelSpeler3, 1, 2);
         //grid column 2
         Button btnJoin = new Button();
-
-        btnJoin.setText(
-                "Join game");
-        btnJoin.setOnAction(
-                new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent event
-                    ) {
-                        try {
-//                            rmiController.getLobby().addUserToGame(Integer.parseInt(gameId), loggedInUser);
-                            startMulti();
-                        } catch (Exception ex) {
-                            Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                    }
+        btnJoin.setText("Join game");
+        btnJoin.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                try {
+                    rmiController.getLobby().addUserToGame(Integer.parseInt(gameId), loggedInUser);
+                    navigateToGame();
+                } catch (RemoteException ex) {
+                    Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
                 }
-        );
-        gamegrid.add(btnJoin,
-                2, 1);
+            }
+        });
+        gamegrid.add(btnJoin, 2, 1);
         //grid column 3
         Button btnSpectate = new Button();
-
-        gamegrid.add(btnSpectate,
-                3, 1);
+        gamegrid.add(btnSpectate, 3, 1);
         //spectate button is niet zichtbaar voor iteratie 2
-        btnSpectate.visibleProperty()
-                .set(true);
-        gamegrid.visibleProperty()
-                .set(false);
-        gamePane.getChildren()
-                .add(gamegrid);
+        btnSpectate.visibleProperty().set(true);
+        gamegrid.visibleProperty().set(false);
+        gamePane.getChildren().add(gamegrid);
         gameTitle.setContent(gamegrid);
-
         idLabel.setText(gameId);
-
-        GameAccordion.getPanes()
-                .add(gameTitle);
-        for (int i = 0;
-                i < 6; i++) {
+        GameAccordion.getPanes().add(gameTitle);
+        for (int i = 0; i < 6; i++) {
             System.out.println(gameInfo[i]);
+        }
+    }
+
+    private void navigateToGame() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Game.fxml"));
+            Parent root = (Parent) fxmlLoader.load();
+            GameController controller = fxmlLoader.<GameController>getController();
+            controller.setMode(Mode.MULTI);
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.setTitle("Airhockey - Multiplayer");
+            stage.setResizable(false);
+            stage.show();
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
     }
 }

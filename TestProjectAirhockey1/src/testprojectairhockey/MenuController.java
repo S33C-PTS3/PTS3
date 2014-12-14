@@ -31,6 +31,7 @@ public class MenuController implements Initializable {
     Button btnSettings;
     Button btnSP;
     Button btnMP;
+    Button btnLogin;
 
     @FXML
     Label lblHoi;
@@ -48,9 +49,11 @@ public class MenuController implements Initializable {
     @FXML
     private void btnSP_Click(ActionEvent evt) throws IOException
     {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Game.fxml"));
+        //startNewWindow("FXMLDocument", "Airhockey - Singleplayer", evt);
+
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXMLDocument.fxml"));
         Parent root = (Parent) fxmlLoader.load();
-        GameController controller = fxmlLoader.<GameController>getController();
+        FXMLDocumentController controller = fxmlLoader.<FXMLDocumentController>getController();
         controller.setMode(Mode.SINGLE);
         Scene scene = new Scene(root);
         Stage stage = new Stage();
@@ -69,6 +72,12 @@ public class MenuController implements Initializable {
 
     }
 
+    @FXML
+    private void btnLogin_Click(ActionEvent evt) throws IOException
+    {
+        startNewWindow("Login", "Airhockey - Login", evt);
+    }
+    
     @FXML
     private void btnSettings_Click(ActionEvent evt)
     {
