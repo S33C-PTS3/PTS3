@@ -38,7 +38,7 @@ public class GameRMI extends UnicastRemoteObject implements RemotePropertyListen
         try
         {
             //System.setProperty("java.rmi.server.hostname", "145.93.162.240");
-            registry = LocateRegistry.getRegistry("192.168.153.1", 1099);
+            registry = LocateRegistry.getRegistry("145.93.163.171", 1099);
             System.out.println("Registry located");
         }
         catch (RemoteException ex)

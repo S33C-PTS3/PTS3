@@ -49,7 +49,7 @@ public class RMI_Server implements RemotePropertyListener {
 
     // Constructor
     public RMI_Server() {
-        System.setProperty("java.rmi.server.hostname", "192.168.153.1");
+        System.setProperty("java.rmi.server.hostname", "145.93.163.171");
 
         //Save Server ip on web server
         try {
