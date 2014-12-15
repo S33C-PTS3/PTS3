@@ -48,7 +48,7 @@ public class RMI_Server {
 
     // Constructor
     public RMI_Server() {
-        System.setProperty("java.rmi.server.hostname", "145.93.163.171");
+        System.setProperty("java.rmi.server.hostname", "145.93.163.169");
 
         //Save Server ip on web server
         try {

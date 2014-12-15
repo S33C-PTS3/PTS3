@@ -112,7 +112,7 @@ public class HockeyField extends UnicastRemoteObject implements RemotePublisher,
                 zijdeY2 = Math.round(693 * sizefactor);
                 sideName = SideName.BOTTOM;
                 try {
-                    player = new HumanPlayer("Meny");
+                    player = new HumanPlayer("joepkerste");
                 } catch (RemoteException ex) {
                     Logger.getLogger(HockeyField.class.getName()).log(Level.SEVERE, null, ex);
                 }
