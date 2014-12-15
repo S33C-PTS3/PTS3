@@ -19,7 +19,7 @@ import java.rmi.server.UnicastRemoteObject;
  *
  * @author Eric
  */
-public class Game extends UnicastRemoteObject implements IActiveGame{
+public class Game implements Serializable {
     private int id;
     private String name;
     private Calendar startTime;
@@ -116,14 +116,14 @@ public class Game extends UnicastRemoteObject implements IActiveGame{
     {
         return false;
     }
-
-    @Override
-    public String[] getUsers() throws RemoteException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public IHockeyField getHockeyField() throws RemoteException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    
+    public String[] getUsers()
+    {
+        String[] userNames = new String[3];
+        for (int i = 0; i < users.size(); i++) 
+        {
+            userNames[i] = users.get(i).getUsername();
+        }
+        return userNames;
     }
 }

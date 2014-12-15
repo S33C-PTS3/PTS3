@@ -93,6 +93,7 @@ public class GameController implements Initializable {
 
     //Modus van de game
     Mode mode = Mode.SINGLE;
+    String loggedInUser = "";
 
     //De afbeeldingen van de bats
     Image batRed = new Image("/testprojectairhockey/batred2.png");
@@ -242,7 +243,7 @@ public class GameController implements Initializable {
     private void keyEventPressed(KeyEvent evt) {
         if (evt.getCode().equals(KeyCode.LEFT) || evt.getCode().equals(KeyCode.RIGHT)) {
             try {
-                hockeyField.setPlayerBatPosition();
+                hockeyField.setPlayerBatPosition(evt.getCode().toString(), loggedInUser);
             } catch (RemoteException ex) {
                 Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -303,7 +304,7 @@ public class GameController implements Initializable {
         }
     }
 
-    public void setMode(Mode mode) {
+    public void setMode(Mode mode, String loggedInUser) {
         this.mode = mode;
         if (mode.equals(Mode.MULTI)) {
             try {
@@ -313,6 +314,13 @@ public class GameController implements Initializable {
             }
         }
         hockeyField = rmiController.getHockeyField();
+        
+        try {
+            rmiController.getActiveGame().startGame();
+        } catch (RemoteException ex) {
+            Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.loggedInUser = loggedInUser;
         startGame();
     }
 

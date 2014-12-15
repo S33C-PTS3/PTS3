@@ -6,9 +6,8 @@
 package Game;
 
 
+import java.io.Serializable;
 import javafx.geometry.Point2D;
-import javafx.scene.paint.Color;
-import testprojectairhockey.SerializationManager;
 import testprojectairhockey.Settings;
 
 /**
@@ -16,14 +15,13 @@ import testprojectairhockey.Settings;
  * @author rens
  * The Bat class represents the bats used inside the game.
  */
-public class Bat{
-    private Color color;
+public class Bat implements Serializable{
+    private SideColor color;
     private float Xpos;
     private float Ypos;
     private double diameter;
     private double Xvelocity;
     private SideName sidename;
-    private SerializationManager serMan = new SerializationManager();
     double rightSpeedModifier = 1;
     double leftSpeedModifier = 1;
     
@@ -35,7 +33,7 @@ public class Bat{
      * @param diameter
      * @param sidename 
      */
-    public Bat(Color color, float Xpos, float Ypos, double diameter, SideName sidename)
+    public Bat(SideColor color, float Xpos, float Ypos, double diameter, SideName sidename)
     {
         this.diameter = diameter;
         this.color = color;
@@ -147,11 +145,11 @@ public class Bat{
             this.Xpos -= (.58*leftSpeedModifier);
             this.Ypos += (1*leftSpeedModifier);
         }
-        else if ("1right".equals(direction)) 
+        else if ("RIGHT".equals(direction)) 
         {
             this.Xpos += this.Xvelocity;
         }
-        else if ("1left".equals(direction))
+        else if ("LEFT".equals(direction))
         {
             this.Xpos -= this.Xvelocity;
         }

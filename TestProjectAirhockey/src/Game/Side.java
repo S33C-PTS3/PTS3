@@ -6,6 +6,7 @@
 package Game;
 
 
+import java.io.Serializable;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 
@@ -14,7 +15,7 @@ import javafx.scene.paint.Color;
  * @author Sasa2905
  * this class represent a side on the HockeyField
  */
-public class Side {
+public class Side implements Serializable{
 
     private int lineX1;
     private int lineY1;
@@ -24,7 +25,7 @@ public class Side {
     private double goalY1;
     private double goalX2;
     private double goalY2;
-    private Color color;
+    private SideColor color;
     private Bat bat;
     private SideName sideName;
     private IPlayer bindedPlayer;
@@ -43,7 +44,7 @@ public class Side {
      * @param sideName
      * @param bp 
      */
-    public Side(int x1, int y1, int x2, int y2, Color color, SideName sideName, IPlayer bp) {
+    public Side(int x1, int y1, int x2, int y2, SideColor color, SideName sideName, IPlayer bp) {
         this.lineX1 = x1;
         this.lineX2 = x2;
         this.lineY1 = y1;
@@ -90,7 +91,7 @@ public class Side {
         bat = new Bat(color, (float) batX1, (float) batY1, (float) diameter, sideBat);
     }
     
-    public Color getColor()
+    public SideColor getColor()
     {
         return this.color;
     }
@@ -112,7 +113,7 @@ public class Side {
     }
 
     /**
-     * Returns a Point2D for the ending point of thies line.
+     * Returns a Point2D for the ending point of these line.
      * @return 
      */
     public Point2D getEndPoint() {

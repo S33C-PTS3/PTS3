@@ -22,14 +22,13 @@ import java.rmi.registry.Registry;
 import java.util.Enumeration;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import observer.RemotePropertyListener;
 import observer.RemotePublisher;
 
 /**
  *
  * @author rens
  */
-public class RMI_Server implements RemotePropertyListener {
+public class RMI_Server {
 
     //Manager for FTP actions
     FTPManager ftp = new FTPManager();
@@ -73,8 +72,6 @@ public class RMI_Server implements RemotePropertyListener {
 
         try {
             game = new ActiveGame("Meny", new User("Sasa2079"));
-            RemotePublisher publisher = (RemotePublisher) game.getHockeyField();
-            publisher.addListener(this, "game");
             System.out.println("Server: Game created");
         } catch (Exception ex) {
             System.out.println("Server: Cannot create Game");
@@ -190,14 +187,9 @@ public class RMI_Server implements RemotePropertyListener {
         System.out.println("SERVER USING REGISTRY");
 
         // Print IP addresses and network interfaces
-        printIPAddresses();
+        //printIPAddresses();
 
         // Create server
         RMI_Server server = new RMI_Server();
-    }
-
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) throws RemoteException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

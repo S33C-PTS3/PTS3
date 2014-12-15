@@ -5,20 +5,23 @@
  */
 package Game;
 
-import Lobby.Game;
 import Lobby.User;
 import Chat.Chat;
 import Shared.IActiveGame;
 import Shared.IHockeyField;
+import java.beans.PropertyChangeEvent;
 import java.rmi.RemoteException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.rmi.server.UnicastRemoteObject;
+import java.util.Timer;
+import java.util.TimerTask;
+import javafx.application.Platform;
+import observer.RemotePropertyListener;
 
 /**
  *
  * @author Eric
  */
-public class ActiveGame extends Game implements IActiveGame{
+public class ActiveGame extends UnicastRemoteObject implements IActiveGame{
 
     private HockeyField hockeyField;
     private Chat chat;
@@ -29,8 +32,9 @@ public class ActiveGame extends Game implements IActiveGame{
 
     public ActiveGame(String name, User creator) throws RemoteException
     {
-        super(name, creator);
+        //super(name, creator);
         hockeyField = new HockeyField();
+        hockeyField.init(Mode.MULTI);
     }
     
     /**
@@ -58,15 +62,24 @@ public class ActiveGame extends Game implements IActiveGame{
     {
         return 0;
     }
-
+    
     @Override
-    public String[] getUsers() throws RemoteException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public String[] getUsers() throws RemoteException
+    {
+        return null;
     }
 
     @Override
-    public IHockeyField getHockeyField() throws RemoteException {
+    public IHockeyField getHockeyField() throws RemoteException
+    {
         return this.hockeyField;
+    }
+
+    @Override
+    public void startGame() throws RemoteException {
+        PuckRunnable runnable = new PuckRunnable(hockeyField);
+        Thread threadPuck = new Thread(runnable);
+        threadPuck.start();
     }
 }
 

@@ -202,7 +202,7 @@ public class LobbyController implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 try {
-                    rmiController.getLobby().addUserToGame(Integer.parseInt(gameId), loggedInUser);
+                    rmiController.getLobby().addUserToGame(Integer.parseInt(gameId), (User)loggedInUser);
                     navigateToGame();
                 } catch (RemoteException ex) {
                     Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
@@ -230,7 +230,7 @@ public class LobbyController implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Game.fxml"));
             Parent root = (Parent) fxmlLoader.load();
             GameController controller = fxmlLoader.<GameController>getController();
-            controller.setMode(Mode.MULTI);
+            controller.setMode(Mode.MULTI, loggedInUser.getUsername());
             Scene scene = new Scene(root);
             Stage stage = new Stage();
             stage.setScene(scene);

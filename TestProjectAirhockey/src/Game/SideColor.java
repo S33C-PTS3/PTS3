@@ -3,17 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Shared;
-
-import java.rmi.Remote;
-import java.rmi.RemoteException;
+package Game;
 
 /**
  *
  * @author Sasa2905
  */
-public interface IUser extends Remote {
-    
-    String getUsername() throws RemoteException;
-    
+public enum SideColor {
+    RED,BLUE,GREEN
 }

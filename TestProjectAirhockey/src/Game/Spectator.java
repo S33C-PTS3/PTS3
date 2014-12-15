@@ -7,6 +7,7 @@ package Game;
 
 import Lobby.Game;
 import Lobby.User;
+import java.rmi.RemoteException;
 import java.util.List;
 
 /**
@@ -21,7 +22,7 @@ public class Spectator extends User{
      * Constructor used for Spectator
      * @param username 
      */
-    public Spectator(String username)
+    public Spectator(String username) throws RemoteException
     {
         super(username);
     }

@@ -6,9 +6,14 @@
 package Game;
 
 
+import java.rmi.RemoteException;
+import java.util.Observable;
 import java.util.Random;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
+import observer.BasicPublisher;
+import observer.RemotePropertyListener;
+import observer.RemotePublisher;
 
 /**
  *
@@ -23,6 +28,7 @@ public class Puck{
     private final Color color;
     private final double diameter;
     private final Random randomizer = new Random();
+    private BasicPublisher bp;
 
     /**
      * Constructor used for puck

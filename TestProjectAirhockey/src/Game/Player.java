@@ -6,40 +6,38 @@
 package Game;
 
 import Lobby.User;
+import java.rmi.RemoteException;
 
 /**
- * @author Eric
- * Player has an inGameScore used for 
+ * @author Eric Player has an inGameScore used for
  */
-public class Player extends User{
+public class Player extends User implements IPlayer {
 
     private int inGameScore;
 
     /**
      * Constructor for player with username
-     * @param username 
+     *
+     * @param username
      */
-    public Player(String username)
-    {
+    public Player(String username) throws RemoteException {
         super(username);
         //bv. ingamescore = 10
     }
-    
-    /**
-     * Returns inGameScore.
-     * @return 
-     */
-    public int getInGameScore()
-    {
-        return inGameScore;
-    }
-    
-    /**
-     * Changes inGameScore by point.
-     * @param point 
-     */
-    public void changeScore(int point)
-    {
 
+    @Override
+    public void setInGameScore(int newInGameScore) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public int getInGameScore() {
+        return this.inGameScore;
+    }
+
+    @Override
+    public void changeScore(int point) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

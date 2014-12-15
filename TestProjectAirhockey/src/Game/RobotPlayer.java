@@ -5,12 +5,14 @@
  */
 package Game;
 
+import java.rmi.RemoteException;
+
 /**
  *
  * @author Roy
  * This class represents a player not controlled by a human.
  */
-public class RobotPlayer implements IPlayer {
+public class RobotPlayer extends Player implements IPlayer {
     private int inGameScore;
     private Difficulty difficulty;
     private String name;
@@ -19,8 +21,9 @@ public class RobotPlayer implements IPlayer {
      * Constructor for RobotPlayer
      * @param naam 
      */
-    public RobotPlayer(String naam)
+    public RobotPlayer(String naam) throws RemoteException
     {
+        super(naam);
         if(naam == null)
         {
             throw new IllegalArgumentException("Naam mag niet null zijn");

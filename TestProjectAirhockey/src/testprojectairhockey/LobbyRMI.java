@@ -6,6 +6,8 @@
 package testprojectairhockey;
 
 import Shared.ILobby;
+import java.net.MalformedURLException;
+import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -13,6 +15,7 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import observer.RemotePublisher;
 
 /**
  *
@@ -22,7 +25,7 @@ public class LobbyRMI extends UnicastRemoteObject {
 
     private ILobby lobby;
     private Registry registry;
-    private final String bindingname = "Lobby";
+    private final String BINDINGNAME = "Lobby";
 
     /**
      *
@@ -46,12 +49,13 @@ public class LobbyRMI extends UnicastRemoteObject {
             registry = null;
         }
 
-        //Bind effectenbeurs
+        //Bind lobby
         if (registry != null)
         {
             try
             {
-                lobby = (ILobby) registry.lookup(bindingname);
+                String[] names = registry.list();
+                lobby = (ILobby) registry.lookup(BINDINGNAME);
             }
             catch (RemoteException ex)
             {
@@ -67,6 +71,37 @@ public class LobbyRMI extends UnicastRemoteObject {
             }
         }
 
+    }
+    
+    public void getGameCount()
+    {
+        if (registry != null)
+        {
+            try
+            {
+                lobby = (ILobby) registry.lookup(BINDINGNAME);
+            }
+            catch (RemoteException ex)
+            {
+                System.out.println("Cannot bind Lobby");
+                System.out.println("RemoteException: " + ex.getMessage());
+                lobby = null;
+            }
+            catch (NotBoundException ex)
+            {
+                System.out.println("Cannot bind Lobby");
+                System.out.println("NotBoundException: " + ex.getMessage());
+                lobby = null;
+            }
+        }
+        try
+        {
+            System.out.println(lobby.getGames().size());
+        }
+        catch (RemoteException ex)
+        {
+            Logger.getLogger(LobbyRMI.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public ILobby getLobby()

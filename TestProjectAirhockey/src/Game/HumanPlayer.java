@@ -5,6 +5,7 @@
  */
 package Game;
 
+import java.rmi.RemoteException;
 import java.util.Observable;
 
 /**
@@ -12,7 +13,7 @@ import java.util.Observable;
  * @author Roy
  * The HumanPlayer represents a human controlled player
  */
-public class HumanPlayer implements IPlayer {
+public class HumanPlayer extends Player implements IPlayer {
 
     private int inGameScore;
     private String name;
@@ -20,9 +21,10 @@ public class HumanPlayer implements IPlayer {
     /**
      * Constructor used for HumanPlayer
      */
-    public HumanPlayer() {
+    public HumanPlayer(String name) throws RemoteException {
+        super(name);
         this.inGameScore = 20;
-        name = "Eric";
+        this.name = name;
     }
 
     /**

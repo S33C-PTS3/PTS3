@@ -52,13 +52,11 @@ public class Lobby extends UnicastRemoteObject implements ILobby {
      *
      * @return user that is logged in
      */
-    @Override
     public User getLoggedInUser()
     {
         return loggedInUser;
     }
-    
-    @Override
+
     public Chat getChat()
     {
         return chat;
@@ -121,7 +119,7 @@ public class Lobby extends UnicastRemoteObject implements ILobby {
     }
 
     @Override
-    public boolean addUserToGame(int gameId, IUser user) throws RemoteException {
+    public boolean addUserToGame(int gameId, User user) throws RemoteException {
         for(Game g : games)
         {
             if(g.getId() == gameId)

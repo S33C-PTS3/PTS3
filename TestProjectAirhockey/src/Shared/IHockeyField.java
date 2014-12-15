@@ -26,7 +26,7 @@ public interface IHockeyField extends Remote{
     
     public double getDiameter() throws RemoteException;
     
-    public void setPlayerBatPosition() throws RemoteException;
+    public void setPlayerBatPosition(String direction, String userName) throws RemoteException;
     
     public void init(Mode mode) throws RemoteException;
 }

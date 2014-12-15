@@ -5,12 +5,14 @@
  */
 package Game;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Roy
  * Interface IPlayer
  */
-public interface IPlayer {
+public interface IPlayer extends Serializable{
 
     public void setInGameScore(int newInGameScore);
 

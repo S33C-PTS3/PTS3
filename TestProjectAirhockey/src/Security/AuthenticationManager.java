@@ -6,6 +6,7 @@
 package Security;
 
 import Lobby.User;
+import java.rmi.RemoteException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -72,7 +73,11 @@ public class AuthenticationManager {
             }
             else
             {
-                loggedInUser = new User(username);
+                try {
+                    loggedInUser = new User(username);
+                } catch (RemoteException ex) {
+                    Logger.getLogger(AuthenticationManager.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         } 
         catch (SQLException ex) 

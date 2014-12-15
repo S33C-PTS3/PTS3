@@ -7,12 +7,14 @@ package Lobby;
 
 import Shared.IUser;
 import java.io.Serializable;
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 
 /**
  * @author Eric
  * User with an username
  */
-public class User implements Serializable, IUser {
+public class User extends UnicastRemoteObject implements Serializable, IUser {
 
     private String username;
     
@@ -20,7 +22,7 @@ public class User implements Serializable, IUser {
      * Construtor for User.
      * @param username 
      */
-    public User(String username)
+    public User(String username) throws RemoteException
     {
         this.username = username;
     }

@@ -37,6 +37,7 @@ import Game.Mode;
 import java.rmi.RemoteException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.paint.Color;
 
 /**
  *
@@ -200,8 +201,8 @@ public class FXMLDocumentController implements Initializable {
         for (Side side : sides)
         {
             gc.setLineWidth(1);
-            gc.setStroke(side.getColor());
-            gc.setFill(side.getColor());
+            gc.setStroke(Color.BLACK);
+            gc.setFill(Color.BLACK);
             gc.strokeLine(side.getLineX1(), side.getLineY1(), side.getLineX2(), side.getLineY2());
 
             gc.setLineWidth(5);
