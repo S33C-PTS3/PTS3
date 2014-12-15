@@ -151,6 +151,7 @@ public class LobbyController implements Initializable {
     }
 
     private void createNewGame(String[] gameInfo) {
+        int playerCount = 0;
         String gameId = gameInfo[0];
         String gameName = gameInfo[1];
         String gameAverageRanking = gameInfo[2];
@@ -162,7 +163,14 @@ public class LobbyController implements Initializable {
         AnchorPane gamePane = new AnchorPane();
 
         GridPane gamegrid = new GridPane();
-        //550 /4 = 137,5
+        for(int i = 3; i < gameInfo.length; i++)
+        {
+            if(!gameInfo[i].isEmpty())
+            {
+                playerCount++;
+            }
+        }
+        //550 /4 = 137,5       
         for (int i = 0; i < 4; i++) {
             ColumnConstraints column = new ColumnConstraints(COLUMNWIDTH);
             gamegrid.getColumnConstraints().add(column);
@@ -176,22 +184,22 @@ public class LobbyController implements Initializable {
         Label idLabel = new Label();
         // grid column 0
         Label labelPlayers = new Label();
-        labelPlayers.setText("Players: 3/3");
+        labelPlayers.setText("Players: " + playerCount + "/3");
         Label labelSpectators = new Label();
-        labelSpectators.setText("Spectators: 2");
+        labelSpectators.setText("Spectators: 0");
         Label labelRating = new Label();
-        labelRating.setText("Avg. rating 123");
+        labelRating.setText("Avg. rating: " + gameAverageRanking);
         //              node      col row
         gamegrid.add(labelPlayers, 0, 0);
         gamegrid.add(labelSpectators, 0, 1);
         gamegrid.add(labelRating, 0, 2);
         // grid column 1
         Label labelSpeler1 = new Label();
-        labelSpeler1.setText("Player 1: Rens");
+        labelSpeler1.setText("Player 1: " + player1);
         Label labelSpeler2 = new Label();
-        labelSpeler2.setText("Player 2: Karel");
+        labelSpeler2.setText("Player 2: " + player2);
         Label labelSpeler3 = new Label();
-        labelSpeler3.setText("Player 3: Hans");
+        labelSpeler3.setText("Player 3: " + player3);
         gamegrid.add(labelSpeler1, 1, 0);
         gamegrid.add(labelSpeler2, 1, 1);
         gamegrid.add(labelSpeler3, 1, 2);

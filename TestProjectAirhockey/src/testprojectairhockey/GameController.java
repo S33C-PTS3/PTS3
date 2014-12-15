@@ -36,6 +36,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 
 /**
  *
@@ -288,14 +289,17 @@ public class GameController implements Initializable {
             }
         }
         hockeyField = rmiController.getHockeyField();
-        
-        try {
-            rmiController.getActiveGame().startGame();
-        } catch (RemoteException ex) {
-            Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        //START HET SPELLLLLLLLLLL--------------------------------------------------------
+//        try {
+//            rmiController.getActiveGame().startGame();
+//        } catch (RemoteException ex) {
+//            Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
+//        }
         this.loggedInUser = loggedInUser;
         startGame();
+    }
+    
+    private void waitingScreen() {
     }
 
 }
