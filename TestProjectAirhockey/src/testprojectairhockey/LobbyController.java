@@ -132,7 +132,7 @@ public class LobbyController implements Initializable {
         String[] gameInfo = null;
         try {
             System.out.println(lobby.toString());
-            gameInfo = lobby.addGame(new Game("Meny's Game", new User("Meny")));
+            gameInfo = lobby.addGame(new Game(loggedInUser.getUsername() + "'s Game", (User)loggedInUser));
         } catch (RemoteException ex) {
             Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -165,7 +165,7 @@ public class LobbyController implements Initializable {
         GridPane gamegrid = new GridPane();
         for(int i = 3; i < gameInfo.length; i++)
         {
-            if(!gameInfo[i].isEmpty())
+            if(gameInfo[i] != null)
             {
                 playerCount++;
             }

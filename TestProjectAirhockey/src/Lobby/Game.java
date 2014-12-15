@@ -105,7 +105,8 @@ public class Game implements Serializable {
      */
     public boolean addPlayer(User user)
     {
-        return false;
+        this.users.add(user);
+        return true;
     }
     
     /**
