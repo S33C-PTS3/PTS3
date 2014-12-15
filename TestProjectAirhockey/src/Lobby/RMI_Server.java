@@ -48,14 +48,15 @@ public class RMI_Server {
 
     // Constructor
     public RMI_Server() {
-        System.setProperty("java.rmi.server.hostname", "145.93.163.169");
-
         //Save Server ip on web server
         try {
             saveLocalServerIP();
         } catch (RuntimeException ex) {
             System.out.println("IP was not saved to web server: " + ex.getMessage());
         }
+        
+        //Get Server IP
+        System.setProperty("java.rmi.server.hostname", ftp.getIP());
 
         // Print port number for registry
         System.out.println("Server: Port number " + portNumber);

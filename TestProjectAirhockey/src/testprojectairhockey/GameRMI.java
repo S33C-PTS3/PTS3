@@ -5,6 +5,7 @@
  */
 package testprojectairhockey;
 
+import Security.FTPManager;
 import Shared.IActiveGame;
 import Shared.IHockeyField;
 import Shared.ILobby;
@@ -32,6 +33,7 @@ public class GameRMI extends UnicastRemoteObject implements RemotePropertyListen
     private final String BINDINGNAME = "Game";
     private Point2D puckPosition;
     private BasicPublisher bpublisher;
+    private final FTPManager ftp = new FTPManager();
 
     public GameRMI() throws RemoteException
     {
@@ -40,8 +42,7 @@ public class GameRMI extends UnicastRemoteObject implements RemotePropertyListen
         //Locate registry
         try
         {
-            //System.setProperty("java.rmi.server.hostname", "145.93.162.240");
-            registry = LocateRegistry.getRegistry("145.93.163.169", 1099);
+            registry = LocateRegistry.getRegistry(ftp.getIP(), 1099);
             System.out.println("Registry located");
         }
         catch (RemoteException ex)
@@ -73,11 +74,6 @@ public class GameRMI extends UnicastRemoteObject implements RemotePropertyListen
                 game = null;
             }
         }
-
-//        RemotePublisher publisher = null;
-//        publisher = (RemotePublisher)game.getHockeyField();
-//        publisher.addListener(this, "puck");
-//        publisher.addListener(this, "bat");
     }
 
     @Override

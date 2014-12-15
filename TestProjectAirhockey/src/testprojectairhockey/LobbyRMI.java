@@ -5,6 +5,7 @@
  */
 package testprojectairhockey;
 
+import Security.FTPManager;
 import Shared.ILobby;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
@@ -26,6 +27,7 @@ public class LobbyRMI extends UnicastRemoteObject {
     private ILobby lobby;
     private Registry registry;
     private final String BINDINGNAME = "Lobby";
+    private final FTPManager ftp = new FTPManager();
 
     /**
      *
@@ -39,7 +41,7 @@ public class LobbyRMI extends UnicastRemoteObject {
         try
         {
             //System.setProperty("java.rmi.server.hostname", "145.93.162.240");
-            registry = LocateRegistry.getRegistry("145.93.163.169", 1099);
+            registry = LocateRegistry.getRegistry(ftp.getIP(), 1099);
             System.out.println("Registry located");
         }
         catch (RemoteException ex)
