@@ -133,13 +133,6 @@ public class GameController implements Initializable {
                 @Override
                 public void handle(long now) {
                     gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-                    if (mode.equals(Mode.MULTI)) {
-                        try {
-                            hockeyField.setPuckPosition(rmiController.getPuckPosition().getX(), rmiController.getPuckPosition().getY());
-                        } catch (RemoteException ex) {
-                            Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                    }
                     Draw();
 
                     //Als het spel klaar is, isGameOver return de gameResults
@@ -226,7 +219,11 @@ public class GameController implements Initializable {
             }
         }
         Point2D position = null;
-        position = rmiController.getPuckPosition();
+        try {
+            position = new Point2D(hockeyField.getPuckPosition()[0], hockeyField.getPuckPosition()[1]);
+        } catch (RemoteException ex) {
+            Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         gc.setFill(Color.BLACK);
         try {
             gc.fillOval(position.getX() - hockeyField.getDiameter() / 2, position.getY() - hockeyField.getDiameter() / 2, hockeyField.getDiameter(), hockeyField.getDiameter());

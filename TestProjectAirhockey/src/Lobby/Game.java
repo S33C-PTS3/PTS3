@@ -26,6 +26,8 @@ public class Game implements Serializable {
     private int averageGameRating;
     private List<User> users;
     
+    private static final long serialVersionUID = 8384846137124768892L;
+    
     public Game(String name, User creator) throws RemoteException
     {
         users = new ArrayList<>();

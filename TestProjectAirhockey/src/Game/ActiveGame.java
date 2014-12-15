@@ -21,65 +21,70 @@ import observer.RemotePropertyListener;
  *
  * @author Eric
  */
-public class ActiveGame extends UnicastRemoteObject implements IActiveGame{
+public class ActiveGame extends UnicastRemoteObject implements IActiveGame {
 
     private HockeyField hockeyField;
     private Chat chat;
     private int round;
-    
+    private boolean started = false;
+
     //gegenereerde constructor
     //ROUNDS AND SCORES IN ACTIVE GAME ZETTEN EN UIT HOCKEYFIELD
-
-    public ActiveGame(String name, User creator) throws RemoteException
-    {
+    public ActiveGame(String name, User creator) throws RemoteException {
         //super(name, creator);
         hockeyField = new HockeyField();
         hockeyField.init(Mode.MULTI);
     }
-    
+
     /**
      * gets the current round of an active game
-     * @return 
+     *
+     * @return
      */
-    public int getRound()
-    {
+    public int getRound() {
         return round;
     }
-    
+
     /**
      * goes to the next round of the active game
      */
-    public void nextRound()
-    {
-        
+    public void nextRound() {
+
     }
-    
+
     /**
      * calculates and returns the rating at the end of the game
+     *
      * @return the calculated rating
      */
-    public double calculateRating()
-    {
+    public double calculateRating() {
         return 0;
     }
-    
+
     @Override
-    public String[] getUsers() throws RemoteException
-    {
+    public String[] getUsers() throws RemoteException {
         return null;
     }
 
     @Override
-    public IHockeyField getHockeyField() throws RemoteException
-    {
+    public IHockeyField getHockeyField() throws RemoteException {
         return this.hockeyField;
     }
 
     @Override
     public void startGame() throws RemoteException {
-        PuckRunnable runnable = new PuckRunnable(hockeyField);
-        Thread threadPuck = new Thread(runnable);
-        threadPuck.start();
-    }
-}
+        if (!started) 
+        {
+            PuckRunnable runnable = new PuckRunnable(hockeyField);
+            Thread threadPuck = new Thread(runnable);
+            threadPuck.start();
+            started = true;
+        }
 
+    }
+
+    @Override
+    public boolean getGameStatus() throws RemoteException {
+        return this.started;
+    }   
+}

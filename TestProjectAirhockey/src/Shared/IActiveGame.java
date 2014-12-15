@@ -24,4 +24,6 @@ public interface IActiveGame extends Remote {
     public IHockeyField getHockeyField() throws RemoteException;
     
     public void startGame() throws RemoteException;
+    
+    public boolean getGameStatus() throws RemoteException;
 }

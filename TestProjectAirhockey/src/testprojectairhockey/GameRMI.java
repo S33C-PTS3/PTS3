@@ -36,7 +36,6 @@ public class GameRMI extends UnicastRemoteObject implements RemotePropertyListen
     public GameRMI() throws RemoteException
     {
         bpublisher = new BasicPublisher(new String[] { "Server" });
-        puckPosition = new Point2D(250,250);
         System.out.println("Attempting to locate remote registry");
         //Locate registry
         try
@@ -75,10 +74,10 @@ public class GameRMI extends UnicastRemoteObject implements RemotePropertyListen
             }
         }
 
-        RemotePublisher publisher = null;
-        publisher = (RemotePublisher)game.getHockeyField();
-        publisher.addListener(this, "puck");
-        publisher.addListener(this, "bat");
+//        RemotePublisher publisher = null;
+//        publisher = (RemotePublisher)game.getHockeyField();
+//        publisher.addListener(this, "puck");
+//        publisher.addListener(this, "bat");
     }
 
     @Override

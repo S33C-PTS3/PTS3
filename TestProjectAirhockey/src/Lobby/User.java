@@ -14,7 +14,7 @@ import java.rmi.server.UnicastRemoteObject;
  * @author Eric
  * User with an username
  */
-public class User extends UnicastRemoteObject implements Serializable, IUser {
+public class User implements Serializable, IUser {
 
     private String username;
     
