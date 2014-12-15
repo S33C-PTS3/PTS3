@@ -17,6 +17,5 @@
          <font>
             <Font name="Andale Mono" size="46.0" />
          </font></Label>
-      <Button fx:id="btnLogin" layoutX="520.0" layoutY="341.0" mnemonicParsing="false" onAction="#btnLogin_Click" text="Login" />
    </children>
 </AnchorPane>

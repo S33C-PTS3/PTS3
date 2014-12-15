@@ -69,13 +69,6 @@ public class MenuController implements Initializable {
     private void btnMP_Click(ActionEvent evt)
     {
         startNewWindow("Login", "Airhockey - Login", evt);
-
-    }
-
-    @FXML
-    private void btnLogin_Click(ActionEvent evt) throws IOException
-    {
-        startNewWindow("Login", "Airhockey - Login", evt);
     }
     
     @FXML
