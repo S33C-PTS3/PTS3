@@ -36,6 +36,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
+import javafx.scene.transform.Rotate;
 
 /**
  *
@@ -113,6 +114,7 @@ public class GameController implements Initializable {
     }
 
     public void startGame() {
+        //canvas.getTransforms().add(new Rotate(120, 280, 323));
         try {
             //Labels vullen met de namen van de spelers
             Side[] sides = hockeyField.getSides();
@@ -134,30 +136,6 @@ public class GameController implements Initializable {
                 public void handle(long now) {
                     gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
                     Draw();
-
-                    //Als het spel klaar is, isGameOver return de gameResults
-//                    if (hockeyField.isGameOver() != null) {
-//                        this.stop();
-//                        try {
-//                            //Scherm met de gameResults wordt weergegeven.
-//                            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("GameResults.fxml"));
-//                            Parent root = (Parent) fxmlLoader.load();
-//                            GameResultsController controller = fxmlLoader.<GameResultsController>getController();
-//                            controller.setResults(hockeyField.isGameOver());
-//                            Scene scene = new Scene(root);
-//                            Stage stage = new Stage();
-//                            stage.setScene(scene);
-//                            stage.setTitle("Airhockey - Game Results");
-//                            stage.setResizable(false);
-//                            stage.show();
-//                            hockeyField = null;
-//                            Node node = (Node) btnSend;
-//                            node.getParent().getScene().getWindow().hide();
-//                        } catch (IOException ex) {
-//                            System.out.println(ex.getMessage());
-//                        }
-//                        
-//                    }
                 }
             };
             timer.start();

@@ -18,6 +18,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 
 /**
@@ -59,7 +60,7 @@ public class RegisterController implements Initializable {
     
     @FXML
     public void btnRegister_Click(ActionEvent evt)
-    {   
+    {           
         if (checkValidInput()) 
         {
             boolean success = authMan.register(txtUsername.getText(), txtPassword1.getText());
