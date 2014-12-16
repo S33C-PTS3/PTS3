@@ -51,7 +51,7 @@ public class Player extends User implements IPlayer {
 
     @Override
     public int getID() {
-        return playerId;
+        return this.playerId;
     }
 
 }

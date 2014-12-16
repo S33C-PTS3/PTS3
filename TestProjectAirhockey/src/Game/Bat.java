@@ -145,11 +145,11 @@ public class Bat implements Serializable{
             this.Xpos -= (.58*leftSpeedModifier);
             this.Ypos += (1*leftSpeedModifier);
         }
-        else if ("RIGHT".equals(direction)) 
+        else if ("1RIGHT".equals(direction)) 
         {
             this.Xpos += this.Xvelocity;
         }
-        else if ("LEFT".equals(direction))
+        else if ("1LEFT".equals(direction))
         {
             this.Xpos -= this.Xvelocity;
         }
