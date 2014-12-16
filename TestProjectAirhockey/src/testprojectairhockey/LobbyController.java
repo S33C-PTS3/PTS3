@@ -9,6 +9,7 @@ import Game.Mode;
 import Lobby.Game;
 import Lobby.IGame;
 import Lobby.User;
+import Security.AuthenticationManager;
 import Shared.ILobby;
 import Shared.IUser;
 import java.io.IOException;
@@ -25,6 +26,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
@@ -64,6 +66,9 @@ public class LobbyController implements Initializable {
 
     @FXML
     ListView lvChatBox;
+    
+    @FXML
+    ListView lvRanking;
 
     @FXML
     TextField tfMessage;
@@ -77,7 +82,7 @@ public class LobbyController implements Initializable {
     @FXML
     public Label lblLoggedInUser;
     
-
+    private final AuthenticationManager authMan = new AuthenticationManager();
     private ObservableList<String> messages;
     private ArrayList<IGame> games;
     private LobbyRMI rmiController;
@@ -96,6 +101,7 @@ public class LobbyController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         lvChatBox.setItems(messages);
         messages = FXCollections.observableArrayList();
+        populateRanking();
         try {
             rmiController = new LobbyRMI();
         } catch (RemoteException ex) {
@@ -267,6 +273,10 @@ public class LobbyController implements Initializable {
     
     public void populateRanking()
     {
-        
+        ObservableList<String> ratings = FXCollections.observableArrayList();;
+                
+        ratings.addAll(Arrays.asList(authMan.getRanking()));
+
+        lvRanking.setItems(ratings);
     }
 }
