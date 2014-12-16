@@ -170,7 +170,7 @@ public class GameController extends UnicastRemoteObject implements Initializable
                         {
                             lblPlayer3.setText(side.getBoundPlayer().toString());
                         }
-                        canvas.getTransforms().add(new Rotate(120 * side.getBoundPlayer().getID(), 280, 323));
+                        canvas.getTransforms().add(new Rotate(120, 280, 323));
                     }
 
                     //De gameloop
