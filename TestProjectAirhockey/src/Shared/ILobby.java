@@ -6,6 +6,7 @@
 package Shared;
 
 import Chat.Chat;
+import Chat.IChat;
 import Chat.Message;
 import Lobby.Game;
 import Lobby.User;
@@ -59,6 +60,6 @@ public interface ILobby extends Remote, RemotePublisher{
     
     public List<Message> getMessages() throws RemoteException;
     
-    public Chat getChat() throws RemoteException;
+    public IChat getChat() throws RemoteException;
     
 }

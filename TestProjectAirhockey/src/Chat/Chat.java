@@ -76,4 +76,14 @@ public class Chat extends UnicastRemoteObject implements IChat, RemotePublisher 
     public void removeListener(RemotePropertyListener listener, String property) throws RemoteException {
         publisher.removeListener(listener, property);
     }
+
+    @Override
+    public void addListenerO(RemotePropertyListener listener, String property) throws RemoteException {
+        addListener(listener, property);
+    }
+
+    @Override
+    public void removeListenerO(RemotePropertyListener listener, String property) throws RemoteException {
+        removeListener(listener, property);
+    }
 }
