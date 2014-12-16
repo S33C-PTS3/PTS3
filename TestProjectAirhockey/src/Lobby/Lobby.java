@@ -7,6 +7,7 @@ package Lobby;
 
 import Shared.ILobby;
 import Chat.Chat;
+import Chat.Message;
 import Shared.IUser;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -158,5 +159,15 @@ public class Lobby extends UnicastRemoteObject implements ILobby, RemotePublishe
     public void removeListener(RemotePropertyListener listener, String property) throws RemoteException
     {
         publisher.removeListener(listener, property);
+    }
+
+    @Override
+    public boolean addMessage(String sender, String text) throws RemoteException {
+        return chat.addMessage(sender, text);
+    }
+
+    @Override
+    public List<Message> getMessages() throws RemoteException {
+        return chat.getMessages();
     }
 }
