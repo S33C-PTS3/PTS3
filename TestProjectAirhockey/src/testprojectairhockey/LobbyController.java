@@ -13,6 +13,7 @@ import Lobby.User;
 import Security.AuthenticationManager;
 import Shared.ILobby;
 import Shared.IUser;
+import java.beans.PropertyChangeEvent;
 import java.io.IOException;
 import java.net.URL;
 import java.rmi.RemoteException;
@@ -46,6 +47,7 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
+import observer.RemotePropertyListener;
 import observer.RemotePublisher;
 import oracle.jdbc.aq.AQMessageProperties;
 
@@ -54,7 +56,7 @@ import oracle.jdbc.aq.AQMessageProperties;
  *
  * @author Eric
  */
-public class LobbyController implements Initializable {
+public class LobbyController implements Initializable, RemotePropertyListener {
 
     @FXML
     Button btnStartNewGame;
@@ -113,6 +115,7 @@ public class LobbyController implements Initializable {
         try
         {
             rmiController = new LobbyRMI();
+            rmiController.getLobby().getChat().addListener(this, "Chat");
             getMessages();
         }
         catch (RemoteException ex)
@@ -361,5 +364,11 @@ public class LobbyController implements Initializable {
             Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) throws RemoteException {
+        Message m = (Message)evt.getNewValue();
+        messages.add(m.toString());
     }
 }
