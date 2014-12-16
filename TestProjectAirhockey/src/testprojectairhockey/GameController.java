@@ -178,7 +178,7 @@ public class GameController extends UnicastRemoteObject implements Initializable
                         {
                             rotateIndex = side.getBoundPlayer().getID();
                         }
-                        canvas.setRotate(120 * 2);
+                        canvas.setRotate(120);
                     }
 
                     //De gameloop

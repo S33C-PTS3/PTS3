@@ -418,7 +418,7 @@ public class HockeyField extends UnicastRemoteObject implements RemotePublisher,
         for(Side s : sides)
         {
             boundPlayer = (Player)s.getBoundPlayer();
-            if(userName.equals(boundPlayer.getUsername()))
+            if(s.getSideName().equals(SideName.LEFT))
             {
                 s.getBat().move(direction);
                 System.out.println(s.getBat().getPosition().getX());
