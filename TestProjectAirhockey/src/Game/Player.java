@@ -15,6 +15,7 @@ public class Player extends User implements IPlayer {
 
     private int inGameScore;
 
+    private int playerId;
     /**
      * Constructor for player with username
      *
@@ -27,7 +28,7 @@ public class Player extends User implements IPlayer {
 
     @Override
     public void setID(int id) {
-        super.setID(id);
+        this.playerId = id;
     }
     @Override
     public String getUsername() {
@@ -50,7 +51,7 @@ public class Player extends User implements IPlayer {
 
     @Override
     public int getID() {
-        return super.id;
+        return playerId;
     }
 
 }

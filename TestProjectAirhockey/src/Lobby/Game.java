@@ -142,7 +142,7 @@ public class Game implements Serializable {
             {
                 System.out.println( i + users.get(i).getUsername());
                 Player player = new Player(users.get(i).getUsername());
-                player.setID(users.get(i).getID());
+                player.setID(i);
                 players.add(player);
             }
             catch (RemoteException ex)
