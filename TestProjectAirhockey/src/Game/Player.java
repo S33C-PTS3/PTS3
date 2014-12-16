@@ -50,7 +50,7 @@ public class Player extends User implements IPlayer {
 
     @Override
     public int getID() {
-        return this.id;
+        return super.id;
     }
 
 }
