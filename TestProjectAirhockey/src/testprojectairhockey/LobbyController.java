@@ -331,6 +331,8 @@ public class LobbyController implements Initializable {
         
         usernameColumn.setCellValueFactory(cellData -> cellData.getValue().usernameProperty());
         ratingColumn.setCellValueFactory(cellData -> cellData.getValue().ratingProperty());
+        usernameColumn.prefWidthProperty().bind(tvRanking.widthProperty().divide(2));
+        ratingColumn.prefWidthProperty().bind(tvRanking.widthProperty().divide(2).subtract(1));
         tvRanking.getColumns().addAll(usernameColumn, ratingColumn);
         tvRanking.setItems(rankingList);
     }

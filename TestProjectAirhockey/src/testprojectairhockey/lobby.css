@@ -5,3 +5,11 @@
 .mainFxmlClass {
 
 }
+
+.table-view-view .scroll-bar:horizontal .increment-arrow,
+.table-view .scroll-bar:horizontal .decrement-arrow,
+.table-view .scroll-bar:horizontal .increment-button,
+.table-view .scroll-bar:horizontal .decrement-button {
+    -fx-opacity: 0;
+    -fx-padding:-7;
+}
