@@ -5,6 +5,7 @@
  */
 package testprojectairhockey;
 
+import Chat.Message;
 import Game.Mode;
 import Lobby.Game;
 import Lobby.IGame;
@@ -46,6 +47,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
 import observer.RemotePublisher;
+import oracle.jdbc.aq.AQMessageProperties;
 
 /**
  * FXML Controller class
@@ -103,14 +105,15 @@ public class LobbyController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-        lvChatBox.setItems(messages);
         messages = FXCollections.observableArrayList();
+        lvChatBox.setItems(messages);
         
         populateRanking();
 
         try
         {
             rmiController = new LobbyRMI();
+            getMessages();
         }
         catch (RemoteException ex)
         {
@@ -131,18 +134,6 @@ public class LobbyController implements Initializable {
         if (evt.getCode().equals(KeyCode.ENTER))
         {
             sendMessage();
-        }
-    }
-
-    private void sendMessage()
-    {
-        //van wie komt het bericht.. voorbeeldbericht: Eric: Hallo!
-        String message = tfMessage.getText();
-        if (!message.isEmpty() && message.trim().length() > 0)
-        {
-            messages.add(message);
-            lvChatBox.scrollTo(lvChatBox.getItems().size());
-            tfMessage.clear();
         }
     }
 
@@ -342,5 +333,31 @@ public class LobbyController implements Initializable {
         ratingColumn.setCellValueFactory(cellData -> cellData.getValue().ratingProperty());
         tvRanking.getColumns().addAll(usernameColumn, ratingColumn);
         tvRanking.setItems(rankingList);
+    }
+    
+    private void sendMessage() {
+        try {
+            Message m = new Message(loggedInUser.getUsername(), tfMessage.getText());
+            rmiController.getLobby().addMessage(loggedInUser.getUsername(), tfMessage.getText());
+            messages.add(m.toString());
+            tfMessage.clear();
+            lvChatBox.scrollTo(lvChatBox.getItems().size());
+        } catch (RemoteException ex) {
+            Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    private void getMessages() {
+        ILobby lobby = rmiController.getLobby();
+        try {
+            for (int i = 0; i < lobby.getMessages().size(); i++) {
+                messages.add(lobby.getMessages().get(i).toString());
+                lvChatBox.scrollTo(lvChatBox.getItems().size());
+            }
+        } catch (RemoteException ex) {
+            Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 }
