@@ -63,10 +63,10 @@ public class Message implements Serializable {
     }
 
     /**
-     * Returns a string representing the message.
-     * First the sender and followed by the text.
-     * Example: "Eric: Hey Meny"
-     * @return 
+     * Returns a string representing the message. First the sender and followed
+     * by the text. Example: "Eric: Hey Meny"
+     *
+     * @return
      */
     @Override
     public String toString() {
