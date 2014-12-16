@@ -9,20 +9,24 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
+import observer.BasicPublisher;
+import observer.RemotePropertyListener;
+import observer.RemotePublisher;
 
 /**
  *
  * @author Eric
  */
-public class Chat extends UnicastRemoteObject implements IChat {
+public class Chat extends UnicastRemoteObject implements IChat, RemotePublisher {
 
     private List<Message> messages;
-
+    private BasicPublisher publisher;
     /**
      * Creates a new instance of the Chat class
      */
     public Chat() throws RemoteException {
         messages = new ArrayList<>();
+        publisher = new BasicPublisher(new String[] { "Chat" });
     }
 
     /**
@@ -54,11 +58,22 @@ public class Chat extends UnicastRemoteObject implements IChat {
                 messages.set(99, m);
             }
             messages.add(m);
+            publisher.inform(this, "Chat", null, m);
             b = true;
         } catch (Exception e) {
             System.out.println(e.toString());
             b = false;
         }
         return b;
+    }
+
+    @Override
+    public void addListener(RemotePropertyListener listener, String property) throws RemoteException {
+        publisher.addListener(listener, property);
+    }
+
+    @Override
+    public void removeListener(RemotePropertyListener listener, String property) throws RemoteException {
+        publisher.removeListener(listener, property);
     }
 }
