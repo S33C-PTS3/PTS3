@@ -20,7 +20,7 @@
          <font>
             <Font size="15.0" />
          </font></Label>
-    <Button fx:id="btnLogout" layoutX="724.0" layoutY="22.0" mnemonicParsing="false" text="Logout" />
+    <Button fx:id="btnLogout" layoutX="724.0" layoutY="22.0" mnemonicParsing="false" onAction="#btnLogout_Click" text="Logout" />
     <ScrollPane fx:id="GamePane" layoutX="230.0" layoutY="58.0" pannable="false" prefHeight="275.0" prefWidth="550.0">
       <content>
         <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="274.0" prefWidth="549.0">

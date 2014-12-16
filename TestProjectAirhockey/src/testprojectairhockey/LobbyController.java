@@ -82,6 +82,9 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
 
     @FXML
     Button btnSend;
+    
+    @FXML
+    Button btnClose;
 
     @FXML
     Button btnRefresh;
@@ -165,6 +168,29 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
             Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
         }
         createNewGame(gameInfo);
+    }
+    
+    @FXML
+    private void btnLogout_Click(ActionEvent evt)
+    {
+        try
+        {
+            ((Stage)btnClose.getScene().getWindow()).close();
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Menu.fxml"));
+            Parent root = (Parent) fxmlLoader.load();
+            
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.setTitle("Airhockey");
+            stage.setResizable(false);
+            stage.show();
+        }
+        catch (IOException ex)
+        {
+            ex.printStackTrace();
+        }
+        
     }
 
     private void refresh()
