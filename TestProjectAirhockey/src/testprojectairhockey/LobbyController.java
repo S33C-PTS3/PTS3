@@ -73,10 +73,9 @@ public class LobbyController implements Initializable {
 
     @FXML
     Button btnRefresh;
-    
+
     @FXML
     public Label lblLoggedInUser;
-    
 
     private ObservableList<String> messages;
     private ArrayList<IGame> games;
@@ -93,33 +92,42 @@ public class LobbyController implements Initializable {
      * @param rb
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize(URL url, ResourceBundle rb)
+    {
         lvChatBox.setItems(messages);
         messages = FXCollections.observableArrayList();
-        try {
+        try
+        {
             rmiController = new LobbyRMI();
-        } catch (RemoteException ex) {
+        }
+        catch (RemoteException ex)
+        {
             Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
         }
         refresh();
     }
 
     @FXML
-    private void btnSend_Click(ActionEvent evt) {
+    private void btnSend_Click(ActionEvent evt)
+    {
         sendMessage();
     }
 
     @FXML
-    private void enterPressed(KeyEvent evt) {
-        if (evt.getCode().equals(KeyCode.ENTER)) {
+    private void enterPressed(KeyEvent evt)
+    {
+        if (evt.getCode().equals(KeyCode.ENTER))
+        {
             sendMessage();
         }
     }
 
-    private void sendMessage() {
+    private void sendMessage()
+    {
         //van wie komt het bericht.. voorbeeldbericht: Eric: Hallo!
         String message = tfMessage.getText();
-        if (!message.isEmpty() && message.trim().length() > 0) {
+        if (!message.isEmpty() && message.trim().length() > 0)
+        {
             messages.add(message);
             lvChatBox.scrollTo(lvChatBox.getItems().size());
             tfMessage.clear();
@@ -127,35 +135,46 @@ public class LobbyController implements Initializable {
     }
 
     @FXML
-    private void btnRefresh_Click(ActionEvent evt) {
+    private void btnRefresh_Click(ActionEvent evt)
+    {
         refresh();
     }
 
     @FXML
-    private void btnCreateGame_Click(ActionEvent evt) {
+    private void btnCreateGame_Click(ActionEvent evt)
+    {
         ILobby lobby = rmiController.getLobby();
         String[] gameInfo = null;
-        try {
+        try
+        {
             System.out.println(lobby.toString());
-            gameInfo = lobby.addGame(new Game(loggedInUser.getUsername() + "'s Game", (User)loggedInUser));
-        } catch (RemoteException ex) {
+            gameInfo = lobby.addGame(new Game(loggedInUser.getUsername() + "'s Game", (User) loggedInUser));
+        }
+        catch (RemoteException ex)
+        {
             Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
         }
         createNewGame(gameInfo);
     }
 
-    private void refresh() {
-        try {
+    private void refresh()
+    {
+        try
+        {
             GameAccordion.getPanes().clear();
-            for (String[] gamesArray : rmiController.getLobby().getGames()) {
+            for (String[] gamesArray : rmiController.getLobby().getGames())
+            {
                 createNewGame(gamesArray);
             }
-        } catch (RemoteException ex) {
+        }
+        catch (RemoteException ex)
+        {
             Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    private void createNewGame(String[] gameInfo) {
+    private void createNewGame(String[] gameInfo)
+    {
         int playerCount = 0;
         String gameId = gameInfo[0];
         String gameName = gameInfo[1];
@@ -168,20 +187,22 @@ public class LobbyController implements Initializable {
         AnchorPane gamePane = new AnchorPane();
 
         GridPane gamegrid = new GridPane();
-        for(int i = 3; i < gameInfo.length; i++)
+        for (int i = 3; i < gameInfo.length; i++)
         {
-            if(gameInfo[i] != null)
+            if (gameInfo[i] != null)
             {
                 playerCount++;
             }
         }
         //550 /4 = 137,5       
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 4; i++)
+        {
             ColumnConstraints column = new ColumnConstraints(COLUMNWIDTH);
             gamegrid.getColumnConstraints().add(column);
         }
 
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 4; i++)
+        {
             RowConstraints row = new RowConstraints(ROWHEIGHT);
             gamegrid.getRowConstraints().add(row);
         }
@@ -213,11 +234,15 @@ public class LobbyController implements Initializable {
         btnJoin.setText("Join game");
         btnJoin.setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public void handle(ActionEvent event) {
-                try {
-                    rmiController.getLobby().addUserToGame(Integer.parseInt(gameId), (User)loggedInUser);
+            public void handle(ActionEvent event)
+            {
+                try
+                {
+                    rmiController.getLobby().addUserToGame(Integer.parseInt(gameId), (User) loggedInUser);
                     navigateToGame();
-                } catch (RemoteException ex) {
+                }
+                catch (RemoteException ex)
+                {
                     Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
@@ -233,16 +258,22 @@ public class LobbyController implements Initializable {
         gameTitle.setContent(gamegrid);
         idLabel.setText(gameId);
         GameAccordion.getPanes().add(gameTitle);
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < 6; i++)
+        {
             System.out.println(gameInfo[i]);
         }
     }
 
-    private void navigateToGame() {
-        try {
+    private void navigateToGame()
+    {
+        try
+        {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Game.fxml"));
             Parent root = (Parent) fxmlLoader.load();
             GameController controller = fxmlLoader.<GameController>getController();
+            
+            RemotePublisher publisher = (RemotePublisher) rmiController.getLobby();
+            publisher.addListener(controller, "client");
             controller.setMode(Mode.MULTI, loggedInUser.getUsername());
             Scene scene = new Scene(root);
             Stage stage = new Stage();
@@ -250,23 +281,28 @@ public class LobbyController implements Initializable {
             stage.setTitle("Airhockey - Multiplayer");
             stage.setResizable(false);
             stage.show();
-        } catch (IOException ex) {
+        }
+        catch (IOException ex)
+        {
             ex.printStackTrace();
         }
     }
-    
+
     public void setLoggedInUser(User u)
     {
         this.loggedInUser = u;
-        try {
+        try
+        {
             lblLoggedInUser.setText("Welcome " + loggedInUser.getUsername());
-        } catch (RemoteException ex) {
+        }
+        catch (RemoteException ex)
+        {
             Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public void populateRanking()
     {
-        
+
     }
 }

@@ -33,6 +33,7 @@ import Game.Mode;
 import Shared.IHockeyField;
 import java.beans.PropertyChangeEvent;
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.fxml.FXMLLoader;
@@ -45,7 +46,7 @@ import observer.RemotePropertyListener;
  *
  * @author Eric
  */
-public class GameController implements Initializable, RemotePropertyListener {
+public class GameController extends UnicastRemoteObject implements Initializable, RemotePropertyListener {
 
     @FXML
     Label label;
@@ -111,6 +112,11 @@ public class GameController implements Initializable, RemotePropertyListener {
     Image batGreen = new Image("/testprojectairhockey/batgreen2.png");
 
     GameRMI rmiController;
+    
+    public GameController() throws RemoteException
+    {
+        
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -325,7 +331,9 @@ public class GameController implements Initializable, RemotePropertyListener {
         if(loggedInUser.equals(evt.getNewValue()))
         {
             btnStart.setDisable(false);
+            System.out.println("Hey meny");
         }
+        System.out.println("Hey eric");
     }
 
 }

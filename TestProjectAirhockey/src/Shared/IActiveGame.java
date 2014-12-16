@@ -12,7 +12,7 @@ import java.rmi.RemoteException;
  *
  * @author rens
  */
-public interface IActiveGame extends Remote {
+public interface IActiveGame extends Remote{
 
     /**
      * Haalt alle User objecten van deze Game op.
