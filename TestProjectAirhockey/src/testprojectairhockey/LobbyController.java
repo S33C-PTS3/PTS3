@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -335,6 +336,17 @@ public class LobbyController implements Initializable {
         ratingColumn.prefWidthProperty().bind(tvRanking.widthProperty().divide(2).subtract(1));
         tvRanking.getColumns().addAll(usernameColumn, ratingColumn);
         tvRanking.setItems(rankingList);
+        
+        tvRanking.getColumns().addListener(new ListChangeListener() {
+            @Override
+            public void onChanged(Change change) {
+                change.next();
+                if (change.wasReplaced()) {
+                    tvRanking.getColumns().clear();
+                    tvRanking.getColumns().addAll(usernameColumn, ratingColumn);
+                }
+            }
+        });
     }
     
     private void sendMessage() {
