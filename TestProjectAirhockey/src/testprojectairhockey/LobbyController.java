@@ -36,6 +36,7 @@ import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -175,7 +176,8 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
     {
         try
         {
-            ((Stage)btnClose.getScene().getWindow()).close();
+            Stage closingStage = (Stage)((Node)evt.getSource()).getScene().getWindow();
+            closingStage.close();
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Menu.fxml"));
             Parent root = (Parent) fxmlLoader.load();
             
