@@ -17,6 +17,7 @@ import java.beans.PropertyChangeEvent;
 import java.io.IOException;
 import java.net.URL;
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -50,14 +51,13 @@ import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
 import observer.RemotePropertyListener;
 import observer.RemotePublisher;
-import oracle.jdbc.aq.AQMessageProperties;
 
 /**
  * FXML Controller class
  *
  * @author Eric
  */
-public class LobbyController implements Initializable, RemotePropertyListener {
+public class LobbyController extends UnicastRemoteObject implements Initializable, RemotePropertyListener {
 
     @FXML
     Button btnStartNewGame;
@@ -99,6 +99,9 @@ public class LobbyController implements Initializable, RemotePropertyListener {
     private final double COLUMNWIDTH = 137.5;
     private final double ROWHEIGHT = 20;
 
+    public LobbyController() throws RemoteException{
+        
+    }
     /**
      * Initializes the controller class.
      *
