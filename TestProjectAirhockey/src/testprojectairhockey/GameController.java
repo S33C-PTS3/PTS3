@@ -37,6 +37,7 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
@@ -136,7 +137,7 @@ public class GameController extends UnicastRemoteObject implements Initializable
     @FXML
     public void btnStart_Click(ActionEvent evt)
     {
-        Thread t = new Thread(new Runnable() {
+        Platform.runLater(new Runnable() {
 
             @Override
             public void run()
@@ -189,7 +190,6 @@ public class GameController extends UnicastRemoteObject implements Initializable
                 }
             }
         });
-        t.start();
     }
 
     public void Draw()
