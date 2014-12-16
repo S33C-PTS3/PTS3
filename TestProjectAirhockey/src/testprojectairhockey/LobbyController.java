@@ -81,12 +81,9 @@ public class LobbyController implements Initializable {
 
     @FXML
     public Label lblLoggedInUser;
-<<<<<<< HEAD
     
     private final AuthenticationManager authMan = new AuthenticationManager();
-=======
 
->>>>>>> 57aeefe117b3bb23d161ead542969b424e6c1452
     private ObservableList<String> messages;
     private ArrayList<IGame> games;
     private LobbyRMI rmiController;
@@ -106,13 +103,11 @@ public class LobbyController implements Initializable {
     {
         lvChatBox.setItems(messages);
         messages = FXCollections.observableArrayList();
-<<<<<<< HEAD
+        
         populateRanking();
-        try {
-=======
+
         try
         {
->>>>>>> 57aeefe117b3bb23d161ead542969b424e6c1452
             rmiController = new LobbyRMI();
         }
         catch (RemoteException ex)
@@ -318,14 +313,10 @@ public class LobbyController implements Initializable {
 
     public void populateRanking()
     {
-<<<<<<< HEAD
-        ObservableList<String> ratings = FXCollections.observableArrayList();;
+        ObservableList<String> ratings = FXCollections.observableArrayList();
                 
         ratings.addAll(Arrays.asList(authMan.getRanking()));
 
         lvRanking.setItems(ratings);
-=======
-
->>>>>>> 57aeefe117b3bb23d161ead542969b424e6c1452
     }
 }
