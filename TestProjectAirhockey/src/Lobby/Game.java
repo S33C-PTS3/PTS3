@@ -5,6 +5,7 @@
  */
 package Lobby;
 
+import Game.Player;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -22,12 +23,14 @@ public class Game implements Serializable {
     private Calendar startTime;
     private int averageGameRating;
     private List<User> users;
+    private List<Player> players;
     
     private static final long serialVersionUID = 8384846137124768892L;
     
     public Game(String name, User creator) throws RemoteException
     {
         users = new ArrayList<>();
+        players = new ArrayList<>();
         this.name = name;
         this.averageGameRating = 0;
         users.add(creator);
@@ -117,8 +120,14 @@ public class Game implements Serializable {
         return false;
     }
     
-    public List<User> getUsersObject() {
-        return this.users;
+    public List<Player> getUsersObject() {
+        for(int i = 0; i < users.size(); i++)
+        {
+            players.add((Player)users.get(i));
+            
+        }
+        System.out.println(players.toString());
+        return players;
     }
     
     public String[] getUsers()

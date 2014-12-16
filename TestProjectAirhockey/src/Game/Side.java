@@ -28,7 +28,7 @@ public class Side implements Serializable{
     private SideColor color;
     private Bat bat;
     private SideName sideName;
-    private IPlayer bindedPlayer;
+    private IPlayer boundPlayer;
     double batX1 = 0;
     double batY1 = 0;
     double batX2 = 0;
@@ -52,7 +52,7 @@ public class Side implements Serializable{
         this.color = color;
         this.bat = null;
         this.sideName = sideName;
-        this.bindedPlayer = bp;
+        this.boundPlayer = bp;
         SideName sideBat = null;
         int distanceFromSide = 30;
         if (sideName.equals(SideName.LEFT)) {
@@ -100,8 +100,8 @@ public class Side implements Serializable{
      * Returns player binded to this side
      * @return 
      */
-    public IPlayer getBindedPlayer() {
-        return this.bindedPlayer;
+    public IPlayer getBoundPlayer() {
+        return this.boundPlayer;
     }
 
     /**
@@ -331,8 +331,8 @@ public class Side implements Serializable{
         return null;
     }
     
-    public void setBindedPlayer(IPlayer player)
+    public void setBoundPlayer(IPlayer player)
     {
-        this.bindedPlayer = player;
+        this.boundPlayer = player;
     }
 }

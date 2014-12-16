@@ -130,15 +130,15 @@ public class FXMLDocumentController implements Initializable {
         {
             if (side.getSideName().equals(SideName.BOTTOM))
             {
-                lblPlayer1.setText(side.getBindedPlayer().toString());
+                lblPlayer1.setText(side.getBoundPlayer().toString());
             }
             if (side.getSideName().equals(SideName.RIGHT))
             {
-                lblPlayer2.setText(side.getBindedPlayer().toString());
+                lblPlayer2.setText(side.getBoundPlayer().toString());
             }
             if (side.getSideName().equals(SideName.LEFT))
             {
-                lblPlayer3.setText(side.getBindedPlayer().toString());
+                lblPlayer3.setText(side.getBoundPlayer().toString());
             }
         }
 
@@ -212,17 +212,17 @@ public class FXMLDocumentController implements Initializable {
             if (side.getSideName().equals(SideName.BOTTOM))
             {
                 gc.drawImage(batRed, bat.getXpos() - bat.getRadius(), bat.getYpos() - bat.getRadius(), bat.getDiameter(), bat.getDiameter());
-                lblScore1.setText(String.valueOf(side.getBindedPlayer().getInGameScore()));
+                lblScore1.setText(String.valueOf(side.getBoundPlayer().getInGameScore()));
             }
             else if (side.getSideName().equals(SideName.RIGHT))
             {
                 gc.drawImage(batGreen, bat.getXpos() - bat.getRadius(), bat.getYpos() - bat.getRadius(), bat.getDiameter(), bat.getDiameter());
-                lblScore2.setText(String.valueOf(side.getBindedPlayer().getInGameScore()));
+                lblScore2.setText(String.valueOf(side.getBoundPlayer().getInGameScore()));
             }
             else if (side.getSideName().equals(SideName.LEFT))
             {
                 gc.drawImage(batBlue, bat.getXpos() - bat.getRadius(), bat.getYpos() - bat.getRadius(), bat.getDiameter(), bat.getDiameter());
-                lblScore3.setText(String.valueOf(side.getBindedPlayer().getInGameScore()));
+                lblScore3.setText(String.valueOf(side.getBoundPlayer().getInGameScore()));
             }
 
             try {

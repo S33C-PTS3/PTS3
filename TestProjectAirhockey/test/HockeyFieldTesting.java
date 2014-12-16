@@ -45,9 +45,9 @@ public class HockeyFieldTesting {
     {
         assertNotNull("Field was not instantiated", field);
         Side[] sides = field.getSides();
-        IPlayer robot1 = sides[2].getBindedPlayer();
-        IPlayer human = sides[1].getBindedPlayer();
-        IPlayer robot2 = sides[0].getBindedPlayer();
+        IPlayer robot1 = sides[2].getBoundPlayer();
+        IPlayer human = sides[1].getBoundPlayer();
+        IPlayer robot2 = sides[0].getBoundPlayer();
         
         assertEquals("Naam van r1 is niet goed", r1.toString(), robot1.toString());
         assertEquals("Naam van r2 is niet goed", r2.toString(), robot2.toString());

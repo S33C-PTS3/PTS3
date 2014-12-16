@@ -28,7 +28,7 @@ public class SideTesting {
     @Test
     public void testConstructor()
     {   
-        Assert.assertEquals("Binded player incorrect", newPlayer, side.getBindedPlayer());
+        Assert.assertEquals("Binded player incorrect", newPlayer, side.getBoundPlayer());
         Assert.assertEquals("LineX1 incorrect", 100, side.getLineX1(), 0);
         Assert.assertEquals("LineX2 incorrect", 200, side.getLineX2(), 0);
         Assert.assertEquals("LineY1 incorrect", 200, side.getLineY1(), 0);

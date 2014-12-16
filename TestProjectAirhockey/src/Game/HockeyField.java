@@ -6,6 +6,7 @@
 package Game;
 
 import Lobby.Game;
+import Lobby.User;
 import Shared.IHockeyField;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -193,31 +194,31 @@ public class HockeyField extends UnicastRemoteObject implements RemotePublisher,
                     {
                         if (batsHitsPuck.size() <= 1)
                         {
-                            System.out.println("eigen goal gemaakt en aangeraakt door" + batsHitsPuck.get(batsHitsPuck.size() - 1).getBindedPlayer().toString());
-                            batsHitsPuck.get(batsHitsPuck.size() - 1).getBindedPlayer().changeScore(-1);
+                            System.out.println("eigen goal gemaakt en aangeraakt door" + batsHitsPuck.get(batsHitsPuck.size() - 1).getBoundPlayer().toString());
+                            batsHitsPuck.get(batsHitsPuck.size() - 1).getBoundPlayer().changeScore(-1);
                         }
                         else
                         {
-                            System.out.println("1 Gescoord door " + batsHitsPuck.get(batsHitsPuck.size() - 1).getBindedPlayer().toString());
-                            System.out.println("1 Gescoord bij " + goal.getBindedPlayer().toString());
-                            batsHitsPuck.get(batsHitsPuck.size() - 1).getBindedPlayer().changeScore(-1);
+                            System.out.println("1 Gescoord door " + batsHitsPuck.get(batsHitsPuck.size() - 1).getBoundPlayer().toString());
+                            System.out.println("1 Gescoord bij " + goal.getBoundPlayer().toString());
+                            batsHitsPuck.get(batsHitsPuck.size() - 1).getBoundPlayer().changeScore(-1);
                         }
                         resetGame();
 
                     }
                     else if (batsHitsPuck.size() > 0)
                     {
-                        System.out.println("2 Gescoord door " + batsHitsPuck.get(batsHitsPuck.size() - 1).getBindedPlayer().toString());
-                        System.out.println("2 Gescoord bij " + goal.getBindedPlayer().toString());
-                        batsHitsPuck.get(batsHitsPuck.size() - 1).getBindedPlayer().changeScore(1);
-                        goal.getBindedPlayer().changeScore(-1);
+                        System.out.println("2 Gescoord door " + batsHitsPuck.get(batsHitsPuck.size() - 1).getBoundPlayer().toString());
+                        System.out.println("2 Gescoord bij " + goal.getBoundPlayer().toString());
+                        batsHitsPuck.get(batsHitsPuck.size() - 1).getBoundPlayer().changeScore(1);
+                        goal.getBoundPlayer().changeScore(-1);
                         resetGame();
                     }
                 }
                 else
                 {
-                    System.out.println("3 Eigen goal, niemand geraakt " + goal.getBindedPlayer().toString());
-                    goal.getBindedPlayer().changeScore(-1);
+                    System.out.println("3 Eigen goal, niemand geraakt " + goal.getBoundPlayer().toString());
+                    goal.getBoundPlayer().changeScore(-1);
                     resetGame();
                 }
             }
@@ -270,7 +271,7 @@ public class HockeyField extends UnicastRemoteObject implements RemotePublisher,
         this.lastHitSide = null;
         for (Side side : sides)
         {
-            scores.add(side.getBindedPlayer().getInGameScore());
+            scores.add(side.getBoundPlayer().getInGameScore());
         }
         checkWinner();
     }
@@ -323,7 +324,10 @@ public class HockeyField extends UnicastRemoteObject implements RemotePublisher,
     public void setBindedPlayers(Game g) throws RemoteException
     {
         for(int i = 0; i < 3; i++) {
-            sides[i].setBindedPlayer((IPlayer)g.getUsersObject().get(i));
+            User user = g.getUsersObject().get(i);
+            
+            IPlayer player = (IPlayer)g.getUsersObject().get(i);
+            sides[i].setBoundPlayer(player);
         }
     }
 
@@ -341,7 +345,7 @@ public class HockeyField extends UnicastRemoteObject implements RemotePublisher,
             int highscore = 0;
             for (Side side : sides)
             {
-                highscore = side.getBindedPlayer().getInGameScore();
+                highscore = side.getBoundPlayer().getInGameScore();
                 gameResult.add(side);
                 gameOver = true;
 
@@ -351,11 +355,11 @@ public class HockeyField extends UnicastRemoteObject implements RemotePublisher,
                 @Override
                 public int compare(Side side1, Side side2)
                 {
-                    if (side1.getBindedPlayer().getInGameScore() > side2.getBindedPlayer().getInGameScore())
+                    if (side1.getBoundPlayer().getInGameScore() > side2.getBoundPlayer().getInGameScore())
                     {
                         return -1;
                     }
-                    if (side1.getBindedPlayer().getInGameScore() < side2.getBindedPlayer().getInGameScore())
+                    if (side1.getBoundPlayer().getInGameScore() < side2.getBoundPlayer().getInGameScore())
                     {
                         return 1;
                     }
@@ -415,7 +419,7 @@ public class HockeyField extends UnicastRemoteObject implements RemotePublisher,
         Player boundPlayer = null;
         for(Side s : sides)
         {
-            boundPlayer = (Player)s.getBindedPlayer();
+            boundPlayer = (Player)s.getBoundPlayer();
             if(userName.equals(boundPlayer.getUsername()))
             {
                 s.getBat().move(direction);

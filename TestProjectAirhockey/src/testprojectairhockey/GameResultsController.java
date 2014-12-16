@@ -53,9 +53,9 @@ public class GameResultsController implements Initializable {
 
     public void setResults(List<Side> gameOver)
     {
-        lblResult1.setText(gameOver.get(0).getBindedPlayer().toString() + " - " + gameOver.get(0).getBindedPlayer().getInGameScore());
-        lblResult2.setText(gameOver.get(1).getBindedPlayer().toString() + " - " + gameOver.get(1).getBindedPlayer().getInGameScore());
-        lblResult3.setText(gameOver.get(2).getBindedPlayer().toString() + " - " + gameOver.get(2).getBindedPlayer().getInGameScore());
+        lblResult1.setText(gameOver.get(0).getBoundPlayer().toString() + " - " + gameOver.get(0).getBoundPlayer().getInGameScore());
+        lblResult2.setText(gameOver.get(1).getBoundPlayer().toString() + " - " + gameOver.get(1).getBoundPlayer().getInGameScore());
+        lblResult3.setText(gameOver.get(2).getBoundPlayer().toString() + " - " + gameOver.get(2).getBoundPlayer().getInGameScore());
     }
     
     @FXML
