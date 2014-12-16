@@ -5,6 +5,7 @@
  */
 package Shared;
 
+import Chat.Message;
 import Lobby.Game;
 import Lobby.User;
 import java.rmi.Remote;
@@ -52,4 +53,9 @@ public interface ILobby extends Remote, RemotePublisher{
     public boolean addUser(User user) throws RemoteException;
     
     public boolean addUserToGame(int gameId, User user) throws RemoteException;
+    
+    public boolean addMessage(String sender, String text) throws RemoteException;
+    
+    public List<Message> getMessages() throws RemoteException;
+    
 }

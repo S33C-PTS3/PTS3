@@ -7,6 +7,7 @@ package Lobby;
 
 import Shared.ILobby;
 import Chat.Chat;
+import Chat.Message;
 import Shared.IUser;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -162,6 +163,7 @@ public class Lobby extends UnicastRemoteObject implements ILobby, RemotePublishe
     }
 
     @Override
+<<<<<<< HEAD
     public Game getGame(int id) throws RemoteException {
         for(Game g : games)
         {
@@ -171,5 +173,14 @@ public class Lobby extends UnicastRemoteObject implements ILobby, RemotePublishe
             }
         }
         return null;
+=======
+    public boolean addMessage(String sender, String text) throws RemoteException {
+        return chat.addMessage(sender, text);
+    }
+
+    @Override
+    public List<Message> getMessages() throws RemoteException {
+        return chat.getMessages();
+>>>>>>> origin/master
     }
 }

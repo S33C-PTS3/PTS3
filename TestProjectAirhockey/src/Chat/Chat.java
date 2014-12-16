@@ -21,8 +21,7 @@ public class Chat extends UnicastRemoteObject implements IChat {
     /**
      * Creates a new instance of the Chat class
      */
-    public Chat() throws RemoteException 
-    {
+    public Chat() throws RemoteException {
         messages = new ArrayList<>();
     }
 
@@ -48,6 +47,12 @@ public class Chat extends UnicastRemoteObject implements IChat {
         boolean b;
         try {
             Message m = new Message(sender, text);
+            if (messages.size() > 100) {
+                for (int i = 0; i < 99; i++) {
+                    messages.set(i, messages.get(i + 1));
+                }
+                messages.set(99, m);
+            }
             messages.add(m);
             b = true;
         } catch (Exception e) {
