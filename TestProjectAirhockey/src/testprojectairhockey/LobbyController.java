@@ -410,6 +410,9 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
     @Override
     public void propertyChange(PropertyChangeEvent evt) throws RemoteException {
         Message m = (Message)evt.getNewValue();
-        messages.add(m.toString());
+        if(!m.getSender().equals(loggedInUser.getUsername()))
+        {
+             messages.add(m.toString());
+        }
     }
 }
