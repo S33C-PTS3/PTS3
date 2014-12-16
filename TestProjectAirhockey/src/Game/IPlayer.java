@@ -24,4 +24,6 @@ public interface IPlayer extends Serializable{
     
     public String getUsername();
     
+    public void setID(int id);
+    
 }

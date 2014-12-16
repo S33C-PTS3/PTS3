@@ -68,7 +68,7 @@ public class MenuController implements Initializable {
     @FXML
     private void btnMP_Click(ActionEvent evt)
     {
-        startNewWindow("Login", "Airhockey - Login", evt);
+        startNewWindow("Lobby", "Airhockey - Lobby", evt);
     }
     
     @FXML
@@ -93,7 +93,7 @@ public class MenuController implements Initializable {
         }
         catch (Exception ex)
         {
-            System.out.println(ex.getMessage());
+            ex.printStackTrace();
         }
     }
 }

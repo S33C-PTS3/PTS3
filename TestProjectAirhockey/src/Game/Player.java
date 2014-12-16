@@ -26,6 +26,10 @@ public class Player extends User implements IPlayer {
     }
 
     @Override
+    public void setID(int id) {
+        super.setID(id);
+    }
+    @Override
     public String getUsername() {
         return super.getUsername();
     }
