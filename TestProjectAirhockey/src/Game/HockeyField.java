@@ -324,9 +324,7 @@ public class HockeyField extends UnicastRemoteObject implements RemotePublisher,
     public void setBindedPlayers(Game g) throws RemoteException
     {
         for(int i = 0; i < 3; i++) {
-            User user = g.getUsersObject().get(i);
-            
-            IPlayer player = (IPlayer)g.getUsersObject().get(i);
+            IPlayer player = g.getUsersObject().get(i);
             sides[i].setBoundPlayer(player);
         }
     }
