@@ -180,7 +180,18 @@ public class GameController extends UnicastRemoteObject implements Initializable
                             rotateIndex = side.getBoundPlayer().getID();
                         }
                     }
-                    canvas.getTransforms().add(Transform.rotate(-120 * rotateIndex, 230, 323));
+                    if(rotateIndex == 0)
+                    {
+                        canvas.getTransforms().add(Transform.rotate(-120 * (rotateIndex + 1), 230,323));
+                    }
+                    else if(rotateIndex == 1)
+                    {
+                        canvas.getTransforms().add(Transform.rotate(-120 * (rotateIndex - 1), 230, 323));
+                    }
+                    else if(rotateIndex == 2)
+                    {
+                        canvas.getTransforms().add(Transform.rotate(-120 * (rotateIndex), 230, 323));
+                    }
 
                     //De gameloop
                     timer = new AnimationTimer() {
