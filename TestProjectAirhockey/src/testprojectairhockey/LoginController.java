@@ -76,7 +76,7 @@ public class LoginController implements Initializable {
             if (foundUser != null) 
             {
                 loggingInUser = foundUser;
-                navToLobby();
+                navToLobby(evt);
             }
             else
             {
@@ -140,7 +140,7 @@ public class LoginController implements Initializable {
         }
     }
     
-    private void navToLobby()
+    private void navToLobby(ActionEvent evt)
     {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Lobby.fxml"));
@@ -153,6 +153,7 @@ public class LoginController implements Initializable {
             stage.setTitle("Airhockey - Lobby");
             stage.setResizable(false);
             stage.show();
+            ((Node) (evt.getSource())).getScene().getWindow().hide();
         } catch (IOException ex) {
             ex.printStackTrace();
         }

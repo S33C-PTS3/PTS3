@@ -10,12 +10,13 @@ import Lobby.User;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
+import observer.RemotePublisher;
 
 /**
  *
  * @author Sasa2905
  */
-public interface ILobby extends Remote{
+public interface ILobby extends Remote, RemotePublisher{
     
     
     /**

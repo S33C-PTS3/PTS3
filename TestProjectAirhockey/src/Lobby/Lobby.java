@@ -125,12 +125,20 @@ public class Lobby extends UnicastRemoteObject implements ILobby, RemotePublishe
 
     @Override
     public boolean addUserToGame(int gameId, User user) throws RemoteException {
+        int userCount = 0;
         for(Game g : games)
         {
             if(g.getId() == gameId)
             {
                 g.addPlayer((User)user);
-                if(g.getUsers().length == 3)
+                for(int i = 0; i < g.getUsers().length; i++)
+                {
+                    if(g.getUsers()[i] != null)
+                    {
+                        userCount++;
+                    }
+                }
+                if(userCount == 3)
                 {
                     publisher.inform(this, "client", null, g.getUsers()[0]);
                 }
