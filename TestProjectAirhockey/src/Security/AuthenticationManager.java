@@ -165,8 +165,7 @@ public class AuthenticationManager {
             throw new RuntimeException(ex.getMessage());
         }
 
-        //String query = "SELECT * FROM (SELECT USERNAME, RATING FROM AH_ACCOUNT ORDER BY RATING DESC) WHERE ROWNUM < 21;";
-        String query = "SELECT * FROM AH_ACCOUNT";
+        String query = "SELECT * FROM (SELECT USERNAME, RATING FROM AH_ACCOUNT ORDER BY RATING DESC) WHERE ROWNUM < 22";
         PreparedStatement prepstat = null;
         try {
             prepstat = dbConnection.prepareStatement(query);
@@ -179,8 +178,9 @@ public class AuthenticationManager {
             while (rs.next()) {
                 String newLine = "";
                 newLine += rs.getString("USERNAME");
-                newLine += rs.getInt("RANKING");
-                System.out.println("NEW LINE: " + newLine);
+                newLine += "|";
+                newLine += rs.getInt("RATING");
+                System.out.println("RANKING NEW LINE: " + newLine);
                 rankingList[lineIndex] = newLine;
                 lineIndex++;
             }

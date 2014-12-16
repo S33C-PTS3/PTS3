@@ -49,7 +49,7 @@
         </AnchorPane>
       </content>
     </ScrollPane>
-      <ListView fx:id="lvRanking" focusTraversable="false" layoutX="18.0" layoutY="58.0" prefHeight="344.0" prefWidth="203.0" />
+      <TableView fx:id="tvRanking" layoutX="18.0" layoutY="58.0" prefHeight="345.0" prefWidth="200.0" />
   </children>
   <stylesheets>
     <URL value="@lobby.css" />

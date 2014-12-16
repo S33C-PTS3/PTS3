@@ -35,6 +35,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TitledPane;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -68,7 +70,7 @@ public class LobbyController implements Initializable {
     ListView lvChatBox;
     
     @FXML
-    ListView lvRanking;
+    TableView tvRanking;
 
     @FXML
     TextField tfMessage;
@@ -318,6 +320,27 @@ public class LobbyController implements Initializable {
                 
         ratings.addAll(Arrays.asList(authMan.getRanking()));
 
-        lvRanking.setItems(ratings);
+        tvRanking.setEditable(true);
+        
+        TableView<RankedUser> rankingTable = null;
+        TableColumn<RankedUser, String> usernameColumn = new TableColumn("Username");
+        TableColumn<RankedUser, String> ratingColumn = new TableColumn("Rating");
+        usernameColumn.setResizable(false);
+        ratingColumn.setResizable(false);
+        
+        ObservableList<RankedUser> rankingList = FXCollections.observableArrayList();
+        
+        String[] ranking = authMan.getRanking();
+        for (String current: ranking) 
+        {
+            System.out.println("USERNAME: " + current.substring(0, current.indexOf("|")));
+            System.out.println("RATING: " + current.substring(current.indexOf("|"), current.length()));
+            rankingList.add(new RankedUser(current.substring(0, current.indexOf("|")), current.substring(current.indexOf("|"), current.length())));
+        }
+        
+        usernameColumn.setCellValueFactory(cellData -> cellData.getValue().usernameProperty());
+        ratingColumn.setCellValueFactory(cellData -> cellData.getValue().ratingProperty());
+        tvRanking.getColumns().addAll(usernameColumn, ratingColumn);
+        tvRanking.setItems(rankingList);
     }
 }
