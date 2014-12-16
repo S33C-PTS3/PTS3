@@ -31,18 +31,21 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import Game.Mode;
 import Shared.IHockeyField;
+import java.beans.PropertyChangeEvent;
 import java.rmi.RemoteException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import observer.RemotePropertyListener;
 
 /**
  *
  * @author Eric
  */
-public class GameController implements Initializable {
+public class GameController implements Initializable, RemotePropertyListener {
 
     @FXML
     Label label;
@@ -79,6 +82,12 @@ public class GameController implements Initializable {
 
     @FXML
     ListView lvChat;
+    
+    @FXML
+    Button btnStart;
+    
+    @FXML
+    Label lblWaiting;
 
     //lijst met alles messages in de chatbox
     ObservableList<String> messages = FXCollections.observableArrayList();
@@ -111,9 +120,20 @@ public class GameController implements Initializable {
         tfMessage.setFocusTraversable(false);
 
         gc = canvas.getGraphicsContext2D();
+        canvas.setVisible(false);
+        btnStart.setDisable(true);
+        
     }
 
-    public void startGame() {
+    @FXML
+    public void btnStart_Click(ActionEvent evt) {
+        setVisibilityWaitingScreen();
+        try {
+            rmiController.getActiveGame().startGame();
+        } catch (RemoteException ex) {
+            Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         //canvas.getTransforms().add(new Rotate(120, 280, 323));
         try {
             //Labels vullen met de namen van de spelers
@@ -258,14 +278,14 @@ public class GameController implements Initializable {
         Parent root = null;
         try {
             Stage stage = new Stage();
-//            if (hockeyField.getMode().equals(Mode.SINGLE)) {
-//                root = FXMLLoader.load(getClass().getResource("Menu.fxml"));
-//                stage.setTitle("Airhockey - Menu");
-//            } else if (hockeyField.getMode().equals(Mode.MULTI)) {
-//                root = FXMLLoader.load(getClass().getResource("Lobby.fxml"));
-//                stage.setTitle("Airhockey - Mulitplayer");
-//            }
-
+            if (hockeyField.getMode().equals(Mode.SINGLE)) {
+                root = FXMLLoader.load(getClass().getResource("Menu.fxml"));
+                stage.setTitle("Airhockey - Menu");
+            } else if (hockeyField.getMode().equals(Mode.MULTI)) {
+                root = FXMLLoader.load(getClass().getResource("Lobby.fxml"));
+                stage.setTitle("Airhockey - Mulitplayer");
+            }
+            
             hockeyField = null;
 
             Scene scene = new Scene(root);
@@ -274,6 +294,7 @@ public class GameController implements Initializable {
             stage.setResizable(false);
             stage.show();
             ((Node) (evt.getSource())).getScene().getWindow().hide();
+            
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
@@ -289,17 +310,22 @@ public class GameController implements Initializable {
             }
         }
         hockeyField = rmiController.getHockeyField();
-        //START HET SPELLLLLLLLLLL--------------------------------------------------------
-//        try {
-//            rmiController.getActiveGame().startGame();
-//        } catch (RemoteException ex) {
-//            Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
-//        }
         this.loggedInUser = loggedInUser;
-        startGame();
     }
     
-    private void waitingScreen() {
+    private void setVisibilityWaitingScreen() {
+        canvas.setVisible(true);
+        lblWaiting.setVisible(false);
+        btnStart.setVisible(false);
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) throws RemoteException
+    {
+        if(loggedInUser.equals(evt.getNewValue()))
+        {
+            btnStart.setDisable(false);
+        }
     }
 
 }

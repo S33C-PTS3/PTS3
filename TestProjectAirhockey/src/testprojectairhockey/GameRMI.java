@@ -85,7 +85,7 @@ public class GameRMI extends UnicastRemoteObject implements RemotePropertyListen
         }
         else if(evt.getPropertyName().equals("bat"))
         {
-            System.out.println("");
+            System.out.println("bat");
         }
     }
 

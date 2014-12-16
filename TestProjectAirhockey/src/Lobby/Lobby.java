@@ -12,19 +12,23 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
+import observer.BasicPublisher;
+import observer.RemotePropertyListener;
+import observer.RemotePublisher;
 
 /**
  *
  * @author Eric
  */
 // SINGLETON CLASS
-public class Lobby extends UnicastRemoteObject implements ILobby {
+public class Lobby extends UnicastRemoteObject implements ILobby, RemotePublisher {
 
     private Chat chat;
     private User loggedInUser;
     private List<Game> games;
     private List<User> users;
     private int gameCount;
+    private BasicPublisher publisher;
 
     /**
      * creates an new instance of the lobby class
@@ -35,6 +39,7 @@ public class Lobby extends UnicastRemoteObject implements ILobby {
     {
         games = new ArrayList<>();
         gameCount = 1;
+        publisher = new BasicPublisher(new String[] {"client"});
     }
 
     /**
@@ -125,9 +130,25 @@ public class Lobby extends UnicastRemoteObject implements ILobby {
             if(g.getId() == gameId)
             {
                 g.addPlayer((User)user);
+                if(g.getUsers().length == 3)
+                {
+                    publisher.inform(this, "client", null, g.getUsers()[0]);
+                }
                 return true;
             }
         }
         return false;
+    }
+
+    @Override
+    public void addListener(RemotePropertyListener listener, String property) throws RemoteException
+    {
+        publisher.addListener(listener, property);
+    }
+
+    @Override
+    public void removeListener(RemotePropertyListener listener, String property) throws RemoteException
+    {
+        publisher.removeListener(listener, property);
     }
 }
