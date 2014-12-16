@@ -294,6 +294,7 @@ public class LobbyController implements Initializable {
         }
         catch (IOException ex)
         {
+            System.err.println("IOException");
             ex.printStackTrace();
         }
     }
