@@ -32,6 +32,8 @@ public interface ILobby extends Remote, RemotePublisher{
      */
     public List<String[]> getGames() throws RemoteException;
     
+    public Game getGame(int id) throws RemoteException;
+    
     /**
      * Update de ranglijst in de lobby
      * @return nieuwe array ranglijst met 20 plaatsen die gesorteerd zijn op scores van hoog naar laag 

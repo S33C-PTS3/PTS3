@@ -139,6 +139,7 @@ public class Lobby extends UnicastRemoteObject implements ILobby, RemotePublishe
                         userCount++;
                     }
                 }
+                user.setID(userCount-1);
                 if(userCount == 3)
                 {
                     publisher.inform(this, "client", null, g.getUsers()[0]);
@@ -162,6 +163,17 @@ public class Lobby extends UnicastRemoteObject implements ILobby, RemotePublishe
     }
 
     @Override
+<<<<<<< HEAD
+    public Game getGame(int id) throws RemoteException {
+        for(Game g : games)
+        {
+            if(g.getId() == id)
+            {
+                return g;
+            }
+        }
+        return null;
+=======
     public boolean addMessage(String sender, String text) throws RemoteException {
         return chat.addMessage(sender, text);
     }
@@ -169,5 +181,6 @@ public class Lobby extends UnicastRemoteObject implements ILobby, RemotePublishe
     @Override
     public List<Message> getMessages() throws RemoteException {
         return chat.getMessages();
+>>>>>>> origin/master
     }
 }

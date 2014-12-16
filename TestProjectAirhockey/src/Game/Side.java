@@ -330,4 +330,9 @@ public class Side implements Serializable{
         }
         return null;
     }
+    
+    public void setBindedPlayer(IPlayer player)
+    {
+        this.bindedPlayer = player;
+    }
 }

@@ -5,8 +5,8 @@
  */
 package Game;
 
+import Lobby.Game;
 import Shared.IHockeyField;
-import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
@@ -316,6 +316,14 @@ public class HockeyField extends UnicastRemoteObject implements RemotePublisher,
                 && sides[2].getGoalY1() + 20 < sides[2].getBat().getYpos())
         {
             sides[2].moveBat("2left");
+        }
+    }
+    
+    @Override
+    public void setBindedPlayers(Game g) throws RemoteException
+    {
+        for(int i = 0; i < 3; i++) {
+            sides[i].setBindedPlayer((IPlayer)g.getUsersObject().get(i));
         }
     }
 

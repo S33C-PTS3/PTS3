@@ -9,11 +9,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import Game.Spectator;
-import Shared.IActiveGame;
-import Shared.IHockeyField;
 import java.io.Serializable;
 import java.rmi.RemoteException;
-import java.rmi.server.UnicastRemoteObject;
 
 /**
  *
@@ -118,6 +115,10 @@ public class Game implements Serializable {
     public boolean addSpectator(Spectator spectator)
     {
         return false;
+    }
+    
+    public List<User> getUsersObject() {
+        return this.users;
     }
     
     public String[] getUsers()
