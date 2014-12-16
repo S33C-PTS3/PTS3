@@ -8,7 +8,6 @@ package Lobby;
 import Shared.ILobby;
 import Chat.Chat;
 import Chat.Message;
-import Shared.IUser;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
@@ -36,11 +35,10 @@ public class Lobby extends UnicastRemoteObject implements ILobby, RemotePublishe
      *
      * @throws java.rmi.RemoteException
      */
-    public Lobby() throws RemoteException
-    {
+    public Lobby() throws RemoteException {
         games = new ArrayList<>();
         gameCount = 1;
-        publisher = new BasicPublisher(new String[] {"client"});
+        publisher = new BasicPublisher(new String[]{"client"});
     }
 
     /**
@@ -48,8 +46,7 @@ public class Lobby extends UnicastRemoteObject implements ILobby, RemotePublishe
      *
      * @param user
      */
-    public void setLoggedInUser(User user)
-    {
+    public void setLoggedInUser(User user) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -58,35 +55,29 @@ public class Lobby extends UnicastRemoteObject implements ILobby, RemotePublishe
      *
      * @return user that is logged in
      */
-    public User getLoggedInUser()
-    {
+    public User getLoggedInUser() {
         return loggedInUser;
     }
 
-    public Chat getChat()
-    {
+    public Chat getChat() {
         return chat;
     }
 
     @Override
-    public List<User> getUsers() throws RemoteException
-    {
+    public List<User> getUsers() throws RemoteException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public List<String[]> getGames() throws RemoteException
-    {
+    public List<String[]> getGames() throws RemoteException {
         List<String[]> gamesAsString = new ArrayList<>();
         String[] gameInfo;
         gameInfo = new String[6];
-        for (Game game : games)
-        {
+        for (Game game : games) {
             gameInfo[0] = String.valueOf(game.getId());
             gameInfo[1] = game.getName();
             gameInfo[2] = String.valueOf(game.getAverageRating());
-            for (int i = 3; i < game.getUsersGame().size() + 3; i++)
-            {
+            for (int i = 3; i < game.getUsersGame().size() + 3; i++) {
                 gameInfo[i] = game.getUsersGame().get(i - 3).getUsername();
             }
             gamesAsString.add(gameInfo);
@@ -95,14 +86,12 @@ public class Lobby extends UnicastRemoteObject implements ILobby, RemotePublishe
     }
 
     @Override
-    public String[] updateRanking() throws RemoteException
-    {
+    public String[] updateRanking() throws RemoteException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String[] addGame(Game game) throws RemoteException
-    {
+    public String[] addGame(Game game) throws RemoteException {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         game.setId(gameCount);
         games.add(game);
@@ -110,8 +99,7 @@ public class Lobby extends UnicastRemoteObject implements ILobby, RemotePublishe
         gameInfo[0] = String.valueOf(game.getId());
         gameInfo[1] = game.getName();
         gameInfo[2] = String.valueOf(game.getAverageRating());
-        for (int i = 3; i < game.getUsersGame().size() + 3; i++)
-        {
+        for (int i = 3; i < game.getUsersGame().size() + 3; i++) {
             gameInfo[i] = game.getUsersGame().get(i - 3).getUsername();
         }
         gameCount++;
@@ -119,29 +107,23 @@ public class Lobby extends UnicastRemoteObject implements ILobby, RemotePublishe
     }
 
     @Override
-    public boolean addUser(User user) throws RemoteException
-    {
+    public boolean addUser(User user) throws RemoteException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public boolean addUserToGame(int gameId, User user) throws RemoteException {
         int userCount = 0;
-        for(Game g : games)
-        {
-            if(g.getId() == gameId)
-            {
-                g.addPlayer((User)user);
-                for(int i = 0; i < g.getUsers().length; i++)
-                {
-                    if(g.getUsers()[i] != null)
-                    {
+        for (Game g : games) {
+            if (g.getId() == gameId) {
+                g.addPlayer((User) user);
+                for (int i = 0; i < g.getUsers().length; i++) {
+                    if (g.getUsers()[i] != null) {
                         userCount++;
                     }
                 }
-                user.setID(userCount-1);
-                if(userCount == 3)
-                {
+                user.setID(userCount - 1);
+                if (userCount == 3) {
                     publisher.inform(this, "client", null, g.getUsers()[0]);
                 }
                 return true;
@@ -151,29 +133,25 @@ public class Lobby extends UnicastRemoteObject implements ILobby, RemotePublishe
     }
 
     @Override
-    public void addListener(RemotePropertyListener listener, String property) throws RemoteException
-    {
+    public void addListener(RemotePropertyListener listener, String property) throws RemoteException {
         publisher.addListener(listener, property);
     }
 
     @Override
-    public void removeListener(RemotePropertyListener listener, String property) throws RemoteException
-    {
+    public void removeListener(RemotePropertyListener listener, String property) throws RemoteException {
         publisher.removeListener(listener, property);
     }
 
     @Override
-<<<<<<< HEAD
     public Game getGame(int id) throws RemoteException {
-        for(Game g : games)
-        {
-            if(g.getId() == id)
-            {
+        for (Game g : games) {
+            if (g.getId() == id) {
                 return g;
             }
         }
         return null;
-=======
+    }
+
     public boolean addMessage(String sender, String text) throws RemoteException {
         return chat.addMessage(sender, text);
     }
@@ -181,6 +159,5 @@ public class Lobby extends UnicastRemoteObject implements ILobby, RemotePublishe
     @Override
     public List<Message> getMessages() throws RemoteException {
         return chat.getMessages();
->>>>>>> origin/master
     }
 }
