@@ -22,4 +22,6 @@ public interface IPlayer extends Serializable{
     
     public int getID();
     
+    public String getUsername();
+    
 }

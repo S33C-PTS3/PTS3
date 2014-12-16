@@ -156,6 +156,7 @@ public class GameController extends UnicastRemoteObject implements Initializable
                 {
                     //Labels vullen met de namen van de spelers
                     Side[] sides = hockeyField.getSides();
+                    int rotateIndex = 0;
                     for (Side side : sides)
                     {
                         if (side.getSideName().equals(SideName.BOTTOM))
@@ -169,6 +170,10 @@ public class GameController extends UnicastRemoteObject implements Initializable
                         if (side.getSideName().equals(SideName.LEFT))
                         {
                             lblPlayer3.setText(side.getBoundPlayer().toString());
+                        }
+                        if(side.getBoundPlayer().getUsername().equals(loggedInUser))
+                        {
+                            rotateIndex = side.getBoundPlayer().getID();
                         }
                         canvas.getTransforms().add(new Rotate(120, 280, 323));
                     }

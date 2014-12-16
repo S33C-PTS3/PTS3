@@ -26,6 +26,10 @@ public class Player extends User implements IPlayer {
     }
 
     @Override
+    public String getUsername() {
+        return super.getUsername();
+    }
+    @Override
     public void setInGameScore(int newInGameScore) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
