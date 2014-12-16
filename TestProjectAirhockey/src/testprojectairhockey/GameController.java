@@ -161,21 +161,24 @@ public class GameController extends UnicastRemoteObject implements Initializable
                     {
                         if (side.getSideName().equals(SideName.BOTTOM))
                         {
-                            lblPlayer1.setText(side.getBoundPlayer().toString());
+                            lblPlayer1.setText(side.getBoundPlayer().getUsername());
+                            System.out.println("Bottom: " + side.getBoundPlayer().getUsername());
                         }
                         if (side.getSideName().equals(SideName.RIGHT))
                         {
-                            lblPlayer2.setText(side.getBoundPlayer().toString());
+                            lblPlayer2.setText(side.getBoundPlayer().getUsername());
+                            System.out.println("Right: " + side.getBoundPlayer().getUsername());
                         }
                         if (side.getSideName().equals(SideName.LEFT))
                         {
-                            lblPlayer3.setText(side.getBoundPlayer().toString());
+                            lblPlayer3.setText(side.getBoundPlayer().getUsername());
+                            System.out.println("Left: " + side.getBoundPlayer().getUsername());
                         }
                         if(side.getBoundPlayer().getUsername().equals(loggedInUser))
                         {
                             rotateIndex = side.getBoundPlayer().getID();
                         }
-                        canvas.getTransforms().add(new Rotate(120, 280, 323));
+                        canvas.setRotate(120 * 2);
                     }
 
                     //De gameloop
