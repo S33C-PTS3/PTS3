@@ -168,6 +168,14 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
             Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
         }
         createNewGame(gameInfo);
+        try
+        {
+            navigateToGame(rmiController.getLobby().getGame(Integer.valueOf(gameInfo[0])));
+        }
+        catch (RemoteException ex)
+        {
+            Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     @FXML
