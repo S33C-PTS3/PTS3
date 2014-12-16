@@ -334,8 +334,8 @@ public class LobbyController implements Initializable {
         for (String current: ranking) 
         {
             System.out.println("USERNAME: " + current.substring(0, current.indexOf("|")));
-            System.out.println("RATING: " + current.substring(current.indexOf("|"), current.length()));
-            rankingList.add(new RankedUser(current.substring(0, current.indexOf("|")), current.substring(current.indexOf("|"), current.length())));
+            System.out.println("RATING: " + current.substring(current.indexOf("|") + 1, current.length()));
+            rankingList.add(new RankedUser(current.substring(0, current.indexOf("|")), current.substring(current.indexOf("|") + 1, current.length())));
         }
         
         usernameColumn.setCellValueFactory(cellData -> cellData.getValue().usernameProperty());
