@@ -60,6 +60,7 @@ public class Lobby extends UnicastRemoteObject implements ILobby, RemotePublishe
         return loggedInUser;
     }
 
+    @Override
     public Chat getChat() {
         return chat;
     }
