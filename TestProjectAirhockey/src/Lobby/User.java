@@ -17,6 +17,7 @@ import java.rmi.server.UnicastRemoteObject;
 public class User implements Serializable, IUser {
 
     private String username;
+    protected int id;
     
     /**
      * Construtor for User.
@@ -34,5 +35,10 @@ public class User implements Serializable, IUser {
     public String getUsername()
     {
         return username;
+    }
+    
+    public void setID(int id)
+    {
+        this.id = id;
     }
 }

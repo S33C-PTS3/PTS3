@@ -20,4 +20,6 @@ public interface IPlayer extends Serializable{
 
     public void changeScore(int point);
     
+    public int getID();
+    
 }

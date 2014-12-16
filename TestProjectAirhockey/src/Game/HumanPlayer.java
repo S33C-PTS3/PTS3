@@ -63,6 +63,11 @@ public class HumanPlayer extends Player implements IPlayer {
     {
         return name;
     }
+
+    @Override
+    public int getID() {
+        return this.id;
+    }
 }
 
 

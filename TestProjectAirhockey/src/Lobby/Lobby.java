@@ -138,6 +138,7 @@ public class Lobby extends UnicastRemoteObject implements ILobby, RemotePublishe
                         userCount++;
                     }
                 }
+                user.setID(userCount-1);
                 if(userCount == 3)
                 {
                     publisher.inform(this, "client", null, g.getUsers()[0]);
@@ -158,5 +159,17 @@ public class Lobby extends UnicastRemoteObject implements ILobby, RemotePublishe
     public void removeListener(RemotePropertyListener listener, String property) throws RemoteException
     {
         publisher.removeListener(listener, property);
+    }
+
+    @Override
+    public Game getGame(int id) throws RemoteException {
+        for(Game g : games)
+        {
+            if(g.getId() == id)
+            {
+                return g;
+            }
+        }
+        return null;
     }
 }

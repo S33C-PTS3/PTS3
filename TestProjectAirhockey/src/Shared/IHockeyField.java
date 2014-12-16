@@ -7,9 +7,9 @@ package Shared;
 
 import Game.Mode;
 import Game.Side;
+import Lobby.Game;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
-import javafx.geometry.Point2D;
 
 /**
  *
@@ -31,4 +31,6 @@ public interface IHockeyField extends Remote{
     public void init(Mode mode) throws RemoteException;
     
     public Mode getMode() throws RemoteException;
+    
+    public void setBindedPlayers(Game g) throws RemoteException;
 }

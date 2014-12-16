@@ -249,7 +249,7 @@ public class LobbyController implements Initializable {
                 try
                 {
                     rmiController.getLobby().addUserToGame(Integer.parseInt(gameId), (User) loggedInUser);
-                    navigateToGame();
+                    navigateToGame(rmiController.getLobby().getGame(Integer.valueOf(gameId)));
                 }
                 catch (RemoteException ex)
                 {
@@ -274,7 +274,7 @@ public class LobbyController implements Initializable {
         }
     }
 
-    private void navigateToGame()
+    private void navigateToGame(Game g)
     {
         try
         {
@@ -284,7 +284,7 @@ public class LobbyController implements Initializable {
             
             RemotePublisher publisher = (RemotePublisher) rmiController.getLobby();
             publisher.addListener(controller, "client");
-            controller.setMode(Mode.MULTI, loggedInUser.getUsername());
+            controller.setMode(Mode.MULTI, loggedInUser.getUsername(), g);
             Scene scene = new Scene(root);
             Stage stage = new Stage();
             stage.setScene(scene);

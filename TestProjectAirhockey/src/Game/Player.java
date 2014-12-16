@@ -40,4 +40,9 @@ public class Player extends User implements IPlayer {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Override
+    public int getID() {
+        return this.id;
+    }
+
 }

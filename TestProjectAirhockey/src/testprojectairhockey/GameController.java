@@ -30,6 +30,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import Game.Mode;
+import Lobby.Game;
 import Shared.IHockeyField;
 import java.beans.PropertyChangeEvent;
 import java.rmi.RemoteException;
@@ -39,7 +40,7 @@ import java.util.logging.Logger;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
+import javafx.scene.transform.Rotate;
 import observer.RemotePropertyListener;
 
 /**
@@ -127,7 +128,7 @@ public class GameController extends UnicastRemoteObject implements Initializable
 
         gc = canvas.getGraphicsContext2D();
         canvas.setVisible(false);
-        btnStart.setDisable(true);
+        //btnStart.setDisable(true);
         
     }
 
@@ -140,7 +141,6 @@ public class GameController extends UnicastRemoteObject implements Initializable
             Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        //canvas.getTransforms().add(new Rotate(120, 280, 323));
         try {
             //Labels vullen met de namen van de spelers
             Side[] sides = hockeyField.getSides();
@@ -154,6 +154,7 @@ public class GameController extends UnicastRemoteObject implements Initializable
                 if (side.getSideName().equals(SideName.LEFT)) {
                     lblPlayer3.setText(side.getBindedPlayer().toString());
                 }
+                canvas.getTransforms().add(new Rotate(120*side.getBindedPlayer().getID(), 280, 323));
             }
 
             //De gameloop
@@ -306,7 +307,7 @@ public class GameController extends UnicastRemoteObject implements Initializable
         }
     }
 
-    public void setMode(Mode mode, String loggedInUser) {
+    public void setMode(Mode mode, String loggedInUser, Game g) {
         this.mode = mode;
         if (mode.equals(Mode.MULTI)) {
             try {
@@ -316,6 +317,11 @@ public class GameController extends UnicastRemoteObject implements Initializable
             }
         }
         hockeyField = rmiController.getHockeyField();
+        try {
+            hockeyField.setBindedPlayers(g);
+        } catch (RemoteException ex) {
+            Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.loggedInUser = loggedInUser;
     }
     

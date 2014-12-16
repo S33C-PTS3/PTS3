@@ -9,13 +9,11 @@ import Lobby.User;
 import Chat.Chat;
 import Shared.IActiveGame;
 import Shared.IHockeyField;
-import java.beans.PropertyChangeEvent;
+import Shared.IUser;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.Timer;
-import java.util.TimerTask;
-import javafx.application.Platform;
-import observer.RemotePropertyListener;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -27,13 +25,15 @@ public class ActiveGame extends UnicastRemoteObject implements IActiveGame {
     private Chat chat;
     private int round;
     private boolean started = false;
+    private String[] users;
 
     //gegenereerde constructor
     //ROUNDS AND SCORES IN ACTIVE GAME ZETTEN EN UIT HOCKEYFIELD
-    public ActiveGame(String name, User creator) throws RemoteException {
+    public ActiveGame(String name) throws RemoteException {
         //super(name, creator);
         hockeyField = new HockeyField();
         hockeyField.init(Mode.MULTI);
+        users = new String[3];
     }
 
     /**
@@ -75,6 +75,7 @@ public class ActiveGame extends UnicastRemoteObject implements IActiveGame {
     public void startGame() throws RemoteException {
         if (!started) 
         {
+            HockeyField hockeyFieldGame = (HockeyField)hockeyField;
             PuckRunnable runnable = new PuckRunnable(hockeyField);
             Thread threadPuck = new Thread(runnable);
             threadPuck.start();
