@@ -42,6 +42,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 import javafx.scene.transform.Rotate;
+import javafx.scene.transform.Transform;
 import observer.RemotePropertyListener;
 
 /**
@@ -178,7 +179,7 @@ public class GameController extends UnicastRemoteObject implements Initializable
                         {
                             rotateIndex = side.getBoundPlayer().getID();
                         }
-                        canvas.setRotate(120 * 2);
+                        canvas.getTransforms().add(Transform.rotate(120, 230, 323));
                     }
 
                     //De gameloop
