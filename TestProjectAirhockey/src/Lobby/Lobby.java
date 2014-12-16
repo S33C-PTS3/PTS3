@@ -39,6 +39,7 @@ public class Lobby extends UnicastRemoteObject implements ILobby, RemotePublishe
         games = new ArrayList<>();
         gameCount = 1;
         publisher = new BasicPublisher(new String[]{"client"});
+        chat = new Chat();
     }
 
     /**
