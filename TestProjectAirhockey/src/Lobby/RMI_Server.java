@@ -11,7 +11,6 @@ import Game.Mode;
 import Security.FTPManager;
 import Shared.IActiveGame;
 import Shared.ILobby;
-import java.beans.PropertyChangeEvent;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
@@ -22,7 +21,6 @@ import java.rmi.registry.Registry;
 import java.util.Enumeration;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import observer.RemotePublisher;
 
 /**
  *

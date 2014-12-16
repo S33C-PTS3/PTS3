@@ -72,6 +72,10 @@ public class LobbyController implements Initializable {
 
     @FXML
     Button btnRefresh;
+    
+    @FXML
+    public Label lblLoggedInUser;
+    
 
     private ObservableList<String> messages;
     private ArrayList<IGame> games;
@@ -253,5 +257,15 @@ public class LobbyController implements Initializable {
     public void setLoggedInUser(User u)
     {
         this.loggedInUser = u;
+        try {
+            lblLoggedInUser.setText("Welcome " + loggedInUser.getUsername());
+        } catch (RemoteException ex) {
+            Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void populateRanking()
+    {
+        
     }
 }

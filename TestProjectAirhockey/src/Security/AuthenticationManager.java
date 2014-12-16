@@ -189,5 +189,29 @@ public class AuthenticationManager {
         {
             System.out.println("DB Connection found");
         }
-    }    
+    }  
+    
+    public String[] getRanking()
+    {
+        try 
+        {
+            initConnection();
+        } 
+        catch (RuntimeException ex) 
+        {
+            throw new RuntimeException(ex.getMessage());
+        }
+                
+        String query = "SELECT * FROM (SELECT USERNAME, RATING FROM AH_ACCOUNT ORDER BY RATING DESC) WHERE ROWNUM < 21;";
+        PreparedStatement prepstat = null;
+        try {
+            prepstat = dbConnection.prepareStatement(query);
+            //ResultSet rs
+        } catch (SQLException ex) {
+            Logger.getLogger(AuthenticationManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        return null;
+    }
 }
