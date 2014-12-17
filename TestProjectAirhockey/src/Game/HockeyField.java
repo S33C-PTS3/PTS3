@@ -6,7 +6,6 @@
 package Game;
 
 import Lobby.Game;
-import Lobby.User;
 import Shared.IHockeyField;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -51,7 +50,7 @@ public class HockeyField extends UnicastRemoteObject implements RemotePublisher,
      * Constructor used for HockeyField.
      */
     public HockeyField() throws RemoteException {
-        publisher = new BasicPublisher(new String[]{"bat", "puck"});
+        publisher = new BasicPublisher(new String[]{"bat", "puck", "gameOver"});
         puck = new Puck();
     }
 
@@ -235,19 +234,6 @@ public class HockeyField extends UnicastRemoteObject implements RemotePublisher,
         checkWinner();
     }
 
-    public void movePlayerBat(KeyCode key) {
-        Bat bat = sides[1].getBat();
-        if (key.equals(KeyCode.LEFT)) {
-            if (sides[1].getGoalX1() < bat.getXpos()) {
-                bat.move("1left");
-            }
-        } else if (key.equals(KeyCode.RIGHT)) {
-            if (sides[1].getGoalX2() > bat.getXpos()) {
-                bat.move("1right");
-            }
-        }
-    }
-
     public void moveAIPlayers() {
         if (puck.getPosition().getY() < sides[0].getBat().getYpos()
                 && sides[0].getGoalY1() + 20 < sides[0].getBat().getYpos()) {
@@ -288,8 +274,9 @@ public class HockeyField extends UnicastRemoteObject implements RemotePublisher,
                 highscore = side.getBoundPlayer().getInGameScore();
                 gameResult.add(side);
                 gameOver = true;
-
             }
+            publisher.inform(this, "gameOver", null, true);
+            
             Collections.sort(gameResult, new Comparator<Side>() {
 
                 @Override
@@ -348,8 +335,12 @@ public class HockeyField extends UnicastRemoteObject implements RemotePublisher,
     public void setPlayerBatPosition(String direction, String userName) throws RemoteException {
         Player boundPlayer = null;
         for (Side s : sides) {
-            if(s.getBoundPlayer().getUsername().equals(userName))
-            {
+            if (s.getBoundPlayer().getUsername().equals(userName)) {
+                if (s.getGoalX1() + 20 <= s.getBat().getXpos() && direction.equals("LEFT")) {
+                    break;
+                } else if (s.getGoalX2() + 35 >= s.getBat().getXpos() && direction.equals("RIGHT")) {
+                    break;
+                }
                 boundPlayer = (Player) s.getBoundPlayer();
                 s.setBoundPlayer(boundPlayer);
                 s.getBat().move(String.valueOf(s.getBoundPlayer().getID()) + direction);
@@ -357,5 +348,15 @@ public class HockeyField extends UnicastRemoteObject implements RemotePublisher,
                 break;
             }
         }
+    }
+
+    @Override
+    public double[] getBatPositions() throws RemoteException {
+        double[] batPositions = new double[sides.length * 2];
+        for (int i = 0; i < 3; i++) {
+            batPositions[i] = sides[i].getBat().getXpos();
+            batPositions[i + 1] = sides[i].getBat().getYpos();
+        }
+        return batPositions;
     }
 }
