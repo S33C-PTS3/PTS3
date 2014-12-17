@@ -9,6 +9,7 @@ import Chat.IChat;
 import Chat.Message;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import observer.RemotePropertyListener;
 
 /**
  *
@@ -34,4 +35,6 @@ public interface IActiveGame extends Remote{
     public void addMessage(Message m) throws RemoteException;
     
     public void stopGame() throws RemoteException;
+    
+    public void addListenerO(RemotePropertyListener publisher, String property) throws RemoteException; 
 }

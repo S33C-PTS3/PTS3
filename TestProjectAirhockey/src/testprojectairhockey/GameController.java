@@ -453,6 +453,7 @@ public class GameController extends UnicastRemoteObject implements Initializable
         try
         {
             IActiveGame game = rmiController.getActiveGame();
+            game.addListenerO(this, "Client");
             IChat chat = game.getChat();
             chat.addListenerO(this, "Game");
         }
@@ -489,6 +490,10 @@ public class GameController extends UnicastRemoteObject implements Initializable
         {
             System.out.println("End game!");
             endGame();
+        }
+        if(evt.getPropertyName().equals("Client"))
+        {
+            setVisibilityWaitingScreen();
         }
     }
 
