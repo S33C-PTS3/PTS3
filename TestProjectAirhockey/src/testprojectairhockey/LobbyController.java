@@ -124,12 +124,10 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
         try
         {
             rmiController = new LobbyRMI();
-<<<<<<< HEAD
+
             rmiController.getLobby().getChat().addListener(this, "Lobby");
-=======
             rmiController.getLobby().getChat().addListener(this, "Chat");
             rmiController.getLobby().addListener(this, "lobby");
->>>>>>> origin/master
             getMessages();
         }
         catch (RemoteException ex)
