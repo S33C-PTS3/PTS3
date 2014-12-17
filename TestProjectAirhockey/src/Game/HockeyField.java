@@ -45,6 +45,7 @@ public class HockeyField extends UnicastRemoteObject implements RemotePublisher,
     private boolean gameOver = false;
     private Mode mode;
     private BasicPublisher publisher;
+    private String[] gameResultArray;
 
     /**
      * Constructor used for HockeyField.
@@ -52,6 +53,7 @@ public class HockeyField extends UnicastRemoteObject implements RemotePublisher,
     public HockeyField() throws RemoteException {
         publisher = new BasicPublisher(new String[]{"bat", "puck", "gameOver"});
         puck = new Puck();
+        gameResultArray = new String[3];
     }
 
     @Override
@@ -200,7 +202,7 @@ public class HockeyField extends UnicastRemoteObject implements RemotePublisher,
     public BasicPublisher getPublisher() {
         return this.publisher;
     }
-
+    
     public List<Side> isGameOver() {
         if (gameOver) {
             return gameResult;
@@ -209,6 +211,12 @@ public class HockeyField extends UnicastRemoteObject implements RemotePublisher,
         }
     }
 
+    @Override
+    public String[] getGameResults()
+    {
+        return gameResultArray;
+    }
+    
     public Mode getMode() {
         return this.mode;
     }
@@ -269,11 +277,14 @@ public class HockeyField extends UnicastRemoteObject implements RemotePublisher,
         if (rounds < 10) {
             rounds++;
         } else {
+            int index = 0;
             int highscore = 0;
             for (Side side : sides) {
                 highscore = side.getBoundPlayer().getInGameScore();
                 gameResult.add(side);
                 gameOver = true;
+                gameResultArray[index] = side.getBoundPlayer().getUsername() + " - " + side.getBoundPlayer().getInGameScore();
+                index++;
             }
             publisher.inform(this, "gameOver", null, true);
             

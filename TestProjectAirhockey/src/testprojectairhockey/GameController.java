@@ -506,8 +506,13 @@ public class GameController extends UnicastRemoteObject implements Initializable
                 Parent root = null;
                 try
                 {
+                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("GameResults.fxml"));
+                    root = (Parent) fxmlLoader.load();
+                    GameResultsController controller = fxmlLoader.<GameResultsController>getController();
+                    controller.setResults(hockeyField.getGameResults());
+                    
                     Stage stage = new Stage();
-                    root = FXMLLoader.load(getClass().getResource("GameResults.fxml"));
+                    
                     stage.setTitle("Airhockey - Game Results");
 
                     hockeyField = null;
@@ -518,7 +523,7 @@ public class GameController extends UnicastRemoteObject implements Initializable
                     stage.setResizable(false);
                     stage.show();
                     btnSend.getScene().getWindow().hide();
-
+                    
                 }
                 catch (Exception ex)
                 {
