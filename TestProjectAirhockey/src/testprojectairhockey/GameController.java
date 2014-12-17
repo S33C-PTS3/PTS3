@@ -5,6 +5,7 @@
  */
 package testprojectairhockey;
 
+import Chat.IChat;
 import Chat.Message;
 import Game.SideName;
 import Game.Bat;
@@ -32,6 +33,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import Game.Mode;
 import Lobby.Game;
+import Shared.IActiveGame;
 import Shared.IHockeyField;
 import java.beans.PropertyChangeEvent;
 import java.rmi.RemoteException;
@@ -449,11 +451,13 @@ public class GameController extends UnicastRemoteObject implements Initializable
 
         try
         {
-            rmiController.getActiveGame().getChat().addListener(this, "Game");
+            IActiveGame game = rmiController.getActiveGame();
+            IChat chat = game.getChat();
+            chat.addListenerO(this, "Game");
         }
         catch (RemoteException ex)
         {
-            Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
     }
 

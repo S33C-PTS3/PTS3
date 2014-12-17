@@ -5,16 +5,13 @@
  */
 package Game;
 
-import Lobby.User;
 import Chat.Chat;
+import Chat.IChat;
 import Chat.Message;
 import Shared.IActiveGame;
 import Shared.IHockeyField;
-import Shared.IUser;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.ArrayList;
-import java.util.List;
 import observer.BasicPublisher;
 import observer.RemotePropertyListener;
 import observer.RemotePublisher;
@@ -106,7 +103,7 @@ public class ActiveGame extends UnicastRemoteObject implements IActiveGame, Remo
     }
     
     @Override
-    public Chat getChat()
+    public IChat getChat()
     {   
         return this.chat;
     }

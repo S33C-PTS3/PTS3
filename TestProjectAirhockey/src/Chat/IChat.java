@@ -22,7 +22,6 @@ public interface IChat extends Remote,RemotePublisher{
     public boolean addMessage(String sender, String text) throws RemoteException;
      
     public void addListenerO(RemotePropertyListener listener, String property) throws RemoteException;
-
     
     public void removeListenerO(RemotePropertyListener listener, String property) throws RemoteException ;
 }
