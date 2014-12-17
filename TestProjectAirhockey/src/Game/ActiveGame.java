@@ -7,6 +7,7 @@ package Game;
 
 import Lobby.User;
 import Chat.Chat;
+import Chat.Message;
 import Shared.IActiveGame;
 import Shared.IHockeyField;
 import Shared.IUser;
@@ -14,18 +15,22 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
+import observer.BasicPublisher;
+import observer.RemotePropertyListener;
+import observer.RemotePublisher;
 
 /**
  *
  * @author Eric
  */
-public class ActiveGame extends UnicastRemoteObject implements IActiveGame {
+public class ActiveGame extends UnicastRemoteObject implements IActiveGame, RemotePublisher {
 
     private HockeyField hockeyField;
     private Chat chat;
     private int round;
     private boolean started = false;
     private String[] users;
+    BasicPublisher publisher;
 
     //gegenereerde constructor
     //ROUNDS AND SCORES IN ACTIVE GAME ZETTEN EN UIT HOCKEYFIELD
@@ -34,6 +39,7 @@ public class ActiveGame extends UnicastRemoteObject implements IActiveGame {
         hockeyField = new HockeyField();
         hockeyField.init(Mode.MULTI);
         users = new String[3];
+        publisher = new BasicPublisher(new String[]{"Game"});
     }
 
     /**
@@ -73,9 +79,8 @@ public class ActiveGame extends UnicastRemoteObject implements IActiveGame {
 
     @Override
     public void startGame() throws RemoteException {
-        if (!started) 
-        {
-            HockeyField hockeyFieldGame = (HockeyField)hockeyField;
+        if (!started) {
+            HockeyField hockeyFieldGame = (HockeyField) hockeyField;
             PuckRunnable runnable = new PuckRunnable(hockeyField);
             Thread threadPuck = new Thread(runnable);
             threadPuck.start();
@@ -87,5 +92,27 @@ public class ActiveGame extends UnicastRemoteObject implements IActiveGame {
     @Override
     public boolean getGameStatus() throws RemoteException {
         return this.started;
-    }   
+    }
+
+    @Override
+    public void addListener(RemotePropertyListener listener, String property) throws RemoteException {
+        publisher.addListener(listener, property);
+    }
+
+    @Override
+    public void removeListener(RemotePropertyListener listener, String property) throws RemoteException {
+        publisher.removeListener(listener, property);
+    }
+    
+    @Override
+    public Chat getChat()
+    {   
+        return this.chat;
+    }
+    
+    @Override
+    public void addMessage(Message m)
+    {
+        this.chat.getMessages().add(m);
+    }
 }

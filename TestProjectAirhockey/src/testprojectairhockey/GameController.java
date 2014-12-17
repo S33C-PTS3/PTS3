@@ -5,6 +5,7 @@
  */
 package testprojectairhockey;
 
+import Chat.Message;
 import Game.SideName;
 import Game.Bat;
 import Game.Side;
@@ -131,6 +132,12 @@ public class GameController extends UnicastRemoteObject implements Initializable
         lvChat.setItems(messages);
         lvChat.setFocusTraversable(true);
         tfMessage.setFocusTraversable(false);
+        
+        try {
+            rmiController.getActiveGame().getChat().addListener(this, "Game");
+        } catch (RemoteException ex) {
+            Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         gc = canvas.getGraphicsContext2D();
         canvas.setVisible(false);
@@ -340,8 +347,14 @@ public class GameController extends UnicastRemoteObject implements Initializable
     {
         //van wie komt het bericht.. voorbeeldbericht: Eric: Hallo!
         String message = tfMessage.getText();
+<<<<<<< HEAD
         if (!message.isEmpty() && message.trim().length() > 0)
         {
+=======
+        if (!message.isEmpty() && message.trim().length() > 0) {
+            Message m = new Message(loggedInUser, message);
+            rmiController.getActiveGame().addMessage(m);
+>>>>>>> FETCH_HEAD
             messages.add(message);
             lvChat.scrollTo(lvChat.getItems().size());
             tfMessage.clear();
@@ -431,6 +444,7 @@ public class GameController extends UnicastRemoteObject implements Initializable
         {
             btnStart.setDisable(false);
         }
+<<<<<<< HEAD
 
         if (evt.getPropertyName().equals("gameOver"))
         {
@@ -462,6 +476,12 @@ public class GameController extends UnicastRemoteObject implements Initializable
         catch (Exception ex)
         {
             System.out.println(ex.getMessage());
+=======
+        System.out.println("Hey eric");
+        if(evt.getPropertyName().equals("Game"))
+        {
+            messages.add((evt.getNewValue().toString()));
+>>>>>>> FETCH_HEAD
         }
     }
 
