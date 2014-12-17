@@ -121,6 +121,7 @@ public class GameController extends UnicastRemoteObject implements Initializable
     Image batGreen = new Image("/testprojectairhockey/batgreen2.png");
 
     GameRMI rmiController;
+    RemotePublisher publisher;
 
     public GameController() throws RemoteException
     {
@@ -145,7 +146,7 @@ public class GameController extends UnicastRemoteObject implements Initializable
     public void btnStart_Click(ActionEvent evt)
     {
 
-        RemotePublisher publisher = (RemotePublisher) rmiController.getHockeyField();
+        publisher = (RemotePublisher) rmiController.getHockeyField();
         try
         {
             publisher.addListener(this, "gameOver");
@@ -488,6 +489,14 @@ public class GameController extends UnicastRemoteObject implements Initializable
 
     public void endGame()
     {
+        try
+        {
+            publisher.removeListener(this, "gameOver");
+        }
+        catch (RemoteException ex)
+        {
+            Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         timer.stop();
         Platform.runLater(new Runnable() {
 
