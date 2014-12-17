@@ -31,9 +31,6 @@ public class GameResultsController implements Initializable {
     Button btnMainMenu;
     
     @FXML
-    Button btnRestart;
-    
-    @FXML
     Label lblResult1;
     
     @FXML
@@ -61,12 +58,7 @@ public class GameResultsController implements Initializable {
     @FXML
     private void btnMainMenu(ActionEvent evt)
     {
-        gotoScherm("Menu.fxml", evt, "Airhockey");
-    }
-    
-    @FXML void btnRestart(ActionEvent evt)
-    {
-        gotoScherm("FXMLDocument.fxml", evt, "Airhockey - Singleplayer");
+        gotoScherm("Lobby.fxml", evt, "Airhockey");
     }
     
     private void gotoScherm(String bestand, ActionEvent evt, String title)
