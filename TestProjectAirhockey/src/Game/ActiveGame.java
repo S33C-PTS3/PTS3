@@ -112,7 +112,7 @@ public class ActiveGame extends UnicastRemoteObject implements IActiveGame, Remo
     @Override
     public void addMessage(Message m)
     {
-        this.chat.getMessages().add(m);
+        this.chat.addMessage(m.getSender(), m.getText());
     }
 
     @Override

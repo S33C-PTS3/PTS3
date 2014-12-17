@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -432,7 +433,12 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
         }
         if(evt.getPropertyName().equals("lobby"))
         {
-            btnJoin.setDisable(true);
+             Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    btnJoin.setDisable(true);
+                }
+            });
         }
     }
 }
