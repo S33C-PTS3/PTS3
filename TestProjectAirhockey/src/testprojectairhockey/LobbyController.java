@@ -175,6 +175,7 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
         try
         {
             navigateToGame(rmiController.getLobby().getGame(Integer.valueOf(gameInfo[0])));
+            
         }
         catch (RemoteException ex)
         {
@@ -331,6 +332,7 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
             stage.setTitle("Airhockey - Multiplayer");
             stage.setResizable(false);
             stage.show();
+            btnStartNewGame.getScene().getWindow().hide();
         }
         catch (IOException ex)
         {
