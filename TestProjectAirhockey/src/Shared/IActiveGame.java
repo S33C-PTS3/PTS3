@@ -30,7 +30,7 @@ public interface IActiveGame extends Remote{
     
     public boolean getGameStatus() throws RemoteException;
     
-    public Chat getChat();
+    public Chat getChat() throws RemoteException;
     
-    public void addMessage(Message m);
+    public void addMessage(Message m) throws RemoteException;
 }

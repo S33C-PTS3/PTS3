@@ -128,7 +128,6 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
         try
         {
             rmiController = new LobbyRMI();
-
             rmiController.getLobby().getChat().addListener(this, "Lobby");
             rmiController.getLobby().addListener(this, "lobby");
             getMessages();
@@ -306,7 +305,7 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
         Button btnSpectate = new Button();
         gamegrid.add(btnSpectate, 3, 1);
         //spectate button is niet zichtbaar voor iteratie 2
-        btnSpectate.visibleProperty().set(true);
+        btnSpectate.visibleProperty().set(false);
         gamegrid.visibleProperty().set(false);
         gamePane.getChildren().add(gamegrid);
         gameTitle.setContent(gamegrid);
@@ -428,10 +427,12 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) throws RemoteException {
-        Message m = (Message)evt.getNewValue();
-        if(!m.getSender().equals(loggedInUser.getUsername()))
-        {
-             messages.add(m.toString());
+        if(evt.getNewValue() instanceof Message){
+            Message m = (Message)evt.getNewValue();
+            if(!m.getSender().equals(loggedInUser.getUsername()))
+            {
+                 messages.add(m.toString());
+            }
         }
         if(evt.getPropertyName().equals("lobby"))
         {
