@@ -474,7 +474,12 @@ public class GameController extends UnicastRemoteObject implements Initializable
     {
         if (loggedInUser.equals(evt.getNewValue()))
         {
-            btnStart.setDisable(false);
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    btnStart.setDisable(false);
+                }
+            });            
         }
         if (evt.getPropertyName().equals("Game"))
         {
