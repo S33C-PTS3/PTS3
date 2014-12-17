@@ -40,6 +40,7 @@ public class ActiveGame extends UnicastRemoteObject implements IActiveGame, Remo
         hockeyField.init(Mode.MULTI);
         users = new String[3];
         publisher = new BasicPublisher(new String[]{"Game"});
+        chat = new Chat();
     }
 
     /**

@@ -124,12 +124,9 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
         try
         {
             rmiController = new LobbyRMI();
-<<<<<<< HEAD
             rmiController.getLobby().getChat().addListener(this, "Lobby");
-=======
-            rmiController.getLobby().getChat().addListener(this, "Chat");
+            //rmiController.getLobby().getChat().addListener(this, "Chat");
             rmiController.getLobby().addListener(this, "lobby");
->>>>>>> origin/master
             getMessages();
         }
         catch (RemoteException ex)
@@ -427,10 +424,12 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) throws RemoteException {
-        Message m = (Message)evt.getNewValue();
-        if(!m.getSender().equals(loggedInUser.getUsername()))
-        {
-             messages.add(m.toString());
+        if(evt.getNewValue() instanceof Message){
+            Message m = (Message)evt.getNewValue();
+            if(!m.getSender().equals(loggedInUser.getUsername()))
+            {
+                 messages.add(m.toString());
+            }
         }
         if(evt.getPropertyName().equals("lobby"))
         {
