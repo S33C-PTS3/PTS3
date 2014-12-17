@@ -335,4 +335,10 @@ public class Side implements Serializable{
     {
         this.boundPlayer = player;
     }
+    
+    @Override
+    public String toString()
+    {
+        return this.getBoundPlayer().getUsername() + " - " + this.getBoundPlayer().getInGameScore();
+    }
 }
