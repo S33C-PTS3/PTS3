@@ -138,7 +138,7 @@ public class GameController extends UnicastRemoteObject implements Initializable
 
         gc = canvas.getGraphicsContext2D();
         canvas.setVisible(false);
-        btnStart.setDisable(true);
+        //btnStart.setDisable(true);
 
     }
 
@@ -159,78 +159,73 @@ public class GameController extends UnicastRemoteObject implements Initializable
         {
             Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        Platform.runLater(new Runnable() {
-
-            @Override
-            public void run()
+        Platform.runLater(() -> {
+            setVisibilityWaitingScreen();
+            try
             {
-                setVisibilityWaitingScreen();
-                try
-                {
-                    rmiController.getActiveGame().startGame();
-                }
-                catch (RemoteException ex)
-                {
-                    Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-
-                try
-                {
-                    //Labels vullen met de namen van de spelers
-                    sides = hockeyField.getSides();
-                }
-                catch (RemoteException ex)
-                {
-                    Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                int rotateIndex = 0;
-                for (Side side : sides)
-                {
-                    if (side.getSideName().equals(SideName.BOTTOM))
-                    {
-                        lblPlayer1.setText(side.getBoundPlayer().getUsername());
-                        System.out.println("Bottom: " + side.getBoundPlayer().getUsername());
-                    }
-                    if (side.getSideName().equals(SideName.RIGHT))
-                    {
-                        lblPlayer2.setText(side.getBoundPlayer().getUsername());
-                        System.out.println("Right: " + side.getBoundPlayer().getUsername());
-                    }
-                    if (side.getSideName().equals(SideName.LEFT))
-                    {
-                        lblPlayer3.setText(side.getBoundPlayer().getUsername());
-                        System.out.println("Left: " + side.getBoundPlayer().getUsername());
-                    }
-                    if (side.getBoundPlayer().getUsername().equals(loggedInUser))
-                    {
-                        rotateIndex = side.getBoundPlayer().getID();
-                    }
-                }
-
-                if (rotateIndex == 0)
-                {
-                    canvas.getTransforms().add(Transform.rotate(-120 * (rotateIndex + 1), 280, 323));
-                }
-                else if (rotateIndex == 1)
-                {
-                    canvas.getTransforms().add(Transform.rotate(-120 * (rotateIndex - 1), 280, 323));
-                }
-                else if (rotateIndex == 2)
-                {
-                    canvas.getTransforms().add(Transform.rotate(-120 * (rotateIndex), 280, 323));
-                }
-
-                //De gameloop
-                timer = new AnimationTimer() {
-                    @Override
-                    public void handle(long now)
-                    {
-                        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-                        Draw();
-                    }
-                };
-                timer.start();
+                rmiController.getActiveGame().startGame();
             }
+            catch (RemoteException ex)
+            {
+                Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            try
+            {
+                //Labels vullen met de namen van de spelers
+                sides = hockeyField.getSides();
+            }
+            catch (RemoteException ex)
+            {
+                Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            int rotateIndex = 0;
+            for (Side side : sides)
+            {
+                if (side.getSideName().equals(SideName.BOTTOM))
+                {
+                    lblPlayer1.setText(side.getBoundPlayer().getUsername());
+                    System.out.println("Bottom: " + side.getBoundPlayer().getUsername());
+                }
+                if (side.getSideName().equals(SideName.RIGHT))
+                {
+                    lblPlayer2.setText(side.getBoundPlayer().getUsername());
+                    System.out.println("Right: " + side.getBoundPlayer().getUsername());
+                }
+                if (side.getSideName().equals(SideName.LEFT))
+                {
+                    lblPlayer3.setText(side.getBoundPlayer().getUsername());
+                    System.out.println("Left: " + side.getBoundPlayer().getUsername());
+                }
+                if (side.getBoundPlayer().getUsername().equals(loggedInUser))
+                {
+                    rotateIndex = side.getBoundPlayer().getID();
+                }
+            }
+            
+            if (rotateIndex == 0)
+            {
+                canvas.getTransforms().add(Transform.rotate(-120 * (rotateIndex + 1), 280, 323));
+            }
+            else if (rotateIndex == 1)
+            {
+                canvas.getTransforms().add(Transform.rotate(-120 * (rotateIndex - 1), 280, 323));
+            }
+            else if (rotateIndex == 2)
+            {
+                canvas.getTransforms().add(Transform.rotate(-120 * (rotateIndex), 280, 323));
+            }
+            
+            //De gameloop
+            timer = new AnimationTimer() {
+                @Override
+                public void handle(long now)
+                {
+                    gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+                    Draw();
+                }
+            };
+            timer.start();
         });
     }
 
@@ -497,8 +492,15 @@ public class GameController extends UnicastRemoteObject implements Initializable
         }
         if(evt.getPropertyName().equals("Client"))
         {
-            setVisibilityWaitingScreen();
-            startGame();
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    setVisibilityWaitingScreen();
+                    startGame();
+                }
+            });  
+            
+            
         }
     }
 
