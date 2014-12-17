@@ -358,7 +358,7 @@ public class HockeyField extends UnicastRemoteObject implements RemotePublisher,
                 gameResult.add(side);
                 
             }
-            gameResult.sort(null);
+            //gameResult.sort(null);
             
             
             for (Side side : gameResult)
