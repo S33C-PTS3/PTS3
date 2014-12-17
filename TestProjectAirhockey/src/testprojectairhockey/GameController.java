@@ -146,6 +146,10 @@ public class GameController extends UnicastRemoteObject implements Initializable
     public void btnStart_Click(ActionEvent evt)
     {
 
+        startGame();
+    }
+    
+    public void startGame() {
         publisher = (RemotePublisher) rmiController.getHockeyField();
         try
         {
@@ -494,6 +498,7 @@ public class GameController extends UnicastRemoteObject implements Initializable
         if(evt.getPropertyName().equals("Client"))
         {
             setVisibilityWaitingScreen();
+            startGame();
         }
     }
 
