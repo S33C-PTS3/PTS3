@@ -32,4 +32,6 @@ public interface IActiveGame extends Remote{
     public IChat getChat() throws RemoteException;
     
     public void addMessage(Message m) throws RemoteException;
+    
+    public void stopGame() throws RemoteException;
 }

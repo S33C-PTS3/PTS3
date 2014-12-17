@@ -28,6 +28,7 @@ public class ActiveGame extends UnicastRemoteObject implements IActiveGame, Remo
     private boolean started = false;
     private String[] users;
     BasicPublisher publisher;
+    Thread threadPuck;
 
     //gegenereerde constructor
     //ROUNDS AND SCORES IN ACTIVE GAME ZETTEN EN UIT HOCKEYFIELD
@@ -80,7 +81,7 @@ public class ActiveGame extends UnicastRemoteObject implements IActiveGame, Remo
         if (!started) {
             HockeyField hockeyFieldGame = (HockeyField) hockeyField;
             PuckRunnable runnable = new PuckRunnable(hockeyField);
-            Thread threadPuck = new Thread(runnable);
+            threadPuck = new Thread(runnable);
             threadPuck.start();
             started = true;
         }
@@ -112,5 +113,12 @@ public class ActiveGame extends UnicastRemoteObject implements IActiveGame, Remo
     public void addMessage(Message m)
     {
         this.chat.getMessages().add(m);
+    }
+
+    @Override
+    public void stopGame() throws RemoteException
+    {
+        threadPuck.interrupt();
+        started = false;
     }
 }

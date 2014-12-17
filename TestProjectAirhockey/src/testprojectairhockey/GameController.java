@@ -489,27 +489,34 @@ public class GameController extends UnicastRemoteObject implements Initializable
     public void endGame()
     {
         timer.stop();
-        Parent root = null;
-        try
-        {
-            Stage stage = new Stage();
-            root = FXMLLoader.load(getClass().getResource("GameResults.fxml"));
-            stage.setTitle("Airhockey - Game Results");
+        Platform.runLater(new Runnable() {
 
-            hockeyField = null;
+            @Override
+            public void run()
+            {
+                Parent root = null;
+                try
+                {
+                    Stage stage = new Stage();
+                    root = FXMLLoader.load(getClass().getResource("GameResults.fxml"));
+                    stage.setTitle("Airhockey - Game Results");
 
-            Scene scene = new Scene(root);
+                    hockeyField = null;
 
-            stage.setScene(scene);
-            stage.setResizable(false);
-            stage.show();
-            btnSend.getScene().getWindow().hide();
+                    Scene scene = new Scene(root);
 
-        }
-        catch (Exception ex)
-        {
-            System.out.println(ex.getMessage());
-        }
+                    stage.setScene(scene);
+                    stage.setResizable(false);
+                    stage.show();
+                    btnSend.getScene().getWindow().hide();
+
+                }
+                catch (Exception ex)
+                {
+                    System.out.println(ex.getMessage());
+                }
+            }
+        });
 
     }
 }
