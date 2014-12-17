@@ -151,6 +151,9 @@ public class GameController extends UnicastRemoteObject implements Initializable
                 try {
                     //Labels vullen met de namen van de spelers
                     sides = hockeyField.getSides();
+                } catch (RemoteException ex) {
+                    Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
+                }
                     int rotateIndex = 0;
                     for (Side side : sides) {
                         if (side.getSideName().equals(SideName.BOTTOM)) {
@@ -170,11 +173,11 @@ public class GameController extends UnicastRemoteObject implements Initializable
                         }
                     }
                     if (rotateIndex == 0) {
-                        canvas.getTransforms().add(Transform.rotate(-120 * (rotateIndex + 1), 230, 323));
+                        canvas.getTransforms().add(Transform.rotate(-120 * (rotateIndex + 1), 280, 323));
                     } else if (rotateIndex == 1) {
-                        canvas.getTransforms().add(Transform.rotate(-120 * (rotateIndex - 1), 230, 323));
+                        canvas.getTransforms().add(Transform.rotate(-120 * (rotateIndex - 1), 280, 323));
                     } else if (rotateIndex == 2) {
-                        canvas.getTransforms().add(Transform.rotate(-120 * (rotateIndex), 230, 323));
+                        canvas.getTransforms().add(Transform.rotate(-120 * (rotateIndex), 280, 323));
                     }
 
                     //De gameloop
@@ -186,20 +189,25 @@ public class GameController extends UnicastRemoteObject implements Initializable
                         }
                     };
                     timer.start();
-                } catch (RemoteException ex) {
-                    Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
-                }
             }
         });
     }
 
     public void Draw() {
         gc.setLineWidth(1);
-
-        //hulplijnen om te kijken of de puck en de bats in het midden staan.
-        //gc.strokeLine(sides[0].getLineX1(), sides[0].getLineY1(), sides[0].getLineX1(), sides[0].getLineY2());
-        //gc.strokeLine(sides[1].getLineX1(), sides[1].getLineY1(), (sides[2].getLineX2() + sides[2].getLineX1()) / 2, (sides[2].getLineY2() + sides[2].getLineY1()) / 2);
-        //gc.strokeLine(sides[2].getLineX1(), sides[2].getLineY1(), (sides[0].getLineX2() + sides[0].getLineX1()) / 2, (sides[0].getLineY2() + sides[0].getLineY1()) / 2);
+//        double[] batPositions = null;
+//        double batRedX,batRedY,batGreenX,batGreenY,batBlueX,batBlueY;
+//        batRedX = batPositions[0];
+//        batRedY = batPositions[1];
+//        batBlueX = batPositions[2];
+//        batBlueY = batPositions[3];
+//        batGreenX = batPositions[4];
+//        batGreenY = batPositions[5];
+        try {
+            sides = hockeyField.getSides();
+        } catch (RemoteException ex) {
+            Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         for (Side side : sides) {
             gc.setLineWidth(1);
             if (Color.RED.toString().equals(side.getColor().toString())) {
