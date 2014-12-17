@@ -108,6 +108,7 @@ public class GameController extends UnicastRemoteObject implements Initializable
     //Modus van de game
     Mode mode = Mode.SINGLE;
     String loggedInUser = "";
+    Side[] sides;
 
     //De afbeeldingen van de bats
     Image batRed = new Image("/testprojectairhockey/batred2.png");
@@ -156,7 +157,7 @@ public class GameController extends UnicastRemoteObject implements Initializable
                 try
                 {
                     //Labels vullen met de namen van de spelers
-                    Side[] sides = hockeyField.getSides();
+                    sides = hockeyField.getSides();
                     int rotateIndex = 0;
                     for (Side side : sides)
                     {
@@ -214,15 +215,6 @@ public class GameController extends UnicastRemoteObject implements Initializable
 
     public void Draw()
     {
-        Side[] sides = null;
-        try
-        {
-            sides = hockeyField.getSides();
-        }
-        catch (RemoteException ex)
-        {
-            Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
-        }
         gc.setLineWidth(1);
 
         //hulplijnen om te kijken of de puck en de bats in het midden staan.
