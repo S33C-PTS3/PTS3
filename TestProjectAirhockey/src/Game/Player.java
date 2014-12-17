@@ -46,7 +46,7 @@ public class Player extends User implements IPlayer {
 
     @Override
     public void changeScore(int point) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.inGameScore += point;
     }
 
     @Override

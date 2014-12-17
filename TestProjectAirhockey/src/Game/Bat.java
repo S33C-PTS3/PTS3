@@ -22,8 +22,8 @@ public class Bat implements Serializable{
     private double diameter;
     private double Xvelocity;
     private SideName sidename;
-    double rightSpeedModifier = 1;
-    double leftSpeedModifier = 1;
+    double rightSpeedModifier = 10;
+    double leftSpeedModifier = 10;
     
     /**
      * Constructor used for the Bat Class

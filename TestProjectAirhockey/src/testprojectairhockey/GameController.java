@@ -257,7 +257,7 @@ public class GameController extends UnicastRemoteObject implements Initializable
             Bat bat = side.getBat();
             if (side.getSideName().equals(SideName.BOTTOM))
             {
-                gc.drawImage(batRed, bat.getXpos() - bat.getRadius(), bat.getYpos() - bat.getRadius(), bat.getDiameter(), bat.getDiameter());
+                gc.drawImage(batBlue, bat.getXpos() - bat.getRadius(), bat.getYpos() - bat.getRadius(), bat.getDiameter(), bat.getDiameter());
                 lblScore1.setText(String.valueOf(side.getBoundPlayer().getInGameScore()));
             }
             else if (side.getSideName().equals(SideName.RIGHT))
@@ -267,7 +267,7 @@ public class GameController extends UnicastRemoteObject implements Initializable
             }
             else if (side.getSideName().equals(SideName.LEFT))
             {
-                gc.drawImage(batBlue, bat.getXpos() - bat.getRadius(), bat.getYpos() - bat.getRadius(), bat.getDiameter(), bat.getDiameter());
+                gc.drawImage(batRed, bat.getXpos() - bat.getRadius(), bat.getYpos() - bat.getRadius(), bat.getDiameter(), bat.getDiameter());
                 lblScore3.setText(String.valueOf(side.getBoundPlayer().getInGameScore()));
             }
 
