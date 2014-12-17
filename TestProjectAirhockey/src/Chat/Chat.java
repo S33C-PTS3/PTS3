@@ -26,7 +26,7 @@ public class Chat extends UnicastRemoteObject implements IChat, RemotePublisher 
      */
     public Chat() throws RemoteException {
         messages = new ArrayList<>();
-        publisher = new BasicPublisher(new String[] { "Chat" });
+        publisher = new BasicPublisher(new String[] { "Lobby", "Game"});
     }
 
     /**
@@ -58,7 +58,8 @@ public class Chat extends UnicastRemoteObject implements IChat, RemotePublisher 
                 messages.set(99, m);
             }
             messages.add(m);
-            publisher.inform(this, "Chat", null, m);
+            publisher.inform(this, "Lobby", null, m);
+            publisher.inform(this, "Game", null, m);
             b = true;
         } catch (Exception e) {
             System.out.println(e.toString());

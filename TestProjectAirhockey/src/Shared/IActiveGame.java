@@ -5,6 +5,8 @@
  */
 package Shared;
 
+import Chat.Chat;
+import Chat.Message;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
@@ -27,4 +29,8 @@ public interface IActiveGame extends Remote{
     public void startGame() throws RemoteException;
     
     public boolean getGameStatus() throws RemoteException;
+    
+    public Chat getChat() throws RemoteException;
+    
+    public void addMessage(Message m) throws RemoteException;
 }
