@@ -16,41 +16,51 @@ public class Player extends User implements IPlayer {
     private int inGameScore;
 
     private int playerId;
+
     /**
      * Constructor for player with username
      *
      * @param username
      */
-    public Player(String username) throws RemoteException {
+    public Player(String username) throws RemoteException
+    {
         super(username);
-        //bv. ingamescore = 10
+        inGameScore = 10;
     }
 
     @Override
-    public void setID(int id) {
+    public void setID(int id)
+    {
         this.playerId = id;
     }
+
     @Override
-    public String getUsername() {
+    public String getUsername()
+    {
         return super.getUsername();
-    }
-    @Override
-    public void setInGameScore(int newInGameScore) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public int getInGameScore() {
+    public void setInGameScore(int newInGameScore)
+    {
+        this.inGameScore = newInGameScore;
+    }
+
+    @Override
+    public int getInGameScore()
+    {
         return this.inGameScore;
     }
 
     @Override
-    public void changeScore(int point) {
+    public void changeScore(int point)
+    {
         this.inGameScore += point;
     }
 
     @Override
-    public int getID() {
+    public int getID()
+    {
         return this.playerId;
     }
 
