@@ -98,11 +98,7 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
     private ObservableList<String> messages;
     private ArrayList<IGame> games;
     private LobbyRMI rmiController;
-<<<<<<< HEAD
     private IUser loggedInUser = new User("Meny");
-=======
-    private IUser loggedInUser = new User("Roy");
->>>>>>> origin/master
     // widht of accordion / 4 to determine width of the columns
     private final double COLUMNWIDTH = 137.5;
     private final double ROWHEIGHT = 20;
