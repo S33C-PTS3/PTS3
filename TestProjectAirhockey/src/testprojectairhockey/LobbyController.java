@@ -119,7 +119,7 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
         messages = FXCollections.observableArrayList();
         lvChatBox.setItems(messages);
         
-        //populateRanking();
+        populateRanking();
 
         try
         {
