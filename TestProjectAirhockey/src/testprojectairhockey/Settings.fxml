@@ -20,15 +20,15 @@
       </Label>
       <Label layoutX="78.0" layoutY="147.0" text="Difficulty Enemy 1:" />
       <Label layoutX="78.0" layoutY="218.0" text="Difficulty Enemy 2:" />
-      <Slider blockIncrement="0.0" layoutX="288.0" layoutY="147.0" majorTickUnit="1.0" max="2.0" minorTickCount="0" showTickMarks="true" snapToTicks="true" value="1.0" />
-      <Slider layoutX="288.0" layoutY="218.0" majorTickUnit="1.0" max="2.0" minorTickCount="0" showTickMarks="true" snapToTicks="true" value="1.0" />
+      <Slider fx:id="difficultySlider1" blockIncrement="0.0" layoutX="288.0" layoutY="147.0" majorTickUnit="1.0" max="2.0" minorTickCount="0" showTickMarks="true" snapToTicks="true" value="1.0" />
+      <Slider fx:id="difficultySlider2" layoutX="288.0" layoutY="218.0" majorTickUnit="1.0" max="2.0" minorTickCount="0" showTickMarks="true" snapToTicks="true" value="1.0" />
       <Label layoutX="284.0" layoutY="165.0" text="Easy" />
       <Label layoutX="334.0" layoutY="165.0" text="Medium" />
       <Label layoutX="407.0" layoutY="165.0" text="Hard" />
       <Label layoutX="405.0" layoutY="236.0" text="Hard" />
       <Label layoutX="332.0" layoutY="236.0" text="Medium" />
       <Label layoutX="282.0" layoutY="236.0" text="Easy" />
-      <Button fx:id="btnSave" layoutX="436.0" layoutY="321.0" mnemonicParsing="false" onAction="#btnSave_Click" prefHeight="37.0" prefWidth="110.0" text="Save" />
-      <Button fx:id="btnCancel" layoutX="78.0" layoutY="321.0" mnemonicParsing="false" onAction="#btnCancel_Click" prefHeight="37.0" prefWidth="110.0" text="Cancel" />
+      <Button fx:id="btnSave" layoutX="436.0" layoutY="321.0" mnemonicParsing="false" onAction="#handleBtnSaveAndBackEvent" prefHeight="37.0" prefWidth="110.0" text="Save" />
+      <Button fx:id="btnCancel" layoutX="78.0" layoutY="321.0" mnemonicParsing="false" onAction="#handleBtnBackEvent" prefHeight="37.0" prefWidth="110.0" text="Cancel" />
    </children>
 </AnchorPane>

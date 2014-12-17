@@ -6,9 +6,9 @@
 package Game;
 
 
+import SPGame.Settings;
 import java.io.Serializable;
 import javafx.geometry.Point2D;
-import testprojectairhockey.Settings;
 
 /**
  *
@@ -200,15 +200,15 @@ public class Bat implements Serializable{
         {
             case EASY:
                 diff1 = 1;
-                leftSpeedModifier = 1;
+                leftSpeedModifier = .1;
                 break;
             case MEDIUM:
                 diff1 = 2;
-                leftSpeedModifier = 1.6;
+                leftSpeedModifier = 1;
                 break;
             case HARD:
                 diff1 = 3;
-                leftSpeedModifier = 2.2;
+                leftSpeedModifier = 3;
                 break;
         }
             
@@ -216,14 +216,14 @@ public class Bat implements Serializable{
         {
             case EASY:
                 diff2 = 1;
-                rightSpeedModifier = 1;
+                rightSpeedModifier = .1;
                 break;
             case MEDIUM:
-                rightSpeedModifier = 1.6;
+                rightSpeedModifier = 1;
                 diff2 = 2;
                 break;
             case HARD:
-                rightSpeedModifier = 2.2;
+                rightSpeedModifier = 3;
                 diff2 = 3;
                 break;
         }

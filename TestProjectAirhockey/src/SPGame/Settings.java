@@ -3,9 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package testprojectairhockey;
+package SPGame;
 
-import Game.Difficulty;
 import java.io.Serializable;
 
 /**

@@ -53,8 +53,6 @@ public class MenuController implements Initializable {
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXMLDocument.fxml"));
         Parent root = (Parent) fxmlLoader.load();
-        FXMLDocumentController controller = fxmlLoader.<FXMLDocumentController>getController();
-        controller.setMode(Mode.SINGLE);
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);

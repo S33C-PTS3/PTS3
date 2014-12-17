@@ -5,10 +5,7 @@
  */
 package testprojectairhockey;
 
-import Game.SideName;
-import Game.Bat;
-import Game.Side;
-import Game.Puck;
+import SPGame.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -32,12 +29,6 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
-import Game.HockeyField;
-import Game.Mode;
-import java.rmi.RemoteException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.scene.paint.Color;
 
 /**
  *
@@ -92,9 +83,6 @@ public class FXMLDocumentController implements Initializable {
     
     //Animation timer zodat het spel een loop is
     AnimationTimer timer;
-    
-    //Modus van de game
-    Mode mode;
 
     //De afbeeldingen van de bats
     Image batRed = new Image("/testprojectairhockey/batred2.png");
@@ -110,35 +98,23 @@ public class FXMLDocumentController implements Initializable {
         tfMessage.setFocusTraversable(false);
 
         gc = canvas.getGraphicsContext2D();
-        try {
-            hockeyField = new HockeyField();
-        } catch (RemoteException ex) {
-            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+        hockeyField = new HockeyField();
 
-    public void startGame()
-    {
         //Labels vullen met de namen van de spelers
-        Side[] sides = null;
-        try {
-            sides = hockeyField.getSides();
-        } catch (RemoteException ex) {
-            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        Side[] sides = hockeyField.getSides();
         for (Side side : sides)
         {
             if (side.getSideName().equals(SideName.BOTTOM))
             {
-                lblPlayer1.setText(side.getBoundPlayer().toString());
+                lblPlayer1.setText(side.getBindedPlayer().toString());
             }
             if (side.getSideName().equals(SideName.RIGHT))
             {
-                lblPlayer2.setText(side.getBoundPlayer().toString());
+                lblPlayer2.setText(side.getBindedPlayer().toString());
             }
             if (side.getSideName().equals(SideName.LEFT))
             {
-                lblPlayer3.setText(side.getBoundPlayer().toString());
+                lblPlayer3.setText(side.getBindedPlayer().toString());
             }
         }
 
@@ -159,9 +135,9 @@ public class FXMLDocumentController implements Initializable {
                     try
                     {
                         //Scherm met de gameResults wordt weergegeven.
-                        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("GameResults.fxml"));
+                        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("SPGameResults.fxml"));
                         Parent root = (Parent) fxmlLoader.load();
-                        GameResultsController controller = fxmlLoader.<GameResultsController>getController();
+                        SPGameResultsController controller = fxmlLoader.<SPGameResultsController>getController();
                         controller.setResults(hockeyField.isGameOver());
                         Scene scene = new Scene(root);
                         Stage stage = new Stage();
@@ -182,16 +158,12 @@ public class FXMLDocumentController implements Initializable {
             }
         };
         timer.start();
+
     }
 
     public void Draw()
     {
-        Side[] sides = null;
-        try {
-            sides = hockeyField.getSides();
-        } catch (RemoteException ex) {
-            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        Side[] sides = hockeyField.getSides();
         gc.setLineWidth(1);
         
         //hulplijnen om te kijken of de puck en de bats in het midden staan.
@@ -201,8 +173,8 @@ public class FXMLDocumentController implements Initializable {
         for (Side side : sides)
         {
             gc.setLineWidth(1);
-            gc.setStroke(Color.BLACK);
-            gc.setFill(Color.BLACK);
+            gc.setStroke(side.getColor());
+            gc.setFill(side.getColor());
             gc.strokeLine(side.getLineX1(), side.getLineY1(), side.getLineX2(), side.getLineY2());
 
             gc.setLineWidth(5);
@@ -212,24 +184,20 @@ public class FXMLDocumentController implements Initializable {
             if (side.getSideName().equals(SideName.BOTTOM))
             {
                 gc.drawImage(batRed, bat.getXpos() - bat.getRadius(), bat.getYpos() - bat.getRadius(), bat.getDiameter(), bat.getDiameter());
-                lblScore1.setText(String.valueOf(side.getBoundPlayer().getInGameScore()));
+                lblScore1.setText(String.valueOf(side.getBindedPlayer().getInGameScore()));
             }
             else if (side.getSideName().equals(SideName.RIGHT))
             {
                 gc.drawImage(batGreen, bat.getXpos() - bat.getRadius(), bat.getYpos() - bat.getRadius(), bat.getDiameter(), bat.getDiameter());
-                lblScore2.setText(String.valueOf(side.getBoundPlayer().getInGameScore()));
+                lblScore2.setText(String.valueOf(side.getBindedPlayer().getInGameScore()));
             }
             else if (side.getSideName().equals(SideName.LEFT))
             {
                 gc.drawImage(batBlue, bat.getXpos() - bat.getRadius(), bat.getYpos() - bat.getRadius(), bat.getDiameter(), bat.getDiameter());
-                lblScore3.setText(String.valueOf(side.getBoundPlayer().getInGameScore()));
+                lblScore3.setText(String.valueOf(side.getBindedPlayer().getInGameScore()));
             }
 
-            try {
-                lblRoundNr.setText(String.valueOf(hockeyField.getRound()));
-            } catch (RemoteException ex) {
-                Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            lblRoundNr.setText(String.valueOf(hockeyField.getRound()));
 
             Puck puck = hockeyField.getPuck();
             gc.setFill(puck.getColor());
@@ -276,7 +244,6 @@ public class FXMLDocumentController implements Initializable {
         if (!message.isEmpty() && message.trim().length() > 0)
         {
             messages.add(message);
-            lvChat.scrollTo(lvChat.getItems().size());
             tfMessage.clear();
         }
     }
@@ -303,13 +270,6 @@ public class FXMLDocumentController implements Initializable {
         {
             System.out.println(ex.getMessage());
         }
-    }
-    
-    public void setMode(Mode mode)
-    {
-        this.mode = mode;
-        hockeyField.init(mode);
-        startGame();
     }
 
 }
