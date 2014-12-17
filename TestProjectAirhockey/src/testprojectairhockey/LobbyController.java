@@ -102,6 +102,7 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
     // widht of accordion / 4 to determine width of the columns
     private final double COLUMNWIDTH = 137.5;
     private final double ROWHEIGHT = 20;
+    Button btnJoin;
 
     public LobbyController() throws RemoteException{
         
@@ -123,7 +124,12 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
         try
         {
             rmiController = new LobbyRMI();
+<<<<<<< HEAD
             rmiController.getLobby().getChat().addListener(this, "Lobby");
+=======
+            rmiController.getLobby().getChat().addListener(this, "Chat");
+            rmiController.getLobby().addListener(this, "lobby");
+>>>>>>> origin/master
             getMessages();
         }
         catch (RemoteException ex)
@@ -276,7 +282,7 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
         gamegrid.add(labelSpeler2, 1, 1);
         gamegrid.add(labelSpeler3, 1, 2);
         //grid column 2
-        Button btnJoin = new Button();
+        btnJoin = new Button();
         btnJoin.setText("Join game");
         btnJoin.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -425,6 +431,10 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
         if(!m.getSender().equals(loggedInUser.getUsername()))
         {
              messages.add(m.toString());
+        }
+        if(evt.getPropertyName().equals("lobby"))
+        {
+            btnJoin.setDisable(true);
         }
     }
 }
