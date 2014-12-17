@@ -334,7 +334,6 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
         }
         catch (IOException ex)
         {
-            System.err.println("IOException");
             ex.printStackTrace();
         }
     }

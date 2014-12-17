@@ -138,7 +138,7 @@ public class GameController extends UnicastRemoteObject implements Initializable
 
         gc = canvas.getGraphicsContext2D();
         canvas.setVisible(false);
-        //btnStart.setDisable(true);
+        btnStart.setDisable(true);
 
     }
 
