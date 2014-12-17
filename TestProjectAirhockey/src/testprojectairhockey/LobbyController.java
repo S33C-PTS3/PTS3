@@ -299,7 +299,7 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
         Button btnSpectate = new Button();
         gamegrid.add(btnSpectate, 3, 1);
         //spectate button is niet zichtbaar voor iteratie 2
-        btnSpectate.visibleProperty().set(true);
+        btnSpectate.visibleProperty().set(false);
         gamegrid.visibleProperty().set(false);
         gamePane.getChildren().add(gamegrid);
         gameTitle.setContent(gamegrid);
