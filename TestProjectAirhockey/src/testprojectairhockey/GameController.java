@@ -45,6 +45,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Transform;
 import observer.RemotePropertyListener;
+import observer.RemotePublisher;
 
 /**
  *
@@ -141,6 +142,16 @@ public class GameController extends UnicastRemoteObject implements Initializable
     @FXML
     public void btnStart_Click(ActionEvent evt)
     {
+
+        RemotePublisher publisher = (RemotePublisher) rmiController.getHockeyField();
+        try
+        {
+            publisher.addListener(this, "gameOver");
+        }
+        catch (RemoteException ex)
+        {
+            Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         Platform.runLater(new Runnable() {
 
             @Override
@@ -160,54 +171,61 @@ public class GameController extends UnicastRemoteObject implements Initializable
                 {
                     //Labels vullen met de namen van de spelers
                     sides = hockeyField.getSides();
-                } catch (RemoteException ex) {
+                }
+                catch (RemoteException ex)
+                {
                     Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                    int rotateIndex = 0;
-                    for (Side side : sides)
+                int rotateIndex = 0;
+                for (Side side : sides)
+                {
+                    if (side.getSideName().equals(SideName.BOTTOM))
                     {
-                        if (side.getSideName().equals(SideName.BOTTOM))
-                        {
-                            lblPlayer1.setText(side.getBoundPlayer().getUsername());
-                            System.out.println("Bottom: " + side.getBoundPlayer().getUsername());
-                        }
-                        if (side.getSideName().equals(SideName.RIGHT))
-                        {
-                            lblPlayer2.setText(side.getBoundPlayer().getUsername());
-                            System.out.println("Right: " + side.getBoundPlayer().getUsername());
-                        }
-                        if (side.getSideName().equals(SideName.LEFT))
-                        {
-                            lblPlayer3.setText(side.getBoundPlayer().getUsername());
-                            System.out.println("Left: " + side.getBoundPlayer().getUsername());
-                        }
-                        if (side.getBoundPlayer().getUsername().equals(loggedInUser))
-                        {
-                            rotateIndex = side.getBoundPlayer().getID();
-                        }
+                        lblPlayer1.setText(side.getBoundPlayer().getUsername());
+                        System.out.println("Bottom: " + side.getBoundPlayer().getUsername());
                     }
-
-                    if (rotateIndex == 0) {
-                        canvas.getTransforms().add(Transform.rotate(-120 * (rotateIndex + 1), 280, 323));
-                    } else if (rotateIndex == 1) {
-                        canvas.getTransforms().add(Transform.rotate(-120 * (rotateIndex - 1), 280, 323));
-                    } else if (rotateIndex == 2) {
-                        canvas.getTransforms().add(Transform.rotate(-120 * (rotateIndex), 280, 323));
+                    if (side.getSideName().equals(SideName.RIGHT))
+                    {
+                        lblPlayer2.setText(side.getBoundPlayer().getUsername());
+                        System.out.println("Right: " + side.getBoundPlayer().getUsername());
                     }
-
-                    //De gameloop
-                    timer = new AnimationTimer() {
-                        @Override
-                        public void handle(long now)
-                        {
-                            gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-                            Draw();
-                        }
-                    };
-                    timer.start();
+                    if (side.getSideName().equals(SideName.LEFT))
+                    {
+                        lblPlayer3.setText(side.getBoundPlayer().getUsername());
+                        System.out.println("Left: " + side.getBoundPlayer().getUsername());
+                    }
+                    if (side.getBoundPlayer().getUsername().equals(loggedInUser))
+                    {
+                        rotateIndex = side.getBoundPlayer().getID();
+                    }
                 }
-            });
-        }
+
+                if (rotateIndex == 0)
+                {
+                    canvas.getTransforms().add(Transform.rotate(-120 * (rotateIndex + 1), 280, 323));
+                }
+                else if (rotateIndex == 1)
+                {
+                    canvas.getTransforms().add(Transform.rotate(-120 * (rotateIndex - 1), 280, 323));
+                }
+                else if (rotateIndex == 2)
+                {
+                    canvas.getTransforms().add(Transform.rotate(-120 * (rotateIndex), 280, 323));
+                }
+
+                //De gameloop
+                timer = new AnimationTimer() {
+                    @Override
+                    public void handle(long now)
+                    {
+                        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+                        Draw();
+                    }
+                };
+                timer.start();
+            }
+        });
+    }
 
     public void Draw()
     {
@@ -225,12 +243,16 @@ public class GameController extends UnicastRemoteObject implements Initializable
 //        batBlueY = batPositions[3];
 //        batGreenX = batPositions[4];
 //        batGreenY = batPositions[5];
-        try {
+        try
+        {
             sides = hockeyField.getSides();
-        } catch (RemoteException ex) {
+        }
+        catch (RemoteException ex)
+        {
             Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        for (Side side : sides) {
+        for (Side side : sides)
+        {
             gc.setLineWidth(1);
             if (Color.RED.toString().equals(side.getColor().toString()))
             {
@@ -348,13 +370,14 @@ public class GameController extends UnicastRemoteObject implements Initializable
             {
                 Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
             }
-        if (!message.isEmpty() && message.trim().length() > 0) {
-            messages.add(message);
-            lvChat.scrollTo(lvChat.getItems().size());
-            tfMessage.clear();
+            if (!message.isEmpty() && message.trim().length() > 0)
+            {
+                messages.add(message);
+                lvChat.scrollTo(lvChat.getItems().size());
+                tfMessage.clear();
+            }
         }
     }
-}
 
     @FXML
     private void btnExit_Click(ActionEvent evt)
@@ -447,13 +470,42 @@ public class GameController extends UnicastRemoteObject implements Initializable
         if (loggedInUser.equals(evt.getNewValue()))
         {
             btnStart.setDisable(false);
-            System.out.println("Hey meny");
         }
-        System.out.println("Hey eric");
         if (evt.getPropertyName().equals("Game"))
         {
             messages.add((evt.getNewValue().toString()));
         }
+        if (evt.getPropertyName().equals("gameOver"))
+        {
+            System.out.println("End game!");
+            endGame();
+        }
     }
 
+    public void endGame()
+    {
+        timer.stop();
+        Parent root = null;
+        try
+        {
+            Stage stage = new Stage();
+            root = FXMLLoader.load(getClass().getResource("GameResults.fxml"));
+            stage.setTitle("Airhockey - Game Results");
+
+            hockeyField = null;
+
+            Scene scene = new Scene(root);
+
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.show();
+            btnSend.getScene().getWindow().hide();
+
+        }
+        catch (Exception ex)
+        {
+            System.out.println(ex.getMessage());
+        }
+
+    }
 }
