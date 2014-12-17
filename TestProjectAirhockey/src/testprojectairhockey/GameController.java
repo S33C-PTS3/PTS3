@@ -44,6 +44,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Transform;
 import observer.RemotePropertyListener;
+import observer.RemotePublisher;
 
 /**
  *
@@ -118,12 +119,14 @@ public class GameController extends UnicastRemoteObject implements Initializable
 
     GameRMI rmiController;
 
-    public GameController() throws RemoteException {
+    public GameController() throws RemoteException
+    {
 
     }
 
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize(URL url, ResourceBundle rb)
+    {
         //Focus op het spel zodat je meteen de bat kan bewegen
         lvChat.setItems(messages);
         lvChat.setFocusTraversable(true);
@@ -136,83 +139,116 @@ public class GameController extends UnicastRemoteObject implements Initializable
     }
 
     @FXML
-    public void btnStart_Click(ActionEvent evt) {
+    public void btnStart_Click(ActionEvent evt)
+    {
+        RemotePublisher publisher = (RemotePublisher) rmiController.getHockeyField();
+        try
+        {
+            publisher.addListener(this, "gameOver");
+        }
+        catch (RemoteException ex)
+        {
+            Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         Platform.runLater(new Runnable() {
 
             @Override
-            public void run() {
+            public void run()
+            {
                 setVisibilityWaitingScreen();
-                try {
+                try
+                {
                     rmiController.getActiveGame().startGame();
-                } catch (RemoteException ex) {
+                }
+                catch (RemoteException ex)
+                {
                     Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
-                try {
+                try
+                {
                     //Labels vullen met de namen van de spelers
                     sides = hockeyField.getSides();
                     int rotateIndex = 0;
-                    for (Side side : sides) {
-                        if (side.getSideName().equals(SideName.BOTTOM)) {
+                    for (Side side : sides)
+                    {
+                        if (side.getSideName().equals(SideName.BOTTOM))
+                        {
                             lblPlayer1.setText(side.getBoundPlayer().getUsername());
                             System.out.println("Bottom: " + side.getBoundPlayer().getUsername());
                         }
-                        if (side.getSideName().equals(SideName.RIGHT)) {
+                        if (side.getSideName().equals(SideName.RIGHT))
+                        {
                             lblPlayer2.setText(side.getBoundPlayer().getUsername());
                             System.out.println("Right: " + side.getBoundPlayer().getUsername());
                         }
-                        if (side.getSideName().equals(SideName.LEFT)) {
+                        if (side.getSideName().equals(SideName.LEFT))
+                        {
                             lblPlayer3.setText(side.getBoundPlayer().getUsername());
                             System.out.println("Left: " + side.getBoundPlayer().getUsername());
                         }
-                        if (side.getBoundPlayer().getUsername().equals(loggedInUser)) {
+                        if (side.getBoundPlayer().getUsername().equals(loggedInUser))
+                        {
                             rotateIndex = side.getBoundPlayer().getID();
                         }
                     }
-                    if (rotateIndex == 0) {
+                    if (rotateIndex == 0)
+                    {
                         canvas.getTransforms().add(Transform.rotate(-120 * (rotateIndex + 1), 230, 323));
-                    } else if (rotateIndex == 1) {
+                    }
+                    else if (rotateIndex == 1)
+                    {
                         canvas.getTransforms().add(Transform.rotate(-120 * (rotateIndex - 1), 230, 323));
-                    } else if (rotateIndex == 2) {
+                    }
+                    else if (rotateIndex == 2)
+                    {
                         canvas.getTransforms().add(Transform.rotate(-120 * (rotateIndex), 230, 323));
                     }
 
                     //De gameloop
                     timer = new AnimationTimer() {
                         @Override
-                        public void handle(long now) {
+                        public void handle(long now)
+                        {
                             gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
                             Draw();
                         }
                     };
                     timer.start();
-                } catch (RemoteException ex) {
+                }
+                catch (RemoteException ex)
+                {
                     Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
     }
 
-    public void Draw() {
+    public void Draw()
+    {
         gc.setLineWidth(1);
 
         //hulplijnen om te kijken of de puck en de bats in het midden staan.
         //gc.strokeLine(sides[0].getLineX1(), sides[0].getLineY1(), sides[0].getLineX1(), sides[0].getLineY2());
         //gc.strokeLine(sides[1].getLineX1(), sides[1].getLineY1(), (sides[2].getLineX2() + sides[2].getLineX1()) / 2, (sides[2].getLineY2() + sides[2].getLineY1()) / 2);
         //gc.strokeLine(sides[2].getLineX1(), sides[2].getLineY1(), (sides[0].getLineX2() + sides[0].getLineX1()) / 2, (sides[0].getLineY2() + sides[0].getLineY1()) / 2);
-        for (Side side : sides) {
+        for (Side side : sides)
+        {
             gc.setLineWidth(1);
-            if (Color.RED.toString().equals(side.getColor().toString())) {
+            if (Color.RED.toString().equals(side.getColor().toString()))
+            {
                 gc.setStroke(Color.RED);
                 gc.setFill(Color.RED);
             }
 
-            if (Color.BLUE.toString().equals(side.getColor().toString())) {
+            if (Color.BLUE.toString().equals(side.getColor().toString()))
+            {
                 gc.setStroke(Color.BLUE);
                 gc.setFill(Color.BLUE);
             }
 
-            if (Color.GREEN.toString().equals(side.getColor().toString())) {
+            if (Color.GREEN.toString().equals(side.getColor().toString()))
+            {
                 gc.setFill(Color.GREEN);
                 gc.setStroke(Color.GREEN);
             }
@@ -222,27 +258,38 @@ public class GameController extends UnicastRemoteObject implements Initializable
             gc.strokeLine(side.getGoalX1(), side.getGoalY1(), side.getGoalX2(), side.getGoalY2());
 
             Bat bat = side.getBat();
-            if (side.getSideName().equals(SideName.BOTTOM)) {
+            if (side.getSideName().equals(SideName.BOTTOM))
+            {
                 gc.drawImage(batBlue, bat.getXpos() - bat.getRadius(), bat.getYpos() - bat.getRadius(), bat.getDiameter(), bat.getDiameter());
                 lblScore1.setText(String.valueOf(side.getBoundPlayer().getInGameScore()));
-            } else if (side.getSideName().equals(SideName.RIGHT)) {
+            }
+            else if (side.getSideName().equals(SideName.RIGHT))
+            {
                 gc.drawImage(batGreen, bat.getXpos() - bat.getRadius(), bat.getYpos() - bat.getRadius(), bat.getDiameter(), bat.getDiameter());
                 lblScore2.setText(String.valueOf(side.getBoundPlayer().getInGameScore()));
-            } else if (side.getSideName().equals(SideName.LEFT)) {
+            }
+            else if (side.getSideName().equals(SideName.LEFT))
+            {
                 gc.drawImage(batRed, bat.getXpos() - bat.getRadius(), bat.getYpos() - bat.getRadius(), bat.getDiameter(), bat.getDiameter());
                 lblScore3.setText(String.valueOf(side.getBoundPlayer().getInGameScore()));
             }
 
-            try {
+            try
+            {
                 lblRoundNr.setText(String.valueOf(hockeyField.getRound()));
-            } catch (RemoteException ex) {
+            }
+            catch (RemoteException ex)
+            {
                 Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         Point2D position = null;
-        try {
+        try
+        {
             position = new Point2D(hockeyField.getPuckPosition()[0], hockeyField.getPuckPosition()[1]);
-        } catch (RemoteException ex) {
+        }
+        catch (RemoteException ex)
+        {
             Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
         }
         gc.setFill(Color.BLACK);
@@ -254,11 +301,16 @@ public class GameController extends UnicastRemoteObject implements Initializable
     }
 
     @FXML
-    private void keyEventPressed(KeyEvent evt) {
-        if (evt.getCode().equals(KeyCode.LEFT) || evt.getCode().equals(KeyCode.RIGHT)) {
-            try {
+    private void keyEventPressed(KeyEvent evt)
+    {
+        if (evt.getCode().equals(KeyCode.LEFT) || evt.getCode().equals(KeyCode.RIGHT))
+        {
+            try
+            {
                 hockeyField.setPlayerBatPosition(evt.getCode().toString(), loggedInUser);
-            } catch (RemoteException ex) {
+            }
+            catch (RemoteException ex)
+            {
                 Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -267,13 +319,16 @@ public class GameController extends UnicastRemoteObject implements Initializable
     }
 
     @FXML
-    private void btnSend_Click(ActionEvent evt) {
+    private void btnSend_Click(ActionEvent evt)
+    {
         sendMessage();
     }
 
     @FXML
-    private void enterPressed(KeyEvent evt) {
-        if (evt.getCode().equals(KeyCode.ENTER) && tfMessage.isFocused()) {
+    private void enterPressed(KeyEvent evt)
+    {
+        if (evt.getCode().equals(KeyCode.ENTER) && tfMessage.isFocused())
+        {
             lvChat.setFocusTraversable(true);
             tfMessage.setFocusTraversable(false);
             lvChat.requestFocus();
@@ -281,10 +336,12 @@ public class GameController extends UnicastRemoteObject implements Initializable
         }
     }
 
-    private void sendMessage() {
+    private void sendMessage()
+    {
         //van wie komt het bericht.. voorbeeldbericht: Eric: Hallo!
         String message = tfMessage.getText();
-        if (!message.isEmpty() && message.trim().length() > 0) {
+        if (!message.isEmpty() && message.trim().length() > 0)
+        {
             messages.add(message);
             lvChat.scrollTo(lvChat.getItems().size());
             tfMessage.clear();
@@ -292,15 +349,20 @@ public class GameController extends UnicastRemoteObject implements Initializable
     }
 
     @FXML
-    private void btnExit_Click(ActionEvent evt) {
+    private void btnExit_Click(ActionEvent evt)
+    {
         timer.stop();
         Parent root = null;
-        try {
+        try
+        {
             Stage stage = new Stage();
-            if (hockeyField.getMode().equals(Mode.SINGLE)) {
+            if (hockeyField.getMode().equals(Mode.SINGLE))
+            {
                 root = FXMLLoader.load(getClass().getResource("Menu.fxml"));
                 stage.setTitle("Airhockey - Menu");
-            } else if (hockeyField.getMode().equals(Mode.MULTI)) {
+            }
+            else if (hockeyField.getMode().equals(Mode.MULTI))
+            {
                 root = FXMLLoader.load(getClass().getResource("Lobby.fxml"));
                 stage.setTitle("Airhockey - Mulitplayer");
             }
@@ -314,47 +376,93 @@ public class GameController extends UnicastRemoteObject implements Initializable
             stage.show();
             ((Node) (evt.getSource())).getScene().getWindow().hide();
 
-        } catch (Exception ex) {
+        }
+        catch (Exception ex)
+        {
             System.out.println(ex.getMessage());
         }
     }
 
-    public void setMode(Mode mode, String loggedInUser, Game g) {
+    public void setMode(Mode mode, String loggedInUser, Game g)
+    {
         this.mode = mode;
-        if (mode.equals(Mode.MULTI)) {
-            try {
+        if (mode.equals(Mode.MULTI))
+        {
+            try
+            {
                 rmiController = new GameRMI();
-            } catch (RemoteException ex) {
+            }
+            catch (RemoteException ex)
+            {
                 Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         hockeyField = rmiController.getHockeyField();
-        try {
+        try
+        {
             hockeyField.setBindedPlayers(g);
-        } catch (RemoteException ex) {
+        }
+        catch (RemoteException ex)
+        {
             Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.loggedInUser = loggedInUser;
-        try {
+        try
+        {
             diameterPuck = rmiController.getHockeyField().getDiameter();
-        } catch (RemoteException ex) {
+        }
+        catch (RemoteException ex)
+        {
             Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    private void setVisibilityWaitingScreen() {
+    private void setVisibilityWaitingScreen()
+    {
         canvas.setVisible(true);
         lblWaiting.setVisible(false);
         btnStart.setVisible(false);
     }
 
     @Override
-    public void propertyChange(PropertyChangeEvent evt) throws RemoteException {
-        if (loggedInUser.equals(evt.getNewValue())) {
+    public void propertyChange(PropertyChangeEvent evt) throws RemoteException
+    {
+        if (loggedInUser.equals(evt.getNewValue()))
+        {
             btnStart.setDisable(false);
-            System.out.println("Hey meny");
         }
-        System.out.println("Hey eric");
+
+        if (evt.getPropertyName().equals("gameOver"))
+        {
+            System.out.println("End game!");
+            endGame();
+        }
+    }
+
+    public void endGame()
+    {
+        timer.stop();
+        Parent root = null;
+        try
+        {
+            Stage stage = new Stage();
+            root = FXMLLoader.load(getClass().getResource("GameResults.fxml"));
+            stage.setTitle("Airhockey - Game Results");
+
+            hockeyField = null;
+
+            Scene scene = new Scene(root);
+
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.show();
+            btnSend.getScene().getWindow().hide();
+
+        }
+        catch (Exception ex)
+        {
+            System.out.println(ex.getMessage());
+        }
     }
 
 }

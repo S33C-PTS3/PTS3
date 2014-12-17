@@ -51,7 +51,7 @@ public class HockeyField extends UnicastRemoteObject implements RemotePublisher,
      * Constructor used for HockeyField.
      */
     public HockeyField() throws RemoteException {
-        publisher = new BasicPublisher(new String[]{"bat", "puck"});
+        publisher = new BasicPublisher(new String[]{"bat", "puck", "gameOver"});
         puck = new Puck();
     }
 
@@ -288,8 +288,9 @@ public class HockeyField extends UnicastRemoteObject implements RemotePublisher,
                 highscore = side.getBoundPlayer().getInGameScore();
                 gameResult.add(side);
                 gameOver = true;
-
             }
+            publisher.inform(this, "gameOver", null, true);
+            
             Collections.sort(gameResult, new Comparator<Side>() {
 
                 @Override
