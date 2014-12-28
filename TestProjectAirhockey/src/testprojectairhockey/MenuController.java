@@ -66,7 +66,7 @@ public class MenuController implements Initializable {
     @FXML
     private void btnMP_Click(ActionEvent evt)
     {
-        startNewWindow("Login", "Airhockey - Login", evt);
+        startNewWindow("Lobby", "Airhockey - Lobby", evt);
     }
     
     @FXML

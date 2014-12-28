@@ -140,7 +140,7 @@ public class Game implements Serializable {
         {
             try
             {
-                System.out.println( i + users.get(i).getUsername());
+                System.out.println(i + users.get(i).getUsername());
                 Player player = new Player(users.get(i).getUsername());
                 player.setID(i);
                 players.add(player);

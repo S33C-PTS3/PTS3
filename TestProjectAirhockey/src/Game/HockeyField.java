@@ -329,12 +329,20 @@ public class HockeyField extends UnicastRemoteObject implements RemotePublisher,
     @Override
     public void setBindedPlayers(Game g) throws RemoteException
     {
-        for (int i = 0; i < 3; i++)
+        for (int i = 1; i != 0; i++)
         {
+            if(i == 3)
+            {
+                i=0;
+            }
             IPlayer player = g.getUsersObject().get(i);
             int userID = g.getUsersObject().get(i).getID();
             player.setID(userID);
             sides[i].setBoundPlayer(player);
+            if(i == 0)
+            {
+                i=-1;
+            }
         }
     }
 
@@ -441,19 +449,21 @@ public class HockeyField extends UnicastRemoteObject implements RemotePublisher,
         {
             if (s.getBoundPlayer().getUsername().equals(userName))
             {
-////                if (s.getGoalX1() + 20 <= s.getBat().getXpos() && direction.equals("LEFT"))
+//                if (s.getGoalX1() + 20 <= s.getBat().getXpos() && direction.equals("LEFT"))
 //                {
-//                    break;
+//                    System.out.println("BEWEEG");
 //                }
 //                else if (s.getGoalX2() + 35 >= s.getBat().getXpos() && direction.equals("RIGHT"))
 //                {
-//                    break;
 //                }
-                boundPlayer = (Player) s.getBoundPlayer();
-                s.setBoundPlayer(boundPlayer);
-                s.getBat().move(String.valueOf(s.getBoundPlayer().getID()) + direction);
-                System.out.println(s.getBoundPlayer().getID());
-                break;
+//                else
+//                {
+                    boundPlayer = (Player) s.getBoundPlayer();
+                    s.setBoundPlayer(boundPlayer);
+                    s.getBat().move(String.valueOf(s.getBoundPlayer().getID()) + direction);
+                    System.out.println(s.getBoundPlayer().getID());
+                    break;
+                //}
             }
         }
     }
