@@ -423,12 +423,12 @@ public class GameController extends UnicastRemoteObject implements Initializable
     }
 
     public void endGame() {
+        timer.stop();
         try {
             publisher.removeListener(this, "gameOver");
         } catch (RemoteException ex) {
             Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        timer.stop();
         Platform.runLater(new Runnable() {
 
             @Override
