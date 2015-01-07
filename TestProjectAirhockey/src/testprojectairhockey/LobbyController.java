@@ -120,7 +120,7 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
         messages = FXCollections.observableArrayList();
         lvChatBox.setItems(messages);
         
-        //populateRanking();
+        populateRanking();
 
         try
         {
@@ -372,8 +372,6 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
         String[] ranking = authMan.getRanking();
         for (String current: ranking) 
         {
-            System.out.println("USERNAME: " + current.substring(0, current.indexOf("|")));
-            System.out.println("RATING: " + current.substring(current.indexOf("|") + 1, current.length()));
             rankingList.add(new RankedUser(current.substring(0, current.indexOf("|")), current.substring(current.indexOf("|") + 1, current.length())));
         }
         
