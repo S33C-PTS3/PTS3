@@ -126,7 +126,7 @@ public class Lobby extends UnicastRemoteObject implements ILobby, RemotePublishe
                 }
                 user.setID(userCount - 1);
                 if (userCount == 3) {
-                    publisher.inform(this, "client", null, g.getUsers()[0]);
+                    publisher.inform(this, "client", g, g.getUsers()[0]);
                     publisher.inform(this, "lobby", null, true);
                 }
                 return true;

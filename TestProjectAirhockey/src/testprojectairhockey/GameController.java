@@ -407,7 +407,7 @@ public class GameController extends UnicastRemoteObject implements Initializable
                     btnStart.setDisable(false);
                     
                     try {
-                        hockeyField.setBindedPlayers(myGame);
+                        hockeyField.setBindedPlayers((Game)evt.getOldValue());
                     } catch (RemoteException ex) {
                         Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
                     }                    
