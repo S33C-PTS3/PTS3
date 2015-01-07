@@ -108,6 +108,8 @@ public class GameController extends UnicastRemoteObject implements Initializable
 
     //Animation timer zodat het spel een loop is
     AnimationTimer timer;
+    
+    Game myGame;
 
     //Modus van de game
     Mode mode = Mode.SINGLE;
@@ -364,6 +366,7 @@ public class GameController extends UnicastRemoteObject implements Initializable
 
     public void setMode(Mode mode, String loggedInUser, Game g) {
         this.mode = mode;
+        this.myGame = g;
         if (mode.equals(Mode.MULTI)) {
             try {
                 rmiController = new GameRMI();
@@ -371,12 +374,7 @@ public class GameController extends UnicastRemoteObject implements Initializable
                 Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        hockeyField = rmiController.getHockeyField();
-        try {
-            hockeyField.setBindedPlayers(g);
-        } catch (RemoteException ex) {
-            Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        hockeyField = rmiController.getHockeyField();        
         this.loggedInUser = loggedInUser;
         try {
             diameterPuck = rmiController.getHockeyField().getDiameter();
@@ -407,6 +405,12 @@ public class GameController extends UnicastRemoteObject implements Initializable
                 @Override
                 public void run() {
                     btnStart.setDisable(false);
+                    
+                    try {
+                        hockeyField.setBindedPlayers(myGame);
+                    } catch (RemoteException ex) {
+                        Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
+                    }                    
                 }
             });
         }
