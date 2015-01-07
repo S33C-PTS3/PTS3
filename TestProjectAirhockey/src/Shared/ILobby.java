@@ -62,4 +62,6 @@ public interface ILobby extends Remote, RemotePublisher{
     
     public IChat getChat() throws RemoteException;
     
+    public void removeGame(int gameID) throws RemoteException;
+    
 }

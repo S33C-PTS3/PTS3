@@ -122,7 +122,7 @@ public class GameController extends UnicastRemoteObject implements Initializable
 
     GameRMI rmiController;
     RemotePublisher publisher;
-
+    boolean gameActive = true;
     public GameController() throws RemoteException {
 
     }
@@ -187,9 +187,9 @@ public class GameController extends UnicastRemoteObject implements Initializable
             }
 
             if (rotateIndex == 0) {
-                canvas.getTransforms().add(Transform.rotate(-120 * (rotateIndex + 1), 280, 323));
+                canvas.getTransforms().add(Transform.rotate(-120 * (rotateIndex), 280, 323));
             } else if (rotateIndex == 1) {
-                canvas.getTransforms().add(Transform.rotate(-120 * (rotateIndex - 1), 280, 323));
+                canvas.getTransforms().add(Transform.rotate(-120 * (rotateIndex), 280, 323));
             } else if (rotateIndex == 2) {
                 canvas.getTransforms().add(Transform.rotate(-120 * (rotateIndex), 280, 323));
             }
@@ -198,8 +198,11 @@ public class GameController extends UnicastRemoteObject implements Initializable
             timer = new AnimationTimer() {
                 @Override
                 public void handle(long now) {
-                    gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-                    Draw();
+                    if(gameActive)
+                    {
+                        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+                        Draw();
+                    }
                 }
             };
             timer.start();
@@ -251,13 +254,13 @@ public class GameController extends UnicastRemoteObject implements Initializable
 
             Bat bat = side.getBat();
             if (side.getSideName().equals(SideName.BOTTOM)) {
-                gc.drawImage(batBlue, bat.getXpos() - bat.getRadius(), bat.getYpos() - bat.getRadius(), bat.getDiameter(), bat.getDiameter());
+                gc.drawImage(batRed, bat.getXpos() - bat.getRadius(), bat.getYpos() - bat.getRadius(), bat.getDiameter(), bat.getDiameter());
                 lblScore1.setText(String.valueOf(side.getBoundPlayer().getInGameScore()));
             } else if (side.getSideName().equals(SideName.RIGHT)) {
                 gc.drawImage(batGreen, bat.getXpos() - bat.getRadius(), bat.getYpos() - bat.getRadius(), bat.getDiameter(), bat.getDiameter());
                 lblScore2.setText(String.valueOf(side.getBoundPlayer().getInGameScore()));
             } else if (side.getSideName().equals(SideName.LEFT)) {
-                gc.drawImage(batRed, bat.getXpos() - bat.getRadius(), bat.getYpos() - bat.getRadius(), bat.getDiameter(), bat.getDiameter());
+                gc.drawImage(batBlue, bat.getXpos() - bat.getRadius(), bat.getYpos() - bat.getRadius(), bat.getDiameter(), bat.getDiameter());
                 lblScore3.setText(String.valueOf(side.getBoundPlayer().getInGameScore()));
             }
 
@@ -330,6 +333,7 @@ public class GameController extends UnicastRemoteObject implements Initializable
     @FXML
     private void btnExit_Click(ActionEvent evt) {
         timer.stop();
+        gameActive = false;
         Parent root = null;
         try {
             Stage stage = new Stage();
@@ -337,7 +341,10 @@ public class GameController extends UnicastRemoteObject implements Initializable
                 root = FXMLLoader.load(getClass().getResource("Menu.fxml"));
                 stage.setTitle("Airhockey - Menu");
             } else if (hockeyField.getMode().equals(Mode.MULTI)) {
-                root = FXMLLoader.load(getClass().getResource("Lobby.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Lobby.fxml"));
+                root = (Parent) fxmlLoader.load();
+                LobbyController controller = fxmlLoader.<LobbyController>getController();
+                controller.removeGame(rmiController.getActiveGame().getID());
                 stage.setTitle("Airhockey - Mulitplayer");
             }
 
@@ -424,6 +431,7 @@ public class GameController extends UnicastRemoteObject implements Initializable
 
     public void endGame() {
         timer.stop();
+        gameActive = false;
         try {
             publisher.removeListener(this, "gameOver");
         } catch (RemoteException ex) {

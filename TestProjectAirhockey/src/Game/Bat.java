@@ -135,30 +135,30 @@ public class Bat implements Serializable{
         //Settings s = serMan.loadAIsettings();
         
         
-        if ("0LEFT".equals(direction)) 
+        if ("LEFT_LEFT".equals(direction)) 
         {
             this.Xpos += (.58*leftSpeedModifier);
             this.Ypos -= (1*leftSpeedModifier);
         }
-        else if ("0RIGHT".equals(direction))
+        else if ("LEFT_RIGHT".equals(direction))
         {
             this.Xpos -= (.58*leftSpeedModifier);
             this.Ypos += (1*leftSpeedModifier);
         }
-        else if ("1RIGHT".equals(direction)) 
+        else if ("BOTTOM_RIGHT".equals(direction)) 
         {
             this.Xpos += this.Xvelocity;
         }
-        else if ("1LEFT".equals(direction))
+        else if ("BOTTOM_LEFT".equals(direction))
         {
             this.Xpos -= this.Xvelocity;
         }
-        else if ("2LEFT".equals(direction))
+        else if ("RIGHT_LEFT".equals(direction))
         {
             this.Xpos += (.58*rightSpeedModifier);
             this.Ypos += (1*rightSpeedModifier);
         }
-        else if ("2RIGHT".equals(direction))
+        else if ("RIGHT_RIGHT".equals(direction))
         {
             this.Xpos -= (.58*rightSpeedModifier);
             this.Ypos -= (1*rightSpeedModifier);

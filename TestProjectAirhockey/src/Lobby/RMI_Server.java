@@ -70,7 +70,7 @@ public class RMI_Server {
         }
 
         try {
-            game = new ActiveGame("Meny");
+            game = new ActiveGame("Meny",1);
             System.out.println("Server: Game created");
         } catch (Exception ex) {
             System.out.println("Server: Cannot create Game");

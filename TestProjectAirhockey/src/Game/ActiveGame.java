@@ -29,16 +29,18 @@ public class ActiveGame extends UnicastRemoteObject implements IActiveGame, Remo
     private String[] users;
     BasicPublisher publisher;
     Thread threadPuck;
+    private int id;
 
     //gegenereerde constructor
     //ROUNDS AND SCORES IN ACTIVE GAME ZETTEN EN UIT HOCKEYFIELD
-    public ActiveGame(String name) throws RemoteException {
+    public ActiveGame(String name, int id) throws RemoteException {
         //super(name, creator);
         hockeyField = new HockeyField();
         hockeyField.init(Mode.MULTI);
         users = new String[3];
         publisher = new BasicPublisher(new String[]{"Game", "Client"});
         chat = new Chat();
+        this.id = id;
     }
 
     /**
@@ -126,5 +128,10 @@ public class ActiveGame extends UnicastRemoteObject implements IActiveGame, Remo
     @Override
     public void addListenerO(RemotePropertyListener publisher, String property) throws RemoteException {
         this.addListener(publisher, property);
+    }
+
+    @Override
+    public int getID() throws RemoteException {
+        return this.id;
     }
 }

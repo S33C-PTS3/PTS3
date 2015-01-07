@@ -329,20 +329,18 @@ public class HockeyField extends UnicastRemoteObject implements RemotePublisher,
     @Override
     public void setBindedPlayers(Game g) throws RemoteException
     {
-        for (int i = 1; i != 0; i++)
+        int index = 0;
+        for (int i = 0; i < 3; i++)
         {
-            if(i == 3)
-            {
-                i=0;
-            }
             IPlayer player = g.getUsersObject().get(i);
             int userID = g.getUsersObject().get(i).getID();
             player.setID(userID);
-            sides[i].setBoundPlayer(player);
-            if(i == 0)
+            index = i;
+            if(index == 2)
             {
-                i=-1;
+                index = -1;
             }
+            sides[index+1].setBoundPlayer(player);
         }
     }
 
@@ -449,21 +447,48 @@ public class HockeyField extends UnicastRemoteObject implements RemotePublisher,
         {
             if (s.getBoundPlayer().getUsername().equals(userName))
             {
-//                if (s.getGoalX1() + 20 <= s.getBat().getXpos() && direction.equals("LEFT"))
-//                {
-//                    System.out.println("BEWEEG");
-//                }
-//                else if (s.getGoalX2() + 35 >= s.getBat().getXpos() && direction.equals("RIGHT"))
-//                {
-//                }
-//                else
-//                {
+                if(s.getSideName().toString().equals("BOTTOM"))
+                {
+                    if (s.getGoalX1() + 20 >= s.getBat().getXpos() && direction.equals("LEFT"))
+                    {
+                        System.out.println("BEWEEG");
+                        break;
+                    }
+                    else if (s.getGoalX2() - 10 <= s.getBat().getXpos() && direction.equals("RIGHT"))
+                    {
+                        System.out.println("BAT COORDINATEN " + s.getGoalX2()+ " " +s.getBat().getXpos());
+                        break;
+                    }
+                }
+                else if(s.getSideName().toString().equals("LEFT"))
+                {
+                    if (s.getGoalX1() + 20 <= s.getBat().getXpos() && direction.equals("LEFT"))
+                    {
+                        System.out.println("BEWEEG");
+                        break;
+                    }
+                    else if (s.getGoalX2() + 35 >= s.getBat().getXpos() && direction.equals("RIGHT"))
+                    {
+                        System.out.println("BAT COORDINATEN " + s.getGoalX2()+ " " +s.getBat().getXpos());
+                        break;
+                    }
+                }
+                else if(s.getSideName().toString().equals("RIGHT"))
+                {
+                    if(s.getGoalX1() - 20 >=  s.getBat().getXpos() && direction.equals("RIGHT"))
+                    {
+                       break; 
+                    }
+                    else if(s.getGoalX2() - 35 <= s.getBat().getXpos() && direction.equals("LEFT"))
+                    {
+                       break;
+                    }
+                }
                     boundPlayer = (Player) s.getBoundPlayer();
                     s.setBoundPlayer(boundPlayer);
-                    s.getBat().move(String.valueOf(s.getBoundPlayer().getID()) + direction);
+                    s.getBat().move(s.getSideName().toString() + "_" + direction);
                     System.out.println(s.getBoundPlayer().getID());
                     break;
-                //}
             }
         }
     }

@@ -165,9 +165,9 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
         try
         {
             System.out.println(lobby.toString());
-            gameInfo = lobby.addGame(new Game(loggedInUser.getUsername() + "'s Game",(User) loggedInUser));
-            lobby.addUserToGame(1, new User("Frans Bauer"));
-            lobby.addUserToGame(1, new User("Rens"));
+            gameInfo = lobby.addGame(new Game(loggedInUser.getUsername() + "'s Game",new User("Frans Bauer")));
+            lobby.addUserToGame(1,(User) loggedInUser);
+            lobby.addUserToGame(1,new User("Rens"));
         }
         catch (RemoteException ex)
         {
@@ -423,6 +423,15 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
             Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+    }
+    
+    public void removeGame(int gameID)
+    {
+        try {
+            rmiController.getLobby().removeGame(gameID);
+        } catch (RemoteException ex) {
+            Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override

@@ -163,4 +163,9 @@ public class Lobby extends UnicastRemoteObject implements ILobby, RemotePublishe
     public List<Message> getMessages() throws RemoteException {
         return chat.getMessages();
     }
+
+    @Override
+    public void removeGame(int gameID) throws RemoteException {
+        games.remove(getGame(gameID));
+    }
 }
