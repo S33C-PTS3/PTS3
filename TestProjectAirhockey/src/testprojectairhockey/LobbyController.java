@@ -99,7 +99,7 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
     private ObservableList<String> messages;
     private ArrayList<IGame> games;
     private LobbyRMI rmiController;
-    private IUser loggedInUser = new User("Meny");
+    private IUser loggedInUser;
     // widht of accordion / 4 to determine width of the columns
     private final double COLUMNWIDTH = 137.5;
     private final double ROWHEIGHT = 20;
@@ -165,9 +165,7 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
         try
         {
             System.out.println(lobby.toString());
-            gameInfo = lobby.addGame(new Game(loggedInUser.getUsername() + "'s Game",new User("Frans Bauer")));
-            lobby.addUserToGame(1,(User) loggedInUser);
-            lobby.addUserToGame(1,new User("Rens"));
+            gameInfo = lobby.addGame(new Game(loggedInUser.getUsername() + "'s Game", (User)loggedInUser));
         }
         catch (RemoteException ex)
         {
