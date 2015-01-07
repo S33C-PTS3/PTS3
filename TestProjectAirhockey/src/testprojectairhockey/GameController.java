@@ -136,7 +136,7 @@ public class GameController extends UnicastRemoteObject implements Initializable
 
         gc = canvas.getGraphicsContext2D();
         canvas.setVisible(false);
-        //btnStart.setDisable(true);
+        btnStart.setDisable(true);
 
     }
 
@@ -411,6 +411,14 @@ public class GameController extends UnicastRemoteObject implements Initializable
             });
         }
         if (evt.getPropertyName().equals("Game")) {
+//            Platform.runLater(new Runnable() {
+//                @Override
+//                public void run() {
+//                    messages.add((evt.getNewValue().toString()));
+//                }
+//            });
+            
+            
             messages.add((evt.getNewValue().toString()));
         }
         if (evt.getPropertyName().equals("gameOver")) {
