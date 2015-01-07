@@ -438,13 +438,13 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
             Message m = (Message)evt.getNewValue();
             if(!m.getSender().equals(loggedInUser.getUsername()))
             {
-//                Platform.runLater(new Runnable() {
-//                @Override
-//                public void run() {
-//                    messages.add(m.toString());
-//                }
-//            });
-                 messages.add(m.toString());
+                Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    messages.add(m.toString());
+                }
+            });
+                 //messages.add(m.toString());
             }
         }
         if(evt.getPropertyName().equals("lobby"))
