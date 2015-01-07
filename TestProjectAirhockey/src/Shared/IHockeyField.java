@@ -38,4 +38,6 @@ public interface IHockeyField extends Remote{
     public void setBindedPlayers(Game g) throws RemoteException;
     
     public String[] getGameResults() throws RemoteException;
+    
+    public int[] getPlayerScores() throws RemoteException;
 }

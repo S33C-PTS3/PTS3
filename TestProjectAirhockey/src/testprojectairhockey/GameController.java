@@ -227,18 +227,24 @@ public class GameController extends UnicastRemoteObject implements Initializable
         //gc.strokeLine(sides[1].getLineX1(), sides[1].getLineY1(), (sides[2].getLineX2() + sides[2].getLineX1()) / 2, (sides[2].getLineY2() + sides[2].getLineY1()) / 2);
         //gc.strokeLine(sides[2].getLineX1(), sides[2].getLineY1(), (sides[0].getLineX2() + sides[0].getLineX1()) / 2, (sides[0].getLineY2() + sides[0].getLineY1()) / 2);
         double[] batPositions = null;
+        int[] scores = null;
         try {
             batPositions = hockeyField.getBatPositions();
+            scores = hockeyField.getPlayerScores();
         } catch (RemoteException ex) {
             Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
         }
         double batRedX, batRedY, batGreenX, batGreenY, batBlueX, batBlueY;
+        int scorePlayer1, scorePlayer2, scorePlayer3;
         batRedX = batPositions[0];
         batRedY = batPositions[1];
         batBlueX = batPositions[2];
         batBlueY = batPositions[3];
         batGreenX = batPositions[4];
         batGreenY = batPositions[5];
+        scorePlayer1 = scores[0];
+        scorePlayer2 = scores[1];
+        scorePlayer3 = scores[2];
         for (Side side : sides) {
             gc.setLineWidth(1);
             if (Color.RED.toString().equals(side.getColor().toString())) {
@@ -262,14 +268,14 @@ public class GameController extends UnicastRemoteObject implements Initializable
 
             Bat bat = side.getBat();
             if (side.getSideName().equals(SideName.BOTTOM)) {
-                gc.drawImage(batRed, batRedX - bat.getRadius(), batRedY - bat.getRadius(), bat.getDiameter(), bat.getDiameter());
-                lblScore1.setText(String.valueOf(side.getBoundPlayer().getInGameScore()));
+                gc.drawImage(batRed, batBlueX - bat.getRadius(), batBlueY - bat.getRadius(), bat.getDiameter(), bat.getDiameter());
+                lblScore1.setText(String.valueOf(scorePlayer1));
             } else if (side.getSideName().equals(SideName.RIGHT)) {
                 gc.drawImage(batGreen, batGreenX - bat.getRadius(), batGreenY - bat.getRadius(), bat.getDiameter(), bat.getDiameter());
-                lblScore2.setText(String.valueOf(side.getBoundPlayer().getInGameScore()));
+                lblScore2.setText(String.valueOf(scorePlayer2));
             } else if (side.getSideName().equals(SideName.LEFT)) {
-                gc.drawImage(batBlue, batBlueX - bat.getRadius(), batBlueY - bat.getRadius(), bat.getDiameter(), bat.getDiameter());
-                lblScore3.setText(String.valueOf(side.getBoundPlayer().getInGameScore()));
+                gc.drawImage(batBlue, batRedX - bat.getRadius(), batRedY - bat.getRadius(), bat.getDiameter(), bat.getDiameter());
+                lblScore3.setText(String.valueOf(scorePlayer3));
             }
 
             try {
@@ -449,11 +455,6 @@ public class GameController extends UnicastRemoteObject implements Initializable
     public void endGame() {
         timer.stop();
         gameActive = false;
-        try {
-            publisher.removeListener(this, "gameOver");
-        } catch (RemoteException ex) {
-            Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
-        }
         Platform.runLater(new Runnable() {
 
             @Override

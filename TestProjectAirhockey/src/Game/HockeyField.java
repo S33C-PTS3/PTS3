@@ -513,4 +513,14 @@ public class HockeyField extends UnicastRemoteObject implements RemotePublisher,
         }
         return batPositions;
     }
+
+    @Override
+    public int[] getPlayerScores() throws RemoteException {
+        int[] scoresPlayers = null;
+        for(int i = 0; i < scores.size(); i++)
+        {
+            scoresPlayers[i] = scores.get(i);
+        }
+        return scoresPlayers;
+    }
 }
