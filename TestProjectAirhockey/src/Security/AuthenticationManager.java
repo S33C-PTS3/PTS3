@@ -180,7 +180,6 @@ public class AuthenticationManager {
                 newLine += rs.getString("USERNAME");
                 newLine += "|";
                 newLine += rs.getInt("RATING");
-                System.out.println("RANKING NEW LINE: " + newLine);
                 rankingList[lineIndex] = newLine;
                 lineIndex++;
             }
