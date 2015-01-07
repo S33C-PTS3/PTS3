@@ -516,7 +516,7 @@ public class HockeyField extends UnicastRemoteObject implements RemotePublisher,
 
     @Override
     public int[] getPlayerScores() throws RemoteException {
-        int[] scoresPlayers = null;
+        int[] scoresPlayers = new int[scores.size()];
         for(int i = 0; i < scores.size(); i++)
         {
             scoresPlayers[i] = scores.get(i);
