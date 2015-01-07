@@ -504,7 +504,7 @@ public class HockeyField extends UnicastRemoteObject implements RemotePublisher,
     public double[] getBatPositions() throws RemoteException
     {
         double[] batPositions = new double[sides.length * 2];
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 6; i+=2)
         {
             batPositions[i] = sides[i].getBat().getXpos();
             batPositions[i + 1] = sides[i].getBat().getYpos();

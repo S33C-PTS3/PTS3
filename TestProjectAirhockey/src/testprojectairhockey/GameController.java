@@ -108,7 +108,7 @@ public class GameController extends UnicastRemoteObject implements Initializable
 
     //Animation timer zodat het spel een loop is
     AnimationTimer timer;
-    
+
     Game myGame;
 
     //Modus van de game
@@ -125,6 +125,7 @@ public class GameController extends UnicastRemoteObject implements Initializable
     GameRMI rmiController;
     RemotePublisher publisher;
     boolean gameActive = true;
+
     public GameController() throws RemoteException {
 
     }
@@ -196,12 +197,17 @@ public class GameController extends UnicastRemoteObject implements Initializable
                 canvas.getTransforms().add(Transform.rotate(-120 * (rotateIndex), 280, 323));
             }
 
+            try {
+                sides = hockeyField.getSides();
+            } catch (RemoteException ex) {
+                Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
             //De gameloop
             timer = new AnimationTimer() {
                 @Override
                 public void handle(long now) {
-                    if(gameActive)
-                    {
+                    if (gameActive) {
                         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
                         Draw();
                     }
@@ -220,19 +226,19 @@ public class GameController extends UnicastRemoteObject implements Initializable
         //gc.strokeLine(sides[0].getLineX1(), sides[0].getLineY1(), sides[0].getLineX1(), sides[0].getLineY2());
         //gc.strokeLine(sides[1].getLineX1(), sides[1].getLineY1(), (sides[2].getLineX2() + sides[2].getLineX1()) / 2, (sides[2].getLineY2() + sides[2].getLineY1()) / 2);
         //gc.strokeLine(sides[2].getLineX1(), sides[2].getLineY1(), (sides[0].getLineX2() + sides[0].getLineX1()) / 2, (sides[0].getLineY2() + sides[0].getLineY1()) / 2);
-//        double[] batPositions = null;
-//        double batRedX,batRedY,batGreenX,batGreenY,batBlueX,batBlueY;
-//        batRedX = batPositions[0];
-//        batRedY = batPositions[1];
-//        batBlueX = batPositions[2];
-//        batBlueY = batPositions[3];
-//        batGreenX = batPositions[4];
-//        batGreenY = batPositions[5];
+        double[] batPositions = null;
         try {
-            sides = hockeyField.getSides();
+            batPositions = hockeyField.getBatPositions();
         } catch (RemoteException ex) {
             Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        double batRedX, batRedY, batGreenX, batGreenY, batBlueX, batBlueY;
+        batRedX = batPositions[0];
+        batRedY = batPositions[1];
+        batBlueX = batPositions[2];
+        batBlueY = batPositions[3];
+        batGreenX = batPositions[4];
+        batGreenY = batPositions[5];
         for (Side side : sides) {
             gc.setLineWidth(1);
             if (Color.RED.toString().equals(side.getColor().toString())) {
@@ -256,13 +262,13 @@ public class GameController extends UnicastRemoteObject implements Initializable
 
             Bat bat = side.getBat();
             if (side.getSideName().equals(SideName.BOTTOM)) {
-                gc.drawImage(batRed, bat.getXpos() - bat.getRadius(), bat.getYpos() - bat.getRadius(), bat.getDiameter(), bat.getDiameter());
+                gc.drawImage(batRed, batRedX - bat.getRadius(), batRedY - bat.getRadius(), bat.getDiameter(), bat.getDiameter());
                 lblScore1.setText(String.valueOf(side.getBoundPlayer().getInGameScore()));
             } else if (side.getSideName().equals(SideName.RIGHT)) {
-                gc.drawImage(batGreen, bat.getXpos() - bat.getRadius(), bat.getYpos() - bat.getRadius(), bat.getDiameter(), bat.getDiameter());
+                gc.drawImage(batGreen, batGreenX - bat.getRadius(), batGreenY - bat.getRadius(), bat.getDiameter(), bat.getDiameter());
                 lblScore2.setText(String.valueOf(side.getBoundPlayer().getInGameScore()));
             } else if (side.getSideName().equals(SideName.LEFT)) {
-                gc.drawImage(batBlue, bat.getXpos() - bat.getRadius(), bat.getYpos() - bat.getRadius(), bat.getDiameter(), bat.getDiameter());
+                gc.drawImage(batBlue, batBlueX - bat.getRadius(), batBlueY - bat.getRadius(), bat.getDiameter(), bat.getDiameter());
                 lblScore3.setText(String.valueOf(side.getBoundPlayer().getInGameScore()));
             }
 
@@ -374,7 +380,7 @@ public class GameController extends UnicastRemoteObject implements Initializable
                 Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        hockeyField = rmiController.getHockeyField();        
+        hockeyField = rmiController.getHockeyField();
         this.loggedInUser = loggedInUser;
         try {
             diameterPuck = rmiController.getHockeyField().getDiameter();
@@ -405,12 +411,12 @@ public class GameController extends UnicastRemoteObject implements Initializable
                 @Override
                 public void run() {
                     btnStart.setDisable(false);
-                    
+
                     try {
-                        hockeyField.setBindedPlayers((Game)evt.getOldValue());
+                        hockeyField.setBindedPlayers((Game) evt.getOldValue());
                     } catch (RemoteException ex) {
                         Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
-                    }                    
+                    }
                 }
             });
         }
@@ -421,8 +427,7 @@ public class GameController extends UnicastRemoteObject implements Initializable
                     messages.add((evt.getNewValue().toString()));
                 }
             });
-            
-            
+
             //messages.add((evt.getNewValue().toString()));
         }
         if (evt.getPropertyName().equals("gameOver")) {
