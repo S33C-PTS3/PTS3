@@ -75,7 +75,7 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
 
     @FXML
     ListView lvChatBox;
-    
+
     @FXML
     TableView tvRanking;
 
@@ -84,7 +84,7 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
 
     @FXML
     Button btnSend;
-    
+
     @FXML
     Button btnClose;
 
@@ -93,7 +93,7 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
 
     @FXML
     public Label lblLoggedInUser;
-    
+
     private final AuthenticationManager authMan = new AuthenticationManager();
 
     private ObservableList<String> messages;
@@ -105,9 +105,11 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
     private final double ROWHEIGHT = 20;
     Button btnJoin;
 
-    public LobbyController() throws RemoteException{
-        
+    public LobbyController() throws RemoteException
+    {
+
     }
+
     /**
      * Initializes the controller class.
      *
@@ -118,7 +120,7 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
     public void initialize(URL url, ResourceBundle rb)
     {
         messages = FXCollections.observableArrayList();
-        lvChatBox.setItems(messages);       
+        lvChatBox.setItems(messages);
         populateRanking();
 
         try
@@ -164,7 +166,7 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
         try
         {
             System.out.println(lobby.toString());
-            gameInfo = lobby.addGame(new Game(loggedInUser.getUsername() + "'s Game", (User)loggedInUser));
+            gameInfo = lobby.addGame(new Game(loggedInUser.getUsername() + "'s Game", (User) loggedInUser));
         }
         catch (RemoteException ex)
         {
@@ -174,24 +176,24 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
         try
         {
             navigateToGame(rmiController.getLobby().getGame(Integer.valueOf(gameInfo[0])));
-            
+
         }
         catch (RemoteException ex)
         {
             Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     @FXML
     private void btnLogout_Click(ActionEvent evt)
     {
         try
         {
-            Stage closingStage = (Stage)((Node)evt.getSource()).getScene().getWindow();
+            Stage closingStage = (Stage) ((Node) evt.getSource()).getScene().getWindow();
             closingStage.close();
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Menu.fxml"));
             Parent root = (Parent) fxmlLoader.load();
-            
+
             Scene scene = new Scene(root);
             Stage stage = new Stage();
             stage.setScene(scene);
@@ -203,7 +205,7 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
         {
             ex.printStackTrace();
         }
-        
+
     }
 
     private void refresh()
@@ -321,7 +323,7 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Game.fxml"));
             Parent root = (Parent) fxmlLoader.load();
             GameController controller = fxmlLoader.<GameController>getController();
-            
+
             RemotePublisher publisher = (RemotePublisher) rmiController.getLobby();
             publisher.addListener(controller, "client");
             controller.setMode(Mode.MULTI, loggedInUser.getUsername(), g);
@@ -355,100 +357,128 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
     public void populateRanking()
     {
         ObservableList<String> ratings = FXCollections.observableArrayList();
-                
+
         ratings.addAll(Arrays.asList(authMan.getRanking()));
 
         tvRanking.setEditable(true);
-        
+
         TableView<RankedUser> rankingTable = null;
         TableColumn<RankedUser, String> usernameColumn = new TableColumn("Username");
         TableColumn<RankedUser, String> ratingColumn = new TableColumn("Rating");
         usernameColumn.setResizable(false);
         ratingColumn.setResizable(false);
-        
+
         ObservableList<RankedUser> rankingList = FXCollections.observableArrayList();
-        
+
         String[] ranking = authMan.getRanking();
-        for (String current: ranking) 
+        for (String current : ranking)
         {
             rankingList.add(new RankedUser(current.substring(0, current.indexOf("|")), current.substring(current.indexOf("|") + 1, current.length())));
         }
-        
+
         usernameColumn.setCellValueFactory(cellData -> cellData.getValue().usernameProperty());
         ratingColumn.setCellValueFactory(cellData -> cellData.getValue().ratingProperty());
         usernameColumn.prefWidthProperty().bind(tvRanking.widthProperty().divide(2));
         ratingColumn.prefWidthProperty().bind(tvRanking.widthProperty().divide(2).subtract(1));
         tvRanking.getColumns().addAll(usernameColumn, ratingColumn);
         tvRanking.setItems(rankingList);
-        
+
         tvRanking.getColumns().addListener(new ListChangeListener() {
             @Override
-            public void onChanged(Change change) {
+            public void onChanged(Change change)
+            {
                 change.next();
-                if (change.wasReplaced()) {
+                if (change.wasReplaced())
+                {
                     tvRanking.getColumns().clear();
                     tvRanking.getColumns().addAll(usernameColumn, ratingColumn);
                 }
             }
         });
     }
-    
-    private void sendMessage() {
-        try {
-            Message m = new Message(loggedInUser.getUsername(), tfMessage.getText());
-            rmiController.getLobby().addMessage(loggedInUser.getUsername(), tfMessage.getText());
-            messages.add(m.toString());
-            tfMessage.clear();
-            lvChatBox.scrollTo(lvChatBox.getItems().size());
-            tfMessage.clear();
-        } catch (RemoteException ex) {
-            Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
-        }
 
+    private void sendMessage()
+    {
+
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run()
+            {
+                try
+                {
+                    Message m = new Message(loggedInUser.getUsername(), tfMessage.getText());
+                    rmiController.getLobby().addMessage(loggedInUser.getUsername(), tfMessage.getText());
+                    messages.add(m.toString());
+                    tfMessage.clear();
+                    lvChatBox.scrollTo(lvChatBox.getItems().size());
+                    tfMessage.clear();
+                }
+                catch (RemoteException ex)
+                {
+                    Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                catch(IllegalArgumentException ex)
+                {
+                    tfMessage.setPromptText("Write a Message..");
+                }
+            }
+        });
     }
 
-    private void getMessages() {
+    private void getMessages()
+    {
         ILobby lobby = rmiController.getLobby();
-        try {
-            for (int i = 0; i < lobby.getMessages().size(); i++) {
+        try
+        {
+            for (int i = 0; i < lobby.getMessages().size(); i++)
+            {
                 messages.add(lobby.getMessages().get(i).toString());
                 lvChatBox.scrollTo(lvChatBox.getItems().size());
             }
-        } catch (RemoteException ex) {
+        }
+        catch (RemoteException ex)
+        {
             Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
-    
+
     public void removeGame(int gameID)
     {
-        try {
+        try
+        {
             rmiController.getLobby().removeGame(gameID);
-        } catch (RemoteException ex) {
+        }
+        catch (RemoteException ex)
+        {
             Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     @Override
-    public void propertyChange(PropertyChangeEvent evt) throws RemoteException {
-        if(evt.getNewValue() instanceof Message){
-            Message m = (Message)evt.getNewValue();
-            if(!m.getSender().equals(loggedInUser.getUsername()))
+    public void propertyChange(PropertyChangeEvent evt) throws RemoteException
+    {
+        if (evt.getNewValue() instanceof Message)
+        {
+            Message m = (Message) evt.getNewValue();
+            if (!m.getSender().equals(loggedInUser.getUsername()))
             {
                 Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    messages.add(m.toString());
-                }
-            });
-                 //messages.add(m.toString());
+                    @Override
+                    public void run()
+                    {
+                        messages.add(m.toString());
+                    }
+                });
+                //messages.add(m.toString());
             }
         }
-        if(evt.getPropertyName().equals("lobby"))
+        if (evt.getPropertyName().equals("lobby"))
         {
-             Platform.runLater(new Runnable() {
+            Platform.runLater(new Runnable() {
                 @Override
-                public void run() {
+                public void run()
+                {
                     btnJoin.setDisable(true);
                 }
             });
