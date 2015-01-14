@@ -305,6 +305,7 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
         gamegrid.add(btnJoin, 2, 1);
         //grid column 3
         btnSpectate = new Button();
+        btnSpectate.setText("Spectate");
         btnSpectate.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
