@@ -9,6 +9,7 @@ import Chat.IChat;
 import Chat.Message;
 import Game.SideName;
 import Game.Bat;
+import Game.IPlayer;
 import Game.Side;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -33,11 +34,14 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import Game.Mode;
 import Lobby.Game;
+import Security.AuthenticationManager;
 import Shared.IActiveGame;
 import Shared.IHockeyField;
 import java.beans.PropertyChangeEvent;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
@@ -142,7 +146,6 @@ public class GameController extends UnicastRemoteObject implements Initializable
         gc = canvas.getGraphicsContext2D();
         canvas.setVisible(false);
         btnStart.setDisable(true);
-
     }
 
     @FXML
@@ -560,6 +563,16 @@ public class GameController extends UnicastRemoteObject implements Initializable
     {
         timer.stop();
         gameActive = false;
+        
+        if (updateRatings()) 
+        {
+            System.out.println("Player ratings were updated");
+        }
+        else
+        {
+            System.err.println("Player rating update failed");
+        }
+        
         Platform.runLater(new Runnable() {
 
             @Override
@@ -594,5 +607,47 @@ public class GameController extends UnicastRemoteObject implements Initializable
             }
         });
 
+    }
+    
+    private boolean updateRatings()
+    {
+        boolean isSuccess = false;
+        
+        AuthenticationManager authMan = new AuthenticationManager();
+        
+        try {
+            for (Side s: hockeyField.getSides())
+            {
+                double ratingscore;
+                double endScore = s.getBoundPlayer().getInGameScore();
+                double correction;
+                ArrayList<IPlayer> opponents = new ArrayList<>();
+                
+                for (Side s2: hockeyField.getSides()) 
+                {
+                    if (s2.getBoundPlayer() != s.getBoundPlayer()) 
+                    {
+                       opponents.add(s2.getBoundPlayer());
+                    }
+                }
+                
+                if (opponents.size() != 2) {
+                    throw new RuntimeException("Opponents size is incorrect, should be 2, is " + opponents.size());
+                }
+
+                correction = (authMan.getPlayerRating(opponents.get(0).getUsername()) + authMan.getPlayerRating(opponents.get(1).getUsername()) - 2*authMan.getPlayerRating(s.getBoundPlayer().getUsername()))/8;
+                
+                ratingscore = endScore + correction;
+                
+                if (authMan.updatePlayerRatingscores(s.getBoundPlayer(), ratingscore)) 
+                {
+                    isSuccess = true;
+                }
+            }
+        } catch (RemoteException ex) {
+            Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return isSuccess;
     }
 }

@@ -5,6 +5,7 @@
  */
 package Security;
 
+import Game.IPlayer;
 import Lobby.User;
 import java.rmi.RemoteException;
 import java.sql.Connection;
@@ -186,5 +187,110 @@ public class AuthenticationManager {
         } catch (SQLException ex) {}
 
         return rankingList;
+    }
+    
+    public boolean updatePlayerRatingscores(IPlayer player, double ratingscore) throws SQLException
+    {
+        boolean isSuccess = false;
+        
+        try {
+            initConnection();
+        } catch (RuntimeException ex) {
+            throw new RuntimeException(ex.getMessage());
+        }
+        
+        PreparedStatement prepstat;
+        String query = "UPDATE AH_ACCOUNT SET GAME5=GAME4, GAME4=GAME3, GAME3=GAME2, GAME2=GAME1, GAME1=? WHERE USERNAME = ?";
+        int result = 0;
+
+         try {
+            prepstat = dbConnection.prepareStatement(query);
+            prepstat.setInt(1, (int)ratingscore);
+            prepstat.setString(2, player.getUsername());
+            result = prepstat.executeUpdate();
+        } catch (SQLException ex) {
+            System.err.println("updating not completed: " + ex.getMessage());
+            isSuccess = false;
+        }
+
+        if (result == 1) {
+            isSuccess = true;
+        } else {
+            isSuccess = false;
+        }
+
+        if (isSuccess) 
+        {
+            if (!updatePlayerAverageRating(player)) 
+            {
+                throw new SQLException("Average rating could not be updated for player " + player.getUsername());
+            }
+        }
+        else
+        {
+            throw new SQLException("Ratingscore for player " + player.getUsername() + " failed.");
+        }
+        
+        return isSuccess;
+    }
+    
+    public double getPlayerRating(String playerName)
+    {
+        double rating = 0;
+
+        PreparedStatement prepstat = null;
+        String query = "SELECT RATING FROM AH_ACCOUNT WHERE USERNAME = ?";
+
+        try {
+            prepstat = dbConnection.prepareStatement(query);
+            prepstat.setString(1, playerName);
+            ResultSet rs = prepstat.executeQuery();
+            
+            if (rs.next()) 
+            {
+                rating = rs.getDouble("RATING");
+            }
+            else
+            {
+                throw new SQLException("No row available, rating not found");
+            }
+            
+        } catch (SQLException ex) {
+            System.err.println(ex.getMessage());
+        }
+        
+        return rating;
+    }
+    
+    private boolean updatePlayerAverageRating(IPlayer player)
+    {
+        boolean isSuccess = false;
+        
+        try {
+            initConnection();
+        } catch (RuntimeException ex) {
+            throw new RuntimeException(ex.getMessage());
+        }
+        
+        PreparedStatement prepstat;
+        String query = "UPDATE AH_ACCOUNT SET RATING = (GAME1*5+GAME2*4+GAME3*3+GAME4*2+GAME5)/15 WHERE USERNAME = ?";
+        int result = 0;
+
+         try {
+            prepstat = dbConnection.prepareStatement(query);
+            prepstat.setString(1, player.getUsername());
+            result = prepstat.executeUpdate();
+        } catch (SQLException ex) {
+            System.err.println("updating of average rating not completed: " + ex.getMessage());
+            isSuccess = false;
+        }
+
+        if (result == 1) {
+            isSuccess = true;
+        } else {
+            isSuccess = false;
+        }
+        
+        return isSuccess;
     }
 }
