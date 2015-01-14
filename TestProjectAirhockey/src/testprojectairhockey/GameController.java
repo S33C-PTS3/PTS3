@@ -40,6 +40,7 @@ import Shared.IHockeyField;
 import java.beans.PropertyChangeEvent;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -639,9 +640,13 @@ public class GameController extends UnicastRemoteObject implements Initializable
                 
                 ratingscore = endScore + correction;
                 
-                if (authMan.updatePlayerRatingscores(s.getBoundPlayer(), ratingscore)) 
-                {
-                    isSuccess = true;
+                try {
+                    if (authMan.updatePlayerRatingscores(s.getBoundPlayer(), ratingscore))
+                    {
+                        isSuccess = true;
+                    }
+                } catch (SQLException ex) {
+                    System.err.println("SQLException in GameController.UpdateRankings() " + ex.getMessage());
                 }
             }
         } catch (RemoteException ex) {
