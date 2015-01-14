@@ -626,7 +626,7 @@ public class GameController extends UnicastRemoteObject implements Initializable
                 
                 for (Side s2: hockeyField.getSides()) 
                 {
-                    if (s2.getBoundPlayer() != s.getBoundPlayer()) 
+                    if (s2.getBoundPlayer().getID() != s.getBoundPlayer().getID()) 
                     {
                        opponents.add(s2.getBoundPlayer());
                     }

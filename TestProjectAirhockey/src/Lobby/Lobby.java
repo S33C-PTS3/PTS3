@@ -9,6 +9,7 @@ import Shared.ILobby;
 import Chat.Chat;
 import Chat.Message;
 import Game.Spectator;
+import Shared.IUser;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
