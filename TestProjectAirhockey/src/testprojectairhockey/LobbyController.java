@@ -7,6 +7,7 @@ package testprojectairhockey;
 
 import Chat.Message;
 import Game.Mode;
+import Game.Spectator;
 import Lobby.Game;
 import Lobby.IGame;
 import Lobby.User;
@@ -104,6 +105,7 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
     private final double COLUMNWIDTH = 137.5;
     private final double ROWHEIGHT = 20;
     Button btnJoin;
+    Button btnSpectate;
 
     public LobbyController() throws RemoteException
     {
@@ -233,6 +235,7 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
         String player1 = gameInfo[3];
         String player2 = gameInfo[4];
         String player3 = gameInfo[5];
+        String spectatorCount = gameInfo[6];
         TitledPane gameTitle = new TitledPane();
         gameTitle.setText(gameName);
         AnchorPane gamePane = new AnchorPane();
@@ -263,7 +266,7 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
         Label labelPlayers = new Label();
         labelPlayers.setText("Players: " + playerCount + "/3");
         Label labelSpectators = new Label();
-        labelSpectators.setText("Spectators: 0");
+        labelSpectators.setText("Spectators: " + spectatorCount + "/2" );
         Label labelRating = new Label();
         labelRating.setText("Avg. rating: " + gameAverageRanking);
         //              node      col row
@@ -301,10 +304,26 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
         });
         gamegrid.add(btnJoin, 2, 1);
         //grid column 3
-        Button btnSpectate = new Button();
+        btnSpectate = new Button();
+        btnSpectate.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent event)
+            {
+                try
+                {
+                    rmiController.getLobby().addSpectatorToGame(Integer.parseInt(gameId), (Spectator) loggedInUser );
+                    navigateToGame(rmiController.getLobby().getGame(Integer.valueOf(gameId)));
+                }
+                catch (RemoteException ex)
+                {
+                    Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
         gamegrid.add(btnSpectate, 3, 1);
         //spectate button is niet zichtbaar voor iteratie 2
-        btnSpectate.visibleProperty().set(false);
+        btnSpectate.visibleProperty().set(true);
         gamegrid.visibleProperty().set(false);
         gamePane.getChildren().add(gamegrid);
         gameTitle.setContent(gamegrid);
@@ -480,6 +499,16 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
                 public void run()
                 {
                     btnJoin.setDisable(true);
+                }
+            });
+        }
+        if (evt.getPropertyName().equals("spectator"))
+        {
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run()
+                {
+                    btnSpectate.setDisable(true);
                 }
             });
         }

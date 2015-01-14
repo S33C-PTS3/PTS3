@@ -27,6 +27,7 @@ public class ActiveGame extends UnicastRemoteObject implements IActiveGame, Remo
     private int round;
     private boolean started = false;
     private String[] users;
+    private String[] spectators;
     BasicPublisher publisher;
     Thread threadPuck;
     private int id;

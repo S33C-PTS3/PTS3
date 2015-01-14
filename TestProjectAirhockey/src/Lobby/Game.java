@@ -27,6 +27,7 @@ public class Game implements Serializable {
     private int averageGameRating;
     private List<User> users;
     private List<Player> players;
+    private List<Spectator> spectators;
 
     private static final long serialVersionUID = 8384846137124768892L;
 
@@ -34,6 +35,7 @@ public class Game implements Serializable {
     {
         users = new ArrayList<>();
         players = new ArrayList<>();
+        spectators = new ArrayList<>();
         this.name = name;
         this.averageGameRating = 0;
         users.add(creator);
@@ -70,7 +72,7 @@ public class Game implements Serializable {
      */
     public List<Spectator> getSpectators()
     {
-        return null;
+        return this.spectators;
     }
 
     /**
@@ -131,7 +133,8 @@ public class Game implements Serializable {
      */
     public boolean addSpectator(Spectator spectator)
     {
-        return false;
+        this.spectators.add(spectator);
+        return true;
     }
 
     public List<Player> getUsersObject()

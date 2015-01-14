@@ -8,6 +8,7 @@ package Lobby;
 import Shared.ILobby;
 import Chat.Chat;
 import Chat.Message;
+import Game.Spectator;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
@@ -29,6 +30,7 @@ public class Lobby extends UnicastRemoteObject implements ILobby, RemotePublishe
     private List<User> users;
     private int gameCount;
     private BasicPublisher publisher;
+    private final int MAXSPECTATORS = 2;
 
     /**
      * creates an new instance of the lobby class
@@ -38,7 +40,7 @@ public class Lobby extends UnicastRemoteObject implements ILobby, RemotePublishe
     public Lobby() throws RemoteException {
         games = new ArrayList<>();
         gameCount = 1;
-        publisher = new BasicPublisher(new String[]{"client", "lobby"});
+        publisher = new BasicPublisher(new String[]{"client", "lobby", "spectator"});
         chat = new Chat();
     }
 
@@ -74,7 +76,7 @@ public class Lobby extends UnicastRemoteObject implements ILobby, RemotePublishe
     public List<String[]> getGames() throws RemoteException {
         List<String[]> gamesAsString = new ArrayList<>();
         String[] gameInfo;
-        gameInfo = new String[6];
+        gameInfo = new String[7];
         for (Game game : games) {
             gameInfo[0] = String.valueOf(game.getId());
             gameInfo[1] = game.getName();
@@ -82,6 +84,7 @@ public class Lobby extends UnicastRemoteObject implements ILobby, RemotePublishe
             for (int i = 3; i < game.getUsersGame().size() + 3; i++) {
                 gameInfo[i] = game.getUsersGame().get(i - 3).getUsername();
             }
+            gameInfo[6] = String.valueOf(game.getSpectators().size());
             gamesAsString.add(gameInfo);
         }
         return gamesAsString;
@@ -97,15 +100,34 @@ public class Lobby extends UnicastRemoteObject implements ILobby, RemotePublishe
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         game.setId(gameCount);
         games.add(game);
-        String[] gameInfo = new String[6];
+        String[] gameInfo = new String[7];
         gameInfo[0] = String.valueOf(game.getId());
         gameInfo[1] = game.getName();
         gameInfo[2] = String.valueOf(game.getAverageRating());
         for (int i = 3; i < game.getUsersGame().size() + 3; i++) {
             gameInfo[i] = game.getUsersGame().get(i - 3).getUsername();
         }
+        gameInfo[6] =  String.valueOf(game.getSpectators().size());
         gameCount++;
         return gameInfo;
+    }
+    
+    @Override
+    public boolean addSpectatorToGame(int gameId, Spectator spectator) throws RemoteException
+    {
+        for (Game g : games)
+        {
+            if (g.getId() == gameId)
+            {
+                g.addSpectator(spectator);
+                if (g.getSpectators().size() == MAXSPECTATORS)
+                {
+                    publisher.inform(this, "spectators", null, true);
+                }
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
