@@ -7,6 +7,7 @@ package Game;
 
 import Lobby.Game;
 import Lobby.User;
+import Shared.IUser;
 import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.List;
@@ -15,13 +16,14 @@ import java.util.List;
  * @author Eric
  * Spectator is a user who is specatating an active game.
  */
-public class Spectator extends User implements Serializable{
+public class Spectator extends User implements Serializable, IUser{
     
     private List<Game> games;
 
     /**
      * Constructor used for Spectator
      * @param username 
+     * @throws java.rmi.RemoteException 
      */
     public Spectator(String username) throws RemoteException
     {
