@@ -313,7 +313,7 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
             {
                 try
                 {
-                    rmiController.getLobby().addSpectatorToGame(Integer.parseInt(gameId), (Spectator) loggedInUser );
+                    rmiController.getLobby().addSpectatorToGame(Integer.parseInt(gameId), loggedInUser );
                     navigateToGame(rmiController.getLobby().getGame(Integer.valueOf(gameId)));
                 }
                 catch (RemoteException ex)

@@ -57,7 +57,7 @@ public interface ILobby extends Remote, RemotePublisher{
     
     public boolean addUserToGame(int gameId, User user) throws RemoteException;
     
-    public boolean addSpectatorToGame(int gameId, User user) throws RemoteException;
+    public boolean addSpectatorToGame(int gameId, IUser user) throws RemoteException;
     
     public boolean addMessage(String sender, String text) throws RemoteException;
     
