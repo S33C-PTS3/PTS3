@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 import Game.HumanPlayer;
+import java.rmi.RemoteException;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Before;
@@ -16,19 +17,19 @@ public class HumanPlayerTest {
     HumanPlayer hp;
     
     @Before
-    public void setUp() {
-        hp = new HumanPlayer();
+    public void setUp() throws RemoteException {
+        hp = new HumanPlayer("Henk");
     }
     
     @Test
-    public void testHumanPlayer()
+    public void testHumanPlayer() throws RemoteException
     {
         /**
          * Constructor for HumanPlayer.
          * @param username 
          */
         assertNotNull("Should be created", hp);
-        assertNotNull("Should be created", new HumanPlayer());
+        assertNotNull("Should be created", new HumanPlayer("Henk"));
     }
     
     @Test

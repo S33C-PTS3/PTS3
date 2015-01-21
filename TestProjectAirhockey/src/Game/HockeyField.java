@@ -528,4 +528,9 @@ public class HockeyField extends UnicastRemoteObject implements RemotePublisher,
     public void addListenerO(RemotePropertyListener listener, String property) throws RemoteException {
         publisher.addListener(listener, property);
     }
+
+    @Override
+    public double getDiameterBat() throws RemoteException {
+        return sides[0].getBat().getDiameter();
+    }
 }

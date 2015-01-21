@@ -120,6 +120,7 @@ public class GameController extends UnicastRemoteObject implements Initializable
     String loggedInUser = "";
     Side[] sides;
     double diameterPuck;
+    double diameterBat;
 
     //De afbeeldingen van de bats
     Image batRed = new Image("/testprojectairhockey/batred2.png");
@@ -151,9 +152,12 @@ public class GameController extends UnicastRemoteObject implements Initializable
     public void btnStart_Click(ActionEvent evt)
     {
 
-        try {
+        try
+        {
             startGame();
-        } catch (RemoteException ex) {
+        }
+        catch (RemoteException ex)
+        {
             Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -257,11 +261,6 @@ public class GameController extends UnicastRemoteObject implements Initializable
     public void Draw()
     {
         gc.setLineWidth(1);
-
-        //hulplijnen om te kijken of de puck en de bats in het midden staan.
-        //gc.strokeLine(sides[0].getLineX1(), sides[0].getLineY1(), sides[0].getLineX1(), sides[0].getLineY2());
-        //gc.strokeLine(sides[1].getLineX1(), sides[1].getLineY1(), (sides[2].getLineX2() + sides[2].getLineX1()) / 2, (sides[2].getLineY2() + sides[2].getLineY1()) / 2);
-        //gc.strokeLine(sides[2].getLineX1(), sides[2].getLineY1(), (sides[0].getLineX2() + sides[0].getLineX1()) / 2, (sides[0].getLineY2() + sides[0].getLineY1()) / 2);
         double[] batPositions = null;
         int[] scores = null;
         try
@@ -274,32 +273,37 @@ public class GameController extends UnicastRemoteObject implements Initializable
             Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
         }
         double batRedX, batRedY, batGreenX, batGreenY, batBlueX, batBlueY;
-        int scorePlayer1, scorePlayer2, scorePlayer3;
+        int scorePlayer1 = 0, scorePlayer2 = 0, scorePlayer3 = 0;
         batRedX = batPositions[0];
         batRedY = batPositions[1];
         batBlueX = batPositions[2];
         batBlueY = batPositions[3];
         batGreenX = batPositions[4];
         batGreenY = batPositions[5];
-        scorePlayer1 = scores[0];
-        scorePlayer2 = scores[1];
-        scorePlayer3 = scores[2];
+
+        if (scores.length == 3)
+        {
+            scorePlayer1 = scores[0];
+            scorePlayer2 = scores[1];
+            scorePlayer3 = scores[2];
+        }
+
         for (Side side : sides)
         {
             gc.setLineWidth(1);
-            if (Color.RED.toString().equals(side.getColor().toString()))
+            if ("RED".equals(side.getColor().toString()))
             {
                 gc.setStroke(Color.RED);
                 gc.setFill(Color.RED);
             }
 
-            if (Color.BLUE.toString().equals(side.getColor().toString()))
+            if ("BLUE".equals(side.getColor().toString()))
             {
                 gc.setStroke(Color.BLUE);
                 gc.setFill(Color.BLUE);
             }
 
-            if (Color.GREEN.toString().equals(side.getColor().toString()))
+            if ("GREEN".equals(side.getColor().toString()))
             {
                 gc.setFill(Color.GREEN);
                 gc.setStroke(Color.GREEN);
@@ -309,20 +313,19 @@ public class GameController extends UnicastRemoteObject implements Initializable
             gc.setLineWidth(5);
             gc.strokeLine(side.getGoalX1(), side.getGoalY1(), side.getGoalX2(), side.getGoalY2());
 
-            Bat bat = side.getBat();
             if (side.getSideName().equals(SideName.BOTTOM))
             {
-                gc.drawImage(batRed, batBlueX - bat.getRadius(), batBlueY - bat.getRadius(), bat.getDiameter(), bat.getDiameter());
+                gc.drawImage(batRed, batBlueX - diameterBat/2, batBlueY - diameterBat/2, diameterBat, diameterBat);
                 lblScore1.setText(String.valueOf(scorePlayer1));
             }
             else if (side.getSideName().equals(SideName.RIGHT))
             {
-                gc.drawImage(batGreen, batGreenX - bat.getRadius(), batGreenY - bat.getRadius(), bat.getDiameter(), bat.getDiameter());
+                gc.drawImage(batGreen, batGreenX - diameterBat/2, batGreenY - diameterBat/2, diameterBat, diameterBat);
                 lblScore2.setText(String.valueOf(scorePlayer2));
             }
             else if (side.getSideName().equals(SideName.LEFT))
             {
-                gc.drawImage(batBlue, batRedX - bat.getRadius(), batRedY - bat.getRadius(), bat.getDiameter(), bat.getDiameter());
+                gc.drawImage(batBlue, batRedX - diameterBat/2, batRedY - diameterBat/2, diameterBat, diameterBat);
                 lblScore3.setText(String.valueOf(scorePlayer3));
             }
 
@@ -467,15 +470,19 @@ public class GameController extends UnicastRemoteObject implements Initializable
     {
         this.mode = mode;
         this.myGame = g;
-        try {
+        try
+        {
             hockeyField = myGame.getHockeyField();
-        } catch (RemoteException ex) {
+        }
+        catch (RemoteException ex)
+        {
             Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.loggedInUser = loggedInUser;
         try
         {
             diameterPuck = myGame.getHockeyField().getDiameter();
+            diameterBat = myGame.getHockeyField().getDiameterBat();
         }
         catch (RemoteException ex)
         {
@@ -549,9 +556,12 @@ public class GameController extends UnicastRemoteObject implements Initializable
                 public void run()
                 {
                     setVisibilityWaitingScreen();
-                    try {
+                    try
+                    {
                         startGame();
-                    } catch (RemoteException ex) {
+                    }
+                    catch (RemoteException ex)
+                    {
                         Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
@@ -564,8 +574,8 @@ public class GameController extends UnicastRemoteObject implements Initializable
     {
         timer.stop();
         gameActive = false;
-        
-        if (updateRatings()) 
+
+        if (updateRatings())
         {
             System.out.println("Player ratings were updated");
         }
@@ -573,7 +583,7 @@ public class GameController extends UnicastRemoteObject implements Initializable
         {
             System.err.println("Player rating update failed");
         }
-        
+
         Platform.runLater(new Runnable() {
 
             @Override
@@ -609,53 +619,67 @@ public class GameController extends UnicastRemoteObject implements Initializable
         });
 
     }
-    
+
     private boolean updateRatings()
     {
         boolean isSuccess = false;
-        
-        AuthenticationManager authMan = new AuthenticationManager();
-        
-        try {
-            for (Side s: hockeyField.getSides())
-            {
-                double ratingscore;
-                double endScore = s.getBoundPlayer().getInGameScore();
-                double correction;
-                ArrayList<IPlayer> opponents = new ArrayList<>();
-                
-                for (Side s2: hockeyField.getSides()) 
-                {
-                    if (s2.getBoundPlayer().getID() != s.getBoundPlayer().getID()) 
-                    {
-                       opponents.add(s2.getBoundPlayer());
-                    }
-                }
-                
-                if (opponents.size() != 2) {
-                    throw new RuntimeException("Opponents size is incorrect, should be 2, is " + opponents.size());
-                }
 
-                double ratingOpp1 = authMan.getPlayerRating(opponents.get(0).getUsername());
-                double ratingOpp2 = authMan.getPlayerRating(opponents.get(1).getUsername());
-                double ratingPlayer = authMan.getPlayerRating(s.getBoundPlayer().getUsername());
-                correction = ((ratingOpp1 + ratingOpp2) - (2*ratingPlayer))/8;
-                
-                ratingscore = endScore + correction;
-                
-                try {
-                    if (authMan.updatePlayerRatingscores(s.getBoundPlayer(), ratingscore))
+        AuthenticationManager authMan = new AuthenticationManager();
+
+        try
+        {
+            for (Side s : hockeyField.getSides())
+            {
+                if (s.getBoundPlayer().getID() == 2) {
+                    double ratingscore;
+                    double endScore = -20 + s.getBoundPlayer().getInGameScore();
+                    double correction;
+                    ArrayList<IPlayer> opponents = new ArrayList<>();
+
+                    for (Side s2 : hockeyField.getSides())
                     {
-                        isSuccess = true;
+                        if (s2.getBoundPlayer().getID() != s.getBoundPlayer().getID())
+                        {
+                            opponents.add(s2.getBoundPlayer());
+                        }
                     }
-                } catch (SQLException ex) {
-                    System.err.println("SQLException in GameController.UpdateRankings() " + ex.getMessage());
+
+                    if (opponents.size() != 2)
+                    {
+                        throw new RuntimeException("Opponents size is incorrect, should be 2, is " + opponents.size());
+                    }
+
+                    double ratingOpp1 = authMan.getPlayerRating(opponents.get(0).getUsername());
+                    double ratingOpp2 = authMan.getPlayerRating(opponents.get(1).getUsername());
+                    double ratingPlayer = authMan.getPlayerRating(s.getBoundPlayer().getUsername());
+                    correction = ((ratingOpp1 + ratingOpp2) - (2 * ratingPlayer)) / 8;
+
+                    ratingscore = endScore + correction;
+
+                    try
+                    {
+                        if (authMan.updatePlayerRatingscores(s.getBoundPlayer(), ratingscore))
+                        {
+                            isSuccess = true;
+                        }
+                    }
+                    catch (SQLException ex)
+                    {
+                        System.err.println("SQLException in GameController.UpdateRankings() " + ex.getMessage());
+                    }
                 }
+                else
+                {
+                    isSuccess = true;
+                } 
             }
-        } catch (RemoteException ex) {
+        }
+        catch (RemoteException ex)
+        {
             Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+        
         return isSuccess;
     }
 }

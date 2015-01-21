@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+import Game.SideColor;
 import Game.Bat;
 import Game.SideName;
 import javafx.geometry.Point2D;
@@ -20,7 +21,7 @@ public class BatTesting {
 
     @Test
     public void testConstructor() {
-        Bat bat = new Bat(Color.RED, 1, 1, 5, SideName.BATBOTTOM);
+        Bat bat = new Bat(SideColor.RED, 1, 1, 5, SideName.BATBOTTOM);
         assertNotNull("Should be created", bat);
         assertEquals("Xpos incorrect", 1, bat.getXpos(),0.1);
         assertEquals("Ypos incorrect", 1, bat.getYpos(),0.1);
@@ -38,7 +39,7 @@ public class BatTesting {
 
     @Test
     public void testMove() {
-        Bat bat = new Bat(Color.RED, 1, 1, 5, SideName.BATBOTTOM);
+        Bat bat = new Bat(SideColor.RED, 1, 1, 5, SideName.BATBOTTOM);
         Float xposStart = bat.getXpos();
         bat.move("1right");
         assertEquals("Should be the same", xposStart + bat.getXvelocity(), bat.getXpos(),1);
@@ -50,7 +51,7 @@ public class BatTesting {
     @Test
     public void testSetXpos()
     {
-        Bat bat = new Bat(Color.RED, 1, 1, 5, SideName.BATBOTTOM);
+        Bat bat = new Bat(SideColor.RED, 1, 1, 5, SideName.BATBOTTOM);
         bat.setXpos(10);
         assertEquals("Xpos not set correctly", 10, bat.getXpos(), 0.1);
     }
@@ -58,7 +59,7 @@ public class BatTesting {
     @Test
     public void testSetXvel()
     {
-        Bat bat = new Bat(Color.RED, 1, 1, 5, SideName.BATBOTTOM);
+        Bat bat = new Bat(SideColor.RED, 1, 1, 5, SideName.BATBOTTOM);
         bat.setXvelocity(5);
         assertEquals("X velocity not set correctly", 5, bat.getXvelocity(), 0.1);
     }
