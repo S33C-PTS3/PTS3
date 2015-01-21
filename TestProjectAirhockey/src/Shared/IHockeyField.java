@@ -42,4 +42,6 @@ public interface IHockeyField extends Remote{
     public int[] getPlayerScores() throws RemoteException;
 
     public void addListenerO(RemotePropertyListener listener, String property) throws RemoteException;
+    
+    public double getDiameterBat() throws RemoteException;
 }

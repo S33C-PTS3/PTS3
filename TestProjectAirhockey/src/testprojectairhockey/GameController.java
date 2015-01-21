@@ -120,6 +120,7 @@ public class GameController extends UnicastRemoteObject implements Initializable
     String loggedInUser = "";
     Side[] sides;
     double diameterPuck;
+    double diameterBat;
 
     //De afbeeldingen van de bats
     Image batRed = new Image("/testprojectairhockey/batred2.png");
@@ -317,20 +318,19 @@ public class GameController extends UnicastRemoteObject implements Initializable
             gc.setLineWidth(5);
             gc.strokeLine(side.getGoalX1(), side.getGoalY1(), side.getGoalX2(), side.getGoalY2());
 
-            Bat bat = side.getBat();
             if (side.getSideName().equals(SideName.BOTTOM))
             {
-                gc.drawImage(batRed, batBlueX - bat.getRadius(), batBlueY - bat.getRadius(), bat.getDiameter(), bat.getDiameter());
+                gc.drawImage(batRed, batBlueX - diameterBat/2, batBlueY - diameterBat/2, diameterBat, diameterBat);
                 lblScore1.setText(String.valueOf(scorePlayer1));
             }
             else if (side.getSideName().equals(SideName.RIGHT))
             {
-                gc.drawImage(batGreen, batGreenX - bat.getRadius(), batGreenY - bat.getRadius(), bat.getDiameter(), bat.getDiameter());
+                gc.drawImage(batGreen, batGreenX - diameterBat/2, batGreenY - diameterBat/2, diameterBat, diameterBat/2);
                 lblScore2.setText(String.valueOf(scorePlayer2));
             }
             else if (side.getSideName().equals(SideName.LEFT))
             {
-                gc.drawImage(batBlue, batRedX - bat.getRadius(), batRedY - bat.getRadius(), bat.getDiameter(), bat.getDiameter());
+                gc.drawImage(batBlue, batRedX - diameterBat/2, batRedY - diameterBat/2, diameterBat, diameterBat);
                 lblScore3.setText(String.valueOf(scorePlayer3));
             }
 
@@ -487,6 +487,7 @@ public class GameController extends UnicastRemoteObject implements Initializable
         try
         {
             diameterPuck = myGame.getHockeyField().getDiameter();
+            diameterBat = myGame.getHockeyField().getDiameterBat();
         }
         catch (RemoteException ex)
         {
