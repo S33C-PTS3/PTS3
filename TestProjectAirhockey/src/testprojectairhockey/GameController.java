@@ -632,7 +632,7 @@ public class GameController extends UnicastRemoteObject implements Initializable
             for (Side s: hockeyField.getSides())
             {
                 double ratingscore;
-                double endScore = s.getBoundPlayer().getInGameScore();
+                double endScore = -20 + s.getBoundPlayer().getInGameScore();
                 double correction;
                 ArrayList<IPlayer> opponents = new ArrayList<>();
                 
