@@ -39,6 +39,10 @@ public class Spectator extends User implements Serializable, IUser{
         return games;
     }
     
+    public void addGame(Game game)
+    {
+        this.games.add(game);
+    }
     
     /**
      * Zooms into the selected game.

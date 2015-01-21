@@ -7,6 +7,7 @@ package Shared;
 
 import Chat.IChat;
 import Chat.Message;
+import Game.Spectator;
 import Lobby.IGame;
 import Lobby.User;
 import java.rmi.Remote;
@@ -55,7 +56,7 @@ public interface ILobby extends Remote, RemotePublisher{
     
     public boolean addUserToGame(int gameId, User user) throws RemoteException;
     
-    public boolean addSpectatorToGame(int gameId, IUser user) throws RemoteException;
+    public boolean addSpectatorToGame(int gameId, Spectator spectator) throws RemoteException;
     
     public boolean addMessage(String sender, String text) throws RemoteException;
     

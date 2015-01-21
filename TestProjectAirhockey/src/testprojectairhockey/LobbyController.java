@@ -101,7 +101,8 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
     private ArrayList<IGame> games;
     private LobbyRMI rmiController;
     private IUser loggedInUser = new User("Meny");
-    // widht of accordion / 4 to determine width of the columns
+    private Spectator spectator;
+    // width of accordion / 4 to determine width of the columns
     private final double COLUMNWIDTH = 137.5;
     private final double ROWHEIGHT = 20;
     private final int LASTPLAYERINDEX = 6;
@@ -178,7 +179,7 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
         createNewGame(gameInfo);
         try
         {
-            navigateToGame(rmiController.getLobby().getGame(Integer.valueOf(gameInfo[0])));
+            navigateToGame(rmiController.getLobby().getGame(Integer.valueOf(gameInfo[0])), true);
 
         }
         catch (RemoteException ex)
@@ -267,7 +268,7 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
         Label labelPlayers = new Label();
         labelPlayers.setText("Players: " + playerCount + "/3");
         Label labelSpectators = new Label();
-        labelSpectators.setText("Spectators: " + spectatorCount + "/2" );
+        labelSpectators.setText("Spectators: " + spectatorCount + "/2");
         Label labelRating = new Label();
         labelRating.setText("Avg. rating: " + gameAverageRanking);
         //              node      col row
@@ -294,7 +295,7 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
                 try
                 {
                     rmiController.getLobby().addUserToGame(Integer.parseInt(gameId), (User) loggedInUser);
-                    navigateToGame(rmiController.getLobby().getGame(Integer.valueOf(gameId)));
+                    navigateToGame(rmiController.getLobby().getGame(Integer.valueOf(gameId)), true);
                     btnJoin.getScene().getWindow().hide();
                 }
                 catch (RemoteException ex)
@@ -314,8 +315,12 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
             {
                 try
                 {
-                    rmiController.getLobby().addSpectatorToGame(Integer.parseInt(gameId), loggedInUser );
-                    navigateToGame(rmiController.getLobby().getGame(Integer.valueOf(gameId)));
+                    if (spectator == null)
+                    {
+                        spectator = new Spectator(loggedInUser.getUsername());
+                    }
+                    rmiController.getLobby().addSpectatorToGame(Integer.parseInt(gameId), spectator);
+                    navigateToSpectatorOverview();
                 }
                 catch (RemoteException ex)
                 {
@@ -337,7 +342,7 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
         }
     }
 
-    private void navigateToGame(IGame g)
+    private void navigateToGame(IGame g, boolean player)
     {
         try
         {
@@ -354,11 +359,36 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
             stage.setTitle("Airhockey - Multiplayer");
             stage.setResizable(false);
             stage.show();
-            btnStartNewGame.getScene().getWindow().hide();
+            if (player)
+            {
+                btnStartNewGame.getScene().getWindow().hide();
+            }
+
         }
         catch (IOException ex)
         {
             ex.printStackTrace();
+        }
+    }
+
+    public void navigateToSpectatorOverview()
+    {
+        try
+        {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("SpectatorOverview.fxml"));
+            Parent root = (Parent) fxmlLoader.load();
+            SpectatorOverviewController controller = fxmlLoader.<SpectatorOverviewController>getController();
+            
+            controller.setSpectator(spectator);
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.setTitle("Airhockey - Spectator overview");
+            stage.setResizable(false);
+            stage.show();
+        }
+        catch (IOException ex)
+        {
         }
     }
 
@@ -438,7 +468,7 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
                 {
                     Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                catch(IllegalArgumentException ex)
+                catch (IllegalArgumentException ex)
                 {
                     tfMessage.setPromptText("Write a Message..");
                 }

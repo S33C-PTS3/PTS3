@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="testprojectairhockey.SpectatorOverviewController">
+  <children>
+    <Button fx:id="btnSpecGame2" layoutX="316.0" layoutY="55.0" mnemonicParsing="false" prefHeight="142.0" prefWidth="242.0" text="Button" />
+    <Button fx:id="btnSpecGame1" layoutX="45.0" layoutY="55.0" mnemonicParsing="false" prefHeight="142.0" prefWidth="242.0" text="Button" />
+    <Button fx:id="btnSpecGame3" layoutX="45.0" layoutY="216.0" mnemonicParsing="false" prefHeight="142.0" prefWidth="242.0" text="Button" />
+    <Button fx:id="btnSpecGame4" layoutX="316.0" layoutY="216.0" mnemonicParsing="false" prefHeight="142.0" prefWidth="242.0" text="Button" />
+    <ImageView fx:id="imgGame1" fitHeight="142.0" fitWidth="189.33333333333331" layoutX="71.0" layoutY="55.0" pickOnBounds="true" preserveRatio="true" />
+    <ImageView id="imgGame1" fx:id="imgGame2" fitHeight="142.0" fitWidth="189.33333333333331" layoutX="342.0" layoutY="55.0" pickOnBounds="true" preserveRatio="true" />
+    <ImageView id="imgGame1" fx:id="imgGame3" fitHeight="142.0" fitWidth="189.33333333333331" layoutX="63.0" layoutY="216.0" pickOnBounds="true" preserveRatio="true" />
+    <ImageView id="imgGame1" fx:id="imgGame4" fitHeight="142.0" fitWidth="189.33333333333331" layoutX="342.0" layoutY="216.0" pickOnBounds="true" preserveRatio="true" />
+  </children>
+</AnchorPane>
