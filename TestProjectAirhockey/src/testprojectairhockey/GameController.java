@@ -261,22 +261,17 @@ public class GameController extends UnicastRemoteObject implements Initializable
     public void Draw()
     {
         gc.setLineWidth(1);
-
-        //hulplijnen om te kijken of de puck en de bats in het midden staan.
-        //gc.strokeLine(sides[0].getLineX1(), sides[0].getLineY1(), sides[0].getLineX1(), sides[0].getLineY2());
-        //gc.strokeLine(sides[1].getLineX1(), sides[1].getLineY1(), (sides[2].getLineX2() + sides[2].getLineX1()) / 2, (sides[2].getLineY2() + sides[2].getLineY1()) / 2);
-        //gc.strokeLine(sides[2].getLineX1(), sides[2].getLineY1(), (sides[0].getLineX2() + sides[0].getLineX1()) / 2, (sides[0].getLineY2() + sides[0].getLineY1()) / 2);
         double[] batPositions = null;
         int[] scores = null;
-        try
-        {
-            batPositions = hockeyField.getBatPositions();
-            scores = hockeyField.getPlayerScores();
-        }
-        catch (RemoteException ex)
-        {
-            Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        try
+//        {
+//            batPositions = hockeyField.getBatPositions();
+//            scores = hockeyField.getPlayerScores();
+//        }
+//        catch (RemoteException ex)
+//        {
+//            Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
+//        }
         double batRedX, batRedY, batGreenX, batGreenY, batBlueX, batBlueY;
         int scorePlayer1 = 0, scorePlayer2 = 0, scorePlayer3 = 0;
         batRedX = batPositions[0];
@@ -325,7 +320,7 @@ public class GameController extends UnicastRemoteObject implements Initializable
             }
             else if (side.getSideName().equals(SideName.RIGHT))
             {
-                gc.drawImage(batGreen, batGreenX - diameterBat/2, batGreenY - diameterBat/2, diameterBat, diameterBat/2);
+                gc.drawImage(batGreen, batGreenX - diameterBat/2, batGreenY - diameterBat/2, diameterBat, diameterBat);
                 lblScore2.setText(String.valueOf(scorePlayer2));
             }
             else if (side.getSideName().equals(SideName.LEFT))
