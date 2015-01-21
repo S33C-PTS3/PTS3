@@ -635,42 +635,48 @@ public class GameController extends UnicastRemoteObject implements Initializable
         {
             for (Side s : hockeyField.getSides())
             {
-                double ratingscore;
-                double endScore = -20 + s.getBoundPlayer().getInGameScore();
-                double correction;
-                ArrayList<IPlayer> opponents = new ArrayList<>();
+                if (s.getBoundPlayer().getID() == 2) {
+                    double ratingscore;
+                    double endScore = -20 + s.getBoundPlayer().getInGameScore();
+                    double correction;
+                    ArrayList<IPlayer> opponents = new ArrayList<>();
 
-                for (Side s2 : hockeyField.getSides())
-                {
-                    if (s2.getBoundPlayer().getID() != s.getBoundPlayer().getID())
+                    for (Side s2 : hockeyField.getSides())
                     {
-                        opponents.add(s2.getBoundPlayer());
+                        if (s2.getBoundPlayer().getID() != s.getBoundPlayer().getID())
+                        {
+                            opponents.add(s2.getBoundPlayer());
+                        }
+                    }
+
+                    if (opponents.size() != 2)
+                    {
+                        throw new RuntimeException("Opponents size is incorrect, should be 2, is " + opponents.size());
+                    }
+
+                    double ratingOpp1 = authMan.getPlayerRating(opponents.get(0).getUsername());
+                    double ratingOpp2 = authMan.getPlayerRating(opponents.get(1).getUsername());
+                    double ratingPlayer = authMan.getPlayerRating(s.getBoundPlayer().getUsername());
+                    correction = ((ratingOpp1 + ratingOpp2) - (2 * ratingPlayer)) / 8;
+
+                    ratingscore = endScore + correction;
+
+                    try
+                    {
+                        if (authMan.updatePlayerRatingscores(s.getBoundPlayer(), ratingscore))
+                        {
+                            isSuccess = true;
+                        }
+                    }
+                    catch (SQLException ex)
+                    {
+                        System.err.println("SQLException in GameController.UpdateRankings() " + ex.getMessage());
                     }
                 }
-
-                if (opponents.size() != 2)
+                else
                 {
-                    throw new RuntimeException("Opponents size is incorrect, should be 2, is " + opponents.size());
-                }
-
-                double ratingOpp1 = authMan.getPlayerRating(opponents.get(0).getUsername());
-                double ratingOpp2 = authMan.getPlayerRating(opponents.get(1).getUsername());
-                double ratingPlayer = authMan.getPlayerRating(s.getBoundPlayer().getUsername());
-                correction = ((ratingOpp1 + ratingOpp2) - (2 * ratingPlayer)) / 8;
-
-                ratingscore = endScore + correction;
-
-                try
-                {
-                    if (authMan.updatePlayerRatingscores(s.getBoundPlayer(), ratingscore))
-                    {
-                        isSuccess = true;
-                    }
-                }
-                catch (SQLException ex)
-                {
-                    System.err.println("SQLException in GameController.UpdateRankings() " + ex.getMessage());
-                }
+                    isSuccess = true;
+                } 
             }
         }
         catch (RemoteException ex)
@@ -678,6 +684,7 @@ public class GameController extends UnicastRemoteObject implements Initializable
             Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+        
         return isSuccess;
     }
 }

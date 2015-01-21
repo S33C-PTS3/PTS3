@@ -25,7 +25,7 @@ public class Player extends User implements IPlayer {
     public Player(String username) throws RemoteException
     {
         super(username);
-        inGameScore = 10;
+        inGameScore = 20;
     }
 
     @Override
