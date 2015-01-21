@@ -238,6 +238,12 @@ public class AuthenticationManager {
     {
         double rating = 0;
 
+        try {
+            initConnection();
+        } catch (RuntimeException ex) {
+            throw new RuntimeException(ex.getMessage());
+        }
+        
         PreparedStatement prepstat = null;
         String query = "SELECT RATING FROM AH_ACCOUNT WHERE USERNAME = ?";
 

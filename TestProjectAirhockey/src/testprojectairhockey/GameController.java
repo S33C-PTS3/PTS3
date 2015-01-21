@@ -564,14 +564,14 @@ public class GameController extends UnicastRemoteObject implements Initializable
         timer.stop();
         gameActive = false;
         
-//        if (updateRatings()) 
-//        {
-//            System.out.println("Player ratings were updated");
-//        }
-//        else
-//        {
-//            System.err.println("Player rating update failed");
-//        }
+        if (updateRatings()) 
+        {
+            System.out.println("Player ratings were updated");
+        }
+        else
+        {
+            System.err.println("Player rating update failed");
+        }
         
         Platform.runLater(new Runnable() {
 
@@ -635,7 +635,10 @@ public class GameController extends UnicastRemoteObject implements Initializable
                     throw new RuntimeException("Opponents size is incorrect, should be 2, is " + opponents.size());
                 }
 
-                correction = (authMan.getPlayerRating(opponents.get(0).getUsername()) + authMan.getPlayerRating(opponents.get(1).getUsername()) - 2*authMan.getPlayerRating(s.getBoundPlayer().getUsername()))/8;
+                double ratingOpp1 = authMan.getPlayerRating(opponents.get(0).getUsername());
+                double ratingOpp2 = authMan.getPlayerRating(opponents.get(1).getUsername());
+                double ratingPlayer = authMan.getPlayerRating(s.getBoundPlayer().getUsername());
+                correction = ((ratingOpp1 + ratingOpp2) - (2*ratingPlayer))/8;
                 
                 ratingscore = endScore + correction;
                 
