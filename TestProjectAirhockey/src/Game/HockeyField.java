@@ -523,4 +523,9 @@ public class HockeyField extends UnicastRemoteObject implements RemotePublisher,
         }
         return scoresPlayers;
     }
+
+    @Override
+    public void addListenerO(RemotePropertyListener listener, String property) throws RemoteException {
+        publisher.addListener(listener, property);
+    }
 }

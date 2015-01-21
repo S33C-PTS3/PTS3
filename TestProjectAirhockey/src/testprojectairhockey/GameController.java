@@ -42,14 +42,12 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
-import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Transform;
 import observer.RemotePropertyListener;
 import observer.RemotePublisher;
@@ -493,6 +491,7 @@ public class GameController extends UnicastRemoteObject implements Initializable
             game.addListenerO(this, "Client");
             IChat chat = game.getChat();
             chat.addListenerO(this, "Game");
+            game.getHockeyField().addListenerO(this, "gameOver");
         }
         catch (RemoteException ex)
         {

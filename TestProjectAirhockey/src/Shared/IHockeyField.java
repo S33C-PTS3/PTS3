@@ -11,6 +11,8 @@ import Lobby.Game;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
+import observer.RemotePropertyListener;
+import testprojectairhockey.GameController;
 
 /**
  *
@@ -40,4 +42,6 @@ public interface IHockeyField extends Remote{
     public String[] getGameResults() throws RemoteException;
     
     public int[] getPlayerScores() throws RemoteException;
+
+    public void addListenerO(RemotePropertyListener listener, String property) throws RemoteException;
 }
