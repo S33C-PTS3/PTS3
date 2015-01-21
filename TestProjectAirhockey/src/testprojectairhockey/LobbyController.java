@@ -244,7 +244,7 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
         GridPane gamegrid = new GridPane();
         for (int i = 3; i < LASTPLAYERINDEX; i++)
         {
-            if (!"".equals(gameInfo[i]))
+            if ((gameInfo[i]) != null)
             {
                 playerCount++;
             }
