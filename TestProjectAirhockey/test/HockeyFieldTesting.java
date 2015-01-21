@@ -12,6 +12,7 @@ import Game.IPlayer;
 import Game.Puck;
 import Game.RobotPlayer;
 import Game.Side;
+import java.rmi.RemoteException;
 import static org.junit.Assert.*;
 import org.junit.*;
 
@@ -27,12 +28,12 @@ public class HockeyFieldTesting {
     IPlayer r1;
     IPlayer r2;
     @Before
-    public void setUp()
+    public void setUp() throws RemoteException
     {
         puck = new Puck();
         
         //Create players
-        h = new HumanPlayer();
+        h = new HumanPlayer("Henk");
         r1 = new RobotPlayer("Sjef");
         r2 = new RobotPlayer("Karel");
         
@@ -41,7 +42,7 @@ public class HockeyFieldTesting {
     }
     
     @Test
-    public void testConstructor()
+    public void testConstructor() throws RemoteException
     {
         assertNotNull("Field was not instantiated", field);
         Side[] sides = field.getSides();

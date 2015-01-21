@@ -6,6 +6,7 @@
 
 import Game.Difficulty;
 import Game.RobotPlayer;
+import java.rmi.RemoteException;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -19,13 +20,13 @@ public class RobotPlayerTest {
     RobotPlayer rp;
 
     @Before
-    public void setUp()
+    public void setUp() throws RemoteException
     {
         rp = new RobotPlayer("Theo");
     }
 
     @Test
-    public void testRobotPlayer()
+    public void testRobotPlayer() throws RemoteException
     {
         /**
          * Constructor for RobotPlayer with a name and difficulty.
@@ -93,7 +94,7 @@ public class RobotPlayerTest {
     }
 
     @Test
-    public void testGetInGameScore()
+    public void testGetInGameScore() throws RemoteException
     {
         RobotPlayer newRobot = new RobotPlayer("x");
         assertEquals("Should be 20", 20, newRobot.getInGameScore());

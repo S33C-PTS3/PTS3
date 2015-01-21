@@ -35,7 +35,7 @@ public class LobbyTest {
     }
 
     @Test
-    public void testAddGame() {
+    public void testAddGame() throws RemoteException {
         /**
          * Adds a game to the list of games
          *
@@ -78,7 +78,7 @@ public class LobbyTest {
     }
 
     @Test
-    public void testAddUser() {
+    public void testAddUser() throws RemoteException {
         /**
          * Adds a user to the list of users
          *
@@ -119,7 +119,7 @@ public class LobbyTest {
     }
 
     @Test
-    public void testSetLoggedInUser() {
+    public void testSetLoggedInUser() throws RemoteException {
         /**
          * sets the loggedInUser field with the user that just logged in
          *

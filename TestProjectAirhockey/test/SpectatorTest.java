@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 import Game.Spectator;
+import java.rmi.RemoteException;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -21,7 +22,7 @@ public class SpectatorTest {
     }
     
     @Before
-    public void setUp() {
+    public void setUp() throws RemoteException {
         s = new Spectator("Henk");
     }
     
@@ -29,7 +30,7 @@ public class SpectatorTest {
      * Test for registering an user.
      */
     @Test
-    public void testSpectator()
+    public void testSpectator() throws RemoteException
     {
         assertNotNull("Should be created",new Spectator("theo"));
         assertNotNull("Should be created", s);
