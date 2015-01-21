@@ -10,6 +10,7 @@ import Lobby.User;
 import Shared.IUser;
 import java.io.Serializable;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,6 +29,7 @@ public class Spectator extends User implements Serializable, IUser{
     public Spectator(String username) throws RemoteException
     {
         super(username);
+        games = new ArrayList<>();
     }
     
     /**
