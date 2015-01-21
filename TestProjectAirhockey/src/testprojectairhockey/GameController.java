@@ -159,8 +159,31 @@ public class GameController extends UnicastRemoteObject implements Initializable
     }
 
     public void startGame() throws RemoteException
+    {   
+        if(timer != null)
+        {
+            timer.start();
+        }
+        else
+        {
+            DrawInit();
+            timer.start();
+        }
+        
+        lvChat.setFocusTraversable(true);
+        tfMessage.setFocusTraversable(false);
+    }
+    
+    public void DrawInit()
     {
-        publisher = (RemotePublisher) myGame.getHockeyField();
+        try
+        {
+            publisher = (RemotePublisher) myGame.getHockeyField();
+        }
+        catch (RemoteException ex)
+        {
+            Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         try
         {
             publisher.addListener(this, "gameOver");
@@ -169,19 +192,8 @@ public class GameController extends UnicastRemoteObject implements Initializable
         {
             Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        Platform.runLater(() ->
-        {
-            setVisibilityWaitingScreen();
-            try
-            {
-                myGame.getActiveGame().startGame();
-            }
-            catch (RemoteException ex)
-            {
-                Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-            try
+        
+        try
             {
                 //Labels vullen met de namen van de spelers
                 sides = hockeyField.getSides();
@@ -190,6 +202,10 @@ public class GameController extends UnicastRemoteObject implements Initializable
             {
                 Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
             }
+        
+        Platform.runLater(() ->
+        {
+            canvas.setVisible(true);
             int rotateIndex = 0;
             for (Side side : sides)
             {
@@ -227,15 +243,6 @@ public class GameController extends UnicastRemoteObject implements Initializable
                 canvas.getTransforms().add(Transform.rotate(-120 * (rotateIndex), 280, 323));
             }
 
-            try
-            {
-                sides = hockeyField.getSides();
-            }
-            catch (RemoteException ex)
-            {
-                Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
             //De gameloop
             timer = new AnimationTimer() {
                 @Override
@@ -248,10 +255,8 @@ public class GameController extends UnicastRemoteObject implements Initializable
                     }
                 }
             };
-            timer.start();
         });
-        lvChat.setFocusTraversable(true);
-        tfMessage.setFocusTraversable(false);
+        DrawHockeyfield(0,0,0,0,0,0,0,0,0);
     }
 
     public void Draw()
@@ -284,22 +289,53 @@ public class GameController extends UnicastRemoteObject implements Initializable
         scorePlayer1 = scores[0];
         scorePlayer2 = scores[1];
         scorePlayer3 = scores[2];
+        DrawHockeyfield(batBlueX, batBlueY, batGreenX, batGreenY, batRedX, batRedY, scorePlayer1, scorePlayer2, scorePlayer3);
+        
+        try
+            {
+                lblRoundNr.setText(String.valueOf(hockeyField.getRound()));
+            }
+            catch (RemoteException ex)
+            {
+                Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        
+        Point2D position = null;
+        try
+        {
+            position = new Point2D(hockeyField.getPuckPosition()[0], hockeyField.getPuckPosition()[1]);
+        }
+        catch (RemoteException ex)
+        {
+            Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        gc.setFill(Color.BLACK);
+        gc.fillOval(position.getX() - diameterPuck / 2, position.getY() - diameterPuck / 2, diameterPuck, diameterPuck);
+
+//            if (hockeyField.getMode().equals(Mode.SINGLE)) {
+//                hockeyField.moveAIPlayers();
+//            }
+    }
+
+    public void DrawHockeyfield(double batBlueX, double batBlueY, double batGreenX, double batGreenY, double batRedX, double batRedY, int scorePlayer1, int scorePlayer2, int scorePlayer3)
+    {
+        
         for (Side side : sides)
         {
             gc.setLineWidth(1);
-            if (Color.RED.toString().equals(side.getColor().toString()))
+            if ("RED".equals(side.getColor().toString()))
             {
                 gc.setStroke(Color.RED);
                 gc.setFill(Color.RED);
             }
 
-            if (Color.BLUE.toString().equals(side.getColor().toString()))
+            if ("BLUE".equals(side.getColor().toString()))
             {
                 gc.setStroke(Color.BLUE);
                 gc.setFill(Color.BLUE);
             }
 
-            if (Color.GREEN.toString().equals(side.getColor().toString()))
+            if ("GREEN".equals(side.getColor().toString()))
             {
                 gc.setFill(Color.GREEN);
                 gc.setStroke(Color.GREEN);
@@ -325,31 +361,7 @@ public class GameController extends UnicastRemoteObject implements Initializable
                 gc.drawImage(batBlue, batRedX - bat.getRadius(), batRedY - bat.getRadius(), bat.getDiameter(), bat.getDiameter());
                 lblScore3.setText(String.valueOf(scorePlayer3));
             }
-
-            try
-            {
-                lblRoundNr.setText(String.valueOf(hockeyField.getRound()));
-            }
-            catch (RemoteException ex)
-            {
-                Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
-            }
         }
-        Point2D position = null;
-        try
-        {
-            position = new Point2D(hockeyField.getPuckPosition()[0], hockeyField.getPuckPosition()[1]);
-        }
-        catch (RemoteException ex)
-        {
-            Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        gc.setFill(Color.BLACK);
-        gc.fillOval(position.getX() - diameterPuck / 2, position.getY() - diameterPuck / 2, diameterPuck, diameterPuck);
-
-//            if (hockeyField.getMode().equals(Mode.SINGLE)) {
-//                hockeyField.moveAIPlayers();
-//            }
     }
 
     @FXML
@@ -494,11 +506,11 @@ public class GameController extends UnicastRemoteObject implements Initializable
         {
             ex.printStackTrace();
         }
+        DrawInit();
     }
 
     private void setVisibilityWaitingScreen()
     {
-        canvas.setVisible(true);
         lblWaiting.setVisible(false);
         btnStart.setVisible(false);
     }
