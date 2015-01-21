@@ -516,7 +516,7 @@ public class GameController extends UnicastRemoteObject implements Initializable
 
                     try
                     {
-                        hockeyField.setBindedPlayers((Game) evt.getOldValue());
+                        hockeyField.setBindedPlayers((IGame) evt.getOldValue());
                     }
                     catch (RemoteException ex)
                     {

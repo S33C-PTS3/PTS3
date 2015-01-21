@@ -5,10 +5,12 @@
  */
 package Lobby;
 
+import Game.Player;
 import Shared.IActiveGame;
 import Shared.IHockeyField;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.List;
 
 /**
  *
@@ -20,4 +22,5 @@ import java.rmi.RemoteException;
         
         IActiveGame getActiveGame() throws RemoteException; 
        
+        List<Player> getUsersObject() throws RemoteException;
 }

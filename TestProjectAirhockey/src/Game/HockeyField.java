@@ -5,7 +5,7 @@
  */
 package Game;
 
-import Lobby.Game;
+import Lobby.IGame;
 import Shared.IHockeyField;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -16,7 +16,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.geometry.Point2D;
-import javafx.scene.input.KeyCode;
 import observer.BasicPublisher;
 import observer.RemotePropertyListener;
 import observer.RemotePublisher;
@@ -328,7 +327,7 @@ public class HockeyField extends UnicastRemoteObject implements RemotePublisher,
     }
 
     @Override
-    public void setBindedPlayers(Game g) throws RemoteException
+    public void setBindedPlayers(IGame g) throws RemoteException
     {
         int index = 1;
         List<Player> players = g.getUsersObject();

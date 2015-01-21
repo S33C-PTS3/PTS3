@@ -23,7 +23,7 @@ import java.util.logging.Logger;
  *
  * @author Eric
  */
-public class Game extends UnicastRemoteObject implements Serializable,IGame {
+public class Game extends UnicastRemoteObject implements IGame {
 
     private int id;
     private String name;
@@ -142,7 +142,8 @@ public class Game extends UnicastRemoteObject implements Serializable,IGame {
         return true;
     }
 
-    public List<Player> getUsersObject()
+    @Override
+    public List<Player> getUsersObject() throws RemoteException
     {
         for (int i = 0; i < users.size(); i++)
         {
@@ -182,4 +183,5 @@ public class Game extends UnicastRemoteObject implements Serializable,IGame {
     public IActiveGame getActiveGame() throws RemoteException {
         return this.gameActive;
     }
+
 }

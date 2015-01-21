@@ -7,12 +7,10 @@ package Shared;
 
 import Game.Mode;
 import Game.Side;
-import Lobby.Game;
+import Lobby.IGame;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
-import java.util.List;
 import observer.RemotePropertyListener;
-import testprojectairhockey.GameController;
 
 /**
  *
@@ -37,7 +35,7 @@ public interface IHockeyField extends Remote{
     
     public Mode getMode() throws RemoteException;
     
-    public void setBindedPlayers(Game g) throws RemoteException;
+    public void setBindedPlayers(IGame g) throws RemoteException;
     
     public String[] getGameResults() throws RemoteException;
     
