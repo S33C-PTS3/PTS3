@@ -104,6 +104,7 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
     // widht of accordion / 4 to determine width of the columns
     private final double COLUMNWIDTH = 137.5;
     private final double ROWHEIGHT = 20;
+    private final int LASTPLAYERINDEX = 6;
     Button btnJoin;
     Button btnSpectate;
 
@@ -241,9 +242,9 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
         AnchorPane gamePane = new AnchorPane();
 
         GridPane gamegrid = new GridPane();
-        for (int i = 3; i < gameInfo.length; i++)
+        for (int i = 3; i < LASTPLAYERINDEX; i++)
         {
-            if (gameInfo[i] != null)
+            if (!"".equals(gameInfo[i]))
             {
                 playerCount++;
             }
