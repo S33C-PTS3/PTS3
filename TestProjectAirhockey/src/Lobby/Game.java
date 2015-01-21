@@ -5,13 +5,17 @@
  */
 package Lobby;
 
+import Game.ActiveGame;
 import Game.Player;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import Game.Spectator;
+import Shared.IActiveGame;
+import Shared.IHockeyField;
 import java.io.Serializable;
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -19,7 +23,7 @@ import java.util.logging.Logger;
  *
  * @author Eric
  */
-public class Game implements Serializable {
+public class Game extends UnicastRemoteObject implements Serializable,IGame {
 
     private int id;
     private String name;
@@ -28,7 +32,7 @@ public class Game implements Serializable {
     private List<User> users;
     private List<Player> players;
     private List<Spectator> spectators;
-
+    private ActiveGame gameActive;
     private static final long serialVersionUID = 8384846137124768892L;
 
     public Game(String name, User creator) throws RemoteException
@@ -38,6 +42,7 @@ public class Game implements Serializable {
         spectators = new ArrayList<>();
         this.name = name;
         this.averageGameRating = 0;
+        gameActive = new ActiveGame(name, id);
         users.add(creator);
     }
 
@@ -166,5 +171,15 @@ public class Game implements Serializable {
             userNames[i] = users.get(i).getUsername();
         }
         return userNames;
+    }
+
+    @Override
+    public IHockeyField getHockeyField() throws RemoteException {
+        return this.gameActive.getHockeyField();
+    }
+
+    @Override
+    public IActiveGame getActiveGame() throws RemoteException {
+        return this.gameActive;
     }
 }

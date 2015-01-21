@@ -5,11 +5,9 @@
  */
 package Shared;
 
-import Chat.Chat;
 import Chat.IChat;
 import Chat.Message;
-import Game.Spectator;
-import Lobby.Game;
+import Lobby.IGame;
 import Lobby.User;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
@@ -35,7 +33,7 @@ public interface ILobby extends Remote, RemotePublisher{
      */
     public List<String[]> getGames() throws RemoteException;
     
-    public Game getGame(int id) throws RemoteException;
+    public IGame getGame(int id) throws RemoteException;
     
     /**
      * Update de ranglijst in de lobby
@@ -47,7 +45,7 @@ public interface ILobby extends Remote, RemotePublisher{
      * Voegt een game toe aan de lijst met games.
      * @return true als dit succesvol is verlopen, anders false.
      */
-    public String[] addGame(Game game) throws RemoteException;
+    public String[] addGame(String name, IUser creator) throws RemoteException;
     
     /**
      * Voegt een ingelogde user toe aan de lijst met users in de lobby

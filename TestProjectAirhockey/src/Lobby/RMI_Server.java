@@ -36,13 +36,10 @@ public class RMI_Server {
 
     // Set binding name for student administration
     private static final String BINDINGNAMELOBBY = "Lobby";
-    private static final String BINDINGNAMEGAME = "Game";
 
     // References to registry and student administration
     private Registry registry = null;
     private ILobby lobby = null;
-    private IActiveGame game;
-    private HockeyField hockeyField;
 
     // Constructor
     public RMI_Server() {
@@ -68,16 +65,8 @@ public class RMI_Server {
             System.out.println("Server: RemoteException: " + ex.getMessage());
             lobby = null;
         }
-
-        try {
-            game = new ActiveGame("Meny",1);
-            System.out.println("Server: Game created");
-        } catch (Exception ex) {
-            System.out.println("Server: Cannot create Game");
-            System.out.println("Server: RemoteException: " + ex.getMessage());
-            game = null;
-        }
-
+        
+        
         // Create registry at port number
         try {
             registry = LocateRegistry.createRegistry(portNumber);
@@ -94,19 +83,6 @@ public class RMI_Server {
             System.out.println("Server: Cannot bind lobby");
             System.out.println("Server: RemoteException: " + ex.getMessage());
         }
-        try {
-            registry.rebind(BINDINGNAMEGAME, game);
-        } catch (RemoteException ex) {
-            System.out.println("Server: Cannot bind game");
-            System.out.println("Server: RemoteException: " + ex.getMessage());
-        }
-
-        try {
-            hockeyField = (HockeyField) game.getHockeyField();
-        } catch (RemoteException ex) {
-            Logger.getLogger(RMI_Server.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        hockeyField.init(Mode.MULTI);
     }
 
     // Print IP addresses and network interfaces

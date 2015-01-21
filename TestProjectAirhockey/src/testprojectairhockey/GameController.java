@@ -34,6 +34,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import Game.Mode;
 import Lobby.Game;
+import Lobby.IGame;
 import Security.AuthenticationManager;
 import Shared.IActiveGame;
 import Shared.IHockeyField;
@@ -112,7 +113,7 @@ public class GameController extends UnicastRemoteObject implements Initializable
     //Animation timer zodat het spel een loop is
     AnimationTimer timer;
 
-    Game myGame;
+    IGame myGame;
 
     //Modus van de game
     Mode mode = Mode.SINGLE;
@@ -125,7 +126,6 @@ public class GameController extends UnicastRemoteObject implements Initializable
     Image batBlue = new Image("/testprojectairhockey/batblue2.png");
     Image batGreen = new Image("/testprojectairhockey/batgreen2.png");
 
-    GameRMI rmiController;
     RemotePublisher publisher;
     boolean gameActive = true;
 
@@ -151,12 +151,16 @@ public class GameController extends UnicastRemoteObject implements Initializable
     public void btnStart_Click(ActionEvent evt)
     {
 
-        startGame();
+        try {
+            startGame();
+        } catch (RemoteException ex) {
+            Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
-    public void startGame()
+    public void startGame() throws RemoteException
     {
-        publisher = (RemotePublisher) rmiController.getHockeyField();
+        publisher = (RemotePublisher) myGame.getHockeyField();
         try
         {
             publisher.addListener(this, "gameOver");
@@ -170,7 +174,7 @@ public class GameController extends UnicastRemoteObject implements Initializable
             setVisibilityWaitingScreen();
             try
             {
-                rmiController.getActiveGame().startGame();
+                myGame.getActiveGame().startGame();
             }
             catch (RemoteException ex)
             {
@@ -398,7 +402,7 @@ public class GameController extends UnicastRemoteObject implements Initializable
                         Message m = new Message(loggedInUser, message);
                         try
                         {
-                            rmiController.getActiveGame().addMessage(m);
+                            myGame.getActiveGame().addMessage(m);
                         }
                         catch (RemoteException ex)
                         {
@@ -439,7 +443,7 @@ public class GameController extends UnicastRemoteObject implements Initializable
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Lobby.fxml"));
                 root = (Parent) fxmlLoader.load();
                 LobbyController controller = fxmlLoader.<LobbyController>getController();
-                controller.removeGame(rmiController.getActiveGame().getID());
+                controller.removeGame(myGame.getActiveGame().getID());
                 stage.setTitle("Airhockey - Mulitplayer");
             }
 
@@ -459,26 +463,19 @@ public class GameController extends UnicastRemoteObject implements Initializable
         }
     }
 
-    public void setMode(Mode mode, String loggedInUser, Game g)
+    public void setMode(Mode mode, String loggedInUser, IGame g)
     {
         this.mode = mode;
         this.myGame = g;
-        if (mode.equals(Mode.MULTI))
-        {
-            try
-            {
-                rmiController = new GameRMI();
-            }
-            catch (RemoteException ex)
-            {
-                Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        try {
+            hockeyField = myGame.getHockeyField();
+        } catch (RemoteException ex) {
+            Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        hockeyField = rmiController.getHockeyField();
         this.loggedInUser = loggedInUser;
         try
         {
-            diameterPuck = rmiController.getHockeyField().getDiameter();
+            diameterPuck = myGame.getHockeyField().getDiameter();
         }
         catch (RemoteException ex)
         {
@@ -487,7 +484,7 @@ public class GameController extends UnicastRemoteObject implements Initializable
 
         try
         {
-            IActiveGame game = rmiController.getActiveGame();
+            IActiveGame game = myGame.getActiveGame();
             game.addListenerO(this, "Client");
             IChat chat = game.getChat();
             chat.addListenerO(this, "Game");
@@ -552,7 +549,11 @@ public class GameController extends UnicastRemoteObject implements Initializable
                 public void run()
                 {
                     setVisibilityWaitingScreen();
-                    startGame();
+                    try {
+                        startGame();
+                    } catch (RemoteException ex) {
+                        Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
             });
 
