@@ -110,7 +110,7 @@ public class AuthenticationManager {
 
         int newID = highestID + 1;
         PreparedStatement prepstat;
-        query = "INSERT INTO AH_ACCOUNT VALUES (?, ?, ?, 100)";
+        query = "INSERT INTO AH_ACCOUNT VALUES (?, ?, ?, 15, NULL, NULL, NULL, NULL, NULL)";
         int result = 0;
 
         try {
