@@ -8,6 +8,7 @@ import Game.Player;
 import Game.Spectator;
 import Lobby.Game;
 import Lobby.User;
+import java.rmi.RemoteException;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,7 +27,7 @@ public class GameTest {
     ActiveGame active1;
     
     @Before
-    public void setUp() {
+    public void setUp() throws RemoteException  {
         user1 = new Player("Chain");
         user2 = new Player("Meny");
         user3 = new Player("Test");
@@ -35,11 +36,11 @@ public class GameTest {
         game1 = new Game("NewGame",user1);
         game1.addPlayer(user2);
         game1.addPlayer(user3);
-        active1 = new ActiveGame("NewGame",user1,null,null);
+        active1 = new ActiveGame("NewGame",1);
     }
     
     @Test(expected=IllegalArgumentException.class)
-    public void testGameConstructor(){
+    public void testGameConstructor() throws RemoteException{
         try{
             Game errorGame = new Game("new",null);
             fail("game moet minimaal 1 speler hebben");
@@ -63,8 +64,8 @@ public class GameTest {
         /**
         * @return a list of players that joined this game as players
         */
-        assertEquals(1,game1.getUsers().size());
-        assertEquals(user1, game1.getUsers().get(0));
+        assertEquals(1,game1.getUsers().length);
+        assertEquals(user1.toString(), game1.getUsers()[0]);
          /**
          * gets the time the Game has started
          * @return the time the Game has started if it has started ,else returns null
@@ -86,11 +87,11 @@ public class GameTest {
                 /**
         * @return a list of players that joined this game as players
         */
-        assertEquals(3,game1.getUsers().size());
+        assertEquals(3,game1.getUsers().length);
  
     }
     @Test
-    public void testAddSpectator(){
+    public void testAddSpectator() throws RemoteException{
                 /**
          * adds a spectator to the list of spectators 
          * in this game if the spectator is spectating less than 4 games at the moment.
@@ -119,7 +120,7 @@ public class GameTest {
     }
     
     @Test
-    public void testStart(){
+    public void testStart() throws RemoteException{
          /**
          * starts an inactive game if 3 players have joined and the creator of the game has confirmed this.
          * a start-time will also be set at the current time.
@@ -138,7 +139,7 @@ public class GameTest {
     }
     
     @Test
-    public void testgetRating(){
+    public void testgetRating() throws RemoteException{
         /**
         * calculates and returns the average rating of this game
         * average rating is the sum of the rating of all players in this game divided by the amount of players in this game
