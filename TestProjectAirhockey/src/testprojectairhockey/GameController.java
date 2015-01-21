@@ -491,7 +491,7 @@ public class GameController extends UnicastRemoteObject implements Initializable
             game.addListenerO(this, "Client");
             IChat chat = game.getChat();
             chat.addListenerO(this, "Game");
-            game.getHockeyField().addListenerO(this, "gameOver");
+            hockeyField.addListenerO(this, "gameOver");
         }
         catch (RemoteException ex)
         {
@@ -564,14 +564,14 @@ public class GameController extends UnicastRemoteObject implements Initializable
         timer.stop();
         gameActive = false;
         
-        if (updateRatings()) 
-        {
-            System.out.println("Player ratings were updated");
-        }
-        else
-        {
-            System.err.println("Player rating update failed");
-        }
+//        if (updateRatings()) 
+//        {
+//            System.out.println("Player ratings were updated");
+//        }
+//        else
+//        {
+//            System.err.println("Player rating update failed");
+//        }
         
         Platform.runLater(new Runnable() {
 

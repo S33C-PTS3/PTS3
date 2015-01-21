@@ -294,6 +294,7 @@ public class HockeyField extends UnicastRemoteObject implements RemotePublisher,
         this.hitBat = null;
         this.hitSide = null;
         this.lastHitSide = null;
+        scores = new ArrayList<>();
         for (Side side : sides)
         {
             scores.add(side.getBoundPlayer().getInGameScore());
