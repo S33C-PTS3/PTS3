@@ -263,15 +263,15 @@ public class GameController extends UnicastRemoteObject implements Initializable
         gc.setLineWidth(1);
         double[] batPositions = null;
         int[] scores = null;
-//        try
-//        {
-//            batPositions = hockeyField.getBatPositions();
-//            scores = hockeyField.getPlayerScores();
-//        }
-//        catch (RemoteException ex)
-//        {
-//            Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+        try
+        {
+            batPositions = hockeyField.getBatPositions();
+            scores = hockeyField.getPlayerScores();
+        }
+        catch (RemoteException ex)
+        {
+            Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         double batRedX, batRedY, batGreenX, batGreenY, batBlueX, batBlueY;
         int scorePlayer1 = 0, scorePlayer2 = 0, scorePlayer3 = 0;
         batRedX = batPositions[0];
