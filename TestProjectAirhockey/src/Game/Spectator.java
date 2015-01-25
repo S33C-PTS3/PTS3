@@ -12,14 +12,18 @@ import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
+import observer.BasicPublisher;
+import observer.RemotePropertyListener;
+import observer.RemotePublisher;
 
 /**
  * @author Eric
  * Spectator is a user who is specatating an active game.
  */
-public class Spectator extends User implements Serializable, IUser{
+public class Spectator extends User implements Serializable, IUser, RemotePublisher{
     
     private List<Game> games;
+    private BasicPublisher publisher;
 
     /**
      * Constructor used for Spectator
@@ -30,6 +34,7 @@ public class Spectator extends User implements Serializable, IUser{
     {
         super(username);
         games = new ArrayList<>();
+        publisher = new BasicPublisher(new String[]{"SpectatorGames"});
     }
     
     /**
@@ -53,5 +58,17 @@ public class Spectator extends User implements Serializable, IUser{
     public void zoomIn(Game selectedGame)
     {
                      
+    }
+
+    @Override
+    public void addListener(RemotePropertyListener listener, String property) throws RemoteException
+    {
+        publisher.addListener(listener, property);
+    }
+
+    @Override
+    public void removeListener(RemotePropertyListener listener, String property) throws RemoteException
+    {
+        publisher.removeListener(listener, property);
     }
 }

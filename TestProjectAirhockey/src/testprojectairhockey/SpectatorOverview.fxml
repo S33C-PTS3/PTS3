@@ -10,13 +10,17 @@
 
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="testprojectairhockey.SpectatorOverviewController">
   <children>
-    <Button fx:id="btnSpecGame2" layoutX="316.0" layoutY="55.0" mnemonicParsing="false" opacity="0.0" prefHeight="142.0" prefWidth="242.0" text="Button" />
-    <Button fx:id="btnSpecGame1" layoutX="45.0" layoutY="55.0" mnemonicParsing="false" opacity="0.0" prefHeight="142.0" prefWidth="242.0" text="Button" />
-    <Button fx:id="btnSpecGame3" layoutX="45.0" layoutY="216.0" mnemonicParsing="false" opacity="0.0" prefHeight="142.0" prefWidth="242.0" text="Button" />
-    <Button fx:id="btnSpecGame4" layoutX="316.0" layoutY="216.0" mnemonicParsing="false" opacity="0.0" prefHeight="142.0" prefWidth="242.0" text="Button" />
-    <ImageView fx:id="imgGame1" fitHeight="116.0" fitWidth="155.0" layoutX="89.0" layoutY="68.0" onMouseClicked="#Game1_Click" pickOnBounds="true" preserveRatio="true" />
-    <ImageView id="imgGame1" fx:id="imgGame2" fitHeight="116.0" fitWidth="155.0" layoutX="356.0" layoutY="68.0" pickOnBounds="true" preserveRatio="true" />
-    <ImageView id="imgGame1" fx:id="imgGame3" fitHeight="116.0" fitWidth="155.0" layoutX="89.0" layoutY="229.0" pickOnBounds="true" preserveRatio="true" />
-    <ImageView id="imgGame1" fx:id="imgGame4" fitHeight="116.0" fitWidth="155.0" layoutX="359.0" layoutY="229.0" pickOnBounds="true" preserveRatio="true" />
+      <Label layoutX="117.0" layoutY="268.0" text="No Active Game" />
+      <Label layoutX="387.0" layoutY="268.0" text="No Active Game" />
+      <Label layoutX="385.0" layoutY="90.0" text="No Active Game" />
+      <Label layoutX="118.0" layoutY="90.0" text="No Active Game" textAlignment="CENTER" />
+    <ImageView fx:id="imgGame1" fitHeight="116.0" fitWidth="155.0" layoutX="89.0" layoutY="44.0" onMouseClicked="#Game1_Click" pickOnBounds="true" preserveRatio="true" />
+    <ImageView id="imgGame1" fx:id="imgGame2" disable="true" fitHeight="116.0" fitWidth="155.0" layoutX="356.0" layoutY="44.0" pickOnBounds="true" preserveRatio="true" visible="false" />
+    <ImageView id="imgGame1" fx:id="imgGame3" disable="true" fitHeight="116.0" fitWidth="155.0" layoutX="88.0" layoutY="224.0" pickOnBounds="true" preserveRatio="true" visible="false" />
+    <ImageView id="imgGame1" fx:id="imgGame4" disable="true" fitHeight="116.0" fitWidth="155.0" layoutX="358.0" layoutY="224.0" pickOnBounds="true" preserveRatio="true" visible="false" />
+      <Label layoutX="142.0" layoutY="171.0" text="Game 1" textAlignment="CENTER" />
+      <Label layoutX="410.0" layoutY="171.0" text="Game 2" />
+      <Label layoutX="410.0" layoutY="349.0" text="Game 4" />
+      <Label layoutX="143.0" layoutY="349.0" text="Game 3" />
   </children>
 </AnchorPane>

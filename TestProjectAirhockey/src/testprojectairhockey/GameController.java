@@ -471,19 +471,29 @@ public class GameController extends UnicastRemoteObject implements Initializable
         this.mode = mode;
         this.myGame = g;
         this.usermode = usermode;
-        if(Mode.SPECTATOR.equals(usermode))
+        if (Mode.SPECTATOR.equals(usermode))
         {
-            setVisibilityWaitingScreen();
             try
             {
-                startGame();
+                if (myGame.getActiveGame().getGameStatus())
+                {
+                    setVisibilityWaitingScreen();
+                    try
+                    {
+                        startGame();
+                    }
+                    catch (RemoteException ex)
+                    {
+                        System.out.println("Error start watching game: " + ex.getMessage());
+                    }
+                }
             }
             catch (RemoteException ex)
             {
-                System.out.println("Error start watching game: " + ex.getMessage());
+                System.out.println("Get active game  error " + ex.getMessage());
             }
         }
-        
+
         try
         {
             hockeyField = myGame.getHockeyField();
@@ -519,9 +529,9 @@ public class GameController extends UnicastRemoteObject implements Initializable
 
     private void setVisibilityWaitingScreen()
     {
-            canvas.setVisible(true);
-            lblWaiting.setVisible(false);
-            btnStart.setVisible(false);
+        canvas.setVisible(true);
+        lblWaiting.setVisible(false);
+        btnStart.setVisible(false);
     }
 
     @Override

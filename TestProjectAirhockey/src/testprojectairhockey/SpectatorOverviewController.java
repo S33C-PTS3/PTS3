@@ -7,9 +7,15 @@ package testprojectairhockey;
 
 import Game.Mode;
 import Game.Spectator;
+import java.beans.PropertyChangeEvent;
 import java.io.IOException;
 import java.net.URL;
+import java.rmi.RemoteException;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -22,6 +28,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import observer.RemotePropertyListener;
 import observer.RemotePublisher;
 
 /**
@@ -29,7 +36,7 @@ import observer.RemotePublisher;
  *
  * @author rens
  */
-public class SpectatorOverviewController implements Initializable {
+public class SpectatorOverviewController implements Initializable, RemotePropertyListener {
 
     @FXML
     Button btnSpecGame1;
@@ -65,47 +72,11 @@ public class SpectatorOverviewController implements Initializable {
         imgGame2.setImage(imgGame);
         imgGame3.setImage(imgGame);
         imgGame4.setImage(imgGame);
-
-//        btnSpecGame1 = new Button("", imgGame1);
-//        btnSpecGame2 = new Button("", imgGame2);
-//        btnSpecGame3 = new Button("", imgGame3);
-//        btnSpecGame4 = new Button("", imgGame4);
-
-//        btnSpecGame1.setOnAction(new EventHandler<ActionEvent>() {
-//
-//            @Override
-//            public void handle(ActionEvent event)
-//            {
-//                navigateToGame(0);
-//            }
-//        });
-//
-//        btnSpecGame2.setOnAction(new EventHandler<ActionEvent>() {
-//
-//            @Override
-//            public void handle(ActionEvent event)
-//            {
-//                navigateToGame(1);
-//            }
-//        });
-//
-//        btnSpecGame3.setOnAction(new EventHandler<ActionEvent>() {
-//
-//            @Override
-//            public void handle(ActionEvent event)
-//            {
-//                navigateToGame(2);
-//            }
-//        });
-//
-//        btnSpecGame4.setOnAction(new EventHandler<ActionEvent>() {
-//
-//            @Override
-//            public void handle(ActionEvent event)
-//            {
-//                navigateToGame(3);
-//            }
-//        });
+        
+        imgGame1.setVisible(false);
+        imgGame2.setVisible(false);
+        imgGame3.setVisible(false);
+        imgGame4.setVisible(false);
     }
 
     @FXML
@@ -118,6 +89,14 @@ public class SpectatorOverviewController implements Initializable {
     public void setSpectator(Spectator spectator)
     {
         this.spectator = spectator;
+        try
+        {
+            this.spectator.addListener(this, "SpectatorGames");
+        }
+        catch (RemoteException ex)
+        {
+            System.out.println("Spectator games listener: " + ex.getMessage());
+        }
     }
 
     public void navigateToGame(int gameindex)
@@ -138,6 +117,45 @@ public class SpectatorOverviewController implements Initializable {
         }
         catch (IOException ex)
         {
+            System.out.println("Error navigateToGame: " + ex.getMessage());
+        }
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) throws RemoteException
+    {
+        if (spectator.getGames().get(0) == null)
+        {
+            imgGame1.setVisible(false);
+        }
+        else if (spectator.getGames().get(1) == null)
+        {
+            imgGame2.setVisible(false);
+        }
+        else if (spectator.getGames().get(2) == null)
+        {
+            imgGame3.setVisible(false);
+        }
+        else if (spectator.getGames().get(3) == null)
+        {
+            imgGame4.setVisible(false);
+        }
+        
+        if (spectator.getGames().get(0) != null)
+        {
+            imgGame1.setVisible(true);
+        }
+        else if (spectator.getGames().get(1) != null)
+        {
+            imgGame2.setVisible(true);
+        }
+        else if (spectator.getGames().get(2) != null)
+        {
+            imgGame3.setVisible(true);
+        }
+        else if (spectator.getGames().get(3) != null)
+        {
+            imgGame4.setVisible(true);
         }
     }
 
