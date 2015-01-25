@@ -117,6 +117,7 @@ public class GameController extends UnicastRemoteObject implements Initializable
 
     //Modus van de game
     Mode mode = Mode.SINGLE;
+    Mode usermode;
     String loggedInUser = "";
     Side[] sides;
     double diameterPuck;
@@ -151,7 +152,6 @@ public class GameController extends UnicastRemoteObject implements Initializable
     @FXML
     public void btnStart_Click(ActionEvent evt)
     {
-
         try
         {
             startGame();
@@ -315,17 +315,17 @@ public class GameController extends UnicastRemoteObject implements Initializable
 
             if (side.getSideName().equals(SideName.BOTTOM))
             {
-                gc.drawImage(batRed, batBlueX - diameterBat/2, batBlueY - diameterBat/2, diameterBat, diameterBat);
+                gc.drawImage(batRed, batBlueX - diameterBat / 2, batBlueY - diameterBat / 2, diameterBat, diameterBat);
                 lblScore1.setText(String.valueOf(scorePlayer1));
             }
             else if (side.getSideName().equals(SideName.RIGHT))
             {
-                gc.drawImage(batGreen, batGreenX - diameterBat/2, batGreenY - diameterBat/2, diameterBat, diameterBat);
+                gc.drawImage(batGreen, batGreenX - diameterBat / 2, batGreenY - diameterBat / 2, diameterBat, diameterBat);
                 lblScore2.setText(String.valueOf(scorePlayer2));
             }
             else if (side.getSideName().equals(SideName.LEFT))
             {
-                gc.drawImage(batBlue, batRedX - diameterBat/2, batRedY - diameterBat/2, diameterBat, diameterBat);
+                gc.drawImage(batBlue, batRedX - diameterBat / 2, batRedY - diameterBat / 2, diameterBat, diameterBat);
                 lblScore3.setText(String.valueOf(scorePlayer3));
             }
 
@@ -466,10 +466,24 @@ public class GameController extends UnicastRemoteObject implements Initializable
         }
     }
 
-    public void setMode(Mode mode, String loggedInUser, IGame g)
+    public void setMode(Mode mode, String loggedInUser, IGame g, Mode usermode)
     {
         this.mode = mode;
         this.myGame = g;
+        this.usermode = usermode;
+        if(Mode.SPECTATOR.equals(usermode))
+        {
+            setVisibilityWaitingScreen();
+            try
+            {
+                startGame();
+            }
+            catch (RemoteException ex)
+            {
+                System.out.println("Error start watching game: " + ex.getMessage());
+            }
+        }
+        
         try
         {
             hockeyField = myGame.getHockeyField();
@@ -505,9 +519,9 @@ public class GameController extends UnicastRemoteObject implements Initializable
 
     private void setVisibilityWaitingScreen()
     {
-        canvas.setVisible(true);
-        lblWaiting.setVisible(false);
-        btnStart.setVisible(false);
+            canvas.setVisible(true);
+            lblWaiting.setVisible(false);
+            btnStart.setVisible(false);
     }
 
     @Override
@@ -630,7 +644,8 @@ public class GameController extends UnicastRemoteObject implements Initializable
         {
             for (Side s : hockeyField.getSides())
             {
-                if (s.getBoundPlayer().getID() == 2) {
+                if (s.getBoundPlayer().getID() == 2)
+                {
                     double ratingscore;
                     double endScore = -20 + s.getBoundPlayer().getInGameScore();
                     double correction;
@@ -671,7 +686,7 @@ public class GameController extends UnicastRemoteObject implements Initializable
                 else
                 {
                     isSuccess = true;
-                } 
+                }
             }
         }
         catch (RemoteException ex)
@@ -679,7 +694,6 @@ public class GameController extends UnicastRemoteObject implements Initializable
             Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        
         return isSuccess;
     }
 }

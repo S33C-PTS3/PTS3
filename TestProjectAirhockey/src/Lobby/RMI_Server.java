@@ -128,7 +128,7 @@ public class RMI_Server {
             InetAddress[] allMyIps = InetAddress.getAllByName(localhost.getCanonicalHostName());
             if (allMyIps != null && allMyIps.length > 1) {
                 for (InetAddress allMyIp : allMyIps) {
-                    if (allMyIp.toString().contains("145")) {
+                    if (allMyIp.toString().contains("192")) {
                         int slashIndex = allMyIp.toString().indexOf("/");
                         ip = allMyIp.toString().substring(slashIndex + 1);
                         System.out.println("Server IP: " + ip);

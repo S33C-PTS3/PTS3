@@ -50,7 +50,6 @@ public class MenuController implements Initializable {
     private void btnSP_Click(ActionEvent evt) throws IOException
     {
         //startNewWindow("FXMLDocument", "Airhockey - Singleplayer", evt);
-
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXMLDocument.fxml"));
         Parent root = (Parent) fxmlLoader.load();
         Scene scene = new Scene(root);
@@ -60,13 +59,13 @@ public class MenuController implements Initializable {
         stage.setResizable(false);
         stage.show();
         ((Node) (evt.getSource())).getScene().getWindow().hide();
-
     }
 
     @FXML
     private void btnMP_Click(ActionEvent evt)
     {
-        startNewWindow("Login", "Airhockey - Login", evt);
+        //startNewWindow("Login", "Airhockey - Login", evt);
+        startNewWindow("Lobby", "Airhockey - Lobby", evt);
     }
     
     @FXML

@@ -125,7 +125,7 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
     {
         messages = FXCollections.observableArrayList();
         lvChatBox.setItems(messages);
-        populateRanking();
+        //populateRanking();
 
         try
         {
@@ -319,7 +319,8 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
                     {
                         spectator = new Spectator(loggedInUser.getUsername());
                     }
-                    rmiController.getLobby().addSpectatorToGame(Integer.parseInt(gameId), spectator);
+                    spectator = rmiController.getLobby().addSpectatorToGame(Integer.parseInt(gameId), spectator);
+                    System.out.println("Nr of games: " + spectator.getGames().size());
                     navigateToSpectatorOverview();
                 }
                 catch (RemoteException ex)
@@ -352,7 +353,7 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
 
             RemotePublisher publisher = (RemotePublisher) rmiController.getLobby();
             publisher.addListener(controller, "client");
-            controller.setMode(Mode.MULTI, loggedInUser.getUsername(), g);
+            controller.setMode(Mode.MULTI, loggedInUser.getUsername(), g, Mode.PLAYER);
             Scene scene = new Scene(root);
             Stage stage = new Stage();
             stage.setScene(scene);

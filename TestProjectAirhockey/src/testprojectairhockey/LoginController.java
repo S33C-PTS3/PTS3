@@ -5,7 +5,6 @@
  */
 package testprojectairhockey;
 
-import Game.Mode;
 import Lobby.User;
 import Security.AuthenticationManager;
 import java.io.IOException;

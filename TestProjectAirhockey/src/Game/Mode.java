@@ -10,5 +10,5 @@ package Game;
  * @author Eric
  */
 public enum Mode {
-    SINGLE, MULTI;
+    SINGLE, MULTI, SPECTATOR, PLAYER;
 }

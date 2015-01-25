@@ -20,6 +20,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import observer.RemotePublisher;
 
@@ -65,20 +66,53 @@ public class SpectatorOverviewController implements Initializable {
         imgGame3.setImage(imgGame);
         imgGame4.setImage(imgGame);
 
-        btnSpecGame1 = new Button("", imgGame1);
-        btnSpecGame2 = new Button("", imgGame2);
-        btnSpecGame3 = new Button("", imgGame3);
-        btnSpecGame4 = new Button("", imgGame4);
+//        btnSpecGame1 = new Button("", imgGame1);
+//        btnSpecGame2 = new Button("", imgGame2);
+//        btnSpecGame3 = new Button("", imgGame3);
+//        btnSpecGame4 = new Button("", imgGame4);
 
-        btnSpecGame1.setOnAction(new EventHandler<ActionEvent>() {
+//        btnSpecGame1.setOnAction(new EventHandler<ActionEvent>() {
+//
+//            @Override
+//            public void handle(ActionEvent event)
+//            {
+//                navigateToGame(0);
+//            }
+//        });
+//
+//        btnSpecGame2.setOnAction(new EventHandler<ActionEvent>() {
+//
+//            @Override
+//            public void handle(ActionEvent event)
+//            {
+//                navigateToGame(1);
+//            }
+//        });
+//
+//        btnSpecGame3.setOnAction(new EventHandler<ActionEvent>() {
+//
+//            @Override
+//            public void handle(ActionEvent event)
+//            {
+//                navigateToGame(2);
+//            }
+//        });
+//
+//        btnSpecGame4.setOnAction(new EventHandler<ActionEvent>() {
+//
+//            @Override
+//            public void handle(ActionEvent event)
+//            {
+//                navigateToGame(3);
+//            }
+//        });
+    }
 
-            @Override
-            public void handle(ActionEvent event)
-            {
-
-            }
-        });
-
+    @FXML
+    private void Game1_Click(MouseEvent evt)
+    {
+        System.out.println("Nr of games: " + spectator.getGames().size());
+        navigateToGame(0);
     }
 
     public void setSpectator(Spectator spectator)
@@ -88,21 +122,23 @@ public class SpectatorOverviewController implements Initializable {
 
     public void navigateToGame(int gameindex)
     {
-        try{
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Game.fxml"));
-        Parent root = (Parent) fxmlLoader.load();
-        GameController controller = fxmlLoader.<GameController>getController();
+        try
+        {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Game.fxml"));
+            Parent root = (Parent) fxmlLoader.load();
+            GameController controller = fxmlLoader.<GameController>getController();
 
-        controller.setMode(Mode.MULTI, spectator.getUsername(), spectator.getGames().get(gameindex));
-        Scene scene = new Scene(root);
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        stage.setTitle("Airhockey - Multiplayer");
-        stage.setResizable(false);
-        stage.show();
+            controller.setMode(Mode.MULTI, spectator.getUsername(), spectator.getGames().get(gameindex), Mode.SPECTATOR);
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.setTitle("Airhockey - Multiplayer");
+            stage.setResizable(false);
+            stage.show();
         }
-        catch(IOException ex)
-        {}
+        catch (IOException ex)
+        {
+        }
     }
 
 }

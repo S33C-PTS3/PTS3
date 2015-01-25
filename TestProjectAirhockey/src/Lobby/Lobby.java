@@ -116,22 +116,23 @@ public class Lobby extends UnicastRemoteObject implements ILobby, RemotePublishe
     }
     
     @Override
-    public boolean addSpectatorToGame(int gameId, Spectator spectator) throws RemoteException
+    public Spectator addSpectatorToGame(int gameId, Spectator spectator) throws RemoteException
     {
+        Spectator spectator2 = spectator;
         for (Game g : games)
         {
             if (g.getId() == gameId)
             {
-                g.addSpectator(spectator);
-                spectator.addGame(g);
+                g.addSpectator(spectator2);
+                spectator2.addGame(g);
                 if (g.getSpectators().size() == MAXSPECTATORS)
                 {
                     publisher.inform(this, "spectator", null, true);
                 }
-                return true;
+                return spectator2;
             }
         }
-        return false;
+        return spectator2;
     }
 
     @Override
