@@ -53,8 +53,9 @@
     
     <target name="-post-jfx-deploy">
        <fx:deploy width="${javafx.run.width}" height="${javafx.run.height}" 
-                  nativeBundles="all"
-                  outdir="${basedir}/${dist.dir}" outfile="${application.title}">
+                  nativeBundles="exe"
+                  outdir="${basedir}/${dist.dir}" outfile="${application.title}"
+                    verbose="true">
           <fx:application name="${application.title}" 
                           mainClass="${javafx.main.class}"/>
           <fx:resources>
