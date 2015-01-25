@@ -60,15 +60,6 @@ public class ActiveGame extends UnicastRemoteObject implements IActiveGame, Remo
 
     }
 
-    /**
-     * calculates and returns the rating at the end of the game
-     *
-     * @return the calculated rating
-     */
-    public double calculateRating() {
-        return 0;
-    }
-
     @Override
     public String[] getUsers() throws RemoteException {
         return null;
