@@ -61,11 +61,6 @@ public class ActiveGame extends UnicastRemoteObject implements IActiveGame, Remo
     }
 
     @Override
-    public String[] getUsers() throws RemoteException {
-        return null;
-    }
-
-    @Override
     public IHockeyField getHockeyField() throws RemoteException {
         return this.hockeyField;
     }
