@@ -41,7 +41,7 @@ public class Lobby extends UnicastRemoteObject implements ILobby, RemotePublishe
     public Lobby() throws RemoteException {
         games = new ArrayList<>();
         gameCount = 1;
-        publisher = new BasicPublisher(new String[]{"client", "lobby", "spectator"});
+        publisher = new BasicPublisher(new String[]{"client", "lobby", "spectator", "SpectatorOverview"});
         chat = new Chat();
     }
 
@@ -128,6 +128,7 @@ public class Lobby extends UnicastRemoteObject implements ILobby, RemotePublishe
                 if (g.getSpectators().size() == MAXSPECTATORS)
                 {
                     publisher.inform(this, "spectator", null, true);
+                    publisher.inform(this, "SpectatorOverview", null, gameId);
                 }
                 return spectator2;
             }

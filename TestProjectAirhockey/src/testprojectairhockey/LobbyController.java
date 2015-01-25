@@ -109,8 +109,7 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
     Button btnJoin;
     Button btnSpectate;
 
-    public LobbyController() throws RemoteException
-    {
+    public LobbyController() throws RemoteException {
 
     }
 
@@ -121,78 +120,61 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
      * @param rb
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb)
-    {
+    public void initialize(URL url, ResourceBundle rb) {
         messages = FXCollections.observableArrayList();
         lvChatBox.setItems(messages);
         //populateRanking();
 
-        try
-        {
+        try {
             rmiController = new LobbyRMI();
             rmiController.getLobby().getChat().addListener(this, "Lobby");
             rmiController.getLobby().addListener(this, "lobby");
             getMessages();
-        }
-        catch (RemoteException ex)
-        {
+        } catch (RemoteException ex) {
             Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
         }
         refresh();
     }
 
     @FXML
-    private void btnSend_Click(ActionEvent evt)
-    {
+    private void btnSend_Click(ActionEvent evt) {
         sendMessage();
     }
 
     @FXML
-    private void enterPressed(KeyEvent evt)
-    {
-        if (evt.getCode().equals(KeyCode.ENTER))
-        {
+    private void enterPressed(KeyEvent evt) {
+        if (evt.getCode().equals(KeyCode.ENTER)) {
             sendMessage();
         }
     }
 
     @FXML
-    private void btnRefresh_Click(ActionEvent evt)
-    {
+    private void btnRefresh_Click(ActionEvent evt) {
         refresh();
     }
 
     @FXML
-    private void btnCreateGame_Click(ActionEvent evt)
-    {
+    private void btnCreateGame_Click(ActionEvent evt) {
         ILobby lobby = rmiController.getLobby();
         String[] gameInfo = null;
-        try
-        {
+        try {
             System.out.println(lobby.toString());
             gameInfo = lobby.addGame(loggedInUser.getUsername() + "'s Game", loggedInUser);
-        }
-        catch (RemoteException ex)
-        {
+        } catch (RemoteException ex) {
             Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
         }
         createNewGame(gameInfo);
-        try
-        {
+        try {
             navigateToGame(rmiController.getLobby().getGame(Integer.valueOf(gameInfo[0])), true);
 
-        }
-        catch (RemoteException ex)
-        {
+        } catch (RemoteException ex) {
             Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     @FXML
-    private void btnLogout_Click(ActionEvent evt)
-    {
-        try
-        {
+    private void btnLogout_Click(ActionEvent evt) {
+        try {
             Stage closingStage = (Stage) ((Node) evt.getSource()).getScene().getWindow();
             closingStage.close();
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Menu.fxml"));
@@ -204,32 +186,24 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
             stage.setTitle("Airhockey");
             stage.setResizable(false);
             stage.show();
-        }
-        catch (IOException ex)
-        {
+        } catch (IOException ex) {
             ex.printStackTrace();
         }
 
     }
 
-    private void refresh()
-    {
-        try
-        {
+    private void refresh() {
+        try {
             GameAccordion.getPanes().clear();
-            for (String[] gamesArray : rmiController.getLobby().getGames())
-            {
+            for (String[] gamesArray : rmiController.getLobby().getGames()) {
                 createNewGame(gamesArray);
             }
-        }
-        catch (RemoteException ex)
-        {
+        } catch (RemoteException ex) {
             Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    private void createNewGame(String[] gameInfo)
-    {
+    private void createNewGame(String[] gameInfo) {
         int playerCount = 0;
         String gameId = gameInfo[0];
         String gameName = gameInfo[1];
@@ -243,22 +217,18 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
         AnchorPane gamePane = new AnchorPane();
 
         GridPane gamegrid = new GridPane();
-        for (int i = 3; i < LASTPLAYERINDEX; i++)
-        {
-            if ((gameInfo[i]) != null)
-            {
+        for (int i = 3; i < LASTPLAYERINDEX; i++) {
+            if ((gameInfo[i]) != null) {
                 playerCount++;
             }
         }
         //550 /4 = 137,5       
-        for (int i = 0; i < 4; i++)
-        {
+        for (int i = 0; i < 4; i++) {
             ColumnConstraints column = new ColumnConstraints(COLUMNWIDTH);
             gamegrid.getColumnConstraints().add(column);
         }
 
-        for (int i = 0; i < 4; i++)
-        {
+        for (int i = 0; i < 4; i++) {
             RowConstraints row = new RowConstraints(ROWHEIGHT);
             gamegrid.getRowConstraints().add(row);
         }
@@ -290,16 +260,12 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
         btnJoin.setText("Join game");
         btnJoin.setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public void handle(ActionEvent event)
-            {
-                try
-                {
+            public void handle(ActionEvent event) {
+                try {
                     rmiController.getLobby().addUserToGame(Integer.parseInt(gameId), (User) loggedInUser);
                     navigateToGame(rmiController.getLobby().getGame(Integer.valueOf(gameId)), true);
                     btnJoin.getScene().getWindow().hide();
-                }
-                catch (RemoteException ex)
-                {
+                } catch (RemoteException ex) {
                     Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
@@ -311,20 +277,15 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
         btnSpectate.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
-            public void handle(ActionEvent event)
-            {
-                try
-                {
-                    if (spectator == null)
-                    {
+            public void handle(ActionEvent event) {
+                try {
+                    if (spectator == null) {
                         spectator = new Spectator(loggedInUser.getUsername());
                     }
                     spectator = rmiController.getLobby().addSpectatorToGame(Integer.parseInt(gameId), spectator);
                     System.out.println("Nr of games: " + spectator.getGames().size());
                     navigateToSpectatorOverview();
-                }
-                catch (RemoteException ex)
-                {
+                } catch (RemoteException ex) {
                     Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
@@ -337,16 +298,13 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
         gameTitle.setContent(gamegrid);
         idLabel.setText(gameId);
         GameAccordion.getPanes().add(gameTitle);
-        for (int i = 0; i < 6; i++)
-        {
+        for (int i = 0; i < 6; i++) {
             System.out.println(gameInfo[i]);
         }
     }
 
-    private void navigateToGame(IGame g, boolean player)
-    {
-        try
-        {
+    private void navigateToGame(IGame g, boolean player) {
+        try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Game.fxml"));
             Parent root = (Parent) fxmlLoader.load();
             GameController controller = fxmlLoader.<GameController>getController();
@@ -360,26 +318,22 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
             stage.setTitle("Airhockey - Multiplayer");
             stage.setResizable(false);
             stage.show();
-            if (player)
-            {
+            if (player) {
                 btnStartNewGame.getScene().getWindow().hide();
             }
 
-        }
-        catch (IOException ex)
-        {
+        } catch (IOException ex) {
             ex.printStackTrace();
         }
     }
 
-    public void navigateToSpectatorOverview()
-    {
-        try
-        {
+    public void navigateToSpectatorOverview() {
+        try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("SpectatorOverview.fxml"));
             Parent root = (Parent) fxmlLoader.load();
             SpectatorOverviewController controller = fxmlLoader.<SpectatorOverviewController>getController();
-            
+            RemotePublisher publisher = (RemotePublisher) rmiController.getLobby();
+
             controller.setSpectator(spectator);
             Scene scene = new Scene(root);
             Stage stage = new Stage();
@@ -387,27 +341,21 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
             stage.setTitle("Airhockey - Spectator overview");
             stage.setResizable(false);
             stage.show();
-        }
-        catch (IOException ex)
-        {
+            publisher.addListener(controller, "SpectatorOverview");
+        } catch (IOException ex) {
         }
     }
 
-    public void setLoggedInUser(IUser u)
-    {
+    public void setLoggedInUser(IUser u) {
         this.loggedInUser = u;
-        try
-        {
+        try {
             lblLoggedInUser.setText("Welcome " + loggedInUser.getUsername());
-        }
-        catch (RemoteException ex)
-        {
+        } catch (RemoteException ex) {
             Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public void populateRanking()
-    {
+    public void populateRanking() {
         ObservableList<String> ratings = FXCollections.observableArrayList();
 
         ratings.addAll(Arrays.asList(authMan.getRanking()));
@@ -423,8 +371,7 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
         ObservableList<RankedUser> rankingList = FXCollections.observableArrayList();
 
         String[] ranking = authMan.getRanking();
-        for (String current : ranking)
-        {
+        for (String current : ranking) {
             rankingList.add(new RankedUser(current.substring(0, current.indexOf("|")), current.substring(current.indexOf("|") + 1, current.length())));
         }
 
@@ -437,11 +384,9 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
 
         tvRanking.getColumns().addListener(new ListChangeListener() {
             @Override
-            public void onChanged(Change change)
-            {
+            public void onChanged(Change change) {
                 change.next();
-                if (change.wasReplaced())
-                {
+                if (change.wasReplaced()) {
                     tvRanking.getColumns().clear();
                     tvRanking.getColumns().addAll(usernameColumn, ratingColumn);
                 }
@@ -449,98 +394,74 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
         });
     }
 
-    private void sendMessage()
-    {
+    private void sendMessage() {
 
         Platform.runLater(new Runnable() {
             @Override
-            public void run()
-            {
-                try
-                {
+            public void run() {
+                try {
                     Message m = new Message(loggedInUser.getUsername(), tfMessage.getText());
                     rmiController.getLobby().addMessage(loggedInUser.getUsername(), tfMessage.getText());
                     messages.add(m.toString());
                     tfMessage.clear();
                     lvChatBox.scrollTo(lvChatBox.getItems().size());
                     tfMessage.clear();
-                }
-                catch (RemoteException ex)
-                {
+                } catch (RemoteException ex) {
                     Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                catch (IllegalArgumentException ex)
-                {
+                } catch (IllegalArgumentException ex) {
                     tfMessage.setPromptText("Write a Message..");
                 }
             }
         });
     }
 
-    private void getMessages()
-    {
+    private void getMessages() {
         ILobby lobby = rmiController.getLobby();
-        try
-        {
-            for (int i = 0; i < lobby.getMessages().size(); i++)
-            {
+        try {
+            for (int i = 0; i < lobby.getMessages().size(); i++) {
                 messages.add(lobby.getMessages().get(i).toString());
                 lvChatBox.scrollTo(lvChatBox.getItems().size());
             }
-        }
-        catch (RemoteException ex)
-        {
+        } catch (RemoteException ex) {
             Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
 
-    public void removeGame(int gameID)
-    {
-        try
-        {
+    public void removeGame(int gameID) {
+        try {
             rmiController.getLobby().removeGame(gameID);
-        }
-        catch (RemoteException ex)
-        {
+        } catch (RemoteException ex) {
             Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     @Override
-    public void propertyChange(PropertyChangeEvent evt) throws RemoteException
-    {
-        if (evt.getNewValue() instanceof Message)
-        {
+    public void propertyChange(PropertyChangeEvent evt) throws RemoteException {
+        if (evt.getNewValue() instanceof Message) {
             Message m = (Message) evt.getNewValue();
-            if (!m.getSender().equals(loggedInUser.getUsername()))
-            {
+            if (!m.getSender().equals(loggedInUser.getUsername())) {
                 Platform.runLater(new Runnable() {
                     @Override
-                    public void run()
-                    {
+                    public void run() {
                         messages.add(m.toString());
                     }
                 });
                 //messages.add(m.toString());
             }
         }
-        if (evt.getPropertyName().equals("lobby"))
-        {
+        if (evt.getPropertyName().equals("lobby")) {
             Platform.runLater(new Runnable() {
                 @Override
-                public void run()
-                {
+                public void run() {
                     btnJoin.setDisable(true);
                 }
             });
         }
-        if (evt.getPropertyName().equals("spectator"))
-        {
+        if (evt.getPropertyName().equals("spectator")) {
             Platform.runLater(new Runnable() {
                 @Override
-                public void run()
-                {
+                public void run() {
                     btnSpectate.setDisable(true);
                 }
             });

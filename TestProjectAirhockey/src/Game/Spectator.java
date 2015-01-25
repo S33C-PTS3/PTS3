@@ -18,12 +18,11 @@ import observer.RemotePublisher;
 
 /**
  * @author Eric
- * Spectator is a user who is specatating an active game.
+ * Spectator is a user who is spectating an active game.
  */
-public class Spectator extends User implements Serializable, IUser, RemotePublisher{
+public class Spectator extends User implements Serializable, IUser{
     
     private List<Game> games;
-    private BasicPublisher publisher;
 
     /**
      * Constructor used for Spectator
@@ -34,7 +33,6 @@ public class Spectator extends User implements Serializable, IUser, RemotePublis
     {
         super(username);
         games = new ArrayList<>();
-        publisher = new BasicPublisher(new String[]{"SpectatorGames"});
     }
     
     /**
@@ -58,17 +56,5 @@ public class Spectator extends User implements Serializable, IUser, RemotePublis
     public void zoomIn(Game selectedGame)
     {
                      
-    }
-
-    @Override
-    public void addListener(RemotePropertyListener listener, String property) throws RemoteException
-    {
-        publisher.addListener(listener, property);
-    }
-
-    @Override
-    public void removeListener(RemotePropertyListener listener, String property) throws RemoteException
-    {
-        publisher.removeListener(listener, property);
     }
 }

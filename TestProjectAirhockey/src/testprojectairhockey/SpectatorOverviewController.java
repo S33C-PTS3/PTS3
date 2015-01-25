@@ -63,8 +63,7 @@ public class SpectatorOverviewController implements Initializable, RemotePropert
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb)
-    {
+    public void initialize(URL url, ResourceBundle rb) {
 
         Image imgGame = new Image(getClass().getResourceAsStream("fieldPicture.png"));
 
@@ -72,7 +71,7 @@ public class SpectatorOverviewController implements Initializable, RemotePropert
         imgGame2.setImage(imgGame);
         imgGame3.setImage(imgGame);
         imgGame4.setImage(imgGame);
-        
+
         imgGame1.setVisible(false);
         imgGame2.setVisible(false);
         imgGame3.setVisible(false);
@@ -80,29 +79,34 @@ public class SpectatorOverviewController implements Initializable, RemotePropert
     }
 
     @FXML
-    private void Game1_Click(MouseEvent evt)
-    {
+    private void Game1_Click(MouseEvent evt) {
         System.out.println("Nr of games: " + spectator.getGames().size());
         navigateToGame(0);
     }
-
-    public void setSpectator(Spectator spectator)
-    {
-        this.spectator = spectator;
-        try
-        {
-            this.spectator.addListener(this, "SpectatorGames");
-        }
-        catch (RemoteException ex)
-        {
-            System.out.println("Spectator games listener: " + ex.getMessage());
-        }
+    
+    @FXML
+    private void Game2_Click(MouseEvent evt) {
+        navigateToGame(1);
+    }
+    
+    @FXML
+    private void Game3_Click(MouseEvent evt) {
+        System.out.println("Nr of games: " + spectator.getGames().size());
+        navigateToGame(2);
+    }
+    @FXML
+    private void Game4_Click(MouseEvent evt) {
+        System.out.println("Nr of games: " + spectator.getGames().size());
+        navigateToGame(3);
     }
 
-    public void navigateToGame(int gameindex)
-    {
-        try
-        {
+    public void setSpectator(Spectator spectator) {
+        this.spectator = spectator;
+        updateImageView();
+    }
+
+    public void navigateToGame(int gameindex) {
+        try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Game.fxml"));
             Parent root = (Parent) fxmlLoader.load();
             GameController controller = fxmlLoader.<GameController>getController();
@@ -114,48 +118,25 @@ public class SpectatorOverviewController implements Initializable, RemotePropert
             stage.setTitle("Airhockey - Multiplayer");
             stage.setResizable(false);
             stage.show();
-        }
-        catch (IOException ex)
-        {
+        } catch (IOException ex) {
             System.out.println("Error navigateToGame: " + ex.getMessage());
         }
     }
 
     @Override
-    public void propertyChange(PropertyChangeEvent evt) throws RemoteException
-    {
-        if (spectator.getGames().get(0) == null)
+    public void propertyChange(PropertyChangeEvent evt) throws RemoteException {
+        updateImageView();
+    }
+
+    private void updateImageView() {     
+        ImageView[] imgView = new ImageView[4];
+        imgView[0] = imgGame1;
+        imgView[1] = imgGame2;
+        imgView[2] = imgGame3;
+        imgView[3] = imgGame4;
+        for(int i = 0; i < spectator.getGames().size(); i++)
         {
-            imgGame1.setVisible(false);
-        }
-        else if (spectator.getGames().get(1) == null)
-        {
-            imgGame2.setVisible(false);
-        }
-        else if (spectator.getGames().get(2) == null)
-        {
-            imgGame3.setVisible(false);
-        }
-        else if (spectator.getGames().get(3) == null)
-        {
-            imgGame4.setVisible(false);
-        }
-        
-        if (spectator.getGames().get(0) != null)
-        {
-            imgGame1.setVisible(true);
-        }
-        else if (spectator.getGames().get(1) != null)
-        {
-            imgGame2.setVisible(true);
-        }
-        else if (spectator.getGames().get(2) != null)
-        {
-            imgGame3.setVisible(true);
-        }
-        else if (spectator.getGames().get(3) != null)
-        {
-            imgGame4.setVisible(true);
+            imgView[i].setVisible(true);
         }
     }
 
