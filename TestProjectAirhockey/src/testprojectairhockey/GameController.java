@@ -171,16 +171,6 @@ public class GameController extends UnicastRemoteObject implements Initializable
 
     public void startGame() throws RemoteException
     {
-        long gameStartingPoint = System.nanoTime() + (GAMESTARTDELAY * 1000000);
-
-        while (true)
-        {
-            if (System.nanoTime() > gameStartingPoint)
-            {
-                break;
-            }
-        }
-
         publisher = (RemotePublisher) myGame.getHockeyField();
         try
         {
