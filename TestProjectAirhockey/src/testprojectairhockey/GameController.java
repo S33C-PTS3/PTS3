@@ -136,6 +136,8 @@ public class GameController extends UnicastRemoteObject implements Initializable
     boolean ratingUpdated = false;
     AuthenticationManager authMan = new AuthenticationManager();
 
+    private final int GAMESTARTDELAY = 5;
+    
     public GameController() throws RemoteException
     {
 
@@ -169,7 +171,15 @@ public class GameController extends UnicastRemoteObject implements Initializable
 
     public void startGame() throws RemoteException
     {
-        System.err.println("SYSTIME:::::::::::::::::::::::: " + System.nanoTime());
+        long gameStartingPoint = System.nanoTime() + (GAMESTARTDELAY * 1000000);
+        
+        while (true)
+        {
+            if (System.nanoTime() > gameStartingPoint) 
+            {
+                break;
+            }
+        }
         
         publisher = (RemotePublisher) myGame.getHockeyField();
         try
