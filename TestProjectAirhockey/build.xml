@@ -51,9 +51,9 @@
 
     -->
     
-    <!--<target name="-post-jfx-deploy">
+    <target name="-post-jfx-deploy">
        <fx:deploy width="${javafx.run.width}" height="${javafx.run.height}" 
-                  nativeBundles="exe"
+                  nativeBundles="image"
                   outdir="${basedir}/${dist.dir}" outfile="${application.title}"
                     verbose="true">
           <fx:application name="${application.title}" 
@@ -65,5 +65,5 @@
           <fx:info title="${application.title}" 
                    vendor="${application.vendor}"/>
         </fx:deploy>          
-     </target>-->
+     </target>
 </project>

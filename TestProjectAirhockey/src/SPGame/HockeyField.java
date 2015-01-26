@@ -82,6 +82,7 @@ public class HockeyField {
                 sideName = SideName.RIGHT;
                 player = new RobotPlayer("Sjef");
             }
+            
             Side s = new Side(zijdeX1, zijdeY1, zijdeX2, zijdeY2, colors[i], sideName, player);
             sides[i] = s;
             middleX += zijdeX2;

@@ -5,7 +5,11 @@
  */
 package testprojectairhockey;
 
-import SPGame.*;
+import SPGame.Bat;
+import SPGame.HockeyField;
+import SPGame.Puck;
+import SPGame.Side;
+import SPGame.SideName;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -29,6 +33,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+import testprojectairhockey.SPGameResultsController;
 
 /**
  *
@@ -91,6 +96,11 @@ public class FXMLDocumentController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb)
+    {
+        init();
+    }
+
+    public void init()
     {
         //Focus op het spel zodat je meteen de bat kan bewegen
         lvChat.setItems(messages);
@@ -158,7 +168,6 @@ public class FXMLDocumentController implements Initializable {
             }
         };
         timer.start();
-
     }
 
     public void Draw()

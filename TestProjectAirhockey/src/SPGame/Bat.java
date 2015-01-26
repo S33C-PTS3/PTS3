@@ -39,11 +39,12 @@ public class Bat{
         this.color = color;
         this.Xpos = Xpos;
         this.Ypos = Ypos;
-        int xVel = 10;
+        int xVel = 7;
         
         //Speed of own bat depends on difficulty
-        Settings loadedSettings = serMan.loadAIsettings();
-        int overallDifficulty = getOverallDifficulty(loadedSettings);
+        //Settings loadedSettings = serMan.loadAIsettings();
+        //int overallDifficulty = getOverallDifficulty(loadedSettings);
+        int overallDifficulty = xVel;
         
         switch(overallDifficulty)
         {
@@ -62,11 +63,16 @@ public class Bat{
             case 6:
                 xVel = 8;
                 break;
+            case 7:
+                xVel = 5;
+                break;
         }
         
         this.Xvelocity = xVel;
         
         this.sidename = sidename;
+        this.rightSpeedModifier *= xVel;
+        this.leftSpeedModifier *= xVel;
     }
     
     /**

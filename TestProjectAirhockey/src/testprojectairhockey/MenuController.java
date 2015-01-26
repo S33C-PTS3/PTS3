@@ -9,6 +9,8 @@ import Game.Mode;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,6 +21,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import observer.RemotePublisher;
 
 /**
  * FXML Controller class
@@ -47,18 +50,61 @@ public class MenuController implements Initializable {
     }
 
     @FXML
-    private void btnSP_Click(ActionEvent evt) throws IOException
+    private void btnSP_Click(ActionEvent evt)
     {
-        //startNewWindow("FXMLDocument", "Airhockey - Singleplayer", evt);
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXMLDocument.fxml"));
-        Parent root = (Parent) fxmlLoader.load();
-        Scene scene = new Scene(root);
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        stage.setTitle("Airhockey - Singleplayer");
-        stage.setResizable(false);
-        stage.show();
-        ((Node) (evt.getSource())).getScene().getWindow().hide();
+//        try
+//        {
+//            lblHoi.setText("1");
+//            URL url = getClass().getResource("FXMLDocument.fxml");
+//            lblHoi.setText("2");
+//            if(url != null)
+//            {
+//                lblHoi.setText(url.toString());
+//            }
+//            else
+//            {
+//                lblHoi.setText("3.4444");
+//            }
+//            
+//            //lblHoi.setText("3.5");
+//            Parent root = FXMLLoader.load(url);
+//            lblHoi.setText("3");
+//            Scene scene = new Scene(root);
+//            lblHoi.setText("4");
+//            Stage stage = new Stage();
+//            lblHoi.setText("5");
+//            stage.setScene(scene);
+//            lblHoi.setText("6");
+//            stage.setTitle("Airhockey - Singleplayer");
+//            lblHoi.setText("7");
+//            stage.setResizable(false);
+//            lblHoi.setText("8");
+//            stage.show();
+//            lblHoi.setText("9");
+//            ((Node) (evt.getSource())).getScene().getWindow().hide();
+//            lblHoi.setText("10");
+//        }
+//        catch (IOException ex)
+//        {
+//            lblHoi.setText(ex.getMessage());
+//        }
+        
+        try
+        {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FXMLDocument.fxml"));
+            Parent root = (Parent) fxmlLoader.load();
+            FXMLDocumentController controller = fxmlLoader.<FXMLDocumentController>getController();
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.setTitle("Airhockey - Singleplayer");
+            stage.setResizable(false);
+            stage.show();
+        }
+        catch (IOException ex)
+        {
+            lblHoi.setText(ex.getLocalizedMessage());
+        }
     }
 
     @FXML
@@ -66,7 +112,7 @@ public class MenuController implements Initializable {
     {
         startNewWindow("Login", "Airhockey - Login", evt);
     }
-    
+
     @FXML
     private void btnSettings_Click(ActionEvent evt)
     {
