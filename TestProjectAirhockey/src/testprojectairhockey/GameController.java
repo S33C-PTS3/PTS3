@@ -45,6 +45,7 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Timer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
@@ -168,6 +169,8 @@ public class GameController extends UnicastRemoteObject implements Initializable
 
     public void startGame() throws RemoteException
     {
+        System.err.println("SYSTIME:::::::::::::::::::::::: " + System.nanoTime());
+        
         publisher = (RemotePublisher) myGame.getHockeyField();
         try
         {
