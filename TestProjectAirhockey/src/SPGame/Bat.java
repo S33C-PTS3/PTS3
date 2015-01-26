@@ -22,8 +22,8 @@ public class Bat{
     private double Xvelocity;
     private SideName sidename;
     private SerializationManager serMan = new SerializationManager();
-    double rightSpeedModifier = 1;
-    double leftSpeedModifier = 1;
+    double rightSpeedModifier = 0.1;
+    double leftSpeedModifier = 0.1;
     
     /**
      * Constructor used for the Bat Class
@@ -201,15 +201,15 @@ public class Bat{
         {
             case EASY:
                 diff1 = 1;
-                leftSpeedModifier = 1;
+                leftSpeedModifier = 0.15;
                 break;
             case MEDIUM:
                 diff1 = 2;
-                leftSpeedModifier = 1.6;
+                leftSpeedModifier = 0.45;
                 break;
             case HARD:
                 diff1 = 3;
-                leftSpeedModifier = 2.2;
+                leftSpeedModifier = 1;
                 break;
         }
             
@@ -217,14 +217,14 @@ public class Bat{
         {
             case EASY:
                 diff2 = 1;
-                rightSpeedModifier = 1;
+                rightSpeedModifier = 0.1;
                 break;
             case MEDIUM:
-                rightSpeedModifier = 1.6;
+                rightSpeedModifier = 0.55;
                 diff2 = 2;
                 break;
             case HARD:
-                rightSpeedModifier = 2.2;
+                rightSpeedModifier = 0.9;
                 diff2 = 3;
                 break;
         }
