@@ -233,6 +233,7 @@ public class Lobby extends UnicastRemoteObject implements ILobby, RemotePublishe
                 for(User u : g.getUsersGame()) {
                     if(username.equals(u.getUsername())) {
                         g.removePlayer(u);
+                        break;
                     }
                 }
             }
