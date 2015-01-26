@@ -137,7 +137,7 @@ public class GameController extends UnicastRemoteObject implements Initializable
     AuthenticationManager authMan = new AuthenticationManager();
 
     private final int GAMESTARTDELAY = 5;
-    
+
     public GameController() throws RemoteException
     {
 
@@ -172,10 +172,10 @@ public class GameController extends UnicastRemoteObject implements Initializable
     public void startGame() throws RemoteException
     {
         long gameStartingPoint = System.nanoTime() + (GAMESTARTDELAY * 1000000);
-        
+
         while (true)
         {
-            if (System.nanoTime() > gameStartingPoint) 
+            if (System.nanoTime() > gameStartingPoint)
             {
                 break;
             }
@@ -524,9 +524,18 @@ public class GameController extends UnicastRemoteObject implements Initializable
 
     public void setMode(Mode mode, IUser loggedInUser, IGame g, Mode usermode)
     {
-        this.mode = mode;
-        this.myGame = g;
-        this.usermode = usermode;
+        try
+        {
+            this.mode = mode;
+            this.myGame = g;
+            this.usermode = usermode;
+            myGame.getActiveGame().addListenerO(this, "GameEnd");
+        }
+        catch (RemoteException ex)
+        {
+            Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         if (Mode.SPECTATOR.equals(usermode))
         {
             try
@@ -536,7 +545,6 @@ public class GameController extends UnicastRemoteObject implements Initializable
                     setVisibilityWaitingScreen();
                     try
                     {
-                        myGame.getActiveGame().addListenerO(this, "GameEnd");
                         startGame();
                     }
                     catch (RemoteException ex)
@@ -651,26 +659,34 @@ public class GameController extends UnicastRemoteObject implements Initializable
         }
         if (evt.getPropertyName().equals("GameEnd"))
         {
-            try
-            {
-                Stage stage = new Stage();
-                Parent root = null;
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Lobby.fxml"));
-                root = (Parent) fxmlLoader.load();
-                LobbyController controller = fxmlLoader.<LobbyController>getController();
-                controller.setLoggedInUser(loggedInUser);
-                stage.setTitle("Airhockey - Mulitplayer");
 
-                Scene scene = new Scene(root);
-                stage.setScene(scene);
-                stage.setResizable(false);
-                stage.show();
-                ((Node) (evt.getSource())).getScene().getWindow().hide();
-            }
-            catch (IOException ex)
-            {
-                Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+                Platform.runLater(new Runnable() {
+
+                    @Override
+                    public void run()
+                    {
+                        try{
+                        Stage stage = new Stage();
+                        Parent root = null;
+                        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Lobby.fxml"));
+                        root = (Parent) fxmlLoader.load();
+                        LobbyController controller = fxmlLoader.<LobbyController>getController();
+                        controller.setLoggedInUser(loggedInUser);
+                        stage.setTitle("Airhockey - Mulitplayer");
+
+                        Scene scene = new Scene(root);
+                        stage.setScene(scene);
+                        stage.setResizable(false);
+                        stage.show();
+                        btnSend.getScene().getWindow().hide();
+                        }
+                        catch(IOException ex)
+                        {
+                            ex.printStackTrace();
+                        }
+                    }
+                });
+
         }
     }
 
