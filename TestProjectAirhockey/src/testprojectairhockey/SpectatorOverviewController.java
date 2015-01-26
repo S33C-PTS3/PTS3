@@ -111,7 +111,7 @@ public class SpectatorOverviewController implements Initializable, RemotePropert
             Parent root = (Parent) fxmlLoader.load();
             GameController controller = fxmlLoader.<GameController>getController();
 
-            controller.setMode(Mode.MULTI, spectator.getUsername(), spectator.getGames().get(gameindex), Mode.SPECTATOR);
+            controller.setMode(Mode.MULTI, spectator, spectator.getGames().get(gameindex), Mode.SPECTATOR);
             Scene scene = new Scene(root);
             Stage stage = new Stage();
             stage.setScene(scene);
