@@ -11,6 +11,7 @@ import java.beans.PropertyChangeEvent;
 import java.io.IOException;
 import java.net.URL;
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
@@ -36,7 +37,7 @@ import observer.RemotePublisher;
  *
  * @author rens
  */
-public class SpectatorOverviewController implements Initializable, RemotePropertyListener {
+public class SpectatorOverviewController  extends UnicastRemoteObject implements Initializable, RemotePropertyListener{
 
     @FXML
     Button btnSpecGame1;
@@ -59,11 +60,17 @@ public class SpectatorOverviewController implements Initializable, RemotePropert
 
     private Spectator spectator;
 
+    
+    public SpectatorOverviewController() throws RemoteException
+    {
+        // DO NOTHING;
+    }
     /**
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize(URL url, ResourceBundle rb) 
+    {
 
         Image imgGame = new Image(getClass().getResourceAsStream("fieldPicture.png"));
 
@@ -79,34 +86,43 @@ public class SpectatorOverviewController implements Initializable, RemotePropert
     }
 
     @FXML
-    private void Game1_Click(MouseEvent evt) {
+    private void Game1_Click(MouseEvent evt)
+    {
         System.out.println("Nr of games: " + spectator.getGames().size());
         navigateToGame(0);
     }
-    
+
     @FXML
-    private void Game2_Click(MouseEvent evt) {
+    private void Game2_Click(MouseEvent evt)
+    {
         navigateToGame(1);
     }
-    
+
     @FXML
-    private void Game3_Click(MouseEvent evt) {
+    private void Game3_Click(MouseEvent evt)
+    {
         System.out.println("Nr of games: " + spectator.getGames().size());
         navigateToGame(2);
     }
+
     @FXML
-    private void Game4_Click(MouseEvent evt) {
+    private void Game4_Click(MouseEvent evt)
+    {
         System.out.println("Nr of games: " + spectator.getGames().size());
         navigateToGame(3);
     }
 
-    public void setSpectator(Spectator spectator) {
-        this.spectator = spectator;
-        updateImageView();
+    public void setSpectator(Spectator spectator)
+    {
+            this.spectator = spectator;
+            updateImageView();
+
     }
 
-    public void navigateToGame(int gameindex) {
-        try {
+    public void navigateToGame(int gameindex)
+    {
+        try
+        {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Game.fxml"));
             Parent root = (Parent) fxmlLoader.load();
             GameController controller = fxmlLoader.<GameController>getController();
@@ -118,23 +134,28 @@ public class SpectatorOverviewController implements Initializable, RemotePropert
             stage.setTitle("Airhockey - Multiplayer");
             stage.setResizable(false);
             stage.show();
-        } catch (IOException ex) {
+        }
+        catch (IOException ex)
+        {
             System.out.println("Error navigateToGame: " + ex.getMessage());
         }
     }
 
     @Override
-    public void propertyChange(PropertyChangeEvent evt) throws RemoteException {
+    public void propertyChange(PropertyChangeEvent evt) throws RemoteException
+    {
         updateImageView();
+        System.out.println(spectator.getGames().size() + "  KAPPADOR");
     }
 
-    private void updateImageView() {     
+    private void updateImageView()
+    {
         ImageView[] imgView = new ImageView[4];
         imgView[0] = imgGame1;
         imgView[1] = imgGame2;
         imgView[2] = imgGame3;
         imgView[3] = imgGame4;
-        for(int i = 0; i < spectator.getGames().size(); i++)
+        for (int i = 0; i < spectator.getGames().size(); i++)
         {
             imgView[i].setVisible(true);
         }
