@@ -228,19 +228,26 @@ public class Lobby extends UnicastRemoteObject implements ILobby, RemotePublishe
     @Override
     public void removeUserFromGame(String username, int gameID) throws RemoteException
     {
-        for(Game g : games) {
-            if(g.getId() == gameID) {
-                for(User u : g.getUsersGame()) {
-                    if(username.equals(u.getUsername())) {
+        int gameid = -1;
+        for (Game g : games)
+        {
+            if (g.getId() == gameID)
+            {
+                for (User u : g.getUsersGame())
+                {
+                    if (username.equals(u.getUsername()))
+                    {
                         g.removePlayer(u);
-                        if(g.getUsersGame().isEmpty()) {
-                            removeGame(gameID);
-                            break;
+                        if (g.getUsersGame().isEmpty())
+                        {
+                            gameid = gameID;
+
                         }
-                        break;
                     }
                 }
             }
+            removeGame(gameid);
+            break;
         }
     }
 }
