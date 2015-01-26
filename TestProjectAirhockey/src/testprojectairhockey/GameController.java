@@ -40,6 +40,7 @@ import Shared.IActiveGame;
 import Shared.IHockeyField;
 import Shared.IUser;
 import java.beans.PropertyChangeEvent;
+import java.io.IOException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.sql.SQLException;
@@ -432,19 +433,50 @@ public class GameController extends UnicastRemoteObject implements Initializable
     @FXML
     private void btnExit_Click(ActionEvent evt)
     {
-        timer.stop();
-        gameActive = false;
-        Parent root = null;
-        try
+        if (timer != null)
         {
-            Stage stage = new Stage();
-            if (hockeyField.getMode().equals(Mode.SINGLE))
+            timer.stop();
+            gameActive = false;
+            Parent root = null;
+            try
             {
-                root = FXMLLoader.load(getClass().getResource("Menu.fxml"));
-                stage.setTitle("Airhockey - Menu");
+                Stage stage = new Stage();
+                if (hockeyField.getMode().equals(Mode.SINGLE))
+                {
+                    root = FXMLLoader.load(getClass().getResource("Menu.fxml"));
+                    stage.setTitle("Airhockey - Menu");
+                }
+                else if (hockeyField.getMode().equals(Mode.MULTI))
+                {
+                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Lobby.fxml"));
+                    root = (Parent) fxmlLoader.load();
+                    LobbyController controller = fxmlLoader.<LobbyController>getController();
+                    controller.removeGame(myGame.getActiveGame().getID());
+                    controller.setLoggedInUser(loggedInUser);
+                    stage.setTitle("Airhockey - Mulitplayer");
+                }
+
+                hockeyField = null;
+
+                Scene scene = new Scene(root);
+
+                stage.setScene(scene);
+                stage.setResizable(false);
+                stage.show();
+                ((Node) (evt.getSource())).getScene().getWindow().hide();
+
             }
-            else if (hockeyField.getMode().equals(Mode.MULTI))
+            catch (Exception ex)
             {
+                System.out.println(ex.getMessage());
+            }
+        }
+        else
+        {
+            try
+            {
+                Stage stage = new Stage();
+                Parent root = null;
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Lobby.fxml"));
                 root = (Parent) fxmlLoader.load();
                 LobbyController controller = fxmlLoader.<LobbyController>getController();
@@ -453,20 +485,12 @@ public class GameController extends UnicastRemoteObject implements Initializable
                 stage.setTitle("Airhockey - Mulitplayer");
             }
 
-            hockeyField = null;
-
-            Scene scene = new Scene(root);
-
-            stage.setScene(scene);
-            stage.setResizable(false);
-            stage.show();
-            ((Node) (evt.getSource())).getScene().getWindow().hide();
-
+            catch (IOException ex)
+            {
+                System.out.println("IOException: " + ex.getMessage());
+            }
         }
-        catch (Exception ex)
-        {
-            System.out.println(ex.getMessage());
-        }
+
     }
 
     public void setMode(Mode mode, IUser loggedInUser, IGame g, Mode usermode)
