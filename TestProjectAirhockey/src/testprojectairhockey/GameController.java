@@ -214,9 +214,13 @@ public class GameController extends UnicastRemoteObject implements Initializable
                     lblPlayer3.setText(side.getBoundPlayer().getUsername());
                     System.out.println("Left: " + side.getBoundPlayer().getUsername());
                 }
-                if (side.getBoundPlayer().getUsername().equals(loggedInUser))
-                {
-                    rotateIndex = side.getBoundPlayer().getID();
+                try {
+                    if (side.getBoundPlayer().getUsername().equals(loggedInUser.getUsername()))
+                    {
+                        rotateIndex = side.getBoundPlayer().getID();
+                    }
+                } catch (RemoteException ex) {
+                    Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
 
@@ -652,7 +656,7 @@ public class GameController extends UnicastRemoteObject implements Initializable
                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("GameResults.fxml"));
                     root = (Parent) fxmlLoader.load();
                     GameResultsController controller = fxmlLoader.<GameResultsController>getController();
-                    controller.setResults(hockeyField.getGameResults());
+                    controller.setResults(hockeyField.getGameResults(),loggedInUser);
 
                     Stage stage = new Stage();
 
