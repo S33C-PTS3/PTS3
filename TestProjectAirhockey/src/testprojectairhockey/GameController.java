@@ -685,7 +685,18 @@ public class GameController extends UnicastRemoteObject implements Initializable
     }
 
     private boolean updateRatings()
-    {
+    {        
+        try {
+            String log = loggedInUser.getUsername();
+            String sideNil = sides[0].getBoundPlayer().getUsername();
+            
+            if (!log.equals(sideNil)) {
+                return true;
+            }
+        } catch (RemoteException ex) {
+            Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         boolean isSuccess = false;
 
         try
