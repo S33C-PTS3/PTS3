@@ -483,6 +483,12 @@ public class GameController extends UnicastRemoteObject implements Initializable
                 controller.removeGame(myGame.getActiveGame().getID());
                 controller.setLoggedInUser(loggedInUser);
                 stage.setTitle("Airhockey - Mulitplayer");
+                
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
+                stage.setResizable(false);
+                stage.show();
+                ((Node) (evt.getSource())).getScene().getWindow().hide();
             }
 
             catch (IOException ex)
