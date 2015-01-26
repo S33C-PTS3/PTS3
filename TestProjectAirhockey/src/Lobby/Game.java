@@ -46,6 +46,7 @@ public class Game extends UnicastRemoteObject implements IGame {
         users.add(creator);
     }
 
+    @Override
     public int getId()
     {
         return this.id;

@@ -457,7 +457,7 @@ public class GameController extends UnicastRemoteObject implements Initializable
                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Lobby.fxml"));
                     root = (Parent) fxmlLoader.load();
                     LobbyController controller = fxmlLoader.<LobbyController>getController();
-                    controller.removeGame(myGame.getActiveGame().getID());
+                    controller.removeGame(myGame.getId());
                     controller.setLoggedInUser(loggedInUser);
                     stage.setTitle("Airhockey - Mulitplayer");
                 }
