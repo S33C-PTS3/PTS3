@@ -18,9 +18,9 @@
     <ImageView id="imgGame1" fx:id="imgGame2" disable="false" fitHeight="116.0" fitWidth="155.0" layoutX="356.0" layoutY="44.0" onMouseClicked="#Game2_Click" pickOnBounds="true" preserveRatio="true" visible="false" />
     <ImageView id="imgGame1" fx:id="imgGame3" disable="false" fitHeight="116.0" fitWidth="155.0" layoutX="88.0" layoutY="224.0" onMouseClicked="#Game3_Click" pickOnBounds="true" preserveRatio="true" visible="false" />
     <ImageView id="imgGame1" fx:id="imgGame4" disable="false" fitHeight="116.0" fitWidth="155.0" layoutX="358.0" layoutY="224.0" onMouseClicked="#Game4_Click" pickOnBounds="true" preserveRatio="true" visible="false" />
-    <Label layoutX="142.0" layoutY="171.0" text="Game 1" textAlignment="CENTER" />
-    <Label layoutX="410.0" layoutY="171.0" text="Game 2" />
-    <Label layoutX="410.0" layoutY="349.0" text="Game 4" />
-    <Label layoutX="143.0" layoutY="349.0" text="Game 3" />
+    <Label fx:id="lblGame1" layoutX="142.0" layoutY="171.0" text="Game 1" textAlignment="CENTER" />
+    <Label fx:id="lblGame2" layoutX="410.0" layoutY="171.0" text="Game 2" />
+    <Label fx:id="lblGame4" layoutX="410.0" layoutY="349.0" text="Game 4" />
+    <Label fx:id="lblGame3" layoutX="143.0" layoutY="349.0" text="Game 3" />
   </children>
 </AnchorPane>

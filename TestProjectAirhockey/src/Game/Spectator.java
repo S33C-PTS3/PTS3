@@ -6,6 +6,7 @@
 package Game;
 
 import Lobby.Game;
+import Lobby.IGame;
 import Lobby.User;
 import Shared.IUser;
 import java.io.Serializable;
@@ -22,7 +23,7 @@ import observer.RemotePublisher;
  */
 public class Spectator extends User implements Serializable, IUser{
     
-    private List<Game> games;
+    private List<IGame> games;
 
     /**
      * Constructor used for Spectator
@@ -39,7 +40,7 @@ public class Spectator extends User implements Serializable, IUser{
      * Returns a list of all games Spectator is watching.
      * @return 
      */
-    public List<Game> getGames()
+    public List<IGame> getGames()
     {
         return games;
     }

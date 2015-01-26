@@ -23,4 +23,6 @@ import java.util.List;
         IActiveGame getActiveGame() throws RemoteException; 
        
         List<Player> getUsersObject() throws RemoteException;
+        
+        String getName() throws RemoteException;
 }

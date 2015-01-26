@@ -25,6 +25,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -37,7 +38,7 @@ import observer.RemotePublisher;
  *
  * @author rens
  */
-public class SpectatorOverviewController  extends UnicastRemoteObject implements Initializable, RemotePropertyListener{
+public class SpectatorOverviewController extends UnicastRemoteObject implements Initializable, RemotePropertyListener {
 
     @FXML
     Button btnSpecGame1;
@@ -57,19 +58,28 @@ public class SpectatorOverviewController  extends UnicastRemoteObject implements
     ImageView imgGame3;
     @FXML
     ImageView imgGame4;
+    @FXML
+    Label lblGame1;
+    @FXML
+    Label lblGame2;
+    @FXML
+    Label lblGame3;
+    @FXML
+    Label lblGame4;
 
     private Spectator spectator;
+    private Label[] labels;
 
-    
     public SpectatorOverviewController() throws RemoteException
     {
         // DO NOTHING;
     }
+
     /**
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) 
+    public void initialize(URL url, ResourceBundle rb)
     {
 
         Image imgGame = new Image(getClass().getResourceAsStream("fieldPicture.png"));
@@ -83,6 +93,8 @@ public class SpectatorOverviewController  extends UnicastRemoteObject implements
         imgGame2.setVisible(false);
         imgGame3.setVisible(false);
         imgGame4.setVisible(false);
+
+        labels = new Label[4];
     }
 
     @FXML
@@ -112,10 +124,22 @@ public class SpectatorOverviewController  extends UnicastRemoteObject implements
         navigateToGame(3);
     }
 
+    public void addListenerToPublisher(RemotePublisher publisher)
+    {
+        try
+        {
+            publisher.addListener(this, "SpectatorOverview");
+        }
+        catch (RemoteException ex)
+        {
+            Logger.getLogger(SpectatorOverviewController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     public void setSpectator(Spectator spectator)
     {
-            this.spectator = spectator;
-            updateImageView();
+        this.spectator = spectator;
+        updateImageView();
 
     }
 
@@ -158,6 +182,15 @@ public class SpectatorOverviewController  extends UnicastRemoteObject implements
         for (int i = 0; i < spectator.getGames().size(); i++)
         {
             imgView[i].setVisible(true);
+            try
+            {
+                System.out.println(spectator.getGames().get(i).getName());
+                labels[i].setText(spectator.getGames().get(i).getName());
+            }
+            catch (RemoteException ex)
+            {
+                Logger.getLogger(SpectatorOverviewController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 

@@ -59,6 +59,7 @@ public class Game extends UnicastRemoteObject implements IGame {
      *returns the name of this game
      */
 
+    @Override
     public String getName()
     {
         return this.name;

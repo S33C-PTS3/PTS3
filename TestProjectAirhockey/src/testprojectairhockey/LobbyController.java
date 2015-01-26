@@ -107,6 +107,7 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
     private final double ROWHEIGHT = 20;
     private final int LASTPLAYERINDEX = 6;
     boolean isOverviewOpen = false;
+    SpectatorOverviewController controller;
     Button btnJoin;
     Button btnSpectate;
 
@@ -327,6 +328,10 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
                         navigateToSpectatorOverview();
                         isOverviewOpen = true;
                     }
+                    else
+                    {
+                       controller.setSpectator(spectator);
+                    }
                 }
                 catch (RemoteException ex)
                 {
@@ -383,9 +388,9 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
         {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("SpectatorOverview.fxml"));
             Parent root = (Parent) fxmlLoader.load();
-            SpectatorOverviewController controller = fxmlLoader.<SpectatorOverviewController>getController();
+            controller = fxmlLoader.<SpectatorOverviewController>getController();
             RemotePublisher publisher = (RemotePublisher) rmiController.getLobby();
-            publisher.addListener(controller, "SpectatorOverview");
+            controller.addListenerToPublisher(publisher);
             controller.setSpectator(spectator);
             Scene scene = new Scene(root);
             Stage stage = new Stage();
