@@ -39,7 +39,7 @@ public class ActiveGame extends UnicastRemoteObject implements IActiveGame, Remo
         hockeyField = new HockeyField();
         hockeyField.init(Mode.MULTI);
         users = new String[3];
-        publisher = new BasicPublisher(new String[]{"Game", "Client"});
+        publisher = new BasicPublisher(new String[]{"Game", "Client", "GameEnd"});
         chat = new Chat();
         this.id = id;
     }
@@ -114,6 +114,7 @@ public class ActiveGame extends UnicastRemoteObject implements IActiveGame, Remo
     public void stopGame() throws RemoteException
     {
         threadPuck.interrupt();
+        publisher.inform(this,  "GameEnd", null, true);
         started = false;
     }
 
