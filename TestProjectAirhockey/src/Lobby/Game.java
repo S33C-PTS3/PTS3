@@ -130,6 +130,10 @@ public class Game extends UnicastRemoteObject implements IGame {
         this.users.add(user);
         return true;
     }
+    
+    public void removePlayer(User user) {
+        this.users.remove(user);
+    }
 
     /**
      * adds a spectator to the list of spectators in this game if the spectator

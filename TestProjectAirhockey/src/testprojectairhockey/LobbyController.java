@@ -411,6 +411,17 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
         {
         }
     }
+    
+    public void removeUserFromGame(int gameID, IUser u) {
+        try
+        {
+            rmiController.getLobby().removeUserFromGame(u.getUsername(), gameID);
+        }
+        catch (RemoteException ex)
+        {
+            Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     public void setLoggedInUser(IUser u)
     {
