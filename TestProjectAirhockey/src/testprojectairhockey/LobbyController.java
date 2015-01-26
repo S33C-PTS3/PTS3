@@ -123,7 +123,7 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
     public void initialize(URL url, ResourceBundle rb) {
         messages = FXCollections.observableArrayList();
         lvChatBox.setItems(messages);
-        //populateRanking();
+        populateRanking();
 
         try {
             rmiController = new LobbyRMI();
