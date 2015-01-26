@@ -6,7 +6,6 @@
 package testprojectairhockey;
 
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,7 +17,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
-import Game.Side;
+import Shared.IUser;
 
 /**
  * FXML Controller class
@@ -39,6 +38,7 @@ public class GameResultsController implements Initializable {
     @FXML
     Label lblResult3;
     
+    IUser loggedInUser;
     /**
      * Initializes the controller class.
      */
@@ -48,7 +48,7 @@ public class GameResultsController implements Initializable {
         // TODO
     }    
 
-    public void setResults(String[] gameOver)
+    public void setResults(String[] gameOver, IUser user)
     {
         lblResult1.setText(gameOver[0]);
         lblResult2.setText(gameOver[1]);
@@ -66,7 +66,11 @@ public class GameResultsController implements Initializable {
         Parent root;
         try
         {
-            root = FXMLLoader.load(getClass().getResource(bestand));
+            root = null;
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(bestand));
+            root = (Parent) fxmlLoader.load();
+            LobbyController controller = fxmlLoader.<LobbyController>getController();
+            controller.setLoggedInUser(loggedInUser);
             Stage stage = new Stage();
             stage.setTitle(title);
             Scene scene = new Scene(root);
