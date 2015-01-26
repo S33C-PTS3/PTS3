@@ -113,7 +113,7 @@ public class Lobby extends UnicastRemoteObject implements ILobby, RemotePublishe
     public String[] addGame(String name, IUser user) throws RemoteException
     {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        Game game = new Game(name + gameCount, (User) user);
+        Game game = new Game(name, (User) user);
         game.setId(gameCount);
         games.add(game);
         String[] gameInfo = new String[7];
@@ -229,6 +229,8 @@ public class Lobby extends UnicastRemoteObject implements ILobby, RemotePublishe
     public void removeUserFromGame(String username, int gameID) throws RemoteException
     {
         int gameid = -1;
+        User tempuser = null;
+        int size = -1;
         for (Game g : games)
         {
             if (g.getId() == gameID)
@@ -237,16 +239,19 @@ public class Lobby extends UnicastRemoteObject implements ILobby, RemotePublishe
                 {
                     if (username.equals(u.getUsername()))
                     {
-                        g.removePlayer(u);
-                        if (g.getUsersGame().isEmpty())
+                        tempuser = u;
+                        if (g.getUsersGame().size() == 1)
                         {
                             gameid = gameID;
-
                         }
                     }
                 }
             }
             removeGame(gameid);
+            if (tempuser != null) {
+                g.removePlayer(tempuser);
+            }
+
             break;
         }
     }

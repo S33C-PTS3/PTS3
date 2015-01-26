@@ -201,15 +201,15 @@ public class Bat{
         {
             case EASY:
                 diff1 = 1;
-                leftSpeedModifier = 0.15;
+                leftSpeedModifier = 0.08;
                 break;
             case MEDIUM:
                 diff1 = 2;
-                leftSpeedModifier = 0.45;
+                leftSpeedModifier = 0.25;
                 break;
             case HARD:
                 diff1 = 3;
-                leftSpeedModifier = 1;
+                leftSpeedModifier = 0.5;
                 break;
         }
             
@@ -217,14 +217,14 @@ public class Bat{
         {
             case EASY:
                 diff2 = 1;
-                rightSpeedModifier = 0.1;
+                rightSpeedModifier = 0.08;
                 break;
             case MEDIUM:
-                rightSpeedModifier = 0.55;
+                rightSpeedModifier = 0.27;
                 diff2 = 2;
                 break;
             case HARD:
-                rightSpeedModifier = 0.9;
+                rightSpeedModifier = 0.52;
                 diff2 = 3;
                 break;
         }
