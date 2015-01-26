@@ -311,7 +311,7 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
 
             RemotePublisher publisher = (RemotePublisher) rmiController.getLobby();
             publisher.addListener(controller, "client");
-            controller.setMode(Mode.MULTI, loggedInUser.getUsername(), g, Mode.PLAYER);
+            controller.setMode(Mode.MULTI, loggedInUser, g, Mode.PLAYER);
             Scene scene = new Scene(root);
             Stage stage = new Stage();
             stage.setScene(scene);

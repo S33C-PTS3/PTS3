@@ -38,6 +38,7 @@ import Lobby.IGame;
 import Security.AuthenticationManager;
 import Shared.IActiveGame;
 import Shared.IHockeyField;
+import Shared.IUser;
 import java.beans.PropertyChangeEvent;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -118,7 +119,7 @@ public class GameController extends UnicastRemoteObject implements Initializable
     //Modus van de game
     Mode mode = Mode.SINGLE;
     Mode usermode;
-    String loggedInUser = "";
+    IUser loggedInUser;
     Side[] sides;
     double diameterPuck;
     double diameterBat;
@@ -362,7 +363,7 @@ public class GameController extends UnicastRemoteObject implements Initializable
         {
             try
             {
-                hockeyField.setPlayerBatPosition(evt.getCode().toString(), loggedInUser);
+                hockeyField.setPlayerBatPosition(evt.getCode().toString(), loggedInUser.getUsername());
             }
             catch (RemoteException ex)
             {
@@ -402,9 +403,10 @@ public class GameController extends UnicastRemoteObject implements Initializable
                     String message = tfMessage.getText();
                     if (!message.isEmpty() && message.trim().length() > 0)
                     {
-                        Message m = new Message(loggedInUser, message);
+
                         try
                         {
+                            Message m = new Message(loggedInUser.getUsername(), message);
                             myGame.getActiveGame().addMessage(m);
                         }
                         catch (RemoteException ex)
@@ -447,6 +449,7 @@ public class GameController extends UnicastRemoteObject implements Initializable
                 root = (Parent) fxmlLoader.load();
                 LobbyController controller = fxmlLoader.<LobbyController>getController();
                 controller.removeGame(myGame.getActiveGame().getID());
+                controller.setLoggedInUser(loggedInUser);
                 stage.setTitle("Airhockey - Mulitplayer");
             }
 
@@ -466,7 +469,7 @@ public class GameController extends UnicastRemoteObject implements Initializable
         }
     }
 
-    public void setMode(Mode mode, String loggedInUser, IGame g, Mode usermode)
+    public void setMode(Mode mode, IUser loggedInUser, IGame g, Mode usermode)
     {
         this.mode = mode;
         this.myGame = g;
