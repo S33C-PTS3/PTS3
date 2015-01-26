@@ -95,6 +95,10 @@ public class SpectatorOverviewController extends UnicastRemoteObject implements 
         imgGame4.setVisible(false);
 
         labels = new Label[4];
+        labels[0] = lblGame1;
+        labels[1] = lblGame2;
+        labels[2] = lblGame3;
+        labels[3] = lblGame4;
     }
 
     @FXML

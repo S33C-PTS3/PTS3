@@ -290,6 +290,10 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
         //grid column 2
         btnJoin = new Button();
         btnJoin.setText("Join game");
+        if (playerCount == 3)
+        {
+            btnJoin.setDisable(true);
+        }
         btnJoin.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event)
@@ -310,6 +314,10 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
         //grid column 3
         btnSpectate = new Button();
         btnSpectate.setText("Spectate");
+        if (Integer.valueOf(spectatorCount) == 2)
+        {
+            btnSpectate.setDisable(true);
+        }
         btnSpectate.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
