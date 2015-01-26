@@ -570,7 +570,7 @@ public class GameController extends UnicastRemoteObject implements Initializable
     @Override
     public void propertyChange(PropertyChangeEvent evt) throws RemoteException
     {
-        if (loggedInUser.equals(evt.getNewValue()))
+        if (loggedInUser.getUsername().equals(evt.getNewValue()))
         {
             Platform.runLater(new Runnable() {
                 @Override
