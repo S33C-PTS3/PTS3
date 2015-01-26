@@ -132,6 +132,8 @@ public class GameController extends UnicastRemoteObject implements Initializable
 
     RemotePublisher publisher;
     boolean gameActive = true;
+    boolean ratingUpdated = false;
+    AuthenticationManager authMan = new AuthenticationManager();
 
     public GameController() throws RemoteException
     {
@@ -639,6 +641,7 @@ public class GameController extends UnicastRemoteObject implements Initializable
         if (updateRatings())
         {
             System.out.println("Player ratings were updated");
+            ratingUpdated = true;
         }
         else
         {
@@ -685,55 +688,47 @@ public class GameController extends UnicastRemoteObject implements Initializable
     {
         boolean isSuccess = false;
 
-        AuthenticationManager authMan = new AuthenticationManager();
-
         try
         {
             for (Side s : hockeyField.getSides())
             {
-                if (s.getBoundPlayer().getID() == 2)
+                double ratingscore;
+                double endScore = s.getBoundPlayer().getInGameScore();
+                double correction;
+                ArrayList<IPlayer> opponents = new ArrayList<>();
+
+                for (Side s2 : hockeyField.getSides())
                 {
-                    double ratingscore;
-                    double endScore = -20 + s.getBoundPlayer().getInGameScore();
-                    double correction;
-                    ArrayList<IPlayer> opponents = new ArrayList<>();
-
-                    for (Side s2 : hockeyField.getSides())
+                    if (s2.getBoundPlayer().getID() != s.getBoundPlayer().getID())
                     {
-                        if (s2.getBoundPlayer().getID() != s.getBoundPlayer().getID())
-                        {
-                            opponents.add(s2.getBoundPlayer());
-                        }
-                    }
-
-                    if (opponents.size() != 2)
-                    {
-                        throw new RuntimeException("Opponents size is incorrect, should be 2, is " + opponents.size());
-                    }
-
-                    double ratingOpp1 = authMan.getPlayerRating(opponents.get(0).getUsername());
-                    double ratingOpp2 = authMan.getPlayerRating(opponents.get(1).getUsername());
-                    double ratingPlayer = authMan.getPlayerRating(s.getBoundPlayer().getUsername());
-                    correction = ((ratingOpp1 + ratingOpp2) - (2 * ratingPlayer)) / 8;
-
-                    ratingscore = endScore + correction;
-
-                    try
-                    {
-                        if (authMan.updatePlayerRatingscores(s.getBoundPlayer(), ratingscore))
-                        {
-                            isSuccess = true;
-                        }
-                    }
-                    catch (SQLException ex)
-                    {
-                        System.err.println("SQLException in GameController.UpdateRankings() " + ex.getMessage());
+                        opponents.add(s2.getBoundPlayer());
                     }
                 }
-                else
+
+                if (opponents.size() != 2)
                 {
-                    isSuccess = true;
+                    throw new RuntimeException("Opponents size is incorrect, should be 2, is " + opponents.size());
                 }
+
+                double ratingOpp1 = authMan.getPlayerRating(opponents.get(0).getUsername());
+                double ratingOpp2 = authMan.getPlayerRating(opponents.get(1).getUsername());
+                double ratingPlayer = authMan.getPlayerRating(s.getBoundPlayer().getUsername());
+                correction = ((ratingOpp1 + ratingOpp2) - (2 * ratingPlayer)) / 8;
+
+                ratingscore = endScore + correction;
+
+                try
+                {
+                    if (authMan.updatePlayerRatingscores(s.getBoundPlayer(), ratingscore))
+                    {
+                        isSuccess = true;
+                    }
+                }
+                catch (SQLException ex)
+                {
+                    System.err.println("SQLException in GameController.UpdateRankings() " + ex.getMessage());
+                }
+                
             }
         }
         catch (RemoteException ex)
