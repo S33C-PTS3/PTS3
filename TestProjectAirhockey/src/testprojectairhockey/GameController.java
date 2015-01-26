@@ -204,17 +204,17 @@ public class GameController extends UnicastRemoteObject implements Initializable
             int rotateIndex = 0;
             for (Side side : sides)
             {
-                if (side.getSideName().equals(SideName.BOTTOM))
+                if (side.getSideName().equals(SideName.LEFT))
                 {
                     lblPlayer1.setText(side.getBoundPlayer().getUsername());
                     System.out.println("Bottom: " + side.getBoundPlayer().getUsername());
                 }
-                if (side.getSideName().equals(SideName.RIGHT))
+                if (side.getSideName().equals(SideName.BOTTOM))
                 {
                     lblPlayer2.setText(side.getBoundPlayer().getUsername());
                     System.out.println("Right: " + side.getBoundPlayer().getUsername());
                 }
-                if (side.getSideName().equals(SideName.LEFT))
+                if (side.getSideName().equals(SideName.RIGHT))
                 {
                     lblPlayer3.setText(side.getBoundPlayer().getUsername());
                     System.out.println("Left: " + side.getBoundPlayer().getUsername());
@@ -699,7 +699,7 @@ public class GameController extends UnicastRemoteObject implements Initializable
                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("GameResults.fxml"));
                     root = (Parent) fxmlLoader.load();
                     GameResultsController controller = fxmlLoader.<GameResultsController>getController();
-                    controller.setResults(hockeyField.getGameResults(), loggedInUser);
+                    controller.setResults(hockeyField.getGameResults(), loggedInUser, myGame.getId());
 
                     Stage stage = new Stage();
 

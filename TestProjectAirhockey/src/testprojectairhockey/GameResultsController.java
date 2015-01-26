@@ -39,6 +39,7 @@ public class GameResultsController implements Initializable {
     Label lblResult3;
     
     IUser loggedInUser;
+    int gameID;
     /**
      * Initializes the controller class.
      */
@@ -48,17 +49,19 @@ public class GameResultsController implements Initializable {
         // TODO
     }    
 
-    public void setResults(String[] gameOver, IUser user)
+    public void setResults(String[] gameOver, IUser user, int gameID)
     {
         lblResult1.setText(gameOver[0]);
         lblResult2.setText(gameOver[1]);
         lblResult3.setText(gameOver[2]);
+        loggedInUser = user;
+        this.gameID = gameID;
     }
     
     @FXML
     private void btnMainMenu(ActionEvent evt)
     {
-        gotoScherm("Lobby.fxml", evt, "Airhockey");
+        gotoScherm("Lobby.fxml", evt, "Airhockey - Lobby");
     }
     
     private void gotoScherm(String bestand, ActionEvent evt, String title)
@@ -71,6 +74,7 @@ public class GameResultsController implements Initializable {
             root = (Parent) fxmlLoader.load();
             LobbyController controller = fxmlLoader.<LobbyController>getController();
             controller.setLoggedInUser(loggedInUser);
+            controller.removeGame(gameID);
             Stage stage = new Stage();
             stage.setTitle(title);
             Scene scene = new Scene(root);
