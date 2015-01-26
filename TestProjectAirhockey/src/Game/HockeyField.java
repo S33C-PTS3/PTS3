@@ -257,7 +257,8 @@ public class HockeyField extends UnicastRemoteObject implements RemotePublisher,
     {
         if (gameOver)
         {
-            return gameResult;
+            System.err.println("GAME IS OVER");
+            return gameResult;       
         }
         else
         {
@@ -365,15 +366,15 @@ public class HockeyField extends UnicastRemoteObject implements RemotePublisher,
             int index = 0;
             int highscore = 0;
             gameOver = true;
-            for (Side side : sides)
-            {
-                highscore = side.getBoundPlayer().getInGameScore();
-                gameResult.add(side);
-                
+            if (gameResult.size() != 3) {
+                for (Side side : sides)
+                {
+                    highscore = side.getBoundPlayer().getInGameScore();
+                    gameResult.add(side);
+
+                }
             }
-            //gameResult.sort(null);
-            
-            
+
             for (Side side : gameResult)
             {
                 gameResultArray[index] = side.toString();

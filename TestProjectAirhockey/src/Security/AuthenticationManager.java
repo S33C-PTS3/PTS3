@@ -25,11 +25,13 @@ public class AuthenticationManager {
     private Connection dbConnection;
     private String ip;
     private final FTPManager ftp = new FTPManager();
+    private boolean connectionIsInitialized;
 
     /**
      * Constructor for AuthenticationManager
      */
     public AuthenticationManager() {
+        connectionIsInitialized = false;
     }
 
     /**
@@ -135,6 +137,10 @@ public class AuthenticationManager {
     }
 
     private void initConnection() throws RuntimeException {
+        if (connectionIsInitialized) {
+            return;
+        }
+        
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");
         } catch (ClassNotFoundException ex) {
@@ -154,6 +160,7 @@ public class AuthenticationManager {
 
         if (dbConnection != null) {
             System.out.println("DB Connection found");
+            connectionIsInitialized = true;
         }
     }
 
@@ -192,7 +199,7 @@ public class AuthenticationManager {
     public boolean updatePlayerRatingscores(IPlayer player, double ratingscore) throws SQLException
     {
         boolean isSuccess = false;
-        
+        System.err.println("AuthMan: updateing ranking for " + player.getUsername() + " with score " + ratingscore);
         try {
             initConnection();
         } catch (RuntimeException ex) {
