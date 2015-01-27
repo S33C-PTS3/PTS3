@@ -77,6 +77,7 @@ public class Game extends UnicastRemoteObject implements IGame {
     /**
      * @return a list of spectators that joined this game as spectators
      */
+    @Override
     public List<Spectator> getSpectators()
     {
         return this.spectators;

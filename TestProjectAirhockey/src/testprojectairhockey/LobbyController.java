@@ -536,6 +536,18 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
             Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    public void removeSpectator(int gameID, Spectator specToRemove)
+    {
+       try
+       {
+           rmiController.getLobby().removeSpectatorFromGame(gameID, specToRemove);
+       }
+       catch(RemoteException ex)
+       {
+          Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex); 
+       }
+    }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) throws RemoteException
