@@ -303,7 +303,7 @@ public class GameController extends UnicastRemoteObject implements Initializable
             scorePlayer3 = scores[2];
         }
 
-        if (scores[0] == 0 && scores[1] == 0 & scores[2] == 0) 
+        if (scores[0] == 0 && scores[1] == 0 && scores[2] == 0) 
         {
             lblScore1.setText("20");
             lblScore2.setText("20");
