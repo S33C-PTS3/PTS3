@@ -82,7 +82,6 @@ public class AuthenticationManager {
     /**
      * Adds an user with a password and unique username. No duplicate usernames
      * are allowed.
-     *
      * @param username
      * @param password
      * @return
