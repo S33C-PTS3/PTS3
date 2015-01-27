@@ -18,9 +18,9 @@
         <Button fx:id="btnExit" focusTraversable="false" layoutX="706.0" layoutY="29.0" mnemonicParsing="false" onAction="#btnExit_Click" text="Exit Game" />
         <Label fx:id="lblPlayer2" layoutX="23.0" layoutY="68.0" minHeight="16" minWidth="69" text="Green:" />
         <Label fx:id="lblPlayer3" layoutX="23.0" layoutY="86.0" minHeight="16" minWidth="69" text="Blue:" />
-        <Label fx:id="lblScore3" layoutX="105.0" layoutY="86.0" minHeight="16" minWidth="69" text="10" />
-        <Label fx:id="lblScore2" layoutX="105.0" layoutY="68.0" minHeight="16" minWidth="69" text="10" />
-        <Label fx:id="lblScore1" layoutX="105.0" layoutY="50.0" minHeight="16" minWidth="69" text="10" />
+        <Label fx:id="lblScore3" layoutX="105.0" layoutY="86.0" minHeight="16" minWidth="69" text="20" />
+        <Label fx:id="lblScore2" layoutX="105.0" layoutY="68.0" minHeight="16" minWidth="69" text="20" />
+        <Label fx:id="lblScore1" layoutX="105.0" layoutY="50.0" minHeight="16" minWidth="69" text="20" />
         <Label fx:id="label3" layoutX="23.0" layoutY="21.0" minHeight="16" minWidth="69" text="Score:">
             <font>
                 <Font size="20.0" />
