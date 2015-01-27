@@ -738,7 +738,7 @@ public class GameController extends UnicastRemoteObject implements Initializable
         }
         catch (RemoteException ex)
         {
-            Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Logged in user not found. Updating of ranking failed.");
         }
 
         boolean isSuccess = false;
@@ -788,7 +788,7 @@ public class GameController extends UnicastRemoteObject implements Initializable
         }
         catch (RemoteException ex)
         {
-            Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Remote exception. Updating of ranking failed.");
         }
 
         return isSuccess;
