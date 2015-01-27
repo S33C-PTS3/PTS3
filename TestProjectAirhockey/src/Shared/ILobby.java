@@ -68,4 +68,6 @@ public interface ILobby extends Remote, RemotePublisher{
     
     public void removeUserFromGame(String username, int gameID) throws RemoteException;
     
+    public void removeSpectatorFromGame(int gameID, Spectator spectator) throws RemoteException;
+    
 }

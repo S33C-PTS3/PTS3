@@ -173,7 +173,6 @@ public class SpectatorOverviewController extends UnicastRemoteObject implements 
     public void propertyChange(PropertyChangeEvent evt) throws RemoteException
     {
         updateImageView();
-        System.out.println(spectator.getGames().size() + "  KAPPADOR");
     }
 
     private void updateImageView()
