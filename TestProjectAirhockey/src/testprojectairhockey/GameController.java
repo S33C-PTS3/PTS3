@@ -462,14 +462,17 @@ public class GameController extends UnicastRemoteObject implements Initializable
                 }
                 else if (hockeyField.getMode().equals(Mode.MULTI))
                 {
+
                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Lobby.fxml"));
                     root = (Parent) fxmlLoader.load();
                     LobbyController controller = fxmlLoader.<LobbyController>getController();
+
                     for (Spectator spec : myGame.getSpectators())
                     {
                         if (loggedInUser.getUsername().equals(spec.getUsername()))
                         {
                             controller.removeSpectator(myGame.getId(), spec);
+
                             isSpectator = true;
                         }
                     }
@@ -479,9 +482,10 @@ public class GameController extends UnicastRemoteObject implements Initializable
                         myGame.getActiveGame().stopGame();
                     }
                     controller.setLoggedInUser(loggedInUser);
+
                     stage.setTitle("Airhockey - Mulitplayer");
                 }
-
+                ((Node) (evt.getSource())).getScene().getWindow().hide();
                 hockeyField = null;
 
             }
@@ -663,18 +667,22 @@ public class GameController extends UnicastRemoteObject implements Initializable
                 {
                     try
                     {
-                        Stage stage = new Stage();
-                        Parent root = null;
-                        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Lobby.fxml"));
-                        root = (Parent) fxmlLoader.load();
-                        LobbyController controller = fxmlLoader.<LobbyController>getController();
-                        controller.setLoggedInUser(loggedInUser);
-                        stage.setTitle("Airhockey - Mulitplayer");
+                        if (!mode.equals(mode.SPECTATOR))
+                        {
+                            Stage stage = new Stage();
+                            Parent root = null;
+                            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Lobby.fxml"));
+                            root = (Parent) fxmlLoader.load();
+                            LobbyController controller = fxmlLoader.<LobbyController>getController();
+                            controller.setLoggedInUser(loggedInUser);
+                            stage.setTitle("Airhockey - Lobby");
 
-                        Scene scene = new Scene(root);
-                        stage.setScene(scene);
-                        stage.setResizable(false);
-                        stage.show();
+                            Scene scene = new Scene(root);
+                            stage.setScene(scene);
+                            stage.setResizable(false);
+                            stage.show();
+
+                        }
                         btnSend.getScene().getWindow().hide();
                     }
                     catch (IOException ex)
@@ -682,7 +690,8 @@ public class GameController extends UnicastRemoteObject implements Initializable
                         ex.printStackTrace();
                     }
                 }
-            });
+            }
+            );
 
         }
     }
@@ -710,22 +719,26 @@ public class GameController extends UnicastRemoteObject implements Initializable
                 Parent root = null;
                 try
                 {
-                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("GameResults.fxml"));
-                    root = (Parent) fxmlLoader.load();
-                    GameResultsController controller = fxmlLoader.<GameResultsController>getController();
-                    controller.setResults(hockeyField.getGameResults(), loggedInUser, myGame.getId());
+                    if (mode != mode.SPECTATOR)
+                    {
+                        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("GameResults.fxml"));
+                        root = (Parent) fxmlLoader.load();
+                        GameResultsController controller = fxmlLoader.<GameResultsController>getController();
+                        controller.setResults(hockeyField.getGameResults(), loggedInUser, myGame.getId());
 
-                    Stage stage = new Stage();
+                        Stage stage = new Stage();
 
-                    stage.setTitle("Airhockey - Game Results");
+                        stage.setTitle("Airhockey - Game Results");
 
-                    hockeyField = null;
+                        hockeyField = null;
 
-                    Scene scene = new Scene(root);
+                        Scene scene = new Scene(root);
 
-                    stage.setScene(scene);
-                    stage.setResizable(false);
-                    stage.show();
+                        stage.setScene(scene);
+                        stage.setResizable(false);
+                        stage.show();
+                    }
+
                     btnSend.getScene().getWindow().hide();
 
                 }
