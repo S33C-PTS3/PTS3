@@ -223,6 +223,8 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
             {
                 createNewGame(gamesArray);
             }
+            
+            populateRanking();
         }
         catch (RemoteException ex)
         {
@@ -535,18 +537,6 @@ public class LobbyController extends UnicastRemoteObject implements Initializabl
         {
             Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-    
-    public void removeSpectator(int gameID, Spectator specToRemove)
-    {
-       try
-       {
-           rmiController.getLobby().removeSpectatorFromGame(gameID, specToRemove);
-       }
-       catch(RemoteException ex)
-       {
-          Logger.getLogger(LobbyController.class.getName()).log(Level.SEVERE, null, ex); 
-       }
     }
 
     @Override

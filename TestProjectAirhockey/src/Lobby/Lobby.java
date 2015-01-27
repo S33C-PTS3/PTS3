@@ -255,30 +255,4 @@ public class Lobby extends UnicastRemoteObject implements ILobby, RemotePublishe
             break;
         }
     }
-
-    @Override
-    public void removeSpectatorFromGame(int gameID, Spectator spectator) throws RemoteException
-    {
-        Spectator tempspec = null;
-        for (Game g : games)
-        {
-            if (g.getId() == gameID)
-            {
-                for (Spectator s : g.getSpectators())
-                {
-                    if (spectator.getUsername().equals(s.getUsername()))
-                    {
-                        tempspec = s;
-                    }
-                }
-            }
-
-            if (tempspec != null) {
-                g.removePlayer(tempspec);
-            }
-
-            break;
-        }
-        publisher.inform(this, "SpectatorOverview", null, true);
-    }
 }

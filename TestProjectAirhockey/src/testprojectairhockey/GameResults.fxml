@@ -13,17 +13,17 @@
         <URL value="@gameresults.css" />
     </stylesheets>
    <children>
-      <Label fx:id="lblResult1" alignment="CENTER" layoutX="255.0" layoutY="65.0" text="Label" textAlignment="CENTER">
+      <Label fx:id="lblResult1" layoutX="255.0" layoutY="65.0" text="Label" textAlignment="CENTER">
          <font>
             <Font size="36.0" />
          </font>
       </Label>
-      <Label fx:id="lblResult2" alignment="CENTER" layoutX="255.0" layoutY="132.0" text="Label" textAlignment="CENTER">
+      <Label fx:id="lblResult2" layoutX="255.0" layoutY="132.0" text="Label" textAlignment="CENTER">
          <font>
             <Font size="36.0" />
          </font>
       </Label>
-      <Label fx:id="lblResult3" alignment="CENTER" layoutX="255.0" layoutY="192.0" text="Label" textAlignment="CENTER">
+      <Label fx:id="lblResult3" layoutX="255.0" layoutY="192.0" text="Label" textAlignment="CENTER">
          <font>
             <Font size="36.0" />
          </font></Label>

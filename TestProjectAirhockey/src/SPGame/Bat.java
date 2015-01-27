@@ -22,8 +22,8 @@ public class Bat{
     private double Xvelocity;
     private SideName sidename;
     private SerializationManager serMan = new SerializationManager();
-    double rightSpeedModifier = 0.08;
-    double leftSpeedModifier = 0.09;
+    double rightSpeedModifier = 0.1;
+    double leftSpeedModifier = 0.1;
     
     /**
      * Constructor used for the Bat Class
@@ -44,29 +44,29 @@ public class Bat{
         //Speed of own bat depends on difficulty
         //Settings loadedSettings = serMan.loadAIsettings();
         //int overallDifficulty = getOverallDifficulty(loadedSettings);
-//        int overallDifficulty = xVel;
-//        
-//        switch(overallDifficulty)
-//        {
-//            case 2:
-//                xVel = 12;
-//                break;
-//            case 3:
-//                xVel = 11;
-//                break;
-//            case 4:
-//                xVel = 10;
-//                break;
-//            case 5:
-//                xVel = 9;
-//                break;
-//            case 6:
-//                xVel = 8;
-//                break;
-//            case 7:
-//                xVel = 5;
-//                break;
-//        }
+        int overallDifficulty = xVel;
+        
+        switch(overallDifficulty)
+        {
+            case 2:
+                xVel = 12;
+                break;
+            case 3:
+                xVel = 11;
+                break;
+            case 4:
+                xVel = 10;
+                break;
+            case 5:
+                xVel = 9;
+                break;
+            case 6:
+                xVel = 8;
+                break;
+            case 7:
+                xVel = 5;
+                break;
+        }
         
         this.Xvelocity = xVel;
         

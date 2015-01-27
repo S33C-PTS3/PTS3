@@ -6,7 +6,6 @@
 package Lobby;
 
 import Game.Player;
-import Game.Spectator;
 import Shared.IActiveGame;
 import Shared.IHockeyField;
 import java.rmi.Remote;
@@ -26,8 +25,6 @@ import java.util.List;
         List<Player> getUsersObject() throws RemoteException;
         
         String getName() throws RemoteException;
-        
-        List<Spectator> getSpectators() throws RemoteException;
         
         int getId() throws RemoteException;
 }
